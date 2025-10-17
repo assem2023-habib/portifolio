@@ -7,6 +7,7 @@
 */
 
 (function() {
+  
   "use strict";
 
   /**
@@ -225,5 +226,51 @@
   }
   window.addEventListener('load', navmenuScrollspy);
   document.addEventListener('scroll', navmenuScrollspy);
+  /**
+   * Dark Mode Toggle
+   */
+  const darkModeToggle = document.getElementById('darkModeToggle');
+  const body = document.body;
+  const moonIcon = darkModeToggle.querySelector('i');
+
+  // Check for saved dark mode preference or default to light mode
+  const currentTheme = localStorage.getItem('theme');
+  if (currentTheme) {
+    body.classList.toggle('dark-mode', currentTheme === 'dark');
+  }
+
+  // Update icon based on current theme
+  function updateIcon() {
+    if (body.classList.contains('dark-mode')) {
+      moonIcon.classList.remove('bi-moon-fill');
+      moonIcon.classList.add('bi-sun-fill');
+      darkModeToggle.classList.add('active');
+    } else {
+      moonIcon.classList.remove('bi-sun-fill');
+      moonIcon.classList.add('bi-moon-fill');
+      darkModeToggle.classList.remove('active');
+    }
+  }
+
+  // Initialize icon on page load
+  updateIcon();
+
+  darkModeToggle.addEventListener('click', function() {
+    body.classList.toggle('dark-mode');
+
+    // Save preference to localStorage
+    const theme = body.classList.contains('dark-mode') ? 'dark' : 'light';
+    localStorage.setItem('theme', theme);
+
+    // Update icon
+    updateIcon();
+
+    // Reinitialize AOS for animations to work properly with theme change
+    if (typeof AOS !== 'undefined') {
+      AOS.refresh();
+    }
+  });
+  
 
 })();
+

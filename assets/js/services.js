@@ -74,46 +74,46 @@ function updateServicesList(activeService) {
 
 // Function to populate services section in index.html
 function populateIndexServices() {
-  // Check if we're on index.html page (has services section)
-  const servicesSection = document.querySelector('#services .container .row');
-  if (servicesSection) {
-    // Get all service items (6 items)
-    const serviceItems = servicesSection.querySelectorAll('.service-item');
-    // Map service data to array for easier iteration
-    const servicesArray = Object.keys(servicesData).map(key => ({
-      id: key,
-      ...servicesData[key]
-    }));
+    // Check if we're on index.html page (has services section)
+    const servicesSection = document.querySelector('#services .container .row');
+    if (servicesSection) {
+        // Get all service items (6 items)
+        const serviceItems = servicesSection.querySelectorAll('.service-item');
+        // Map service data to array for easier iteration
+        const servicesArray = Object.keys(servicesData).map(key => ({
+            id: key,
+            ...servicesData[key]
+        }));
 
-    // Update each service element with data
-    serviceItems.forEach((element, index) => {
-      if (index < servicesArray.length) {
-        const serviceData = servicesArray[index];
+        // Update each service element with data
+        serviceItems.forEach((element, index) => {
+            if (index < servicesArray.length) {
+                const serviceData = servicesArray[index];
 
-        // Update the title
-        const titleElement = element.querySelector('h3');
-        if (titleElement) {
-          titleElement.textContent = serviceData.title;
-        }
+                // Update the title
+                const titleElement = element.querySelector('h3');
+                if (titleElement) {
+                    titleElement.textContent = serviceData.title;
+                }
 
-        // Update the description
-        const descElement = element.querySelector('p');
-        if (descElement) {
-          descElement.textContent = serviceData.description;
-        }
+                // Update the description
+                const descElement = element.querySelector('p');
+                if (descElement) {
+                    descElement.textContent = serviceData.description;
+                }
 
-        // Update the link href
-        const linkElement = element.querySelector('a.stretched-link');
-        if (linkElement) {
-          linkElement.href = `service-details.html?service=${serviceData.id}`;
-        }
-      }
-    });
-  }
+                // Update the link href
+                const linkElement = element.querySelector('a.stretched-link');
+                if (linkElement) {
+                    linkElement.href = `service-details.html?service=${serviceData.id}`;
+                }
+            }
+        });
+    }
 }
 
 // Initialize when page loads
 document.addEventListener('DOMContentLoaded', () => {
-  updateServiceDetails();
-  populateIndexServices();
+    updateServiceDetails();
+    populateIndexServices();
 });

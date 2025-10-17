@@ -26,14 +26,6 @@
 
   <!-- Main CSS File -->
   <link href="assets/css/main.css" rel="stylesheet">
-
-  <!-- =======================================================
-  * Template Name: MyResume
-  * Template URL: https://bootstrapmade.com/free-html-bootstrap-template-my-resume/
-  * Updated: Jun 29 2024 with Bootstrap v5.3.3
-  * Author: BootstrapMade.com
-  * License: https://bootstrapmade.com/license/
-  ======================================================== -->
 </head>
 
 <body class="service-details-page">
@@ -41,6 +33,11 @@
   <header id="header" class="header d-flex flex-column justify-content-center">
 
     <i class="header-toggle d-xl-none bi bi-list"></i>
+
+    <!-- Dark Mode Toggle Button -->
+    <button id="darkModeToggle" class="dark-mode-toggle" title="تبديل الوضع المظلم">
+      <i class="bi bi-moon-fill"></i>
+    </button>
 
     <nav id="navmenu" class="navmenu">
       <ul>
@@ -101,28 +98,25 @@
             <div class="help-box d-flex flex-column justify-content-center align-items-center">
               <i class="bi bi-headset help-icon"></i>
               <h4>Have a Question?</h4>
-              <p class="d-flex align-items-center mt-2 mb-0"><i class="bi bi-telephone me-2"></i> <span>+1 5589 55488 55</span></p>
-              <p class="d-flex align-items-center mt-1 mb-0"><i class="bi bi-envelope me-2"></i> <a href="mailto:contact@example.com">contact@example.com</a></p>
+              <p class="d-flex align-items-center mt-2 mb-0"><i class="bi bi-telephone me-2"></i> <span>+963 994 636 381</span></p>
+              <p class="d-flex align-items-center mt-1 mb-0"><i class="bi bi-envelope me-2"></i> <a href="mailto:contact@example.com">099assemhb@gmail.com</a></p>
             </div>
 
           </div>
 
           <div class="col-lg-8 ps-lg-5" data-aos="fade-up" data-aos-delay="200">
             <img src="assets/img/services.jpg" alt="" class="img-fluid services-img">
-            <h3>Temporibus et in vero dicta aut eius lidero plastis trand lined voluptas dolorem ut voluptas</h3>
+            <h3></h3>
             <p>
-              Blanditiis voluptate odit ex error ea sed officiis deserunt. Cupiditate non consequatur et doloremque consequuntur. Accusantium labore reprehenderit error temporibus saepe perferendis fuga doloribus vero. Qui omnis quo sit. Dolorem architecto eum et quos deleniti officia qui.
             </p>
             <ul>
-              <li><i class="bi bi-check-circle"></i> <span>Aut eum totam accusantium voluptatem.</span></li>
-              <li><i class="bi bi-check-circle"></i> <span>Assumenda et porro nisi nihil nesciunt voluptatibus.</span></li>
-              <li><i class="bi bi-check-circle"></i> <span>Ullamco laboris nisi ut aliquip ex ea</span></li>
+              <li><i class="bi bi-check-circle"></i> <span></span></li>
+              <li><i class="bi bi-check-circle"></i> <span></span></li>
+              <li><i class="bi bi-check-circle"></i> <span></span></li>
             </ul>
             <p>
-              Est reprehenderit voluptatem necessitatibus asperiores neque sed ea illo. Deleniti quam sequi optio iste veniam repellat odit. Aut pariatur itaque nesciunt fuga.
             </p>
             <p>
-              Sunt rem odit accusantium omnis perspiciatis officia. Laboriosam aut consequuntur recusandae mollitia doloremque est architecto cupiditate ullam. Quia est ut occaecati fuga. Distinctio ex repellendus eveniet velit sint quia sapiente cumque. Et ipsa perferendis ut nihil. Laboriosam vel voluptates tenetur nostrum. Eaque iusto cupiditate et totam et quia dolorum in. Sunt molestiae ipsum at consequatur vero. Architecto ut pariatur autem ad non cumque nesciunt qui maxime. Sunt eum quia impedit dolore alias explicabo ea.
             </p>
           </div>
 
@@ -136,24 +130,17 @@
 
   <footer id="footer" class="footer position-relative light-background">
     <div class="container">
-      <h3 class="sitename">Brandon Johnson</h3>
-      <p>Et aut eum quis fuga eos sunt ipsa nihil. Labore corporis magni eligendi fuga maxime saepe commodi placeat.</p>
+      <h3 class="sitename">Assem Adel Habib</h3>
+      <p>Web developer specializing in building modern applications and innovative software solutions using the latest technologies</p>
       <div class="social-links d-flex justify-content-center">
-        <a href=""><i class="bi bi-twitter-x"></i></a>
-        <a href=""><i class="bi bi-facebook"></i></a>
-        <a href=""><i class="bi bi-instagram"></i></a>
-        <a href=""><i class="bi bi-skype"></i></a>
-        <a href=""><i class="bi bi-linkedin"></i></a>
+        <a href="https://github.com/assem2023-habib" target="_blank"><i class="bi bi-github"></i></a>
+        <a href="https://linkedin.com/in/assem-habib-5236a423b" target="_blank"><i class="bi bi-linkedin"></i></a>
       </div>
       <div class="container">
         <div class="copyright">
-          <span>Copyright</span> <strong class="px-1 sitename">Alex Smith</strong> <span>All Rights Reserved</span>
+          <span>Copyright</span> <strong class="px-1 sitename">Assem Adel Habib</strong> <span>All Rights Reserved</span>
         </div>
         <div class="credits">
-          <!-- All the links in the footer should remain intact. -->
-          <!-- You can delete the links only if you've purchased the pro version. -->
-          <!-- Licensing information: https://bootstrapmade.com/license/ -->
-          <!-- Purchase the pro version with working PHP/AJAX contact form: [buy-url] -->
           Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a> Distribuited by <a href="https://themewagon.com">ThemeWagon</a>
         </div>
       </div>
@@ -177,6 +164,10 @@
   <script src="assets/vendor/imagesloaded/imagesloaded.pkgd.min.js"></script>
   <script src="assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
   <script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
+
+  <!-- Services JS File -->
+  <script src="assets/js/services-data.js"></script>
+  <script src="assets/js/services.js"></script>
 
   <!-- Main JS File -->
   <script src="assets/js/main.js"></script>

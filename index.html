@@ -1,783 +1,1039 @@
-
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Index - MyResume Bootstrap Template</title>
+    <meta content="" name="description" />
+    <meta content="" name="keywords" />
 
-<head>
-  <meta charset="utf-8">
-  <meta content="width=device-width, initial-scale=1.0" name="viewport">
-  <title>Index - MyResume Bootstrap Template</title>
-  <meta content="" name="description">
-  <meta content="" name="keywords">
+    <!-- Favicons -->
+    <link href="assets/img/favicon.png" rel="icon" />
+    <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon" />
 
-  <!-- Favicons -->
-  <link href="assets/img/favicon.png" rel="icon">
-  <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com" rel="preconnect" />
+    <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Raleway:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+      rel="stylesheet"
+    />
 
-  <!-- Fonts -->
-  <link href="https://fonts.googleapis.com" rel="preconnect">
-  <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Raleway:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+    <!-- Vendor CSS Files -->
+    <link
+      href="assets/vendor/bootstrap/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="assets/vendor/bootstrap-icons/bootstrap-icons.css"
+      rel="stylesheet"
+    />
+    <link href="assets/vendor/aos/aos.css" rel="stylesheet" />
+    <link
+      href="assets/vendor/glightbox/css/glightbox.min.css"
+      rel="stylesheet"
+    />
+    <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet" />
 
-  <!-- Vendor CSS Files -->
-  <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-  <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
-  <link href="assets/vendor/aos/aos.css" rel="stylesheet">
-  <link href="assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
-  <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+    <!-- Main CSS File -->
+    <link href="assets/css/main.css" rel="stylesheet" />
 
-  <!-- Main CSS File -->
-  <link href="assets/css/main.css" rel="stylesheet">
-
-  <!-- =======================================================
+    <!-- =======================================================
   * Template Name: MyResume
   * Template URL: https://bootstrapmade.com/free-html-bootstrap-template-my-resume/
   * Updated: Jun 29 2024 with Bootstrap v5.3.3
   * Author: BootstrapMade.com
   * License: https://bootstrapmade.com/license/
   ======================================================== -->
-</head>
+  </head>
 
-<body class="index-page">
+  <body class="index-page">
+    <header
+      id="header"
+      class="header d-flex flex-column justify-content-center"
+    >
+      <i class="header-toggle d-xl-none bi bi-list"></i>
 
-  <header id="header" class="header d-flex flex-column justify-content-center">
+      <!-- Dark Mode Toggle Button -->
+      <button
+        id="darkModeToggle"
+        class="dark-mode-toggle"
+        title="تبديل الوضع المظلم"
+      >
+        <i class="bi bi-moon-fill"></i>
+      </button>
 
-    <i class="header-toggle d-xl-none bi bi-list"></i>
+      <nav id="navmenu" class="navmenu">
+        <ul>
+          <li>
+            <a href="#hero" class="active"
+              ><i class="bi bi-house navicon"></i><span>Home</span></a
+            >
+          </li>
+          <li>
+            <a href="#about"
+              ><i class="bi bi-person navicon"></i><span>About</span></a
+            >
+          </li>
+          <li>
+            <a href="#resume"
+              ><i class="bi bi-file-earmark-text navicon"></i
+              ><span>Resume</span></a
+            >
+          </li>
+          <li>
+            <a href="#portfolio"
+              ><i class="bi bi-images navicon"></i><span>Project</span></a
+            >
+          </li>
+          <li>
+            <a href="#services"
+              ><i class="bi bi-hdd-stack navicon"></i><span>Services</span></a
+            >
+          </li>
+          <li>
+            <a href="#contact"
+              ><i class="bi bi-envelope navicon"></i><span>Contact</span></a
+            >
+          </li>
+        </ul>
+      </nav>
+    </header>
 
-    <!-- Dark Mode Toggle Button -->
-    <button id="darkModeToggle" class="dark-mode-toggle" title="تبديل الوضع المظلم">
-      <i class="bi bi-moon-fill"></i>
-    </button>
+    <main class="main">
+      <!-- Hero Section -->
+      <section id="hero" class="hero section light-background">
+        <img src="assets/img/hero-bg.png" alt="" />
 
-    <nav id="navmenu" class="navmenu">
-      <ul>
-        <li><a href="#hero" class="active"><i class="bi bi-house navicon"></i><span>Home</span></a></li>
-        <li><a href="#about"><i class="bi bi-person navicon"></i><span>About</span></a></li>
-        <li><a href="#resume"><i class="bi bi-file-earmark-text navicon"></i><span>Resume</span></a></li>
-        <li><a href="#portfolio"><i class="bi bi-images navicon"></i><span>Project</span></a></li>
-        <li><a href="#services"><i class="bi bi-hdd-stack navicon"></i><span>Services</span></a></li>
-        <li><a href="#contact"><i class="bi bi-envelope navicon"></i><span>Contact</span></a></li>
-      </ul>
-    </nav>
-
-  </header>
-
-  <main class="main">
-
-    <!-- Hero Section -->
-    <section id="hero" class="hero section light-background">
-
-      <img src="assets/img/hero-bg.png" alt="">
-
-      <div class="container" data-aos="zoom-out">
-        <div class="row justify-content-center">
-          <div class="col-lg-9">
-            <h2>Assem Adel Habib</h2>
-            <p>I'm <span class="typed" data-typed-items="Full Stack Developer, Laravel Developer, Backend Developer, Software Engineer">Full Stack Developer</span><span class="typed-cursor typed-cursor--blink" aria-hidden="true"></span></p>
-            <div class="social-links">
-              <a href="https://github.com/assem2023-habib" target="_blank"><i class="bi bi-github"></i></a>
-              <a href="https://linkedin.com/in/assem-habib-5236a423b" target="_blank"><i class="bi bi-linkedin"></i></a>
+        <div class="container" data-aos="zoom-out">
+          <div class="row justify-content-center">
+            <div class="col-lg-9">
+              <h2>Assem Adel Habib</h2>
+              <p>
+                I'm
+                <span
+                  class="typed"
+                  data-typed-items="Full Stack Developer, Laravel Developer, Backend Developer, Software Engineer"
+                  >Full Stack Developer</span
+                ><span
+                  class="typed-cursor typed-cursor--blink"
+                  aria-hidden="true"
+                ></span>
+              </p>
+              <div class="social-links">
+                <a href="https://github.com/assem2023-habib" target="_blank"
+                  ><i class="bi bi-github"></i
+                ></a>
+                <a
+                  href="https://linkedin.com/in/assem-habib-5236a423b"
+                  target="_blank"
+                  ><i class="bi bi-linkedin"></i
+                ></a>
+              </div>
             </div>
           </div>
         </div>
-      </div>
+      </section>
+      <!-- /Hero Section -->
 
-    </section><!-- /Hero Section -->
+      <!-- About Section -->
+      <section id="about" class="about section">
+        <!-- Section Title -->
+        <div class="container section-title" data-aos="fade-up">
+          <h2>About</h2>
+          <p>
+            Web developer specializing in developing modern applications and
+            innovative software solutions
+          </p>
+        </div>
+        <!-- End Section Title -->
 
-    <!-- About Section -->
-    <section id="about" class="about section">
-
-      <!-- Section Title -->
-      <div class="container section-title" data-aos="fade-up">
-        <h2>About</h2>
-        <p>Web developer specializing in developing modern applications and innovative software solutions</p>
-      </div><!-- End Section Title -->
-
-      <div class="container" data-aos="fade-up" data-aos-delay="100">
-
-        <div class="row gy-4 justify-content-center">
-          <div class="col-lg-4">
-            <img src="assets/img/profile-img.png" class="img-fluid" alt="">
+        <div class="container" data-aos="fade-up" data-aos-delay="100">
+          <div class="row gy-4 justify-content-center">
+            <div class="col-lg-4">
+              <img src="assets/img/profile-img.png" class="img-fluid" alt="" />
+            </div>
+            <div class="col-lg-8 content">
+              <h2>Full Stack Developer &amp; Laravel Specialist.</h2>
+              <p class="fst-italic py-3">
+                Web developer specializing in building modern applications and
+                innovative software solutions using the latest technologies.
+              </p>
+              <div class="row">
+                <div class="col-lg-6">
+                  <ul>
+                    <li>
+                      <i class="bi bi-chevron-right"></i>
+                      <strong>Birthday:</strong> <span>Feb 14, 2002</span>
+                    </li>
+                    <li>
+                      <i class="bi bi-chevron-right"></i>
+                      <strong>Website:</strong>
+                      <span>github.com/assem2023-habib</span>
+                    </li>
+                    <li>
+                      <i class="bi bi-chevron-right"></i>
+                      <strong>Phone:</strong> <span>+963 994 636 381</span>
+                    </li>
+                    <li>
+                      <i class="bi bi-chevron-right"></i>
+                      <strong>City:</strong> <span>Jableh, Latakia, Syria</span>
+                    </li>
+                  </ul>
+                </div>
+                <div class="col-lg-6">
+                  <ul>
+                    <li>
+                      <i class="bi bi-chevron-right"></i> <strong>Age:</strong>
+                      <span>24</span>
+                    </li>
+                    <li>
+                      <i class="bi bi-chevron-right"></i>
+                      <strong>Degree:</strong>
+                      <span>Bachelor of Informatics Engineering</span>
+                    </li>
+                    <li>
+                      <i class="bi bi-chevron-right"></i>
+                      <strong>Email:</strong> <span>099assemhb@gmail.com</span>
+                    </li>
+                    <li>
+                      <i class="bi bi-chevron-right"></i>
+                      <strong>Freelance:</strong> <span>Available</span>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+              <p class="py-3">
+                I am an Informatics Engineering graduate specializing in
+                Software Engineering and Information Systems. I have practical
+                experience in web development using Laravel and PHP. I have
+                worked on multiple projects including parcel management systems,
+                e-commerce platforms, and real-time chat applications. I excel
+                in quick learning and teamwork to achieve effective,
+                high-quality software solutions, and I always strive for
+                self-development and advancement in the field until I reach a
+                leadership role in software development.
+              </p>
+            </div>
           </div>
-          <div class="col-lg-8 content">
-            <h2>Full Stack Developer &amp; Laravel Specialist.</h2>
-            <p class="fst-italic py-3">
-              Web developer specializing in building modern applications and innovative software solutions using the latest technologies.
-            </p>
-            <div class="row">
-              <div class="col-lg-6">
+        </div>
+      </section>
+      <!-- /About Section -->
+
+      <!-- Stats Section -->
+      <section id="stats" class="stats section">
+        <div class="container" data-aos="fade-up" data-aos-delay="100">
+          <div class="row gy-4">
+            <div
+              class="col-lg-3 col-md-6 d-flex flex-column align-items-center"
+            >
+              <i class="bi bi-emoji-smile"></i>
+              <div class="stats-item">
+                <span
+                  data-purecounter-start="0"
+                  data-purecounter-end="5"
+                  data-purecounter-duration="1"
+                  class="purecounter"
+                ></span>
+                <p>Happy Clients</p>
+              </div>
+            </div>
+            <!-- End Stats Item -->
+
+            <div
+              class="col-lg-3 col-md-6 d-flex flex-column align-items-center"
+            >
+              <i class="bi bi-journal-richtext"></i>
+              <div class="stats-item">
+                <span
+                  data-purecounter-start="0"
+                  data-purecounter-end="12"
+                  data-purecounter-duration="1"
+                  class="purecounter"
+                ></span>
+                <p>Projects</p>
+              </div>
+            </div>
+            <!-- End Stats Item -->
+
+            <div
+              class="col-lg-3 col-md-6 d-flex flex-column align-items-center"
+            >
+              <i class="bi bi-headset"></i>
+              <div class="stats-item">
+                <span
+                  data-purecounter-start="0"
+                  data-purecounter-end="200"
+                  data-purecounter-duration="1"
+                  class="purecounter"
+                ></span>
+                <p>Hours Of Support</p>
+              </div>
+            </div>
+            <!-- End Stats Item -->
+
+            <div
+              class="col-lg-3 col-md-6 d-flex flex-column align-items-center"
+            >
+              <i class="bi bi-people"></i>
+              <div class="stats-item">
+                <span
+                  data-purecounter-start="0"
+                  data-purecounter-end="3"
+                  data-purecounter-duration="1"
+                  class="purecounter"
+                ></span>
+                <p>Hard Workers</p>
+              </div>
+            </div>
+            <!-- End Stats Item -->
+          </div>
+        </div>
+      </section>
+      <!-- /Stats Section -->
+
+      <!-- Skills Section -->
+      <section id="skills" class="skills section">
+        <!-- Section Title -->
+        <div class="container section-title" data-aos="fade-up">
+          <h2>Skills</h2>
+          <p>
+            Technical skills and proficiency levels in modern web development
+            technologies and frameworks
+          </p>
+        </div>
+        <!-- End Section Title -->
+
+        <div class="container" data-aos="fade-up" data-aos-delay="100">
+          <div class="row skills-content skills-animation">
+            <div class="col-lg-6">
+              <div class="skill-box">
+                <div class="skill-header">
+                  <span class="skill-name">PHP</span>
+                </div>
+                <div class="skill-bar">
+                  <div class="skill-progress" style="width: 95%"></div>
+                </div>
+              </div>
+              <!-- End Skills Item -->
+
+              <div class="skill-box">
+                <div class="skill-header">
+                  <span class="skill-name">Laravel</span>
+                </div>
+                <div class="skill-bar">
+                  <div class="skill-progress" style="width: 90%"></div>
+                </div>
+              </div>
+              <!-- End Skills Item -->
+
+              <div class="skill-box">
+                <div class="skill-header">
+                  <span class="skill-name">MySQL</span>
+                </div>
+                <div class="skill-bar">
+                  <div class="skill-progress" style="width: 85%"></div>
+                </div>
+              </div>
+              <!-- End Skills Item -->
+            </div>
+
+            <div class="col-lg-6">
+              <div class="skill-box">
+                <div class="skill-header">
+                  <span class="skill-name">JavaScript</span>
+                </div>
+                <div class="skill-bar">
+                  <div class="skill-progress" style="width: 80%"></div>
+                </div>
+              </div>
+              <!-- End Skills Item -->
+
+              <div class="skill-box">
+                <div class="skill-header">
+                  <span class="skill-name">HTML</span>
+                </div>
+                <div class="skill-bar">
+                  <div class="skill-progress" style="width: 90%"></div>
+                </div>
+              </div>
+              <!-- End Skills Item -->
+
+              <div class="skill-box">
+                <div class="skill-header">
+                  <span class="skill-name">CSS</span>
+                </div>
+                <div class="skill-bar">
+                  <div class="skill-progress" style="width: 85%"></div>
+                </div>
+              </div>
+              <!-- End Skills Item -->
+            </div>
+          </div>
+        </div>
+      </section>
+      <!-- /Skills Section -->
+
+      <!-- Resume Section -->
+      <section id="resume" class="resume section">
+        <!-- Section Title -->
+        <div class="container section-title" data-aos="fade-up">
+          <h2>Resume</h2>
+          <p>
+            Professional background, education, and work experience in software
+            development and web technologies
+          </p>
+        </div>
+        <!-- End Section Title -->
+
+        <div class="container">
+          <div class="row">
+            <div class="col-lg-6" data-aos="fade-up" data-aos-delay="100">
+              <h3 class="resume-title">Sumary</h3>
+
+              <div class="resume-item pb-0">
+                <h4>Assem Adel Habib</h4>
+                <p>
+                  <em
+                    >Web developer specializing in developing modern
+                    applications using Laravel and PHP, with experience in
+                    building integrated management systems and innovative
+                    software solutions.</em
+                  >
+                </p>
                 <ul>
-                  <li><i class="bi bi-chevron-right"></i> <strong>Birthday:</strong> <span>Feb 14, 2002</span></li>
-                  <li><i class="bi bi-chevron-right"></i> <strong>Website:</strong> <span>github.com/assem2023-habib</span></li>
-                  <li><i class="bi bi-chevron-right"></i> <strong>Phone:</strong> <span>+963 994 636 381</span></li>
-                  <li><i class="bi bi-chevron-right"></i> <strong>City:</strong> <span>Jableh, Latakia, Syria</span></li>
+                  <li>Jableh, Latakia, Syria</li>
+                  <li>+963 994 636 381</li>
+                  <li>099assemhb@gmail.com</li>
                 </ul>
               </div>
-              <div class="col-lg-6">
+              <!-- Edn Resume Item -->
+
+              <h3 class="resume-title">Education</h3>
+              <div class="resume-item">
+                <h4>Bachelor of Informatics Engineering</h4>
+                <h5>2020 - Expected Graduation 2025</h5>
+                <p><em>University of Latakia, Latakia, Syria</em></p>
+                <p>
+                  Specialization in Software Engineering and Information Systems
+                  - Outstanding student in programming and development
+                </p>
+              </div>
+              <!-- Edn Resume Item -->
+
+              <div class="resume-item">
+                <h4>Industrial Secondary School - Computer Technologies</h4>
+                <h5>2019 - 2020</h5>
+                <p><em>Latakia Industrial School, Latakia, Syria</em></p>
+                <p>
+                  First place at governorate level - Computer Technologies and
+                  Programming major
+                </p>
+              </div>
+              <!-- Edn Resume Item -->
+            </div>
+
+            <div class="col-lg-6" data-aos="fade-up" data-aos-delay="200">
+              <h3 class="resume-title">Professional Experience</h3>
+              <div class="resume-item">
+                <h4>SmartShip - Integrated Parcel Management System</h4>
+                <h5>2023 - Present</h5>
+                <p><em>Independent Project</em></p>
                 <ul>
-                  <li><i class="bi bi-chevron-right"></i> <strong>Age:</strong> <span>24</span></li>
-                  <li><i class="bi bi-chevron-right"></i> <strong>Degree:</strong> <span>Bachelor of Informatics Engineering</span></li>
-                  <li><i class="bi bi-chevron-right"></i> <strong>Email:</strong> <span>099assemhb@gmail.com</span></li>
-                  <li><i class="bi bi-chevron-right"></i> <strong>Freelance:</strong> <span>Available</span></li>
+                  <li>
+                    Developed an integrated parcel management system using
+                    Laravel and RESTful APIs
+                  </li>
+                  <li>
+                    Designed an advanced dashboard for parcel tracking and user
+                    management
+                  </li>
+                  <li>
+                    Improved user experience and reduced response time by 40%
+                  </li>
+                  <li>
+                    Implemented advanced security practices and data encryption
+                  </li>
                 </ul>
               </div>
+              <!-- Edn Resume Item -->
+
+              <div class="resume-item">
+                <h4>StitchHub - Tailoring E-Commerce Platform</h4>
+                <h5>2023</h5>
+                <p><em>Comprehensive Platform Development Project</em></p>
+                <ul>
+                  <li>
+                    Built a comprehensive e-commerce platform supporting
+                    multiple languages
+                  </li>
+                  <li>Developed order and user management systems</li>
+                  <li>
+                    Integrated secure payment gateways and inventory management
+                  </li>
+                  <li>Optimized search engines and user experience</li>
+                </ul>
+              </div>
+              <!-- Edn Resume Item -->
             </div>
-            <p class="py-3">
-              I am an Informatics Engineering graduate specializing in Software Engineering and Information Systems. I have practical experience in web development using Laravel and PHP. I have worked on multiple projects including parcel management systems, e-commerce platforms, and real-time chat applications. I excel in quick learning and teamwork to achieve effective, high-quality software solutions, and I always strive for self-development and advancement in the field until I reach a leadership role in software development.
-            </p>
           </div>
         </div>
+      </section>
+      <!-- /Resume Section -->
 
-      </div>
+      <!-- Project Section -->
+      <section id="portfolio" class="portfolio section">
+        <!-- Section Title -->
+        <div class="container section-title" data-aos="fade-up">
+          <h2>Project</h2>
+          <p>
+            Featured projects showcasing expertise in web development, software
+            engineering, and modern technologies
+          </p>
+        </div>
+        <!-- End Section Title -->
 
-    </section><!-- /About Section -->
+        <div class="container">
+          <div
+            class="isotope-layout"
+            data-default-filter="*"
+            data-layout="masonry"
+            data-sort="original-order"
+          >
+            <ul
+              class="portfolio-filters isotope-filters"
+              data-aos="fade-up"
+              data-aos-delay="100"
+            >
+              <li data-filter="*" class="filter-active">All</li>
+              <li data-filter=".filter-web">Web Development</li>
+              <li data-filter=".filter-mobile">Mobile Apps</li>
+              <li data-filter=".filter-desktop">Desktop Apps</li>
+            </ul>
+            <!-- End Portfolio Filters -->
 
-    <!-- Stats Section -->
-    <section id="stats" class="stats section">
-
-      <div class="container" data-aos="fade-up" data-aos-delay="100">
-
-        <div class="row gy-4">
-
-          <div class="col-lg-3 col-md-6 d-flex flex-column align-items-center">
-            <i class="bi bi-emoji-smile"></i>
-            <div class="stats-item">
-              <span data-purecounter-start="0" data-purecounter-end="5" data-purecounter-duration="1" class="purecounter"></span>
-              <p>Happy Clients</p>
+            <div
+              class="row gy-4 isotope-container"
+              data-aos="fade-up"
+              data-aos-delay="200"
+            >
+              <!-- Single portfolio template - will be cloned for each project -->
+              <div class="col-lg-4 col-md-6 portfolio-item isotope-item filter-web portfolio-template" style="display: none;">
+                <img src="" class="img-fluid" alt="">
+                <div class="portfolio-info">
+                  <h4 class="portfolio-title">Project Title</h4>
+                  <p class="portfolio-description">Project description</p>
+                  <a href="" title="" data-gallery="" class="glightbox preview-link"><i class="bi bi-zoom-in"></i></a>
+                  <a href="" title="More Details" class="details-link"><i class="bi bi-link-45deg"></i></a>
+                </div>
+              </div><!-- End Portfolio Template -->
             </div>
-          </div><!-- End Stats Item -->
-
-          <div class="col-lg-3 col-md-6 d-flex flex-column align-items-center">
-            <i class="bi bi-journal-richtext"></i>
-            <div class="stats-item">
-              <span data-purecounter-start="0" data-purecounter-end="12" data-purecounter-duration="1" class="purecounter"></span>
-              <p>Projects</p>
-            </div>
-          </div><!-- End Stats Item -->
-
-          <div class="col-lg-3 col-md-6 d-flex flex-column align-items-center">
-            <i class="bi bi-headset"></i>
-            <div class="stats-item">
-              <span data-purecounter-start="0" data-purecounter-end="200" data-purecounter-duration="1" class="purecounter"></span>
-              <p>Hours Of Support</p>
-            </div>
-          </div><!-- End Stats Item -->
-
-          <div class="col-lg-3 col-md-6 d-flex flex-column align-items-center">
-            <i class="bi bi-people"></i>
-            <div class="stats-item">
-              <span data-purecounter-start="0" data-purecounter-end="3" data-purecounter-duration="1" class="purecounter"></span>
-              <p>Hard Workers</p>
-            </div>
-          </div><!-- End Stats Item -->
-
-        </div>
-
-      </div>
-
-    </section><!-- /Stats Section -->
-
-    <!-- Skills Section -->
-    <section id="skills" class="skills section">
-
-      <!-- Section Title -->
-      <div class="container section-title" data-aos="fade-up">
-        <h2>Skills</h2>
-        <p>Technical skills and proficiency levels in modern web development technologies and frameworks</p>
-      </div><!-- End Section Title -->
-
-      <div class="container" data-aos="fade-up" data-aos-delay="100">
-
-        <div class="row skills-content skills-animation">
-
-          <div class="col-lg-6">
-
-            <div class="skill-box">
-              <div class="skill-header">
-                <span class="skill-name">PHP</span>
-              </div>
-              <div class="skill-bar">
-                <div class="skill-progress" style="width: 95%"></div>
-              </div>
-            </div><!-- End Skills Item -->
-
-            <div class="skill-box">
-              <div class="skill-header">
-                <span class="skill-name">Laravel</span>
-              </div>
-              <div class="skill-bar">
-                <div class="skill-progress" style="width: 90%"></div>
-              </div>
-            </div><!-- End Skills Item -->
-
-            <div class="skill-box">
-              <div class="skill-header">
-                <span class="skill-name">MySQL</span>
-              </div>
-              <div class="skill-bar">
-                <div class="skill-progress" style="width: 85%"></div>
-              </div>
-            </div><!-- End Skills Item -->
-
+            <!-- End Portfolio Container -->
           </div>
-
-          <div class="col-lg-6">
-
-            <div class="skill-box">
-              <div class="skill-header">
-                <span class="skill-name">JavaScript</span>
-              </div>
-              <div class="skill-bar">
-                <div class="skill-progress" style="width: 80%"></div>
-              </div>
-            </div><!-- End Skills Item -->
-
-            <div class="skill-box">
-              <div class="skill-header">
-                <span class="skill-name">HTML</span>
-              </div>
-              <div class="skill-bar">
-                <div class="skill-progress" style="width: 90%"></div>
-              </div>
-            </div><!-- End Skills Item -->
-
-            <div class="skill-box">
-              <div class="skill-header">
-                <span class="skill-name">CSS</span>
-              </div>
-              <div class="skill-bar">
-                <div class="skill-progress" style="width: 85%"></div>
-              </div>
-            </div><!-- End Skills Item -->
-
-          </div>
-
         </div>
+      </section>
+      <!-- /Portfolio Section -->
 
-      </div>
-
-    </section><!-- /Skills Section -->
-
-    <!-- Resume Section -->
-    <section id="resume" class="resume section">
-
-      <!-- Section Title -->
-      <div class="container section-title" data-aos="fade-up">
-        <h2>Resume</h2>
-        <p>Professional background, education, and work experience in software development and web technologies</p>
-      </div><!-- End Section Title -->
-
-      <div class="container">
-
-        <div class="row">
-
-          <div class="col-lg-6" data-aos="fade-up" data-aos-delay="100">
-            <h3 class="resume-title">Sumary</h3>
-
-            <div class="resume-item pb-0">
-              <h4>Assem Adel Habib</h4>
-              <p><em>Web developer specializing in developing modern applications using Laravel and PHP, with experience in building integrated management systems and innovative software solutions.</em></p>
-              <ul>
-                <li>Jableh, Latakia, Syria</li>
-                <li>+963 994 636 381</li>
-                <li>099assemhb@gmail.com</li>
-              </ul>
-            </div><!-- Edn Resume Item -->
-
-            <h3 class="resume-title">Education</h3>
-            <div class="resume-item">
-              <h4>Bachelor of Informatics Engineering</h4>
-              <h5>2020 - Expected Graduation 2025</h5>
-              <p><em>University of Latakia, Latakia, Syria</em></p>
-              <p>Specialization in Software Engineering and Information Systems - Outstanding student in programming and development</p>
-            </div><!-- Edn Resume Item -->
-
-            <div class="resume-item">
-              <h4>Industrial Secondary School - Computer Technologies</h4>
-              <h5>2019 - 2020</h5>
-              <p><em>Latakia Industrial School, Latakia, Syria</em></p>
-              <p>First place at governorate level - Computer Technologies and Programming major</p>
-            </div><!-- Edn Resume Item -->
-
-          </div>
-
-          <div class="col-lg-6" data-aos="fade-up" data-aos-delay="200">
-            <h3 class="resume-title">Professional Experience</h3>
-            <div class="resume-item">
-              <h4>SmartShip - Integrated Parcel Management System</h4>
-              <h5>2023 - Present</h5>
-              <p><em>Independent Project</em></p>
-              <ul>
-                <li>Developed an integrated parcel management system using Laravel and RESTful APIs</li>
-                <li>Designed an advanced dashboard for parcel tracking and user management</li>
-                <li>Improved user experience and reduced response time by 40%</li>
-                <li>Implemented advanced security practices and data encryption</li>
-              </ul>
-            </div><!-- Edn Resume Item -->
-
-            <div class="resume-item">
-              <h4>StitchHub - Tailoring E-Commerce Platform</h4>
-              <h5>2023</h5>
-              <p><em>Comprehensive Platform Development Project</em></p>
-              <ul>
-                <li>Built a comprehensive e-commerce platform supporting multiple languages</li>
-                <li>Developed order and user management systems</li>
-                <li>Integrated secure payment gateways and inventory management</li>
-                <li>Optimized search engines and user experience</li>
-              </ul>
-            </div><!-- Edn Resume Item -->
-
-          </div>
-
+      <!-- Services Section -->
+      <section id="services" class="services section">
+        <!-- Section Title -->
+        <div class="container section-title" data-aos="fade-up">
+          <h2>Services</h2>
+          <p>
+            Professional web development services including full-stack
+            development, API design, and project maintenance
+          </p>
         </div>
-
-      </div>
-
-    </section><!-- /Resume Section -->
-
-    <!-- Project Section -->
-    <section id="portfolio" class="portfolio section">
-
-      <!-- Section Title -->
-      <div class="container section-title" data-aos="fade-up">
-        <h2>Project</h2>
-        <p>Featured projects showcasing expertise in web development, software engineering, and modern technologies</p>
-      </div><!-- End Section Title -->
-
-      <div class="container">
-
-        <div class="isotope-layout" data-default-filter="*" data-layout="masonry" data-sort="original-order">
-
-          <ul class="portfolio-filters isotope-filters" data-aos="fade-up" data-aos-delay="100">
-            <li data-filter="*" class="filter-active">All</li>
-            <li data-filter=".filter-web">Web Development</li>
-            <li data-filter=".filter-mobile">Mobile Apps</li>
-            <li data-filter=".filter-desktop">Desktop Apps</li>
-          </ul><!-- End Portfolio Filters -->
-
-          <div class="row gy-4 isotope-container" data-aos="fade-up" data-aos-delay="200">
-
-            <div class="col-lg-4 col-md-6 portfolio-item isotope-item filter-web">
-              <img src="assets/img/masonry-portfolio/masonry-portfolio-1.jpg" class="img-fluid" alt="">
-              <div class="portfolio-info">
-                <h4>SmartShip</h4>
-                <p>Parcel Management System</p>
-                <a href="assets/img/masonry-portfolio/masonry-portfolio-1.jpg" title="SmartShip - Parcel Management System" data-gallery="portfolio-gallery-web" class="glightbox preview-link"><i class="bi bi-zoom-in"></i></a>
-                <a href="portfolio-details.html" title="More Details" class="details-link"><i class="bi bi-link-45deg"></i></a>
-              </div>
-            </div><!-- End Portfolio Item -->
-
-            <div class="col-lg-4 col-md-6 portfolio-item isotope-item filter-mobile">
-              <img src="assets/img/masonry-portfolio/masonry-portfolio-2.jpg" class="img-fluid" alt="">
-              <div class="portfolio-info">
-                <h4>StitchHub Mobile</h4>
-                <p>Tailoring E-Commerce App</p>
-                <a href="assets/img/masonry-portfolio/masonry-portfolio-2.jpg" title="StitchHub Mobile - Tailoring E-Commerce App" data-gallery="portfolio-gallery-mobile" class="glightbox preview-link"><i class="bi bi-zoom-in"></i></a>
-                <a href="portfolio-details.html" title="More Details" class="details-link"><i class="bi bi-link-45deg"></i></a>
-              </div>
-            </div><!-- End Portfolio Item -->
-
-            <div class="col-lg-4 col-md-6 portfolio-item isotope-item filter-desktop">
-              <img src="assets/img/masonry-portfolio/masonry-portfolio-3.jpg" class="img-fluid" alt="">
-              <div class="portfolio-info">
-                <h4>CutOptimizer</h4>
-                <p>Smart Carpet Cutting Tool</p>
-                <a href="assets/img/masonry-portfolio/masonry-portfolio-3.jpg" title="CutOptimizer - Smart Carpet Cutting Tool" data-gallery="portfolio-gallery-desktop" class="glightbox preview-link"><i class="bi bi-zoom-in"></i></a>
-                <a href="portfolio-details.html" title="More Details" class="details-link"><i class="bi bi-link-45deg"></i></a>
-              </div>
-            </div><!-- End Portfolio Item -->
-
-            <div class="col-lg-4 col-md-6 portfolio-item isotope-item filter-web">
-              <img src="assets/img/masonry-portfolio/masonry-portfolio-4.jpg" class="img-fluid" alt="">
-              <div class="portfolio-info">
-                <h4>Social Backend</h4>
-                <p>Real-Time Messaging System</p>
-                <a href="assets/img/masonry-portfolio/masonry-portfolio-4.jpg" title="Social Backend - Real-Time Messaging System" data-gallery="portfolio-gallery-web" class="glightbox preview-link"><i class="bi bi-zoom-in"></i></a>
-                <a href="portfolio-details.html" title="More Details" class="details-link"><i class="bi bi-link-45deg"></i></a>
-              </div>
-            </div><!-- End Portfolio Item -->
-
-            <div class="col-lg-4 col-md-6 portfolio-item isotope-item filter-mobile">
-              <img src="assets/img/masonry-portfolio/masonry-portfolio-5.jpg" class="img-fluid" alt="">
-              <div class="portfolio-info">
-                <h4>TaskFlow Mobile</h4>
-                <p>Task Management App</p>
-                <a href="assets/img/masonry-portfolio/masonry-portfolio-5.jpg" title="TaskFlow Mobile - Task Management App" data-gallery="portfolio-gallery-mobile" class="glightbox preview-link"><i class="bi bi-zoom-in"></i></a>
-                <a href="portfolio-details.html" title="More Details" class="details-link"><i class="bi bi-link-45deg"></i></a>
-              </div>
-            </div><!-- End Portfolio Item -->
-
-            <div class="col-lg-4 col-md-6 portfolio-item isotope-item filter-desktop">
-              <img src="assets/img/masonry-portfolio/masonry-portfolio-6.jpg" class="img-fluid" alt="">
-              <div class="portfolio-info">
-                <h4>DataAnalyzer</h4>
-                <p>Desktop Data Analysis Tool</p>
-                <a href="assets/img/masonry-portfolio/masonry-portfolio-6.jpg" title="DataAnalyzer - Desktop Data Analysis Tool" data-gallery="portfolio-gallery-desktop" class="glightbox preview-link"><i class="bi bi-zoom-in"></i></a>
-                <a href="portfolio-details.html" title="More Details" class="details-link"><i class="bi bi-link-45deg"></i></a>
-              </div>
-            </div><!-- End Portfolio Item -->
-
-            <div class="col-lg-4 col-md-6 portfolio-item isotope-item filter-web">
-              <img src="assets/img/masonry-portfolio/masonry-portfolio-7.jpg" class="img-fluid" alt="">
-              <div class="portfolio-info">
-                <h4>InventoryPro</h4>
-                <p>Web Inventory Management</p>
-                <a href="assets/img/masonry-portfolio/masonry-portfolio-7.jpg" title="InventoryPro - Web Inventory Management" data-gallery="portfolio-gallery-web" class="glightbox preview-link"><i class="bi bi-zoom-in"></i></a>
-                <a href="portfolio-details.html" title="More Details" class="details-link"><i class="bi bi-link-45deg"></i></a>
-              </div>
-            </div><!-- End Portfolio Item -->
-
-            <div class="col-lg-4 col-md-6 portfolio-item isotope-item filter-mobile">
-              <img src="assets/img/masonry-portfolio/masonry-portfolio-8.jpg" class="img-fluid" alt="">
-              <div class="portfolio-info">
-                <h4>ExpenseTracker</h4>
-                <p>Mobile Expense Manager</p>
-                <a href="assets/img/masonry-portfolio/masonry-portfolio-8.jpg" title="ExpenseTracker - Mobile Expense Manager" data-gallery="portfolio-gallery-mobile" class="glightbox preview-link"><i class="bi bi-zoom-in"></i></a>
-                <a href="portfolio-details.html" title="More Details" class="details-link"><i class="bi bi-link-45deg"></i></a>
-              </div>
-            </div><!-- End Portfolio Item -->
-
-            <div class="col-lg-4 col-md-6 portfolio-item isotope-item filter-desktop">
-              <img src="assets/img/masonry-portfolio/masonry-portfolio-9.jpg" class="img-fluid" alt="">
-              <div class="portfolio-info">
-                <h4>CodeEditor Pro</h4>
-                <p>Desktop Code Editor</p>
-                <a href="assets/img/masonry-portfolio/masonry-portfolio-9.jpg" title="CodeEditor Pro - Desktop Code Editor" data-gallery="portfolio-gallery-desktop" class="glightbox preview-link"><i class="bi bi-zoom-in"></i></a>
-                <a href="portfolio-details.html" title="More Details" class="details-link"><i class="bi bi-link-45deg"></i></a>
-              </div>
-            </div><!-- End Portfolio Item -->
-
-          </div><!-- End Portfolio Container -->
-
-        </div>
-
-      </div>
-
-    </section><!-- /Portfolio Section -->
-
-    <!-- Services Section -->
-    <section id="services" class="services section">
-
-      <!-- Section Title -->
-      <div class="container section-title" data-aos="fade-up">
-        <h2>Services</h2>
-        <p>Professional web development services including full-stack development, API design, and project maintenance</p>
-      </div><!-- End Section Title -->
-
-      <div class="container">
-        <div class="row gy-4">
-          <!-- Services will be populated dynamically by JavaScript -->
-        </div>
-      </div>
-
-    </section><!-- /Services Section -->
-
-    <!-- Testimonials Section -->
-    <section id="testimonials" class="testimonials section">
-
-      <!-- Section Title -->
-      <div class="container section-title" data-aos="fade-up">
-        <h2>Testimonials</h2>
-        <p>Client feedback and recommendations showcasing professional relationships and project success</p>
-      </div><!-- End Section Title -->
-
-      <div class="container" data-aos="fade-up" data-aos-delay="100">
-
-        <div class="swiper init-swiper">
-          <script type="application/json" class="swiper-config">
-            {
-              "loop": true,
-              "speed": 600,
-              "autoplay": {
-                "delay": 5000
-              },
-              "slidesPerView": "auto",
-              "pagination": {
-                "el": ".swiper-pagination",
-                "type": "bullets",
-                "clickable": true
-              }
-            }
-          </script>
-          <div class="swiper-wrapper">
-
-            <div class="swiper-slide">
-              <div class="testimonial-item">
-                <div class="row gy-4 justify-content-center">
-                  <div class="col-lg-6">
-                    <div class="testimonial-content">
-                      <p>
-                        <i class="bi bi-quote quote-icon-left"></i>
-                        <span>Assem delivered exceptional Laravel applications with clean, efficient code. His attention to detail and problem-solving skills made our project a success. Highly recommended for any web development needs.</span>
-                        <i class="bi bi-quote quote-icon-right"></i>
-                      </p>
-                      <h3>Saul Goodman</h3>
-                      <h4>Ceo &amp; Founder</h4>
-                      <div class="stars">
-                        <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="col-lg-2 text-center">
-                    <img src="assets/img/testimonials/testimonials-1.jpg" class="img-fluid testimonial-img" alt="">
-                  </div>
-                </div>
-              </div>
-            </div><!-- End testimonial item -->
-
-            <div class="swiper-slide">
-              <div class="testimonial-item">
-                <div class="row gy-4 justify-content-center">
-                  <div class="col-lg-6">
-                    <div class="testimonial-content">
-                      <p>
-                        <i class="bi bi-quote quote-icon-left"></i>
-                        <span>Working with Assem was a pleasure. He built our e-commerce platform from scratch using modern technologies. The API integration and database optimization exceeded our expectations. Professional and reliable developer.</span>
-                        <i class="bi bi-quote quote-icon-right"></i>
-                      </p>
-                      <h3>Sarah Johnson</h3>
-                      <h4>Project Manager</h4>
-                      <div class="stars">
-                        <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="col-lg-2 text-center">
-                    <img src="assets/img/testimonials/testimonials-2.jpg" class="img-fluid testimonial-img" alt="">
-                  </div>
-                </div>
-              </div>
-            </div><!-- End testimonial item -->
-
-            <div class="swiper-slide">
-              <div class="testimonial-item">
-                <div class="row gy-4 justify-content-center">
-                  <div class="col-lg-6">
-                    <div class="testimonial-content">
-                      <p>
-                        <i class="bi bi-quote quote-icon-left"></i>
-                        <span>Assem's expertise in Laravel and modern web technologies is impressive. He delivered our parcel management system on time and within budget. The code quality and documentation were excellent. Will definitely work with him again.</span>
-                        <i class="bi bi-quote quote-icon-right"></i>
-                      </p>
-                      <h3>Mike Chen</h3>
-                      <h4>Tech Entrepreneur</h4>
-                      <div class="stars">
-                        <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="col-lg-2 text-center">
-                    <img src="assets/img/testimonials/testimonials-3.jpg" class="img-fluid testimonial-img" alt="">
-                  </div>
-                </div>
-              </div>
-            </div><!-- End testimonial item -->
-
-            <div class="swiper-slide">
-              <div class="testimonial-item">
-                <div class="row gy-4 justify-content-center">
-                  <div class="col-lg-6">
-                    <div class="testimonial-content">
-                      <p>
-                        <i class="bi bi-quote quote-icon-left"></i>
-                        <span>Outstanding backend development work! Assem created a robust API system and optimized our database performance significantly. His technical knowledge and communication skills are top-notch. Highly recommended for complex projects.</span>
-                        <i class="bi bi-quote quote-icon-right"></i>
-                      </p>
-                      <h3>Alex Rodriguez</h3>
-                      <h4>Software Engineer</h4>
-                      <div class="stars">
-                        <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="col-lg-2 text-center">
-                    <img src="assets/img/testimonials/testimonials-4.jpg" class="img-fluid testimonial-img" alt="">
-                  </div>
-                </div>
-              </div>
-            </div><!-- End testimonial item -->
-
-          </div>
-          <div class="swiper-pagination"></div>
-        </div>
-
-      </div>
-
-    </section><!-- /Testimonials Section -->
-
-    <!-- Contact Section -->
-    <section id="contact" class="contact section">
-
-      <!-- Section Title -->
-      <div class="container section-title" data-aos="fade-up">
-        <h2>Contact</h2>
-        <p>Get in touch for collaboration opportunities, project inquiries, or professional consultations</p>
-      </div><!-- End Section Title -->
-
-      <div class="container" data-aos="fade" data-aos-delay="100">
-
-        <div class="row gy-4">
-
-          <div class="col-lg-4">
-            <div class="info-item d-flex" data-aos="fade-up" data-aos-delay="200">
-              <i class="bi bi-geo-alt flex-shrink-0"></i>
-              <div>
-                <h3>Address</h3>
-                <p>Jableh, Latakia, Syria</p>
-              </div>
-            </div><!-- End Info Item -->
-
-            <div class="info-item d-flex" data-aos="fade-up" data-aos-delay="300">
-              <i class="bi bi-telephone flex-shrink-0"></i>
-              <div>
-                <h3>Call Us</h3>
-                <p>+963 994 636 381</p>
-              </div>
-            </div><!-- End Info Item -->
-
-            <div class="info-item d-flex" data-aos="fade-up" data-aos-delay="400">
-              <i class="bi bi-envelope flex-shrink-0"></i>
-              <div>
-                <h3>Email Us</h3>
-                <p>099assemhb@gmail.com</p>
-              </div>
-            </div><!-- End Info Item -->
-
-          </div>
-
-          <div class="col-lg-8">
-            <form action="forms/contact.php" method="post" class="php-email-form" data-aos="fade-up" data-aos-delay="200">
-              <div class="row gy-4">
-
-                <div class="col-md-6">
-                  <input type="text" name="name" class="form-control" placeholder="Your Name" required="">
-                </div>
-
-                <div class="col-md-6 ">
-                  <input type="email" class="form-control" name="email" placeholder="Your Email" required="">
-                </div>
-
-                <div class="col-md-12">
-                  <input type="text" class="form-control" name="subject" placeholder="Subject" required="">
-                </div>
-
-                <div class="col-md-12">
-                  <textarea class="form-control" name="message" rows="6" placeholder="Message" required=""></textarea>
-                </div>
-
-                <div class="col-md-12 text-center">
-                  <div class="loading">Loading</div>
-                  <div class="error-message"></div>
-                  <div class="sent-message">Your message has been sent. Thank you!</div>
-
-                  <button type="submit">Send Message</button>
-                </div>
-
-              </div>
-            </form>
-          </div><!-- End Contact Form -->
-
-        </div>
-
-      </div>
-
-    </section><!-- /Contact Section -->
-
-  </main>
-
-  <footer id="footer" class="footer position-relative light-background">
-    <div class="container">
-      <h3 class="sitename">Assem Adel Habib</h3>
-      <p>Web developer specializing in building modern applications and innovative software solutions using the latest technologies</p>
-      <div class="social-links d-flex justify-content-center">
-        <a href="https://github.com/assem2023-habib" target="_blank"><i class="bi bi-github"></i></a>
-        <a href="https://linkedin.com/in/assem-habib-5236a423b" target="_blank"><i class="bi bi-linkedin"></i></a>
-      </div>
-      <div class="container">
-        <div class="copyright">
-          <span>Copyright</span> <strong class="px-1 sitename">Assem Adel Habib</strong> <span>All Rights Reserved</span>
-        </div>
-        <div class="credits">
-          <!-- All the links in the footer should remain intact. -->
-          <!-- You can delete the links only if you've purchased the pro version. -->
-          <!-- Licensing information: https://bootstrapmade.com/license/ -->
-          <!-- Purchase the pro version with working PHP/AJAX contact form: [buy-url] -->
-          Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a> Distribuited by <a href="https://themewagon.com">ThemeWagon</a>
-        </div>
-      </div>
-    </div>
-  </footer>
-
-  <!-- Scroll Top -->
-  <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
-
-  <!-- Preloader -->
-  <div id="preloader"></div>
-
-  <!-- Vendor JS Files -->
-  <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-  <script src="assets/vendor/php-email-form/validate.js"></script>
-  <script src="assets/vendor/aos/aos.js"></script>
-  <script src="assets/vendor/typed.js/typed.umd.js"></script>
-  <script src="assets/vendor/purecounter/purecounter_vanilla.js"></script>
-  <script src="assets/vendor/waypoints/noframework.waypoints.js"></script>
-  <script src="assets/vendor/glightbox/js/glightbox.min.js"></script>
-  <script src="assets/vendor/imagesloaded/imagesloaded.pkgd.min.js"></script>
-  <script src="assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
-  <script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
-
-  <!-- Main JS File -->
-  <script src="assets/js/services-data.js"></script>
-  <script src="assets/js/main.js"></script>
-
-  <script>
-    // Function to generate services section HTML dynamically
-    function generateServicesHTML() {
-      // Check if we're on index.html page (has services section)
-      const servicesContainer = document.querySelector('#services .container .row');
-      if (servicesContainer && servicesData) {
-
-        // Clear existing content
-        servicesContainer.innerHTML = '';
-
-        // Colors for service items (cycling through them)
-        const colors = ['item-cyan', 'item-orange', 'item-teal', 'item-red', 'item-indigo', 'item-pink'];
-        const icons = ['bi-activity', 'bi-broadcast', 'bi-easel', 'bi-bounding-box-circles', 'bi-calendar4-week', 'bi-chat-square-text'];
-
-        // Generate HTML for each service
-        Object.keys(servicesData).forEach((serviceId, index) => {
-          const service = servicesData[serviceId];
-          const color = colors[index % colors.length];
-          const icon = icons[index % icons.length];
-          const delay = 100 + (index * 100); // Stagger animation delay
-
-          const serviceHTML = `
-            <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="${delay}">
-              <div class="service-item ${color} position-relative">
+        <!-- End Section Title -->
+
+        <div class="container">
+          <div class="row gy-4">
+            <!-- Single service template - will be cloned for each service -->
+            <div class="col-lg-4 col-md-6 service-item-template" data-aos="fade-up" data-aos-delay="100" style="display: none;">
+              <div class="service-item item-cyan position-relative">
                 <div class="icon">
                   <svg width="100" height="100" viewBox="0 0 600 600" xmlns="http://www.w3.org/2000/svg">
                     <path stroke="none" stroke-width="0" fill="#f5f5f5" d="M300,521.0016835830174C376.1290562159157,517.8887921683347,466.0731472004068,529.7835943286574,510.70327084640275,468.03025145048787C554.3714126377745,407.6079735673963,508.03601936045806,328.9844924480964,491.2728898941984,256.3432110539036C474.5976632858925,184.082847569629,479.9380746630129,96.60480741107993,416.23090153303,58.64404602377083C348.86323505073057,18.502131276798302,261.93793281208167,40.57373210992963,193.5410806939664,78.93577620505333C130.42746243093433,114.334589627462,98.30271207620316,179.96522072025542,76.75703585869454,249.04625023123273C51.97151888228291,328.5150500222984,13.704378332031375,421.85034740162234,66.52175969318436,486.19268352777647C119.04800174914682,550.1803526380478,217.28368757567262,524.383925680826,300,521.0016835830174"></path>
                   </svg>
-                  <i class="bi ${icon}"></i>
+                  <i class="bi service-icon"></i>
                 </div>
-                <a href="service-details.html?service=${serviceId}" class="stretched-link">
-                  <h3>${service.title}</h3>
+                <a href="#" class="stretched-link service-link">
+                  <h3 class="service-title">Service Title</h3>
                 </a>
-                <p>${service.description}</p>
+                <p class="service-description">Service description will be populated here</p>
               </div>
-            </div><!-- End Service Item -->
-          `;
+            </div><!-- End Service Item Template -->
+          </div>
+        </div>
+      </section>
+      <!-- /Services Section -->
 
-          servicesContainer.insertAdjacentHTML('beforeend', serviceHTML);
-        });
+      <!-- Testimonials Section -->
+      <section id="testimonials" class="testimonials section">
+        <!-- Section Title -->
+        <div class="container section-title" data-aos="fade-up">
+          <h2>Testimonials</h2>
+          <p>
+            Client feedback and recommendations showcasing professional
+            relationships and project success
+          </p>
+        </div>
+        <!-- End Section Title -->
+
+        <div class="container" data-aos="fade-up" data-aos-delay="100">
+          <div class="swiper init-swiper">
+            <script type="application/json" class="swiper-config">
+              {
+                "loop": true,
+                "speed": 600,
+                "autoplay": {
+                  "delay": 5000
+                },
+                "slidesPerView": "auto",
+                "pagination": {
+                  "el": ".swiper-pagination",
+                  "type": "bullets",
+                  "clickable": true
+                }
+              }
+            </script>
+            <div class="swiper-wrapper">
+              <!-- Testimonials will be populated dynamically by JavaScript -->
+            </div>
+            <div class="swiper-pagination"></div>
+          </div>
+        </div>
+      </section>
+      <!-- /Testimonials Section -->
+
+      <!-- Contact Section -->
+      <section id="contact" class="contact section">
+        <!-- Section Title -->
+        <div class="container section-title" data-aos="fade-up">
+          <h2>Contact</h2>
+          <p>
+            Get in touch for collaboration opportunities, project inquiries, or
+            professional consultations
+          </p>
+        </div>
+        <!-- End Section Title -->
+
+        <div class="container" data-aos="fade" data-aos-delay="100">
+          <div class="row gy-4">
+            <div class="col-lg-4">
+              <div
+                class="info-item d-flex"
+                data-aos="fade-up"
+                data-aos-delay="200"
+              >
+                <i class="bi bi-geo-alt flex-shrink-0"></i>
+                <div>
+                  <h3>Address</h3>
+                  <p>Jableh, Latakia, Syria</p>
+                </div>
+              </div>
+              <!-- End Info Item -->
+
+              <div
+                class="info-item d-flex"
+                data-aos="fade-up"
+                data-aos-delay="300"
+              >
+                <i class="bi bi-telephone flex-shrink-0"></i>
+                <div>
+                  <h3>Call Us</h3>
+                  <p>+963 994 636 381</p>
+                </div>
+              </div>
+              <!-- End Info Item -->
+
+              <div
+                class="info-item d-flex"
+                data-aos="fade-up"
+                data-aos-delay="400"
+              >
+                <i class="bi bi-envelope flex-shrink-0"></i>
+                <div>
+                  <h3>Email Us</h3>
+                  <p>099assemhb@gmail.com</p>
+                </div>
+              </div>
+              <!-- End Info Item -->
+            </div>
+
+            <div class="col-lg-8">
+              <form
+                action="forms/contact.php"
+                method="post"
+                class="php-email-form"
+                data-aos="fade-up"
+                data-aos-delay="200"
+              >
+                <div class="row gy-4">
+                  <div class="col-md-6">
+                    <input
+                      type="text"
+                      name="name"
+                      class="form-control"
+                      placeholder="Your Name"
+                      required=""
+                    />
+                  </div>
+
+                  <div class="col-md-6">
+                    <input
+                      type="email"
+                      class="form-control"
+                      name="email"
+                      placeholder="Your Email"
+                      required=""
+                    />
+                  </div>
+
+                  <div class="col-md-12">
+                    <input
+                      type="text"
+                      class="form-control"
+                      name="subject"
+                      placeholder="Subject"
+                      required=""
+                    />
+                  </div>
+
+                  <div class="col-md-12">
+                    <textarea
+                      class="form-control"
+                      name="message"
+                      rows="6"
+                      placeholder="Message"
+                      required=""
+                    ></textarea>
+                  </div>
+
+                  <div class="col-md-12 text-center">
+                    <div class="loading">Loading</div>
+                    <div class="error-message"></div>
+                    <div class="sent-message">
+                      Your message has been sent. Thank you!
+                    </div>
+
+                    <button type="submit">Send Message</button>
+                  </div>
+                </div>
+              </form>
+            </div>
+            <!-- End Contact Form -->
+          </div>
+        </div>
+      </section>
+      <!-- /Contact Section -->
+    </main>
+
+    <footer id="footer" class="footer position-relative light-background">
+      <div class="container">
+        <h3 class="sitename">Assem Adel Habib</h3>
+        <p>
+          Web developer specializing in building modern applications and
+          innovative software solutions using the latest technologies
+        </p>
+        <div class="social-links d-flex justify-content-center">
+          <a href="https://github.com/assem2023-habib" target="_blank"
+            ><i class="bi bi-github"></i
+          ></a>
+          <a
+            href="https://linkedin.com/in/assem-habib-5236a423b"
+            target="_blank"
+            ><i class="bi bi-linkedin"></i
+          ></a>
+        </div>
+        <div class="container">
+          <div class="copyright">
+            <span>Copyright</span>
+            <strong class="px-1 sitename">Assem Adel Habib</strong>
+            <span>All Rights Reserved</span>
+          </div>
+          <div class="credits">
+            Designed by
+            <a href="https://bootstrapmade.com/">BootstrapMade</a> Distribuited
+            by <a href="https://themewagon.com">ThemeWagon</a>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    <!-- Scroll Top -->
+    <a
+      href="#"
+      id="scroll-top"
+      class="scroll-top d-flex align-items-center justify-content-center"
+      ><i class="bi bi-arrow-up-short"></i
+    ></a>
+
+    <!-- Preloader -->
+    <div id="preloader"></div>
+
+    <!-- Vendor JS Files -->
+    <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="assets/vendor/php-email-form/validate.js"></script>
+    <script src="assets/vendor/aos/aos.js"></script>
+    <script src="assets/vendor/typed.js/typed.umd.js"></script>
+    <script src="assets/vendor/purecounter/purecounter_vanilla.js"></script>
+    <script src="assets/vendor/waypoints/noframework.waypoints.js"></script>
+    <script src="assets/vendor/glightbox/js/glightbox.min.js"></script>
+    <script src="assets/vendor/imagesloaded/imagesloaded.pkgd.min.js"></script>
+    <script src="assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
+    <script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
+
+    <!-- Main JS File -->
+    <script src="assets/js/services-data.js"></script>
+    <script src="assets/js/portfolio-data.js"></script>
+    <script src="assets/js/testimonials-data.js"></script>
+    <script src="assets/js/main.js"></script>
+
+    <script>
+      // Function to populate service items by cloning a single template
+      function populateServiceItems() {
+        // Check if we're on index.html page (has services section)
+        const servicesContainer = document.querySelector("#services .container .row");
+        const serviceTemplate = document.querySelector('.service-item-template');
+
+        if (servicesContainer && serviceTemplate && servicesData) {
+          console.log('🔧 Cloning service template for each service...');
+
+          // Clear existing content (including the hidden template)
+          servicesContainer.innerHTML = '';
+
+          // Colors for service items (cycling through them)
+          const colors = [
+            "item-cyan",
+            "item-orange",
+            "item-teal",
+            "item-red",
+            "item-indigo",
+            "item-pink",
+          ];
+          const icons = [
+            "bi-activity",
+            "bi-broadcast",
+            "bi-easel",
+            "bi-bounding-box-circles",
+            "bi-calendar4-week",
+            "bi-chat-square-text",
+          ];
+
+          // Convert servicesData object to array for easier iteration
+          const servicesArray = Object.keys(servicesData).map(key => ({
+            id: key,
+            ...servicesData[key]
+          }));
+
+          // Clone template for each service and populate with data
+          servicesArray.forEach((service, index) => {
+            // Clone the template
+            const serviceClone = serviceTemplate.cloneNode(true);
+
+            // Remove the template class and show the element
+            serviceClone.classList.remove('service-item-template');
+            serviceClone.style.display = 'block';
+
+            // Update data-aos-delay for stagger animation
+            const delay = 100 + (index * 100);
+            serviceClone.setAttribute('data-aos-delay', delay.toString());
+
+            const color = colors[index % colors.length];
+            const icon = icons[index % icons.length];
+
+            // Update the service item class
+            const serviceItem = serviceClone.querySelector('.service-item');
+            if (serviceItem) {
+              serviceItem.className = `service-item ${color} position-relative`;
+            }
+
+            // Update the icon class
+            const iconElement = serviceClone.querySelector('.service-icon');
+            if (iconElement) {
+              iconElement.className = `bi ${icon}`;
+            }
+
+            // Update the service link href
+            const linkElement = serviceClone.querySelector('.service-link');
+            if (linkElement) {
+              linkElement.href = `service-details.html?service=${service.id}`;
+            }
+
+            // Update the service title
+            const titleElement = serviceClone.querySelector('.service-title');
+            if (titleElement) {
+              titleElement.textContent = service.title;
+            }
+
+            // Update the service description
+            const descElement = serviceClone.querySelector('.service-description');
+            if (descElement) {
+              descElement.textContent = service.description;
+            }
+
+            // Append the populated clone to the container
+            servicesContainer.appendChild(serviceClone);
+
+            console.log(`✅ Created service item ${index + 1}: ${service.title}`);
+          });
+        }
       }
-    }
 
-    // Initialize when page loads
-    document.addEventListener('DOMContentLoaded', () => {
-      generateServicesHTML();
-    });
-  </script>
+      // Function to generate portfolio items by cloning a single template
+      function populatePortfolioItems() {
+        // Check if we're on index.html page (has portfolio section)
+        const portfolioContainer = document.querySelector("#portfolio .isotope-container");
+        const portfolioTemplate = document.querySelector('.portfolio-template');
+
+        if (portfolioContainer && portfolioTemplate && portfolioData) {
+          console.log('🔧 Cloning portfolio template for each project...');
+
+          // Clear existing content (including the hidden template)
+          portfolioContainer.innerHTML = '';
+
+          // Convert portfolioData object to array for easier iteration
+          const portfolioArray = Object.keys(portfolioData).map(key => ({
+            id: key,
+            ...portfolioData[key]
+          }));
+
+          // Clone template for each project and populate with data
+          portfolioArray.forEach((project, index) => {
+            // Clone the template
+            const projectClone = portfolioTemplate.cloneNode(true);
+
+            // Remove the template class and show the element
+            projectClone.classList.remove('portfolio-template');
+            projectClone.style.display = 'block';
+
+            // Update data-aos-delay for stagger animation
+            const delay = 100 + (index * 100);
+            projectClone.setAttribute('data-aos-delay', delay.toString());
+
+            // Update the image src and alt
+            const imgElement = projectClone.querySelector('img');
+            if (imgElement) {
+              imgElement.src = project.image;
+              imgElement.alt = `${project.title} - ${project.description}`;
+            }
+
+            // Update the title
+            const titleElement = projectClone.querySelector('.portfolio-title');
+            if (titleElement) {
+              titleElement.textContent = project.title;
+            }
+
+            // Update the description
+            const descElement = projectClone.querySelector('.portfolio-description');
+            if (descElement) {
+              descElement.textContent = project.description;
+            }
+
+            // Update the preview link href, title, and data-gallery
+            const previewLink = projectClone.querySelector('.glightbox.preview-link');
+            if (previewLink) {
+              previewLink.href = project.image;
+              previewLink.title = `${project.title} - ${project.description}`;
+              previewLink.setAttribute('data-gallery', project.gallery);
+            }
+
+            // Update the details link href
+            const detailsLink = projectClone.querySelector('.details-link');
+            if (detailsLink) {
+              detailsLink.href = `${project.detailsUrl}?project=${project.id}`;
+            }
+
+            // Append the populated clone to the container
+            portfolioContainer.appendChild(projectClone);
+
+            console.log(`✅ Created portfolio item ${index + 1}: ${project.title}`);
+          });
+        }
+      }
+
+      // Function to generate testimonials section HTML dynamically
+      function generateTestimonialsHTML() {
+        // Check if we're on index.html page (has testimonials section)
+        const testimonialsContainer = document.querySelector("#testimonials .swiper-wrapper");
+        if (testimonialsContainer && testimonialsData) {
+          console.log('🔧 Generating testimonials HTML dynamically...');
+
+          // Clear existing content
+          testimonialsContainer.innerHTML = '';
+
+          // Generate HTML for each testimonial
+          Object.keys(testimonialsData).forEach((testimonialId, index) => {
+            const testimonial = testimonialsData[testimonialId];
+
+            // Generate stars HTML based on rating
+            let starsHTML = '';
+            for (let i = 0; i < 5; i++) {
+              starsHTML += '<i class="bi bi-star-fill"></i>';
+            }
+
+            const testimonialHTML = `
+              <div class="swiper-slide">
+                <div class="testimonial-item">
+                  <div class="row gy-4 justify-content-center">
+                    <div class="col-lg-6">
+                      <div class="testimonial-content">
+                        <p>
+                          <i class="bi bi-quote quote-icon-left"></i>
+                          <span>${testimonial.content}</span>
+                          <i class="bi bi-quote quote-icon-right"></i>
+                        </p>
+                        <h3>${testimonial.name}</h3>
+                        <h4>${testimonial.role}</h4>
+                        <div class="stars">
+                          ${starsHTML}
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-lg-2 text-center">
+                      <img src="${testimonial.image}" class="img-fluid testimonial-img" alt="">
+                    </div>
+                  </div>
+                </div>
+              </div><!-- End testimonial item -->
+            `;
+
+            testimonialsContainer.insertAdjacentHTML('beforeend', testimonialHTML);
+            console.log(`✅ Generated testimonial: ${testimonial.name}`);
+          });
+        }
+      }
+
+      // Initialize when page loads
+      document.addEventListener("DOMContentLoaded", () => {
+        populateServiceItems();
+        populatePortfolioItems();
+        generateTestimonialsHTML();
+
+        // Initialize glightbox after all dynamic content is created
+        setTimeout(() => {
+          if (typeof GLightbox !== 'undefined') {
+            // Check if glightbox is already initialized
+            if (window.glightboxInstance) {
+              // Refresh existing instance to include new elements
+              window.glightboxInstance.refresh();
+              console.log('🔄 Refreshed existing glightbox instance');
+            } else {
+              // Create new instance if it doesn't exist
+              const glightbox = GLightbox({
+                selector: '.glightbox',
+                touchNavigation: true,
+                closeOnOutsideClick: true,
+                loop: false
+              });
+              window.glightboxInstance = glightbox;
+              console.log('🔧 Created new glightbox instance');
+            }
+          }
+        }, 200);
+      });
+    </script>
 
 </body>
-
 </html>

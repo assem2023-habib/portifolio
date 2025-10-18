@@ -4,7 +4,7 @@
 <head>
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
-  <title>Portfolio Details - MyResume Bootstrap Template</title>
+  <title>Project Details - MyResume Bootstrap Template</title>
   <meta content="" name="description">
   <meta content="" name="keywords">
 
@@ -68,10 +68,11 @@
         <nav class="breadcrumbs">
           <ol>
             <li><a href="index.html">Home</a></li>
-            <li class="current">Portfolio Details</li>
+            <li><a href="#portfolio">Portfolio</a></li>
+            <li class="current project-title">Project Details</li>
           </ol>
         </nav>
-        <h1>Portfolio Details</h1>
+        <h1 class="project-title">Project Details</h1>
       </div>
     </div><!-- End Page Title -->
 
@@ -88,7 +89,9 @@
               "autoplay": {
                 "delay": 5000
               },
-              "slidesPerView": "auto",
+              "slidesPerView": 1,
+              "centeredSlides": true,
+              "spaceBetween": 0,
               "navigation": {
                 "nextEl": ".swiper-button-next",
                 "prevEl": ".swiper-button-prev"
@@ -101,23 +104,11 @@
             }
           </script>
           <div class="swiper-wrapper align-items-center">
-
             <div class="swiper-slide">
-              <img src="assets/img/portfolio/app-1.jpg" alt="">
+              <div class="project-image-container">
+                <img src="assets/img/services.jpg" alt="" class="project-image img-fluid">
+              </div>
             </div>
-
-            <div class="swiper-slide">
-              <img src="assets/img/portfolio/product-1.jpg" alt="">
-            </div>
-
-            <div class="swiper-slide">
-              <img src="assets/img/portfolio/branding-1.jpg" alt="">
-            </div>
-
-            <div class="swiper-slide">
-              <img src="assets/img/portfolio/books-1.jpg" alt="">
-            </div>
-
           </div>
           <div class="swiper-button-prev"></div>
           <div class="swiper-button-next"></div>
@@ -128,48 +119,100 @@
 
           <div class="col-lg-8" data-aos="fade-up">
             <div class="portfolio-description">
-              <h2>This is an example of portfolio details</h2>
-              <p>
-                Autem ipsum nam porro corporis rerum. Quis eos dolorem eos itaque inventore commodi labore quia quia. Exercitationem repudiandae officiis neque suscipit non officia eaque itaque enim. Voluptatem officia accusantium nesciunt est omnis tempora consectetur dignissimos. Sequi nulla at esse enim cum deserunt eius.
-              </p>
-              <p>
-                Amet consequatur qui dolore veniam voluptatem voluptatem sit. Non aspernatur atque natus ut cum nam et. Praesentium error dolores rerum minus sequi quia veritatis eum. Eos et doloribus doloremque nesciunt molestiae laboriosam.
+              <h2 class="project-title text-primary mb-3">Project Title</h2>
+              <p class="project-description lead mb-4">
+                Project description will be loaded here...
               </p>
 
-              <div class="testimonial-item">
-                <p>
-                  <i class="bi bi-quote quote-icon-left"></i>
-                  <span>Export tempor illum tamen malis malis eram quae irure esse labore quem cillum quid cillum eram malis quorum velit fore eram velit sunt aliqua noster fugiat irure amet legam anim culpa.</span>
-                  <i class="bi bi-quote quote-icon-right"></i>
-                </p>
-                <div>
-                  <img src="assets/img/testimonials/testimonials-2.jpg" class="testimonial-img" alt="">
-                  <h3>Sara Wilsson</h3>
-                  <h4>Designer</h4>
+              <!-- Project Features Section -->
+              <div class="project-features mt-4 p-4 bg-light rounded">
+                <h4 class="text-success mb-3"><i class="bi bi-check-circle me-2"></i>Key Features</h4>
+                <div class="row">
+                  <div class="col-md-6">
+                    <ul class="list-unstyled">
+                      <li class="mb-2"><i class="bi bi-check-circle-fill text-success me-2"></i><span>Feature 1</span></li>
+                      <li class="mb-2"><i class="bi bi-check-circle-fill text-success me-2"></i><span>Feature 2</span></li>
+                      <li class="mb-2"><i class="bi bi-check-circle-fill text-success me-2"></i><span>Feature 3</span></li>
+                    </ul>
+                  </div>
+                  <div class="col-md-6">
+                    <ul class="list-unstyled">
+                      <li class="mb-2"><i class="bi bi-check-circle-fill text-success me-2"></i><span>Feature 4</span></li>
+                      <li class="mb-2"><i class="bi bi-check-circle-fill text-success me-2"></i><span>Feature 5</span></li>
+                      <li class="mb-2"><i class="bi bi-check-circle-fill text-success me-2"></i><span>Feature 6</span></li>
+                    </ul>
+                  </div>
                 </div>
               </div>
 
-              <p>
-                Impedit ipsum quae et aliquid doloribus et voluptatem quasi. Perspiciatis occaecati earum et magnam animi. Quibusdam non qui ea vitae suscipit vitae sunt. Repudiandae incidunt cumque minus deserunt assumenda tempore. Delectus voluptas necessitatibus est.
-              </p>
+              <!-- Project Gallery Section -->
+              <div class="project-gallery mt-4">
+                <h4 class="text-info mb-3"><i class="bi bi-images me-2"></i>Project Gallery</h4>
+                <div class="row g-3">
+                  <div class="col-md-4">
+                    <div class="gallery-item">
+                      <img src="" alt="" class="img-fluid rounded shadow-sm project-gallery-image">
+                    </div>
+                  </div>
+                  <div class="col-md-4">
+                    <div class="gallery-item">
+                      <img src="" alt="" class="img-fluid rounded shadow-sm project-gallery-image">
+                    </div>
+                  </div>
+                  <div class="col-md-4">
+                    <div class="gallery-item">
+                      <img src="" alt="" class="img-fluid rounded shadow-sm project-gallery-image">
+                    </div>
+                  </div>
+                </div>
+              </div>
 
-              <p>
-                Sunt voluptatum sapiente facilis quo odio aut ipsum repellat debitis. Molestiae et autem libero. Explicabo et quod necessitatibus similique quis dolor eum. Numquam eaque praesentium rem et qui nesciunt.
-              </p>
-
+              <div class="project-details mt-4 p-3 bg-light rounded">
+                <h4 class="text-warning mb-3"><i class="bi bi-info-circle me-2"></i>Project Details</h4>
+                <p>
+                  More detailed project information and implementation details will be displayed here.
+                  This section provides comprehensive information about the project architecture, challenges faced,
+                  and solutions implemented.
+                </p>
+              </div>
             </div>
           </div>
 
-          <div class="col-lg-3" data-aos="fade-up" data-aos-delay="100">
-            <div class="portfolio-info">
-              <h3>Project information</h3>
-              <ul>
-                <li><strong>Category</strong> Web design</li>
-                <li><strong>Client</strong> ASU Company</li>
-                <li><strong>Project date</strong> 01 March, 2020</li>
-                <li><strong>Project URL</strong> <a href="#">www.example.com</a></li>
-                <li><a href="#" class="btn-visit align-self-start">Visit Website</a></li>
-              </ul>
+          <div class="col-lg-4" data-aos="fade-up" data-aos-delay="100">
+            <div class="portfolio-info card shadow-sm">
+              <div class="card-body">
+                <h3 class="card-title text-center mb-4">Project Information</h3>
+                <ul class="list-unstyled">
+                  <li class="mb-3">
+                    <strong class="text-muted">Category:</strong><br>
+                    <span class="project-category badge bg-primary">Web Development</span>
+                  </li>
+                  <li class="mb-3">
+                    <strong class="text-muted">Technologies:</strong><br>
+                    <span class="project-technologies">Laravel, PHP, MySQL</span>
+                  </li>
+                  <li class="mb-3">
+                    <strong class="text-muted">Status:</strong><br>
+                    <span class="project-status badge bg-success">Completed</span>
+                  </li>
+                  <li class="mb-4">
+                    <strong class="text-muted">Project URL:</strong><br>
+                    <a href="#" class="project-url btn btn-outline-primary btn-sm" target="_blank">
+                      <i class="bi bi-box-arrow-up-right me-1"></i>View Project
+                    </a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+
+            <!-- Projects List Sidebar -->
+            <div class="projects-list mt-4 card shadow-sm">
+              <div class="card-body">
+                <h4 class="card-title text-center mb-3">Other Projects</h4>
+                <ul class="list-unstyled">
+                  <!-- Other projects will be populated here -->
+                </ul>
+              </div>
             </div>
           </div>
 
@@ -183,24 +226,17 @@
 
   <footer id="footer" class="footer position-relative light-background">
     <div class="container">
-      <h3 class="sitename">Brandon Johnson</h3>
-      <p>Et aut eum quis fuga eos sunt ipsa nihil. Labore corporis magni eligendi fuga maxime saepe commodi placeat.</p>
+      <h3 class="sitename">Assem Adel Habib</h3>
+      <p>Web developer specializing in building modern applications and innovative software solutions using the latest technologies</p>
       <div class="social-links d-flex justify-content-center">
-        <a href=""><i class="bi bi-twitter-x"></i></a>
-        <a href=""><i class="bi bi-facebook"></i></a>
-        <a href=""><i class="bi bi-instagram"></i></a>
-        <a href=""><i class="bi bi-skype"></i></a>
-        <a href=""><i class="bi bi-linkedin"></i></a>
+        <a href="https://github.com/assem2023-habib" target="_blank"><i class="bi bi-github"></i></a>
+        <a href="https://linkedin.com/in/assem-habib-5236a423b" target="_blank"><i class="bi bi-linkedin"></i></a>
       </div>
       <div class="container">
         <div class="copyright">
-          <span>Copyright</span> <strong class="px-1 sitename">Alex Smith</strong> <span>All Rights Reserved</span>
+          <span>Copyright</span> <strong class="px-1 sitename">Assem Adel Habib</strong> <span>All Rights Reserved</span>
         </div>
         <div class="credits">
-          <!-- All the links in the footer should remain intact. -->
-          <!-- You can delete the links only if you've purchased the pro version. -->
-          <!-- Licensing information: https://bootstrapmade.com/license/ -->
-          <!-- Purchase the pro version with working PHP/AJAX contact form: [buy-url] -->
           Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a> Distribuited by <a href="https://themewagon.com">ThemeWagon</a>
         </div>
       </div>
@@ -226,7 +262,365 @@
   <script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
 
   <!-- Main JS File -->
+  <script src="assets/js/services-data.js"></script>
+  <script src="assets/js/portfolio-data.js"></script>
   <script src="assets/js/main.js"></script>
+
+  <style>
+    /* Project page specific styles */
+    .project-image-container {
+      max-width: 600px;
+      margin: 0 auto;
+      padding: 20px;
+      background: #f8f9fa;
+      border-radius: 10px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    }
+
+    .project-image {
+      max-height: 400px;
+      width: 100%;
+      object-fit: cover;
+      border-radius: 8px;
+      transition: transform 0.3s ease;
+    }
+
+    .project-image:hover {
+      transform: scale(1.02);
+    }
+
+    /* Gallery images styling */
+    .gallery-item {
+      position: relative;
+      overflow: hidden;
+      border-radius: 8px;
+      transition: transform 0.3s ease;
+    }
+
+    .gallery-item:hover {
+      transform: translateY(-5px);
+    }
+
+    .project-gallery-image {
+      transition: transform 0.3s ease;
+      cursor: pointer;
+    }
+
+    .project-gallery-image:hover {
+      transform: scale(1.05);
+    }
+
+    /* Dark mode specific styles */
+    .dark-mode {
+      background-color: #1a202c;
+      color: #e0e0e0;
+    }
+
+    .dark-mode .project-image-container {
+      background: #2d3748;
+      border: 1px solid #4a5568;
+    }
+
+    .dark-mode .project-image {
+      border: 1px solid #4a5568;
+    }
+
+    .dark-mode .project-features {
+      background: linear-gradient(135deg, #1e3a1e 0%, #2d4a2d 100%);
+      border: 1px solid #4a5d4a;
+    }
+
+    .dark-mode .project-details {
+      background: linear-gradient(135deg, #3d2914 0%, #4d3914 100%);
+      border: 1px solid #6b4d1f;
+    }
+
+    .dark-mode .project-features h4,
+    .dark-mode .project-details h4 {
+      color: #fff;
+    }
+
+    .dark-mode .project-features li,
+    .dark-mode .project-details p {
+      color: #e0e0e0;
+    }
+
+    .dark-mode .project-features .text-muted {
+      color: #b0b0b0 !important;
+    }
+
+    /* Dark mode card styling */
+    .dark-mode .card {
+      background-color: #2d3748;
+      border-color: #4a5568;
+    }
+
+    .dark-mode .card-title {
+      color: #fff;
+    }
+
+    .dark-mode .card-body {
+      color: #e0e0e0;
+    }
+
+    /* Dark mode project information text styling */
+    .dark-mode .portfolio-info h3 {
+      color: #fff;
+    }
+
+    .dark-mode .portfolio-info strong {
+      color: #fff;
+    }
+
+    .dark-mode .portfolio-info .text-muted {
+      color: #a0a0a0 !important;
+    }
+
+    .dark-mode .portfolio-info li {
+      color: #e0e0e0;
+    }
+
+    /* Dark mode projects list styling */
+    .dark-mode .projects-list h4 {
+      color: #fff;
+    }
+
+    .dark-mode .projects-list .fw-bold {
+      color: #b9b8b8;
+    }
+
+    .dark-mode .projects-list .text-muted {
+      color: #888 !important;
+    }
+
+    .dark-mode .projects-list a {
+      background-color: #374151;
+      color: #f0f0f0;
+      border: 1px solid #4a5568;
+    }
+
+    .dark-mode .projects-list a:hover {
+      background-color: #4a5568;
+      color: #fff;
+      border-color: #5a6578;
+    }
+
+    .dark-mode .projects-list .active a {
+      background-color: #3182ce;
+      color: #fff;
+      border-color: #3182ce;
+    }
+
+    /* Dark mode badge styling */
+    .dark-mode .badge {
+      color: #fff;
+    }
+    .dark-mode .badge.bg-success {
+      background-color: #38a169 !important;
+    }
+
+    /* Cards hover effects */
+    .card {
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+    }
+
+    /* Projects list styling */
+    .projects-list .card {
+      border: 1px solid #e9ecef;
+    }
+
+    .projects-list h4 {
+      color: #333;
+    }
+
+    .projects-list .fw-bold {
+      color: #333;
+    }
+
+    .projects-list .text-muted {
+      color: #6c757d !important;
+    }
+
+    .projects-list a {
+      text-decoration: none;
+      border-radius: 6px;
+      background-color: #f8f9fa;
+      color: #333;
+      border: 1px solid #dee2e6;
+    }
+
+    .projects-list a:hover {
+      text-decoration: none;
+      background-color: #e9ecef;
+      color: #000;
+    }
+
+    .projects-list .active a {
+      background-color: #007bff;
+      color: #fff;
+      border-color: #007bff;
+    }
+
+    /* Badge styling */
+    .badge {
+      font-size: 0.8em;
+      padding: 0.5em 0.8em;
+    }
+
+    /* Responsive adjustments */
+    @media (max-width: 768px) {
+      .project-image-container {
+        max-width: 100%;
+        padding: 15px;
+      }
+
+      .project-image {
+        max-height: 300px;
+      }
+
+      .project-features, .project-details {
+        padding: 15px;
+      }
+    }
+
+    @media (max-width: 576px) {
+      .project-image {
+        max-height: 250px;
+      }
+
+      .gallery-item {
+        margin-bottom: 15px;
+      }
+    }
+  </style>
+
+  <script>
+    // Function to get URL parameter
+    function getURLParameter(name) {
+      const urlParams = new URLSearchParams(window.location.search);
+      return urlParams.get(name);
+    }
+
+    // Function to update project details
+    function updateProjectDetails() {
+      const projectId = getURLParameter('project');
+
+      if (projectId && portfolioData && portfolioData[projectId]) {
+        const project = portfolioData[projectId];
+        // Update page title
+        document.title = project.title + " - MyResume Bootstrap Template";
+
+        // Update breadcrumb and main title
+        const projectTitleElements = document.querySelectorAll('.project-title');
+        projectTitleElements.forEach(element => {
+          element.textContent = project.title;
+        });
+
+        // Update project image
+        const projectImage = document.querySelector('.project-image');
+        if (projectImage) {
+          projectImage.src = project.image;
+          projectImage.alt = project.title;
+        }
+
+        // Update project category
+        const projectCategory = document.querySelector('.project-category');
+        if (projectCategory) {
+          projectCategory.textContent = project.category.charAt(0).toUpperCase() + project.category.slice(1);
+        }
+
+        // Update project description
+        const projectDescription = document.querySelector('.project-description');
+        if (projectDescription) {
+          projectDescription.textContent = project.description;
+        }
+
+        // Update project technologies (if available in data)
+        const projectTechnologies = document.querySelector('.project-technologies');
+        if (projectTechnologies) {
+          projectTechnologies.textContent = project.technologies || 'Laravel, PHP, MySQL';
+        }
+
+        // Update project status
+        const projectStatus = document.querySelector('.project-status');
+        if (projectStatus) {
+          projectStatus.textContent = project.status || 'Completed';
+        }
+
+        // Update project URL
+        const projectUrl = document.querySelector('.project-url');
+        if (projectUrl) {
+          projectUrl.href = project.url || '#';
+          projectUrl.textContent = project.url ? 'Visit Project' : 'View Details';
+        }
+
+        // Update project features (if available in data)
+        const featureElements = document.querySelectorAll('.project-features .list-unstyled li span');
+        if (project.features && featureElements.length > 0) {
+          project.features.forEach((feature, index) => {
+            if (featureElements[index]) {
+              featureElements[index].textContent = feature;
+            }
+          });
+        }
+
+        // Update project gallery images (if available in data)
+        const galleryImages = document.querySelectorAll('.project-gallery-image');
+        if (project.galleryImages && galleryImages.length > 0) {
+          project.galleryImages.forEach((imageSrc, index) => {
+            if (galleryImages[index]) {
+              galleryImages[index].src = imageSrc;
+              galleryImages[index].alt = `${project.title} - Image ${index + 1}`;
+            }
+          });
+        }
+
+        // Update projects list sidebar
+        updateProjectsList(projectId);
+      } else {
+        console.log('❌ No project data found, redirecting...');
+        // Default to first project if no valid project ID
+        if (portfolioData) {
+          const firstProjectId = Object.keys(portfolioData)[0];
+          window.location.href = `project.html?project=${firstProjectId}`;
+        }
+      }
+    }
+
+    // Function to update projects list sidebar
+    function updateProjectsList(activeProject) {
+      const projectsList = document.querySelector('.projects-list ul');
+      if (projectsList && portfolioData) {
+        projectsList.innerHTML = '';
+
+        Object.keys(portfolioData).forEach(projectId => {
+          const project = portfolioData[projectId];
+          const li = document.createElement('li');
+          li.className = `mb-2 ${projectId === activeProject ? 'active' : ''}`;
+          li.innerHTML = `
+            <a href="project.html?project=${projectId}" class="d-flex align-items-center p-2 rounded ${projectId === activeProject ? 'bg-primary text-white' : 'bg-light hover-bg-primary'}" style="transition: all 0.3s ease;">
+              <i class="bi ${projectId === activeProject ? 'bi-circle-fill' : 'bi-circle'} me-2"></i>
+              <div>
+                <div class="fw-bold">${project.title}</div>
+                <small class="text-muted">${project.category}</small>
+              </div>
+            </a>
+          `;
+          projectsList.appendChild(li);
+        });
+      }
+    }
+
+    // Initialize when page loads
+    document.addEventListener('DOMContentLoaded', () => {
+      updateProjectDetails();
+    });
+  </script>
 
 </body>
 

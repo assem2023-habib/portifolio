@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <title>All Projects - MyResume Bootstrap Template</title>
+  <meta content="" name="description">
+  <meta content="" name="keywords">
+
+  <!-- Favicons -->
+  <link href="assets/img/favicon.png" rel="icon">
+  <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com" rel="preconnect">
+  <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Raleway:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+
+  <!-- Vendor CSS Files -->
+  <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+  <link href="assets/vendor/aos/aos.css" rel="stylesheet">
+  <link href="assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
+  <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+
+  <!-- Main CSS File -->
+  <link href="assets/css/main.css" rel="stylesheet">
+
+  <!-- =======================================================
+  * Template Name: MyResume
+  * Template URL: https://bootstrapmade.com/free-html-bootstrap-template-my-resume/
+  * Updated: Jun 29 2024 with Bootstrap v5.3.3
+  * Author: BootstrapMade.com
+  * License: https://bootstrapmade.com/license/
+  ======================================================== -->
+</head>
+
+<body class="portfolio-details-page">
+
+  <header id="header" class="header d-flex flex-column justify-content-center">
+
+    <i class="header-toggle d-xl-none bi bi-list"></i>
+
+    <!-- Dark Mode Toggle Button -->
+    <button id="darkModeToggle" class="dark-mode-toggle" title="تبديل الوضع المظلم">
+      <i class="bi bi-moon-fill"></i>
+    </button>
+
+    <nav id="navmenu" class="navmenu">
+      <ul>
+        <li><a href="index.html"><i class="bi bi-house navicon"></i><span>Home</span></a></li>
+        <li><a href="index.html#about"><i class="bi bi-person navicon"></i><span>About</span></a></li>
+        <li><a href="index.html#resume"><i class="bi bi-file-earmark-text navicon"></i><span>Resume</span></a></li>
+        <li><a href="projects.html"><i class="bi bi-images navicon"></i><span>Portfolio</span></a></li>
+        <li><a href="services.html"><i class="bi bi-hdd-stack navicon"></i><span>Services</span></a></li>
+        <li><a href="index.html#testimonials"><i class="bi bi-chat-quote navicon"></i><span>Testimonials</span></a></li>
+        <li><a href="index.html#contact"><i class="bi bi-envelope navicon"></i><span>Contact</span></a></li>
+      </ul>
+    </nav>
+
+  </header>
+
+  <main class="main">
+
+    <!-- Page Title -->
+    <div class="page-title" data-aos="fade">
+      <div class="container">
+        <nav class="breadcrumbs">
+          <ol>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="index.html#portfolio">Portfolio</a></li>
+            <li class="current">All Projects</li>
+          </ol>
+        </nav>
+        <h1>All Projects</h1>
+      </div>
+    </div><!-- End Page Title -->
+
+    <!-- All Projects Section -->
+    <section id="all-projects" class="all-projects section">
+
+      <!-- Section Title -->
+      <div class="container section-title" data-aos="fade-up">
+        <h2>All Projects</h2>
+        <p>Complete portfolio showcasing all web development, mobile applications, and desktop software projects</p>
+      </div><!-- End Section Title -->
+
+      <div class="container">
+        <div
+          class="isotope-layout"
+          data-default-filter="*"
+          data-layout="masonry"
+          data-sort="original-order"
+        >
+          <ul
+            class="portfolio-filters isotope-filters"
+            data-aos="fade-up"
+            data-aos-delay="100"
+          >
+            <li data-filter="*" class="filter-active">All</li>
+            <li data-filter=".filter-web">Web Development</li>
+            <li data-filter=".filter-mobile">Mobile Apps</li>
+            <li data-filter=".filter-desktop">Desktop Apps</li>
+          </ul>
+          <!-- End Portfolio Filters -->
+
+          <div
+            class="row gy-4 isotope-container"
+            data-aos="fade-up"
+            data-aos-delay="200"
+          >
+            <!-- Single portfolio template - will be cloned for each project -->
+            <div class="col-lg-4 col-md-6 portfolio-item isotope-item filter-web portfolio-template" style="display: none;">
+              <img src="" class="img-fluid" alt="">
+              <div class="portfolio-info">
+                <h4 class="portfolio-title">Project Title</h4>
+                <p class="portfolio-description">Project description</p>
+                <a href="" title="" data-gallery="" class="glightbox preview-link"><i class="bi bi-zoom-in"></i></a>
+                <a href="" title="More Details" class="details-link"><i class="bi bi-link-45deg"></i></a>
+              </div>
+            </div><!-- End Portfolio Template -->
+          </div>
+          <!-- End Portfolio Container -->
+        </div>
+      </div>
+
+    </section><!-- /All Projects Section -->
+
+  </main>
+
+  <footer id="footer" class="footer position-relative light-background">
+    <div class="container">
+      <h3 class="sitename">Assem Adel Habib</h3>
+      <p>Web developer specializing in building modern applications and innovative software solutions using the latest technologies</p>
+      <div class="social-links d-flex justify-content-center">
+        <a href="https://github.com/assem2023-habib" target="_blank"><i class="bi bi-github"></i></a>
+        <a href="https://linkedin.com/in/assem-habib-5236a423b" target="_blank"><i class="bi bi-linkedin"></i></a>
+      </div>
+      <div class="container">
+        <div class="copyright">
+          <span>Copyright</span> <strong class="px-1 sitename">Assem Adel Habib</strong> <span>All Rights Reserved</span>
+        </div>
+        <div class="credits">
+          Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a> Distribuited by <a href="https://themewagon.com">ThemeWagon</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scroll Top -->
+  <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+
+  <!-- Preloader -->
+  <div id="preloader"></div>
+
+  <!-- Vendor JS Files -->
+  <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="assets/vendor/php-email-form/validate.js"></script>
+  <script src="assets/vendor/aos/aos.js"></script>
+  <script src="assets/vendor/typed.js/typed.umd.js"></script>
+  <script src="assets/vendor/purecounter/purecounter_vanilla.js"></script>
+  <script src="assets/vendor/waypoints/noframework.waypoints.js"></script>
+  <script src="assets/vendor/glightbox/js/glightbox.min.js"></script>
+  <script src="assets/vendor/imagesloaded/imagesloaded.pkgd.min.js"></script>
+  <script src="assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
+  <script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
+
+  <!-- Main JS File -->
+  <script src="assets/js/portfolio-data.js"></script>
+  <script src="assets/js/main.js"></script>
+
+  <script>
+    // Function to populate all portfolio items
+    function populateAllPortfolioItems() {
+      const portfolioContainer = document.querySelector("#all-projects .isotope-container");
+      const portfolioTemplate = document.querySelector('.portfolio-template');
+
+      if (portfolioContainer && portfolioTemplate && portfolioData) {
+        console.log('🔧 Cloning portfolio template for all projects...');
+
+        // Clear existing content (including the hidden template)
+        portfolioContainer.innerHTML = '';
+
+        // Convert portfolioData object to array for easier iteration
+        const portfolioArray = Object.keys(portfolioData).map(key => ({
+          id: key,
+          ...portfolioData[key]
+        }));
+
+        // Clone template for each project and populate with data
+        portfolioArray.forEach((project, index) => {
+          // Clone the template
+          const projectClone = portfolioTemplate.cloneNode(true);
+
+          // Remove the template class and show the element
+          projectClone.classList.remove('portfolio-template');
+          projectClone.classList.add(`filter-${project.category}`);
+          projectClone.style.display = 'block';
+
+          // Update data-aos-delay for stagger animation
+          const delay = 100 + (index * 100);
+          projectClone.setAttribute('data-aos-delay', delay.toString());
+
+          // Update the image src and alt
+          const imgElement = projectClone.querySelector('img');
+          if (imgElement) {
+            imgElement.src = project.image;
+            imgElement.alt = `${project.title} - ${project.description}`;
+          }
+
+          // Update the title
+          const titleElement = projectClone.querySelector('.portfolio-title');
+          if (titleElement) {
+            titleElement.textContent = project.title;
+          }
+
+          // Update the description
+          const descElement = projectClone.querySelector('.portfolio-description');
+          if (descElement) {
+            descElement.textContent = project.description;
+          }
+
+          // Update the preview link href, title, and data-gallery
+          const previewLink = projectClone.querySelector('.glightbox.preview-link');
+          if (previewLink) {
+            previewLink.href = project.image;
+            previewLink.title = `${project.title} - ${project.description}`;
+            previewLink.setAttribute('data-gallery', project.gallery);
+          }
+
+          // Update the details link href
+          const detailsLink = projectClone.querySelector('.details-link');
+          if (detailsLink) {
+            detailsLink.href = `project.html?project=${project.id}`;
+          }
+
+          // Append the populated clone to the container
+          portfolioContainer.appendChild(projectClone);
+
+          console.log(`✅ Created portfolio item ${index + 1}: ${project.title}`);
+        });
+      }
+    }
+
+    // Initialize when page loads
+    document.addEventListener("DOMContentLoaded", () => {
+      populateAllPortfolioItems();
+
+      // Initialize glightbox after all dynamic content is created
+      setTimeout(() => {
+        if (typeof GLightbox !== 'undefined') {
+          // Check if glightbox is already initialized
+          if (window.glightboxInstance) {
+            // Refresh existing instance to include new elements
+            window.glightboxInstance.refresh();
+            console.log('🔄 Refreshed existing glightbox instance');
+          } else {
+            // Create new instance if it doesn't exist
+            const glightbox = GLightbox({
+              selector: '.glightbox',
+              touchNavigation: true,
+              closeOnOutsideClick: true,
+              loop: false
+            });
+            window.glightboxInstance = glightbox;
+            console.log('🔧 Created new glightbox instance');
+          }
+        }
+      }, 200);
+    });
+  </script>
+
+</body>
+
+</html>

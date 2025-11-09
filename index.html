@@ -76,6 +76,11 @@
             >
           </li>
           <li>
+            <a href="#skills"
+              ><i class="bi bi-gear navicon"></i><span>Skills</span></a
+            >
+          </li>
+          <li>
             <a href="#resume"
               ><i class="bi bi-file-earmark-text navicon"></i
               ><span>Resume</span></a
@@ -89,6 +94,11 @@
           <li>
             <a href="#services"
               ><i class="bi bi-hdd-stack navicon"></i><span>Services</span></a
+            >
+          </li>
+          <li>
+            <a href="#testimonials"
+              ><i class="bi bi-chat-quote navicon"></i><span>Testimonials</span></a
             >
           </li>
           <li>
@@ -221,10 +231,10 @@
       <!-- /About Section -->
 
       <!-- Stats Section -->
-      <section id="stats" class="stats section">
+      <!-- <section id="stats" class="stats section">
         <div class="container" data-aos="fade-up" data-aos-delay="100">
-          <div class="row gy-4">
-            <div
+          <div class="row gy-4"> -->
+            <!-- <div
               class="col-lg-3 col-md-6 d-flex flex-column align-items-center"
             >
               <i class="bi bi-emoji-smile"></i>
@@ -237,10 +247,10 @@
                 ></span>
                 <p>Happy Clients</p>
               </div>
-            </div>
+            </div> -->
             <!-- End Stats Item -->
 
-            <div
+            <!-- <div
               class="col-lg-3 col-md-6 d-flex flex-column align-items-center"
             >
               <i class="bi bi-journal-richtext"></i>
@@ -253,10 +263,10 @@
                 ></span>
                 <p>Projects</p>
               </div>
-            </div>
+            </div> -->
             <!-- End Stats Item -->
 
-            <div
+            <!-- <div
               class="col-lg-3 col-md-6 d-flex flex-column align-items-center"
             >
               <i class="bi bi-headset"></i>
@@ -269,10 +279,10 @@
                 ></span>
                 <p>Hours Of Support</p>
               </div>
-            </div>
+            </div> -->
             <!-- End Stats Item -->
 
-            <div
+            <!-- <div
               class="col-lg-3 col-md-6 d-flex flex-column align-items-center"
             >
               <i class="bi bi-people"></i>
@@ -285,11 +295,11 @@
                 ></span>
                 <p>Hard Workers</p>
               </div>
-            </div>
+            </div> -->
             <!-- End Stats Item -->
-          </div>
+          <!-- </div>
         </div>
-      </section>
+      </section> -->
       <!-- /Stats Section -->
 
       <!-- Skills Section -->
@@ -412,7 +422,7 @@
               <h3 class="resume-title">Education</h3>
               <div class="resume-item">
                 <h4>Bachelor of Informatics Engineering</h4>
-                <h5>2020 - Expected Graduation 2025</h5>
+                <h5>2020 - Graduation 2025</h5>
                 <p><em>University of Latakia, Latakia, Syria</em></p>
                 <p>
                   Specialization in Software Engineering and Information Systems
@@ -529,6 +539,13 @@
               </div><!-- End Portfolio Template -->
             </div>
             <!-- End Portfolio Container -->
+
+          <!-- View All Projects Button -->
+          <div class="text-center mt-5" data-aos="fade-up" data-aos-delay="300">
+            <a href="projects.html" class="btn btn-primary btn-lg">
+              <i class="bi bi-eye me-2"></i>View All Projects
+            </a>
+            <p class="mt-2 text-muted">Discover all 9 projects including detailed case studies</p>
           </div>
         </div>
       </section>
@@ -565,6 +582,14 @@
             </div><!-- End Service Item Template -->
           </div>
         </div>
+
+        <!-- View All Services Button -->
+        <div class="text-center mt-5" data-aos="fade-up" data-aos-delay="300">
+          <a href="services.html" class="btn btn-primary btn-lg">
+            <i class="bi bi-eye me-2"></i>View All Services
+          </a>
+          <p class="mt-2 text-muted">Explore all 6 professional web development services</p>
+        </div>
       </section>
       <!-- /Services Section -->
 
@@ -598,7 +623,34 @@
               }
             </script>
             <div class="swiper-wrapper">
-              <!-- Testimonials will be populated dynamically by JavaScript -->
+              <!-- Single testimonial template - will be cloned for each testimonial -->
+              <div class="swiper-slide testimonial-template" style="display: none;">
+                <div class="testimonial-item">
+                  <div class="row gy-4 justify-content-center">
+                    <div class="col-lg-6">
+                      <div class="testimonial-content">
+                        <p>
+                          <i class="bi bi-quote quote-icon-left"></i>
+                          <span class="testimonial-text">Testimonial content will be populated here</span>
+                          <i class="bi bi-quote quote-icon-right"></i>
+                        </p>
+                        <h3 class="testimonial-name">Client Name</h3>
+                        <h4 class="testimonial-role">Client Role</h4>
+                        <div class="stars">
+                          <i class="bi bi-star-fill"></i>
+                          <i class="bi bi-star-fill"></i>
+                          <i class="bi bi-star-fill"></i>
+                          <i class="bi bi-star-fill"></i>
+                          <i class="bi bi-star-fill"></i>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-lg-2 text-center">
+                      <img src="assets/img/testimonials/testimonials-1.jpg" class="img-fluid testimonial-img" alt="">
+                    </div>
+                  </div>
+                </div>
+              </div><!-- End Testimonial Template -->
             </div>
             <div class="swiper-pagination"></div>
           </div>
@@ -791,14 +843,42 @@
     <script src="assets/js/main.js"></script>
 
     <script>
+      // Homepage-specific limited data for better performance and UX
+      const homepageServicesData = {
+        fullstack: servicesData.fullstack,
+        api: servicesData.api,
+        cms: servicesData.cms,
+        performance: servicesData.performance,
+        interactive: servicesData.interactive,
+        maintenance: servicesData.maintenance
+      };
+
+      const homepagePortfolioData = {
+        smartship: portfolioData.smartship,
+        stitchhub: portfolioData.stitchhub,
+        cutoptimizer: portfolioData.cutoptimizer,
+        socialbackend: portfolioData.socialbackend,
+        taskflow: portfolioData.taskflow,
+        inventorypro: portfolioData.inventorypro
+      };
+
+      const homepageTestimonialsData = {
+        saul: testimonialsData.saul,
+        sarah: testimonialsData.sarah,
+        mike: testimonialsData.mike,
+        alex: testimonialsData.alex,
+        emily: testimonialsData.emily,
+        david: testimonialsData.david
+      };
+
       // Function to populate service items by cloning a single template
       function populateServiceItems() {
         // Check if we're on index.html page (has services section)
         const servicesContainer = document.querySelector("#services .container .row");
         const serviceTemplate = document.querySelector('.service-item-template');
 
-        if (servicesContainer && serviceTemplate && servicesData) {
-          console.log('🔧 Cloning service template for each service...');
+        if (servicesContainer && serviceTemplate && homepageServicesData) {
+          console.log('🔧 Cloning service template for homepage services...');
 
           // Clear existing content (including the hidden template)
           servicesContainer.innerHTML = '';
@@ -821,10 +901,10 @@
             "bi-chat-square-text",
           ];
 
-          // Convert servicesData object to array for easier iteration
-          const servicesArray = Object.keys(servicesData).map(key => ({
+          // Convert homepageServicesData object to array for easier iteration
+          const servicesArray = Object.keys(homepageServicesData).map(key => ({
             id: key,
-            ...servicesData[key]
+            ...homepageServicesData[key]
           }));
 
           // Clone template for each service and populate with data
@@ -887,16 +967,16 @@
         const portfolioContainer = document.querySelector("#portfolio .isotope-container");
         const portfolioTemplate = document.querySelector('.portfolio-template');
 
-        if (portfolioContainer && portfolioTemplate && portfolioData) {
-          console.log('🔧 Cloning portfolio template for each project...');
+        if (portfolioContainer && portfolioTemplate && homepagePortfolioData) {
+          console.log('🔧 Cloning portfolio template for homepage projects...');
 
           // Clear existing content (including the hidden template)
           portfolioContainer.innerHTML = '';
 
-          // Convert portfolioData object to array for easier iteration
-          const portfolioArray = Object.keys(portfolioData).map(key => ({
+          // Convert homepagePortfolioData object to array for easier iteration
+          const portfolioArray = Object.keys(homepagePortfolioData).map(key => ({
             id: key,
-            ...portfolioData[key]
+            ...homepagePortfolioData[key]
           }));
 
           // Clone template for each project and populate with data
@@ -953,54 +1033,81 @@
         }
       }
 
-      // Function to generate testimonials section HTML dynamically
-      function generateTestimonialsHTML() {
+      // Function to generate testimonials by cloning a single template
+      function populateTestimonials() {
         // Check if we're on index.html page (has testimonials section)
         const testimonialsContainer = document.querySelector("#testimonials .swiper-wrapper");
-        if (testimonialsContainer && testimonialsData) {
-          console.log('🔧 Generating testimonials HTML dynamically...');
+        const testimonialTemplate = document.querySelector('.testimonial-template');
 
-          // Clear existing content
+        if (testimonialsContainer && testimonialTemplate && homepageTestimonialsData) {
+          console.log('🔧 Cloning testimonial template for homepage testimonials...');
+
+          // Clear existing content (including the hidden template)
           testimonialsContainer.innerHTML = '';
 
-          // Generate HTML for each testimonial
-          Object.keys(testimonialsData).forEach((testimonialId, index) => {
-            const testimonial = testimonialsData[testimonialId];
+          // Convert homepageTestimonialsData object to array for easier iteration
+          const testimonialsArray = Object.keys(homepageTestimonialsData).map(key => ({
+            id: key,
+            ...homepageTestimonialsData[key]
+          }));
 
-            // Generate stars HTML based on rating
-            let starsHTML = '';
-            for (let i = 0; i < 5; i++) {
-              starsHTML += '<i class="bi bi-star-fill"></i>';
+          // Clone template for each testimonial and populate with data
+          testimonialsArray.forEach((testimonial, index) => {
+            // Clone the template
+            const testimonialClone = testimonialTemplate.cloneNode(true);
+
+            // Remove the template class and show the element
+            testimonialClone.classList.remove('testimonial-template');
+            testimonialClone.style.display = 'block';
+
+            // Update data-aos-delay for stagger animation (if needed)
+            const delay = 100 + (index * 100);
+            testimonialClone.setAttribute('data-aos-delay', delay.toString());
+
+            // Update testimonial content
+            const contentElement = testimonialClone.querySelector('.testimonial-text');
+            if (contentElement) {
+              contentElement.textContent = testimonial.content;
             }
 
-            const testimonialHTML = `
-              <div class="swiper-slide">
-                <div class="testimonial-item">
-                  <div class="row gy-4 justify-content-center">
-                    <div class="col-lg-6">
-                      <div class="testimonial-content">
-                        <p>
-                          <i class="bi bi-quote quote-icon-left"></i>
-                          <span>${testimonial.content}</span>
-                          <i class="bi bi-quote quote-icon-right"></i>
-                        </p>
-                        <h3>${testimonial.name}</h3>
-                        <h4>${testimonial.role}</h4>
-                        <div class="stars">
-                          ${starsHTML}
-                        </div>
-                      </div>
-                    </div>
-                    <div class="col-lg-2 text-center">
-                      <img src="${testimonial.image}" class="img-fluid testimonial-img" alt="">
-                    </div>
-                  </div>
-                </div>
-              </div><!-- End testimonial item -->
-            `;
+            // Update testimonial name
+            const nameElement = testimonialClone.querySelector('.testimonial-name');
+            if (nameElement) {
+              nameElement.textContent = testimonial.name;
+            }
 
-            testimonialsContainer.insertAdjacentHTML('beforeend', testimonialHTML);
-            console.log(`✅ Generated testimonial: ${testimonial.name}`);
+            // Update testimonial role
+            const roleElement = testimonialClone.querySelector('.testimonial-role');
+            if (roleElement) {
+              roleElement.textContent = testimonial.role;
+            }
+
+            // Update testimonial image
+            const imgElement = testimonialClone.querySelector('.testimonial-img');
+            if (imgElement) {
+              imgElement.src = testimonial.image;
+              imgElement.alt = `${testimonial.name} - ${testimonial.role}`;
+            }
+
+            // Update stars based on rating
+            const starsContainer = testimonialClone.querySelector('.stars');
+            if (starsContainer && testimonial.rating) {
+              const stars = starsContainer.querySelectorAll('i');
+              stars.forEach((star, starIndex) => {
+                if (starIndex < testimonial.rating) {
+                  star.classList.add('bi-star-fill');
+                  star.classList.remove('bi-star');
+                } else {
+                  star.classList.add('bi-star');
+                  star.classList.remove('bi-star-fill');
+                }
+              });
+            }
+
+            // Append the populated clone to the container
+            testimonialsContainer.appendChild(testimonialClone);
+
+            console.log(`✅ Created testimonial ${index + 1}: ${testimonial.name}`);
           });
         }
       }
@@ -1009,7 +1116,7 @@
       document.addEventListener("DOMContentLoaded", () => {
         populateServiceItems();
         populatePortfolioItems();
-        generateTestimonialsHTML();
+        populateTestimonials();
 
         // Initialize glightbox after all dynamic content is created
         setTimeout(() => {

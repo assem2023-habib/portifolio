@@ -27,5 +27,19 @@ const testimonialsData = {
     image: "assets/img/testimonials/testimonials-4.jpg",
     content: "Outstanding backend development work! Assem created a robust API system and optimized our database performance significantly. His technical knowledge and communication skills are top-notch. Highly recommended for complex projects.",
     rating: 5
+  },
+  emily: {
+    name: "Emily Davis",
+    role: "Marketing Director",
+    image: "assets/img/testimonials/testimonials-5.jpg",
+    content: "Assem's full-stack development expertise transformed our marketing platform completely. The Laravel backend integration with modern frontend technologies created a seamless user experience that our clients love.",
+    rating: 5
+  },
+  david: {
+    name: "David Wilson",
+    role: "Startup Founder",
+    image: "assets/img/testimonials/testimonials-6.jpg",
+    content: "Working with Assem on our fintech application was exceptional. His attention to security details and performance optimization made our product enterprise-ready. Highly skilled and professional developer.",
+    rating: 5
   }
 };

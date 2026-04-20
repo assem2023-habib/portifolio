@@ -305,6 +305,7 @@
       }
 
       updateLangIcon();
+      updateLanguageDisplay();
 
       if (typeof AOS !== 'undefined') {
         AOS.refresh();
@@ -313,5 +314,41 @@
       location.reload();
     });
   }
+
+  /**
+   * Update language display for all elements
+   */
+  function updateLanguageDisplay() {
+    const lang = localStorage.getItem('portfolio_language') || 'en';
+    
+    // Toggle filter buttons
+    document.querySelectorAll('.lang-en').forEach(el => {
+      el.style.display = lang === 'en' ? '' : 'none';
+    });
+    document.querySelectorAll('.lang-ar').forEach(el => {
+      el.style.display = lang === 'ar' ? '' : 'none';
+    });
+    
+    // Update portfolio filter text
+    const filterItems = document.querySelectorAll('.portfolio-filters li');
+    const filterTexts = {
+      'en': ['All', 'Web Development', 'Mobile Apps', 'Desktop Apps'],
+      'ar': ['الكل', 'تطوير الويب', 'تطبيقات الموبايل', 'تطبيقات سطح المكتب']
+    };
+    
+    filterItems.forEach((item, index) => {
+      if (filterTexts[lang] && filterTexts[lang][index]) {
+        const spanEn = item.querySelector('.lang-en');
+        const spanAr = item.querySelector('.lang-ar');
+        if (spanEn && spanAr) {
+          spanEn.style.display = lang === 'en' ? '' : 'none';
+          spanAr.style.display = lang === 'ar' ? '' : 'none';
+        }
+      }
+    });
+  }
+
+  // Initialize language display
+  updateLanguageDisplay();
 
 })();

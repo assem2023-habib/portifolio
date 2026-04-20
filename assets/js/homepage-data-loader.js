@@ -7,6 +7,17 @@ const HOMEPAGE_PROJECTS_LIMIT = 6;
 const HOMEPAGE_SERVICES_LIMIT = 6;
 
 let loadedData = null;
+let currentLang = localStorage.getItem('portfolio_language') || 'en';
+
+// Get localized title
+function getLocalizedTitle(project) {
+  return currentLang === 'ar' ? (project.titleAr || project.title) : project.title;
+}
+
+// Get localized description
+function getLocalizedDescription(project) {
+  return currentLang === 'ar' ? (project.descriptionAr || project.description) : project.description;
+}
 
 /**
  * تهيئة تحميل البيانات
@@ -128,26 +139,26 @@ function populatePortfolioItems() {
     const imgElement = projectClone.querySelector('img');
     if (imgElement) {
       imgElement.src = project.thumbnail || project.image;
-      imgElement.alt = `${project.title} - ${project.description}`;
+      imgElement.alt = `${getLocalizedTitle(project)} - ${getLocalizedDescription(project)}`;
     }
     
     // العنوان
     const titleElement = projectClone.querySelector('.portfolio-title');
     if (titleElement) {
-      titleElement.textContent = project.title;
+      titleElement.textContent = getLocalizedTitle(project);
     }
     
     // الوصف
     const descElement = projectClone.querySelector('.portfolio-description');
     if (descElement) {
-      descElement.textContent = project.description;
+      descElement.textContent = getLocalizedDescription(project);
     }
     
     // رابط المعاينة
     const previewLink = projectClone.querySelector('.glightbox.preview-link');
     if (previewLink) {
       previewLink.href = project.thumbnail || project.image;
-      previewLink.title = `${project.title} - ${project.description}`;
+      previewLink.title = `${getLocalizedTitle(project)} - ${getLocalizedDescription(project)}`;
       previewLink.setAttribute('data-gallery', project.gallery || 'portfolio-gallery');
     }
     
@@ -298,23 +309,23 @@ function portfolioTemplateClone(project, index) {
   const imgElement = clone.querySelector('img');
   if (imgElement) {
     imgElement.src = project.thumbnail || project.image;
-    imgElement.alt = `${project.title} - ${project.description}`;
+    imgElement.alt = `${getLocalizedTitle(project)} - ${getLocalizedDescription(project)}`;
   }
   
   const titleElement = clone.querySelector('.portfolio-title');
   if (titleElement) {
-    titleElement.textContent = project.title;
+    titleElement.textContent = getLocalizedTitle(project);
   }
   
   const descElement = clone.querySelector('.portfolio-description');
   if (descElement) {
-    descElement.textContent = project.description;
+    descElement.textContent = getLocalizedDescription(project);
   }
   
   const previewLink = clone.querySelector('.glightbox.preview-link');
   if (previewLink) {
     previewLink.href = project.thumbnail || project.image;
-    previewLink.title = `${project.title} - ${project.description}`;
+    previewLink.title = `${getLocalizedTitle(project)} - ${getLocalizedDescription(project)}`;
   }
   
   const detailsLink = clone.querySelector('.details-link');

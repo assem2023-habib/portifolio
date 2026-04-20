@@ -103,10 +103,10 @@
             data-aos="fade-up"
             data-aos-delay="100"
           >
-            <li data-filter="*" class="filter-active">All</li>
-            <li data-filter=".filter-web">Web Development</li>
-            <li data-filter=".filter-mobile">Mobile Apps</li>
-            <li data-filter=".filter-desktop">Desktop Apps</li>
+            <li data-filter="*" class="filter-active"><span class="lang-en">All</span><span class="lang-ar" style="display:none;">الكل</span></li>
+            <li data-filter=".filter-web"><span class="lang-en">Web Development</span><span class="lang-ar" style="display:none;">تطوير الويب</span></li>
+            <li data-filter=".filter-mobile"><span class="lang-en">Mobile Apps</span><span class="lang-ar" style="display:none;">تطبيقات الموبايل</span></li>
+            <li data-filter=".filter-desktop"><span class="lang-en">Desktop Apps</span><span class="lang-ar" style="display:none;">تطبيقات سطح المكتب</span></li>
           </ul>
           <!-- End Portfolio Filters -->
 
@@ -177,6 +177,7 @@
 
   <script>
     let projectsData = null;
+    let currentLang = localStorage.getItem('portfolio_language') || 'en';
 
     // Load projects from JSON
     async function loadProjectsFromJSON() {
@@ -190,6 +191,16 @@
         console.error('Error loading projects:', error);
         return null;
       }
+    }
+
+    // Get localized title
+    function getProjectTitle(project, lang) {
+      return lang === 'ar' ? (project.titleAr || project.title) : project.title;
+    }
+
+    // Get localized description
+    function getProjectDescription(project, lang) {
+      return lang === 'ar' ? (project.descriptionAr || project.description) : project.description;
     }
 
     // Function to populate all portfolio items
@@ -244,18 +255,18 @@
 
         const titleElement = projectClone.querySelector('.portfolio-title');
         if (titleElement) {
-          titleElement.textContent = project.title;
+          titleElement.textContent = getProjectTitle(project, currentLang);
         }
 
         const descElement = projectClone.querySelector('.portfolio-description');
         if (descElement) {
-          descElement.textContent = project.description;
+          descElement.textContent = getProjectDescription(project, currentLang);
         }
 
         const previewLink = projectClone.querySelector('.glightbox.preview-link');
         if (previewLink) {
           previewLink.href = project.thumbnail || project.image;
-          previewLink.title = `${project.title} - ${project.description}`;
+          previewLink.title = `${getProjectTitle(project, currentLang)} - ${getProjectDescription(project, currentLang)}`;
         }
 
         const detailsLink = projectClone.querySelector('.details-link');

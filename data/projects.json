@@ -463,6 +463,13 @@
       "count": 3
     },
     {
+      "id": "desktop",
+      "name": "Desktop Application",
+      "nameAr": "تطبيق سطح المكتب",
+      "icon": "bi-laptop",
+      "count": 3
+    },
+    {
       "id": "backend",
       "name": "Back-End",
       "nameAr": "الجزء الخلفي",

@@ -332,8 +332,8 @@
     // Update portfolio filter text
     const filterItems = document.querySelectorAll('.portfolio-filters li');
     const filterTexts = {
-      'en': ['All', 'Web App', 'Mobile Application', 'Back-End', 'Front-End'],
-      'ar': ['الكل', 'تطبيق ويب', 'تطبيق جوال', 'الجزء الخلفي', 'الواجهة الأمامية']
+      'en': ['All', 'Web App', 'Mobile Application', 'Desktop Application', 'Back-End', 'Front-End'],
+      'ar': ['الكل', 'تطبيق ويب', 'تطبيق جوال', 'تطبيق سطح المكتب', 'الجزء الخلفي', 'الواجهة الأمامية']
     };
     
     filterItems.forEach((item, index) => {

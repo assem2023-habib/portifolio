@@ -395,6 +395,149 @@
           "ar": "النسخة المحمولة من CutOptimizer بنفس الخوارزميات القوية"
         }
       }
+    },
+    {
+      "id": "rma",
+      "title": "RMA - Parcel & Shipping Management System",
+      "titleAr": "نظام إدارة الطرود والشحن",
+      "subtitle": "نظام ويب متكامل لإدارة عمليات الشحن والطرود",
+      "category": "web",
+      "image": "assets/img/masonry-portfolio/masonry-portfolio-1.jpg",
+      "thumbnail": "assets/img/masonry-portfolio/masonry-portfolio-1.jpg",
+      "description": "Comprehensive parcel and shipping management system built with Laravel 12 and Filament Admin Panel",
+      "descriptionAr": "نظام ويب متكامل لإدارة عمليات الشحن والطرود مبني على Laravel 12 مع Filament Admin Panel",
+      "status": "completed",
+      "year": 2025,
+      "duration": "6 أشهر",
+      "client": "مشروع تخرج",
+      "role": "Full Stack Developer",
+      "technologies": [
+        "Laravel",
+        "Filament",
+        "MySQL",
+        "PHP",
+        "Tailwind CSS",
+        "Laravel Passport",
+        "Laravel Reverb",
+        "WebSocket",
+        "Spatie Permission"
+      ],
+      "liveUrl": null,
+      "repoUrl": null,
+      "features": {
+        "parcelManagement": {
+          "en": "Smart Parcel Management with tracking",
+          "ar": "إدارة طرود ذكية مع تتبع"
+        },
+        "tracking": {
+          "en": "Comprehensive tracking system with unique tracking numbers",
+          "ar": "نظام تتبع شامل مع أرقام تتبع فريدة"
+        },
+        "parcelStatuses": {
+          "en": "8 Parcel Statuses (Pending, Confirmed, In Transit, Ready, Delivered, Failed, Returned, Canceled)",
+          "ar": "8 حالات للطرد"
+        },
+        "pricing": {
+          "en": "Automatic pricing based on weight and policies",
+          "ar": "تسعير تلقائي بناءً على الوزن"
+        },
+        "userRoles": {
+          "en": "User Roles (Guest, User, Employee, Super Admin)",
+          "ar": "أدوار المستخدمين (ضيف، مستخدم، موظف، مدير)"
+        },
+        "branches": {
+          "en": "Branch and Route Management",
+          "ar": "إدارة الفروع والمسارات"
+        },
+        "appointments": {
+          "en": "Appointment Booking System",
+          "ar": "نظام حجز المواعيد"
+        },
+        "authorization": {
+          "en": "Parcel Authorization System",
+          "ar": "نظام التخويل"
+        },
+        "chat": {
+          "en": "Real-time Chat System with WebSocket",
+          "ar": "محادثات فورية عبر WebSocket"
+        },
+        "adminPanel": {
+          "en": "Filament Admin Panel with 20+ Resources",
+          "ar": "لوحة تحكم Filament"
+        },
+        "notifications": {
+          "en": "Firebase & Telegram Notifications",
+          "ar": "إشعارات Firebase وتيليجرام"
+        }
+      },
+      "featuresAr": [
+        "إدارة طرود ذكية مع تتبع",
+        "نظام تتبع شامل",
+        "8 حالات للطرد",
+        "تسعير تلقائي",
+        "أدوار المستخدمين المتعددة",
+        "إدارة الفروع والمسارات",
+        "نظام حجز المواعيد",
+        "نظام التخويل",
+        "محادثات فورية",
+        "لوحة تحكم Filament",
+        "إشعارات Firebase"
+      ],
+      "parcelStatuses": [
+        "Pending",
+        "Confirmed",
+        "In Transit",
+        "Ready for Pickup",
+        "Delivered",
+        "Failed",
+        "Returned",
+        "Canceled"
+      ],
+      "adminPanelResources": [
+        "ParcelResource",
+        "ConversationResource",
+        "NotificationResource",
+        "ParcelAuthorizationResource",
+        "ShipmentResource",
+        "TruckResource",
+        "BranchResource",
+        "EmployeeResource",
+        "UserResource",
+        "AppointmentResource"
+      ],
+      "apiEndpoints": {
+        "auth": ["/register", "/login", "/logout", "/me", "/forgot-password"],
+        "parcels": ["GET/POST /parcel", "GET/PUT/DELETE /parcel/{id}"],
+        "chat": ["/conversations", "/messages"],
+        "admin": ["/admin/parcels", "/admin/appointments"],
+        "superAdmin": ["/stats", "/branches", "/employees"]
+      },
+      "architecture": {
+        "pattern": "Laravel MVC with Filament Admin",
+        "description": {
+          "en": "Full-stack web application with Laravel backend and Filament admin panel",
+          "ar": "تطبيق ويب كامل مع Backend Laravel ولوحة تحكم Filament"
+        }
+      },
+      "challenges": {
+        "en": "Building comprehensive shipping system with real-time features",
+        "ar": "بناء نظام شحن شامل مع ميزات لحظية"
+      },
+      "challengesAr": "كان التحدي بناء نظام متكامل يربط بين إدارة الطرود والفروع مع محادثات فورية",
+      "documentation": {
+        "exists": true,
+        "file": "assets/Docs_Project/RMA_GRADUATION_PROJECT.md",
+        "type": "comprehensive"
+      },
+      "highlights": {
+        "isFeatured": true,
+        "isMajor": true,
+        "complexity": "high",
+        "highlights": {
+          "en": "Complete shipping management solution with Filament admin and WebSocket chat",
+          "ar": "حل شامل لإدارة الشحن مع لوحة تحكم Filament ومحادثات WebSocket"
+        }
+      }
     }
   ],
   "metadata": {
@@ -402,6 +545,6 @@
     "createdAt": "2026-04-20",
     "author": "Assem Adel Habib",
     "contact": "099assemhb@gmail.com",
-    "totalProjects": 3
+    "totalProjects": 4
   }
 }

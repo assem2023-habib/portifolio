@@ -450,23 +450,30 @@
   "categories": [
     {
       "id": "web",
-      "name": "Web Development",
-      "nameAr": "تطوير الويب",
+      "name": "Web App",
+      "nameAr": "تطبيق ويب",
       "icon": "bi-globe",
       "count": 5
     },
     {
       "id": "mobile",
-      "name": "Mobile Apps",
-      "nameAr": "تطبيقات الموبايل",
+      "name": "Mobile Application",
+      "nameAr": "تطبيق جوال",
       "icon": "bi-phone",
       "count": 3
     },
     {
-      "id": "desktop",
-      "name": "Desktop Apps",
-      "nameAr": "تطبيقات سطح المكتب",
-      "icon": "bi-laptop",
+      "id": "backend",
+      "name": "Back-End",
+      "nameAr": "الجزء الخلفي",
+      "icon": "bi-server",
+      "count": 3
+    },
+    {
+      "id": "frontend",
+      "name": "Front-End",
+      "nameAr": "الواجهة الأمامية",
+      "icon": "bi-layout-text-window-reverse",
       "count": 3
     }
   ],

@@ -1,0 +1,407 @@
+{
+  "projects": [
+    {
+      "id": "shehrezad",
+      "title": "Shehrezad Backend",
+      "titleAr": "نظام شهرزاد - Backend",
+      "subtitle": "المحرك الخلفي المتكامل لإدارة مبيعات وطلبات شركة شهرزاد",
+      "category": "web",
+      "image": "assets/img/masonry-portfolio/masonry-portfolio-1.jpg",
+      "thumbnail": "assets/img/masonry-portfolio/masonry-portfolio-1.jpg",
+      "description": "Comprehensive Sales, Order, and Debt Management System - Backend built with Node.js and Express",
+      "descriptionAr": "نظام برمجي متكامل لإدارة مبيعات وطلبات شركة شهرزاد مع دعم تعدد العملات والديون",
+      "status": "completed",
+      "year": 2025,
+      "duration": "12 شهر",
+      "client": "شركة شهرزاد للأزياء",
+      "role": "Lead Backend Developer",
+      "technologies": [
+        "Node.js",
+        "Express",
+        "MySQL",
+        "Firebase",
+        "JWT",
+        "Puppeteer",
+        "PDFKit",
+        "Sharp",
+        "Bcrypt",
+        "Socket.io"
+      ],
+      "liveUrl": null,
+      "repoUrl": null,
+      "features": {
+        "multiCurrency": {
+          "en": "Multi-Currency Support (USD, TRY, SYP)",
+          "ar": "دعم 3 عملات (دولار، ليرة تركية،ليرة سورية)"
+        },
+        "inventory": {
+          "en": "Smart Inventory Management with variants (colors, sizes)",
+          "ar": "إدارة مخزون ذكية مع المتغيرات (ألوان، مقاسات)"
+        },
+        "cartLocking": {
+          "en": "Smart Cart Locking with TTL",
+          "ar": "نظام حجز السلة الذكي مع مؤقت زمني"
+        },
+        "debtManagement": {
+          "en": "Complete Debt & Payment Tracking System (FIFO)",
+          "ar": "نظام ديون ومتابعة الدفعات (FIFO)"
+        },
+        "coupons": {
+          "en": "Advanced Coupon & Discount System",
+          "ar": "نظام كوبونات وخصومات متقدم"
+        },
+        "invoicing": {
+          "en": "Automated PDF Invoice Generation",
+          "ar": "توليد فواتير PDF آلية"
+        },
+        "notifications": {
+          "en": "Firebase Push Notifications",
+          "ar": "إشعارات Firebase الفورية"
+        },
+        "reviews": {
+          "en": "Product Reviews & Ratings System",
+          "ar": "نظام تقييم ومراجعات المنتجات"
+        },
+        "favorites": {
+          "en": "Smart Favorites System",
+          "ar": "نظام المفضلة الذكي"
+        },
+        "favorites": {
+          "en": "Smart Favorites System",
+          "ar": "نظام المفضلة الذكي"
+        }
+      },
+      "featuresAr": [
+        "منصة تجارة إلكترونية وإدارة علاقات عملاء متكاملة",
+        "إدارة طلبات كاملة من السلة للفاتورة",
+        "نظام تتبع ديون وحسابات العملاء",
+        "نظام صلاحيات (عميل، موظف، مدير أعلى)",
+        "إشعارات Firebase الفورية",
+        "توليد فواتير PDF آلية",
+        "مهام مجدولة لصيانة النظام",
+        "دعم تعدد العملات",
+        "نظام حجز سلة ذكي",
+        "توزيع دفعات ذكي بطريقة FIFO"
+      ],
+      "architecture": {
+        "pattern": "Modular Architecture with API Versioning",
+        "description": {
+          "en": "Scalable architecture with separate modules for Customers, Employees, and Admins",
+          "ar": "بنية معمارية قابلة للتوسع مع وحدات منفصلة"
+        }
+      },
+      "database": {
+        "tables": [
+          "products",
+          "product_colors",
+          "product_sizes",
+          "carts",
+          "cart_items",
+          "orders",
+          "invoices",
+          "customer_debts",
+          "payments",
+          "coupons",
+          "reviews",
+          "favorites"
+        ]
+      },
+      "security": {
+        "en": ["JWT Authentication", "Bcrypt Password Hashing", "Role-Based Access Control (RBAC)", "Input Validation"],
+        "ar": ["مصادقة JWT", "تشفير Bcrypt", "التحكم بالصلاحيات", "التحقق من المدخلات"]
+      },
+      "challenges": {
+        "en": "Building a complex financial system supporting multi-currency and debts while maintaining high security",
+        "ar": "بناء نظام مالي معقد يدعم تعدد العملات والديون مع الحفاظ على أمان عالي"
+      },
+      "challengesAr": "كان أكبر تحدٍ بناء نظام محاسبة يربط بين العملات المختلفة ويتعامل مع الديون بشكل عادل ودقيق",
+      "documentation": {
+        "exists": true,
+        "file": "assets/Docs_Project/README_SHEHRAZAD_BACKEND.md",
+        "type": "comprehensive"
+      },
+      "highlights": {
+        "isFeatured": true,
+        "isMajor": true,
+        "complexity": "high",
+        "highlights": {
+          "en": "Complete e-commerce solution with multi-currency and debt management",
+          "ar": "حل تجارة إلكترونية متكامل مع تعدد العملات وإدارة الديون"
+        }
+      }
+    },
+    {
+      "id": "cutoptimizer",
+      "title": "CutOptimizer Desktop",
+      "titleAr": "كيت أوبتمايزر - سطح المكتب",
+      "subtitle": "نظام تحسين قص السجاد الاحترافي",
+      "category": "desktop",
+      "image": "assets/img/masonry-portfolio/masonry-portfolio-3.jpg",
+      "thumbnail": "assets/img/masonry-portfolio/masonry-portfolio-3.jpg",
+      "description": "Smart carpet cutting optimization tool for textile industry efficiency and waste reduction",
+      "descriptionAr": "أداة ذكية لتحسين قص السجاد في صناعة النسيج لتقليل الهادر وتحسين الكفاءة",
+      "status": "completed",
+      "year": 2024,
+      "duration": "8 أشهر",
+      "client": "مصانع السجاد المحلية",
+      "role": "Lead Developer",
+      "technologies": [
+        "Python",
+        "PySide6",
+        "Pandas",
+        "XlsxWriter",
+        "FPDF2",
+        "Qt",
+        "Matplotlib"
+      ],
+      "liveUrl": null,
+      "repoUrl": null,
+      "features": {
+        "smartOptimization": {
+          "en": "AI-powered cutting optimization algorithms",
+          "ar": "خوارزميات تحسين القص بالذكاء الاصطناعي"
+        },
+        "wasteReduction": {
+          "en": "Material waste reduction up to 30%",
+          "ar": "تقليل الهادر بنسبة تصل إلى 30%"
+        },
+        "excelImport": {
+          "en": "Excel file import with smart preview",
+          "ar": "استيراد ملفات Excel مع معاينة ذكية"
+        },
+        "reporting": {
+          "en": "Professional colored Excel reports with 7 sheets",
+          "ar": "تقارير Excel ملونة احترافية بـ 7 أوراق"
+        },
+        "glassmorphUI": {
+          "en": "Modern Glassmorphism UI design",
+          "ar": "تصميم Glassmorphism حديث وجذاب"
+        },
+        "background": {
+          "en": "Dark/Light mode with custom backgrounds",
+          "ar": "دعم الوضع الداكن والفاتح"
+        },
+        "suggestionEngine": {
+          "en": "Smart suggestion engine for remaining pieces",
+          "ar": "محرك اقتراحات ذكي للقطع المتبقية"
+        },
+        "multiMachine": {
+          "en": "Multiple machine width support",
+          "ar": "دعم مقاسات ماكينات متعددة"
+        },
+        "threading": {
+          "en": "Background processing with threading",
+          "ar": "معالجة في الخلفية متعددة الخيوط"
+        },
+        "validation": {
+          "en": "Advanced data validation",
+          "ar": "تحقق متقدم من البيانات"
+        }
+      },
+      "featuresAr": [
+        "خوارزميات تحسين القص بالذكاء الاصطناعي",
+        "تقليل الهادر بنسبة تصل إلى 30%",
+        "استيراد ملفات Excel",
+        "تقارير Excel ملونة (7 أوراق)",
+        "تصميم Glassmorphism حديث",
+        "دعم الوضع الداكن والفاتح",
+        "محرك اقتراحات ذكي",
+        "دعم مقاسات ماكينات متعددة",
+        "معالجة في الخلفية",
+        "تحقق متقدم من البيانات"
+      ],
+      "algorithm": {
+        "name": "Greedy Optimization with LCM",
+        "type": {
+          "en": "Cutting Stock Problem Solver",
+          "ar": "حل مشكلة قص المخزون"
+        },
+        "description": {
+          "en": "Uses mathematical algorithms to find optimal arrangement of carpet pieces on machine width",
+          "ar": "يستخدم خوارزميات رياضية لإيجاد الترتيب الأمثل لقطع السجاد"
+        }
+      },
+      "outputSheets": [
+        "Group Details",
+        "Group Summary",
+        "Audit Sheet",
+        "Waste Analysis",
+        "Totals",
+        "Remaining",
+        "Suggestions"
+      ],
+      "architecture": {
+        "pattern": "Modular Architecture with Asynchronous Processing",
+        "description": {
+          "en": "Separation of UI, Business Logic, and Data IO",
+          "ar": "فصل بين الواجهة ومنطق العمل وإدارة البيانات"
+        }
+      },
+      "challenges": {
+        "en": "Developing complex algorithms to solve the Cutting Stock problem with engineering constraints",
+        "ar": "تطوير خوارزميات معقدة لحل مشكلة القص مع مراعاة القيود الهندسية"
+      },
+      "challengesAr": "كان التحدي تصميم خوارزمية ذكية تجد أفضل ترتيب لقطع السجاد على ماكينات بعرض محدد مع تقليل الهادر",
+      "documentation": {
+        "exists": true,
+        "file": "assets/Docs_Project/README_CUTOPTIMIZER.md",
+        "type": "comprehensive"
+      },
+      "highlights": {
+        "isFeatured": true,
+        "isMajor": true,
+        "complexity": "high",
+        "highlights": {
+          "en": "Desktop application with advanced algorithms and professional Excel reports",
+          "ar": "تطبيق سطح مكتب بخوارزميات متقدمة وتقارير Excel احترافية"
+        }
+      }
+    },
+    {
+      "id": "sajadi",
+      "title": "Sajadi - Cut Optimizer Mobile",
+      "titleAr": "سجادي - تحسين القص的手机",
+      "subtitle": "نظام تحسين القص الذكي للسجاد والأقمشة",
+      "category": "mobile",
+      "image": "assets/img/masonry-portfolio/masonry-portfolio-3.jpg",
+      "thumbnail": "assets/img/masonry-portfolio/masonry-portfolio-3.jpg",
+      "description": "Smart carpet cutting optimization mobile app for textile industry efficiency and waste reduction",
+      "descriptionAr": "تطبيق جوال ذكي لتحسين قص السجاد في صناعة النسيج لتقليل الهادر وتحسين الكفاءة",
+      "status": "completed",
+      "year": 2024,
+      "duration": "6 أشهر",
+      "client": "مصانع السجاد المحلية",
+      "role": "Lead Mobile Developer",
+      "technologies": [
+        "Flutter",
+        "Dart",
+        "Provider",
+        "Clean Architecture",
+        "syncfusion_flutter_xlsio",
+        "excel",
+        "fl_chart",
+        "pdf",
+        "printing"
+      ],
+      "liveUrl": null,
+      "repoUrl": null,
+      "features": {
+        "smartOptimization": {
+          "en": "Advanced algorithms for optimal cutting arrangement",
+          "ar": "خوارزميات متقدمة للتجميع الأمثل"
+        },
+        "excelImport": {
+          "en": "Excel file import with smart preview",
+          "ar": "استيراد ملفات Excel مع معاينة ذكية"
+        },
+        "resultsScreen": {
+          "en": "Real-time results with KPIs and efficiency metrics",
+          "ar": "نتائج لحظية مع مؤشرات الأداء"
+        },
+        "reporting": {
+          "en": "Professional Excel reports with 8 sheets",
+          "ar": "تقارير Excel بـ 8 أوراق"
+        },
+        "pdfExport": {
+          "en": "PDF report generation and printing",
+          "ar": "تصدير PDF وجاهز للطباعة"
+        },
+        "statistics": {
+          "en": "Interactive charts and analytics",
+          "ar": "رسوم بيانية تفاعلية"
+        },
+        "glassmorphUI": {
+          "en": "Modern Glassmorphism mobile UI",
+          "ar": "تصميم Glassmorphism حديث"
+        },
+        "rtlSupport": {
+          "en": "Full Arabic RTL support",
+          "ar": "دعم كامل للعربية RTL"
+        },
+        "darkMode": {
+          "en": "Dark/Light mode with custom backgrounds",
+          "ar": "الوضع الداكن والفاتح"
+        },
+        "backgroundProcessing": {
+          "en": "Background processing for performance",
+          "ar": "معالجة في الخلفية"
+        },
+        "suggestionEngine": {
+          "en": "Smart suggestion engine for remaining pieces",
+          "ar": "محرك اقتراحات ذكي"
+        }
+      },
+      "featuresAr": [
+        "خوارزميات تحسين القص",
+        "استيراد ملفات Excel",
+        "نتائج لحظية مع KPIs",
+        "تقارير Excel (8 أوراق)",
+        "تصدير PDF",
+        "رسوم بيانية تفاعلية",
+        "تصميم Glassmorphism",
+        "دعم RTL الكامل",
+        "الوضع الداكن والفاتح",
+        "معالجة في الخلفية",
+        "محرك اقتراحات ذكي"
+      ],
+      "algorithm": {
+        "name": "Greedy Optimization with LCM",
+        "type": {
+          "en": "Cutting Stock Problem Solver",
+          "ar": "حل مشكلة قص المخزون"
+        },
+        "description": {
+          "en": "Same algorithms as desktop version, optimized for mobile",
+          "ar": "نفس الخوارزميات الخاصة بإصدار سطح المكتب"
+        }
+      },
+      "outputSheets": [
+        "Summary",
+        "Details",
+        "Groups",
+        "Remaining",
+        "Statistics",
+        "Suggestions",
+        "Audit",
+        "Totals"
+      ],
+      "architecture": {
+        "pattern": "Clean Architecture with Feature-First",
+        "description": {
+          "en": "Separation of UI, Business Logic, and Services in mobile-optimized structure",
+          "ar": "فصل بين الواجهة والخدمات والمنطق"
+        }
+      },
+      "challenges": {
+        "en": "Adapting complex desktop algorithms for mobile performance constraints",
+        "ar": "تحسين خوارزميات سطح المكتب للأداء على الموبايل"
+      },
+      "challengesAr": "كان التحدي تحويل الخوارزميات المعقدة للعمل بسلاسة على الأجهزة المحمولة مع الحفاظ على الأداء",
+      "platform": {
+        "android": "7.0 (Nougat)+",
+        "ios": "12.0+"
+      },
+      "documentation": {
+        "exists": true,
+        "file": "assets/Docs_Project/README_CUTOPTIMIZER_MOBILE.md",
+        "type": "comprehensive"
+      },
+      "highlights": {
+        "isFeatured": false,
+        "isMajor": false,
+        "complexity": "medium",
+        "highlights": {
+          "en": "Mobile version of CutOptimizer with same powerful algorithms",
+          "ar": "النسخة المحمولة من CutOptimizer بنفس الخوارزميات القوية"
+        }
+      }
+    }
+  ],
+  "metadata": {
+    "version": "1.0.0",
+    "createdAt": "2026-04-20",
+    "author": "Assem Adel Habib",
+    "contact": "099assemhb@gmail.com",
+    "totalProjects": 3
+  }
+}

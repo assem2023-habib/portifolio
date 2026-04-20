@@ -269,4 +269,49 @@
     });
   }
 
+  /**
+   * Language Toggle
+   */
+  const languageToggle = document.getElementById('languageToggle');
+  if (languageToggle) {
+    const body = document.body;
+    const langIcon = languageToggle.querySelector('i');
+
+    const currentLang = localStorage.getItem('portfolio_language') || 'en';
+
+    function updateLangIcon() {
+      const lang = localStorage.getItem('portfolio_language') || 'en';
+      if (lang === 'ar') {
+        languageToggle.classList.add('active');
+      } else {
+        languageToggle.classList.remove('active');
+      }
+    }
+
+    updateLangIcon();
+
+    languageToggle.addEventListener('click', function() {
+      const lang = localStorage.getItem('portfolio_language') || 'en';
+      const newLang = lang === 'en' ? 'ar' : 'en';
+
+      localStorage.setItem('portfolio_language', newLang);
+
+      document.documentElement.lang = newLang;
+
+      if (newLang === 'ar') {
+        document.body.classList.add('rtl');
+      } else {
+        document.body.classList.remove('rtl');
+      }
+
+      updateLangIcon();
+
+      if (typeof AOS !== 'undefined') {
+        AOS.refresh();
+      }
+
+      location.reload();
+    });
+  }
+
 })();

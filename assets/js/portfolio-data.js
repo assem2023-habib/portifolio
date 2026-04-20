@@ -215,5 +215,54 @@ const portfolioData = {
       "assets/img/portfolio/app-7.jpg",
       "assets/img/portfolio/product-5.jpg"
     ]
+  },
+  shehrezad: {
+    title: "Shehrezad Backend",
+    category: "web",
+    image: "assets/img/masonry-portfolio/masonry-portfolio-1.jpg",
+    description: "Integrated e-commerce and CRM backend system with advanced APIs for product, order, and debt management",
+    detailsUrl: "project.html",
+    gallery: "portfolio-gallery-web",
+    technologies: "Node.js, Express, MySQL, Firebase, JWT, Puppeteer, PDFKit",
+    status: "Completed",
+    url: "#",
+    features: [
+      "Integrated e-commerce and CRM platform",
+      "Complete order management (Cart to Invoice)",
+      "Customer debt and account tracking",
+      "RBAC (Customer, Employee, Super Admin)",
+      "Firebase Push Notifications",
+      "Automated PDF Invoice generation",
+      "Cron Jobs for system maintenance"
+    ],
+    galleryImages: [
+      "assets/img/masonry-portfolio/masonry-portfolio-1.jpg",
+      "assets/img/portfolio/app-1.jpg",
+      "assets/img/portfolio/product-1.jpg"
+    ]
+  },
+  shiftpay: {
+    title: "Shift Pay",
+    category: "mobile",
+    image: "assets/img/masonry-portfolio/masonry-portfolio-2.jpg",
+    description: "Smart employee and finance management system with an advanced voice assistant supporting Egyptian dialect, built for offline efficiency",
+    detailsUrl: "project.html",
+    gallery: "portfolio-gallery-mobile",
+    technologies: "Flutter, Bloc, Drift (SQLite), Speech To Text, Clean Architecture",
+    status: "Completed",
+    url: "#",
+    features: [
+      "Advanced Voice Assistant (Egyptian Dialect support)",
+      "Automated Payroll and Financial management",
+      "Offline-first architecture with SQLite (Drift)",
+      "Professional PDF Reporting System",
+      "Inventory and Branch management",
+      "Smart Attendance and Shift tracking"
+    ],
+    galleryImages: [
+      "assets/img/masonry-portfolio/masonry-portfolio-2.jpg",
+      "assets/img/portfolio/app-2.jpg",
+      "assets/img/portfolio/product-2.jpg"
+    ]
   }
 };

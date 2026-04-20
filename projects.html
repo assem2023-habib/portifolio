@@ -42,6 +42,11 @@
 
     <i class="header-toggle d-xl-none bi bi-list"></i>
 
+    <!-- Language Toggle Button -->
+    <button id="languageToggle" class="language-toggle" title="تبديل اللغة / Change Language">
+      <i class="bi bi-translate"></i>
+    </button>
+
     <!-- Dark Mode Toggle Button -->
     <button id="darkModeToggle" class="dark-mode-toggle" title="تبديل الوضع المظلم">
       <i class="bi bi-moon-fill"></i>
@@ -167,96 +172,189 @@
   <script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
 
   <!-- Main JS File -->
-  <script src="assets/js/portfolio-data.js"></script>
+  <script src="assets/js/data-loader.js"></script>
   <script src="assets/js/main.js"></script>
 
   <script>
+    let projectsData = null;
+
+    // Load projects from JSON
+    async function loadProjectsFromJSON() {
+      try {
+        const response = await fetch('data/projects.json');
+        if (!response.ok) throw new Error('Failed to load');
+        const data = await response.json();
+        projectsData = data;
+        return data;
+      } catch (error) {
+        console.error('Error loading projects:', error);
+        return null;
+      }
+    }
+
     // Function to populate all portfolio items
-    function populateAllPortfolioItems() {
+    async function populateAllPortfolioItems(category = '*') {
       const portfolioContainer = document.querySelector("#all-projects .isotope-container");
       const portfolioTemplate = document.querySelector('.portfolio-template');
 
-      if (portfolioContainer && portfolioTemplate && portfolioData) {
-        console.log('🔧 Cloning portfolio template for all projects...');
+      if (!portfolioContainer || !portfolioTemplate) {
+        console.error('Container or template not found');
+        return;
+      }
 
-        // Clear existing content (including the hidden template)
-        portfolioContainer.innerHTML = '';
+      if (!projectsData) {
+        await loadProjectsFromJSON();
+      }
 
-        // Convert portfolioData object to array for easier iteration
-        const portfolioArray = Object.keys(portfolioData).map(key => ({
-          id: key,
-          ...portfolioData[key]
-        }));
+      if (!projectsData || !projectsData.projects) {
+        console.error('No projects data found');
+        return;
+      }
 
-        // Clone template for each project and populate with data
-        portfolioArray.forEach((project, index) => {
-          // Clone the template
-          const projectClone = portfolioTemplate.cloneNode(true);
+      console.log('🔧 Loading projects from JSON...');
 
-          // Remove the template class and show the element
-          projectClone.classList.remove('portfolio-template');
-          projectClone.classList.add(`filter-${project.category}`);
-          projectClone.style.display = 'block';
+      // Filter projects by category
+      let projects = projectsData.projects;
+      if (category !== '*') {
+        projects = projects.filter(p => p.category === category);
+      }
 
-          // Update data-aos-delay for stagger animation
-          const delay = 100 + (index * 100);
-          projectClone.setAttribute('data-aos-delay', delay.toString());
+      // Clear existing content
+      portfolioContainer.innerHTML = '';
 
-          // Update the image src and alt
-          const imgElement = projectClone.querySelector('img');
-          if (imgElement) {
-            imgElement.src = project.image;
-            imgElement.alt = `${project.title} - ${project.description}`;
-          }
+      // Update filter counts
+      updateFilterCounts(projectsData.projects);
 
-          // Update the title
-          const titleElement = projectClone.querySelector('.portfolio-title');
-          if (titleElement) {
-            titleElement.textContent = project.title;
-          }
+      // Clone template for each project and populate with data
+      projects.forEach((project, index) => {
+        const projectClone = portfolioTemplate.cloneNode(true);
 
-          // Update the description
-          const descElement = projectClone.querySelector('.portfolio-description');
-          if (descElement) {
-            descElement.textContent = project.description;
-          }
+        projectClone.classList.remove('portfolio-template');
+        projectClone.classList.add(`filter-${project.category}`);
+        projectClone.style.display = 'block';
 
-          // Update the preview link href, title, and data-gallery
-          const previewLink = projectClone.querySelector('.glightbox.preview-link');
-          if (previewLink) {
-            previewLink.href = project.image;
-            previewLink.title = `${project.title} - ${project.description}`;
-            previewLink.setAttribute('data-gallery', project.gallery);
-          }
+        const delay = 100 + (index * 100);
+        projectClone.setAttribute('data-aos-delay', delay);
 
-          // Update the details link href
-          const detailsLink = projectClone.querySelector('.details-link');
-          if (detailsLink) {
-            detailsLink.href = `project.html?project=${project.id}`;
-          }
+        const imgElement = projectClone.querySelector('img');
+        if (imgElement) {
+          imgElement.src = project.thumbnail || project.image;
+          imgElement.alt = `${project.title} - ${project.description}`;
+        }
 
-          // Append the populated clone to the container
-          portfolioContainer.appendChild(projectClone);
+        const titleElement = projectClone.querySelector('.portfolio-title');
+        if (titleElement) {
+          titleElement.textContent = project.title;
+        }
 
-          console.log(`✅ Created portfolio item ${index + 1}: ${project.title}`);
+        const descElement = projectClone.querySelector('.portfolio-description');
+        if (descElement) {
+          descElement.textContent = project.description;
+        }
+
+        const previewLink = projectClone.querySelector('.glightbox.preview-link');
+        if (previewLink) {
+          previewLink.href = project.thumbnail || project.image;
+          previewLink.title = `${project.title} - ${project.description}`;
+        }
+
+        const detailsLink = projectClone.querySelector('.details-link');
+        if (detailsLink) {
+          detailsLink.href = `project.html?project=${project.id}`;
+        }
+
+        portfolioContainer.appendChild(projectClone);
+
+        console.log(`✅ Created portfolio item ${index + 1}: ${project.title}`);
+      });
+
+      console.log(`✅ Displayed ${projects.length} projects`);
+    }
+
+    // Update filter counts
+    function updateFilterCounts(allProjects) {
+      if (!allProjects) return;
+      
+      const filterButtons = document.querySelectorAll('.portfolio-filters li[data-filter]');
+      
+      filterButtons.forEach(btn => {
+        const filter = btn.getAttribute('data-filter');
+        let count = 0;
+        
+        if (filter === '*') {
+          count = allProjects.length;
+        } else {
+          const category = filter.replace('.filter-', '');
+          count = allProjects.filter(p => p.category === category).length;
+        }
+        
+        const existingCount = btn.querySelector('.filter-count');
+        if (existingCount) existingCount.remove();
+        
+        const countSpan = document.createElement('span');
+        countSpan.className = 'filter-count ms-1';
+        countSpan.style.fontSize = '0.8em';
+        countSpan.style.opacity = '0.7';
+        countSpan.textContent = `(${count})`;
+        btn.appendChild(countSpan);
+      });
+    }
+
+    // Setup filters
+    function setupFilters() {
+      const filterContainer = document.querySelector('.portfolio-filters');
+      if (!filterContainer) return;
+      
+      const filterButtons = filterContainer.querySelectorAll('li[data-filter]');
+      
+      filterButtons.forEach(btn => {
+        btn.addEventListener('click', async function() {
+          const filter = this.getAttribute('data-filter');
+          
+          filterButtons.forEach(b => b.classList.remove('filter-active'));
+          this.classList.add('filter-active');
+          
+          await populateAllPortfolioItems(filter);
+          
+          // Reinitialize Isotope
+          setTimeout(() => {
+            if (typeof Isotope !== 'undefined') {
+              const container = document.querySelector('#all-projects .isotope-container');
+              if (container && window.isotopeInstance) {
+                window.isotopeInstance.reloadItems();
+                window.isotopeInstance.arrange({
+                  filter: filter
+                });
+              }
+            }
+          }, 100);
+        });
+      });
+    }
+
+    // Initialize Isotope
+    function initIsotope() {
+      const container = document.querySelector('#all-projects .isotope-container');
+      if (container && typeof Isotope !== 'undefined') {
+        window.isotopeInstance = new Isotope(container, {
+          itemSelector: '.isotope-item',
+          layoutMode: 'masonry'
         });
       }
     }
 
     // Initialize when page loads
-    document.addEventListener("DOMContentLoaded", () => {
-      populateAllPortfolioItems();
+    document.addEventListener("DOMContentLoaded", async () => {
+      await populateAllPortfolioItems();
+      setupFilters();
+      initIsotope();
 
-      // Initialize glightbox after all dynamic content is created
+      // Initialize glightbox after content is created
       setTimeout(() => {
         if (typeof GLightbox !== 'undefined') {
-          // Check if glightbox is already initialized
           if (window.glightboxInstance) {
-            // Refresh existing instance to include new elements
             window.glightboxInstance.refresh();
-            console.log('🔄 Refreshed existing glightbox instance');
           } else {
-            // Create new instance if it doesn't exist
             const glightbox = GLightbox({
               selector: '.glightbox',
               touchNavigation: true,
@@ -264,10 +362,13 @@
               loop: false
             });
             window.glightboxInstance = glightbox;
-            console.log('🔧 Created new glightbox instance');
           }
         }
-      }, 200);
+
+        if (typeof AOS !== 'undefined') {
+          AOS.refresh();
+        }
+      }, 300);
     });
   </script>
 

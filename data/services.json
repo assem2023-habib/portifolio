@@ -1,0 +1,131 @@
+{
+  "services": [
+    {
+      "id": "fullstack",
+      "title": "Full Stack Web Development",
+      "titleAr": "تطوير الويب الكامل",
+      "icon": "bi-code-square",
+      "description": "Building modern, responsive web applications using the latest technologies and frameworks like Laravel and React.",
+      "descriptionAr": "بناء تطبيقات ويب حديثة ومتجاوبة باستخدام أحدث التقنيات والأطر مثل Laravel و React",
+      "features": [
+        "Modern web application development with Laravel & React",
+        "Responsive design for all devices",
+        "RESTful API integration",
+        "Database design and optimization"
+      ],
+      "featuresAr": [
+        "تطوير تطبيقات ويب حديثة بـ Laravel و React",
+        "تصميم متجاوب لجميع الأجهزة",
+        "تكامل RESTful API",
+        "تصميم وتحسين قواعد البيانات"
+      ]
+    },
+    {
+      "id": "api",
+      "title": "RESTful API Design & Implementation",
+      "titleAr": "تصميم وتنفيذ APIs",
+      "icon": "bi-plug",
+      "description": "Developing secure, scalable APIs with comprehensive documentation and thorough testing.",
+      "descriptionAr": "تطوير APIs آمنة وقابلة للتوسع مع توثيق شامل واختبارات دقيقة",
+      "features": [
+        "RESTful API design and development",
+        "Comprehensive API documentation",
+        "Security implementation and testing",
+        "Performance optimization"
+      ],
+      "featuresAr": [
+        "تصميم وتطوير RESTful API",
+        "توثيق شامل للـ API",
+        "تطبيق واختبار الأمان",
+        "تحسين الأداء"
+      ]
+    },
+    {
+      "id": "cms",
+      "title": "CMS & Dashboard Development",
+      "titleAr": "تطوير CMS ولوحات التحكم",
+      "icon": "bi-layout-text-window-reverse",
+      "description": "Building interactive dashboards and custom content management systems using Laravel and modern JavaScript frameworks.",
+      "descriptionAr": "بناء لوحات تحكم تفاعلية وأنظمة إدارة محتوى مخصصة باستخدام Laravel",
+      "features": [
+        "Custom CMS development",
+        "Interactive dashboard creation",
+        "Laravel and Vue.js integration",
+        "User management systems"
+      ],
+      "featuresAr": [
+        "تطوير CMS مخصص",
+        "إنشاء لوحات تحكم تفاعلية",
+        "تكامل Laravel و Vue.js",
+        "أنظمة إدارة المستخدمين"
+      ]
+    },
+    {
+      "id": "performance",
+      "title": "Performance Optimization & Database",
+      "titleAr": "تحسين الأداء وقواعد البيانات",
+      "icon": "bi-speedometer",
+      "description": "Optimizing application performance and databases, applying best practices for security and high efficiency.",
+      "descriptionAr": "تحسين أداء التطبيقات وقواعد البيانات، مع تطبيق أفضل ممارسات الأمان والكفاءة",
+      "features": [
+        "Performance analysis and optimization",
+        "Database query optimization",
+        "Security best practices implementation",
+        "Scalability improvements"
+      ],
+      "featuresAr": [
+        "تحليل وتحسين الأداء",
+        "تحسين استعلامات قاعدة البيانات",
+        "تطبيق أفضل ممارسات الأمان",
+        "تحسين قابلية التوسع"
+      ]
+    },
+    {
+      "id": "interactive",
+      "title": "Interactive Web Applications",
+      "titleAr": "تطبيقات ويب تفاعلية",
+      "icon": "bi-person-rolodex",
+      "description": "Building modern interactive web applications using Laravel and JavaScript frameworks like Vue.js and React.",
+      "descriptionAr": "بناء تطبيقات ويب تفاعلية حديثة باستخدام Laravel وإطارات JavaScript الحديثة",
+      "features": [
+        "Interactive user interfaces",
+        "Real-time data updates",
+        "Modern JavaScript frameworks",
+        "Responsive web applications"
+      ],
+      "featuresAr": [
+        "واجهات مستخدم تفاعلية",
+        "تحديث البيانات لحظياً",
+        "إطارات JavaScript الحديثة",
+        "تطبيقات ويب متجاوبة"
+      ]
+    },
+    {
+      "id": "maintenance",
+      "title": "Project Maintenance & Updates",
+      "titleAr": "صيانة وتحديث المشاريع",
+      "icon": "bi-tools",
+      "description": "Maintaining and updating software projects, fixing bugs and adding new features according to client requirements.",
+      "descriptionAr": "صيانة وتحديث المشاريع، وإصلاح الأخطاء وإضافة ميزات جديدة حسب متطلبات العميل",
+      "features": [
+        "Ongoing project maintenance",
+        "Bug fixes and security updates",
+        "Feature enhancements",
+        "Technical support"
+      ],
+      "featuresAr": [
+        "صيانة المشاريع المستمرة",
+        "إصلاح الأخطاء وتحديثات الأمان",
+        "تحسين الميزات",
+        "دعم تقني"
+      ]
+    }
+  ],
+  "metadata": {
+    "version": "1.0.0",
+    "lastUpdated": "2025-04-15",
+    "totalServices": 6,
+    "author": "Assem Adel Habib",
+    "contact": "099assemhb@gmail.com"
+  }
+}

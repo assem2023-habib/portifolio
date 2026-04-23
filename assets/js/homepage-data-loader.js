@@ -3,7 +3,7 @@
  * تحميل بيانات الصفحة الرئيسية من JSON
  */
 
-const HOMEPAGE_PROJECTS_LIMIT = 5;
+const HOMEPAGE_PROJECTS_LIMIT = 6;
 const HOMEPAGE_SERVICES_LIMIT = 6;
 
 let loadedData = null;
@@ -25,9 +25,9 @@ function getLocalizedDescription(project) {
 async function initHomepageData() {
   try {
     // تحميل JSON
-    const response = await fetch('data/my-projects.json');
+    const response = await fetch('data/projects.json');
     if (!response.ok) {
-      throw new Error('Failed to load my-projects.json');
+      throw new Error('Failed to load projects.json');
     }
     
     loadedData = await response.json();

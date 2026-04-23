@@ -7,8 +7,8 @@
       "specialization": "Backend Development",
       "specializationAr": "تطوير Backend",
       "files": {
-        "pdf": "assets/cv/nestjs-cv.pdf",
-        "docx": "assets/cv/nestjs-cv.docx"
+        "pdf": "assets/cvs/Back-End NestJs/Assem_habib_CV_NESTJS.pdf",
+        "docx": "assets/cvs/Back-End NestJs/Assem_habib_CV_NESTJS.docx"
       },
       "description": "Backend Developer with expertise in NestJS, Node.js, Express, and databases. Experienced in building scalable APIs and microservices architecture.",
       "descriptionAr": "مطور Backend بخبرة في NestJS و Node.js و Express وقواعد البيانات. خبير في بناء APIs قابلة للتوسع وهندسة الخدمات المصغرة."

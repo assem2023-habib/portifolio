@@ -4,8 +4,6 @@
  */
 
 let projectsData = null;
-let servicesData = null;
-let testimonialsData = null;
 let currentLanguage = 'en';
 let currentFilter = '*';
 

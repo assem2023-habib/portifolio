@@ -1030,6 +1030,11 @@ body.dark-mode section.section {
 .portfolio .portfolio-item {
   position: relative;
   overflow: hidden;
+  height: 250px;
+}
+
+.portfolio .portfolio-item.wide-item {
+  height: 350px;
 }
 
 .portfolio .portfolio-item .portfolio-info {
@@ -1903,10 +1908,18 @@ body.dark-mode section.section {
   padding: 1.5rem;
 }
 
+#portfolio .isotope-container .portfolio-item {
+  position: relative;
+  overflow: hidden;
+}
+
 #portfolio .isotope-container .portfolio-item img {
-  height: 250px;
-  object-fit: cover;
   width: 100%;
+  height: 100%;
+  object-fit: cover;
+  position: absolute;
+  top: 0;
+  left: 0;
 }
 
 @media (max-width: 992px) {
@@ -1917,6 +1930,7 @@ body.dark-mode section.section {
   }
   
   #portfolio .isotope-container .portfolio-item img {
+    position: relative;
     height: 200px;
   }
 }

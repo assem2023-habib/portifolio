@@ -174,6 +174,26 @@ function populatePortfolioItems() {
     portfolioContainer.appendChild(projectClone);
   });
   
+  // Debug: Check how many elements were added
+  const addedElements = portfolioContainer.querySelectorAll('.portfolio-item:not(.portfolio-template)');
+  console.log('🔍 DOM elements added:', addedElements.length);
+  console.log('🔍 Container innerHTML:', portfolioContainer.innerHTML.substring(0, 200));
+  
+  // Try to reinitialize Isotope to show all items
+  setTimeout(() => {
+    if (typeof Isotope !== 'undefined') {
+      const container = document.querySelector('#portfolio .isotope-container');
+      if (container) {
+        console.log('🔄 Reinitializing Isotope...');
+        const iso = new Isotope(container, {
+          itemSelector: '.isotope-item',
+          layoutMode: 'masonry'
+        });
+        window.iso = iso;
+      }
+    }
+  }, 100);
+  
   console.log(`✅ Displayed ${projects.length} projects on homepage`);
 }
 

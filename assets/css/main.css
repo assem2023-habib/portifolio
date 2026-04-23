@@ -1890,26 +1890,41 @@ body.dark-mode section.section {
 }
 
 #portfolio .isotope-container .portfolio-item.wide-item {
-  grid-column: span 2;
+  flex: 0 0 66.666667%;
+  max-width: 66.666667%;
+}
+
+#portfolio .isotope-container .portfolio-item:not(.wide-item) {
+  flex: 0 0 33.333333%;
+  max-width: 33.333333%;
 }
 
 #portfolio .isotope-container .portfolio-item.wide-item .portfolio-info {
   padding: 1.5rem;
 }
 
-#portfolio .isotope-container .portfolio-item.wide-item img,
-#portfolio .isotope-container .portfolio-item:not(.wide-item) img {
+#portfolio .isotope-container .portfolio-item img {
   height: 250px;
   object-fit: cover;
   width: 100%;
 }
 
 @media (max-width: 992px) {
-  #portfolio .isotope-container .portfolio-item.wide-item {
-    grid-column: span 1;
+  #portfolio .isotope-container .portfolio-item.wide-item,
+  #portfolio .isotope-container .portfolio-item:not(.wide-item) {
+    flex: 0 0 50%;
+    max-width: 50%;
   }
   
   #portfolio .isotope-container .portfolio-item img {
     height: 200px;
+  }
+}
+
+@media (max-width: 576px) {
+  #portfolio .isotope-container .portfolio-item.wide-item,
+  #portfolio .isotope-container .portfolio-item:not(.wide-item) {
+    flex: 0 0 100%;
+    max-width: 100%;
   }
 }

@@ -188,6 +188,8 @@
         if (!response.ok) throw new Error('Failed to load my-projects.json');
         const data = await response.json();
         myProjectsData = data;
+        console.log('✅ Projects loaded:', data.projects.length);
+        console.log('📋 Projects:', data.projects);
         return data;
       } catch (error) {
         console.error('Error loading projects:', error);
@@ -228,9 +230,13 @@
 
       // Filter projects by category
       let projects = myProjectsData.projects;
+      console.log('📊 Filter category:', category);
       if (category !== '*') {
         projects = projects.filter(p => p.category === category);
+        console.log('📊 Filtered projects:', projects.length);
       }
+
+      console.log('🎨 Displaying projects:', projects.length);
 
       // Clear existing content
       portfolioContainer.innerHTML = '';

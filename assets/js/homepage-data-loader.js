@@ -69,7 +69,9 @@ function updateFilterCounts() {
   if (!loadedData || !loadedData.projects) return;
   
   const projects = loadedData.projects;
-  const filterButtons = document.querySelectorAll('.portfolio-filters li[data-filter]');
+  const filterButtons = document.querySelectorAll('.portfolio-filters [data-filter]');
+  
+  console.log('🔢 Updating filter counts for', projects.length, 'projects');
   
   filterButtons.forEach(btn => {
     const filter = btn.getAttribute('data-filter');
@@ -81,6 +83,8 @@ function updateFilterCounts() {
       const category = filter.replace('.filter-', '');
       count = projects.filter(p => p.category === category).length;
     }
+    
+    console.log('🔢 Filter', filter, 'has', count, 'projects');
     
     // إزالة العداد القديم
     const existingCount = btn.querySelector('.filter-count');
@@ -286,7 +290,7 @@ function setupPortfolioFilters() {
   const filterContainer = document.querySelector('.portfolio-filters');
   if (!filterContainer) return;
   
-  const filterButtons = filterContainer.querySelectorAll('li[data-filter]');
+  const filterButtons = filterContainer.querySelectorAll('[data-filter]');
   const portfolioContainer = document.querySelector('#portfolio .isotope-container');
   
   if (!portfolioContainer) return;
@@ -294,19 +298,27 @@ function setupPortfolioFilters() {
   filterButtons.forEach(btn => {
     btn.addEventListener('click', function() {
       const filter = this.getAttribute('data-filter');
+      console.log('🔽 Filter clicked:', filter);
       
       if (!loadedData || !loadedData.projects) return;
       
       // تحديث الـ active
       filterButtons.forEach(b => b.classList.remove('filter-active'));
       this.classList.add('filter-active');
+      console.log('🎯 Active filter:', filter);
       
       // الفلترة
       let filteredProjects = loadedData.projects;
       if (filter !== '*') {
         const category = filter.replace('.filter-', '');
         filteredProjects = loadedData.projects.filter(p => p.category === category);
+        console.log('📂 Category filtered:', category);
+      } else {
+        console.log('📂 Showing all projects');
       }
+      
+      console.log('📊 Filtered projects count:', filteredProjects.length);
+      console.log('📋 Filtered projects:', filteredProjects);
       
       // إعادة العرض
       portfolioContainer.innerHTML = '';
@@ -315,6 +327,8 @@ function setupPortfolioFilters() {
         const projectClone = portfolioTemplateClone(project, index);
         portfolioContainer.appendChild(projectClone);
       });
+      
+      console.log('✅ Displaying filtered projects:', filteredProjects.length);
       
       // إعادة تهيئة Isotope
       reinitializeIsotope();

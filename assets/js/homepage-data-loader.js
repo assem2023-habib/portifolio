@@ -122,19 +122,28 @@ function populatePortfolioItems() {
     return;
   }
   
-  // مسح المحتوى
+// مسح المحتوى
   portfolioContainer.innerHTML = '';
   
-  // الحصول على المشاريع (المحدود بـ 5 للصفحة الرئيسية)
+  // الحصول على المشاريع (المحدود بـ 6 للصفحة الرئيسية)
   const projects = loadedData.projects.slice(0, HOMEPAGE_PROJECTS_LIMIT);
   console.log('🎨 Displaying projects on homepage:', projects.length);
   console.log('📊 Projects being displayed:', projects);
   
   projects.forEach((project, index) => {
+    // تحديد الـ layout بناءً على الترتيب (فردي = عريض، زوجي = طبيعي)
+    const isWide = (index + 1) % 2 === 1; // 1st, 3rd, 5th gets wide
+    
     const projectClone = portfolioTemplate.cloneNode(true);
     
     projectClone.classList.remove('portfolio-template');
     projectClone.classList.add(`filter-${project.category}`);
+    
+    // إضافة كلاس للعنصر العريض
+    if (isWide) {
+      projectClone.classList.add('wide-item');
+    }
+    
     projectClone.style.display = 'block';
     projectClone.setAttribute('data-aos-delay', 100 + index * 100);
     

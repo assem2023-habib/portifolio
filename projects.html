@@ -178,7 +178,7 @@
   <script src="assets/js/main.js"></script>
 
   <script>
-    let projectsData = null;
+    let myProjectsData = null;
     let currentLang = localStorage.getItem('portfolio_language') || 'en';
 
     // Load projects from JSON
@@ -187,7 +187,7 @@
         const response = await fetch('data/my-projects.json');
         if (!response.ok) throw new Error('Failed to load my-projects.json');
         const data = await response.json();
-        projectsData = data;
+        myProjectsData = data;
         return data;
       } catch (error) {
         console.error('Error loading projects:', error);
@@ -215,11 +215,11 @@
         return;
       }
 
-      if (!projectsData) {
+      if (!myProjectsData) {
         await loadProjectsFromJSON();
       }
 
-      if (!projectsData || !projectsData.projects) {
+      if (!myProjectsData || !myProjectsData.projects) {
         console.error('No projects data found');
         return;
       }
@@ -227,7 +227,7 @@
       console.log('🔧 Loading projects from JSON...');
 
       // Filter projects by category
-      let projects = projectsData.projects;
+      let projects = myProjectsData.projects;
       if (category !== '*') {
         projects = projects.filter(p => p.category === category);
       }
@@ -236,7 +236,7 @@
       portfolioContainer.innerHTML = '';
 
       // Update filter counts
-      updateFilterCounts(projectsData.projects);
+      updateFilterCounts(myProjectsData.projects);
 
       // Clone template for each project and populate with data
       projects.forEach((project, index) => {

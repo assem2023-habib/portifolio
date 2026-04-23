@@ -1,0 +1,24 @@
+{
+  "cvs": [
+    {
+      "id": "nestjs",
+      "title": "NestJS Developer CV",
+      "titleAr": "سيرة ذاتية - مطور NestJS",
+      "specialization": "Backend Development",
+      "specializationAr": "تطوير Backend",
+      "files": {
+        "pdf": "assets/cv/nestjs-cv.pdf",
+        "docx": "assets/cv/nestjs-cv.docx"
+      },
+      "description": "Backend Developer with expertise in NestJS, Node.js, Express, and databases. Experienced in building scalable APIs and microservices architecture.",
+      "descriptionAr": "مطور Backend بخبرة في NestJS و Node.js و Express وقواعد البيانات. خبير في بناء APIs قابلة للتوسع وهندسة الخدمات المصغرة."
+    }
+  ],
+  "metadata": {
+    "version": "1.0.0",
+    "createdAt": "2026-04-23",
+    "author": "Assem Adel Habib",
+    "contact": "099assemhb@gmail.com",
+    "totalCVs": 1
+  }
+}

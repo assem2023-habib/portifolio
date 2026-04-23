@@ -14,8 +14,8 @@ let currentFilter = '*';
  */
 async function loadProjectsData() {
   try {
-    const response = await fetch('data/projects.json');
-    if (!response.ok) throw new Error('Failed to load projects.json');
+    const response = await fetch('data/my-projects.json');
+    if (!response.ok) throw new Error('Failed to load my-projects.json');
     const data = await response.json();
     projectsData = data;
     return data;

@@ -25,9 +25,9 @@ function getLocalizedDescription(project) {
 async function initHomepageData() {
   try {
     // تحميل JSON
-    const response = await fetch('data/projects.json');
+    const response = await fetch('data/my-projects.json');
     if (!response.ok) {
-      throw new Error('Failed to load projects.json');
+      throw new Error('Failed to load my-projects.json');
     }
     
     loadedData = await response.json();
@@ -389,6 +389,8 @@ function setupLanguageToggle() {
  */
 document.addEventListener('DOMContentLoaded', async () => {
   await initHomepageData();
+  await initCVLoader();
+  renderCVs(document.getElementById('cv-container'));
   setupPortfolioFilters();
   setupLanguageToggle();
   

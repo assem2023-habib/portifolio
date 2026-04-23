@@ -1691,3 +1691,41 @@ body.dark-mode section.section {
   margin-right: 8px;
   color: var(--accent-color);
 }
+
+/*--------------------------------------------------------------
+# CV Section Styles
+--------------------------------------------------------------*/
+.cv-card {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.cv-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1) !important;
+}
+
+.cv-title {
+  color: var(--heading-color);
+  font-weight: 600;
+}
+
+.cv-description {
+  line-height: 1.6;
+}
+
+.cv-header .badge {
+  font-size: 0.75rem;
+  padding: 0.35em 0.65em;
+}
+
+.cv-actions .btn {
+  transition: all 0.3s ease;
+}
+
+.cv-actions .btn:hover {
+  transform: translateY(-2px);
+}
+
+#cv .section-title {
+  margin-bottom: 40px;
+}

@@ -1030,7 +1030,7 @@ body.dark-mode section.section {
 .portfolio .portfolio-item {
   position: relative;
   overflow: hidden;
-  height: 250px;
+  height: 280px;
 }
 
 .portfolio .portfolio-item.wide-item {
@@ -1891,24 +1891,28 @@ body.dark-mode section.section {
 # Portfolio Layout - Wide/Normal Cards
 --------------------------------------------------------------*/
 #portfolio .isotope-container {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 20px;
+  display: flex !important;
+  flex-wrap: wrap !important;
+  align-items: stretch;
+  gap: 15px;
 }
 
 #portfolio .isotope-container .portfolio-item {
   transition: all 0.3s ease;
-  margin-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+  height: 250px;
 }
 
 #portfolio .isotope-container .portfolio-item.wide-item {
-  flex: 0 0 calc(66.666667% - 20px);
-  max-width: calc(66.666667% - 20px);
+  flex: 0 0 66.666667%;
+  max-width: 66.666667%;
+  height: 320px;
 }
 
 #portfolio .isotope-container .portfolio-item:not(.wide-item) {
-  flex: 0 0 calc(33.333333% - 20px);
-  max-width: calc(33.333333% - 20px);
+  flex: 0 0 33.333333%;
+  max-width: 33.333333%;
 }
 
 #portfolio .isotope-container .portfolio-item.wide-item .portfolio-info {
@@ -1932,17 +1936,9 @@ body.dark-mode section.section {
 @media (max-width: 992px) {
   #portfolio .isotope-container .portfolio-item.wide-item,
   #portfolio .isotope-container .portfolio-item:not(.wide-item) {
-    flex: 0 0 calc(50% - 15px);
-    max-width: calc(50% - 15px);
-  }
-  
-  #portfolio .isotope-container .portfolio-item {
-    height: 200px;
-  }
-  
-  #portfolio .isotope-container .portfolio-item img {
-    position: relative;
-    height: 100%;
+    flex: 0 0 50%;
+    max-width: 50%;
+    height: 250px;
   }
 }
 
@@ -1951,6 +1947,6 @@ body.dark-mode section.section {
   #portfolio .isotope-container .portfolio-item:not(.wide-item) {
     flex: 0 0 100%;
     max-width: 100%;
-    margin-bottom: 15px;
+    height: 220px;
   }
 }

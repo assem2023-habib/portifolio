@@ -68,14 +68,19 @@ function createCVElement(cv) {
 
   return `
     <div class="col-md-6 col-lg-4" data-aos="fade-up">
-      <div class="cv-card bg-white shadow-sm rounded p-4 h-100">
-        <div class="cv-header mb-3">
-          <h5 class="cv-title mb-1">${text.title}</h5>
-          <span class="badge bg-primary">${text.specialization}</span>
+      <div class="cv-card d-flex flex-column h-100">
+        <div class="cv-icon-wrapper">
+          <div class="cv-icon">
+            <i class="bi bi-file-earmark-text"></i>
+          </div>
         </div>
-        <p class="cv-description text-muted small mb-3">${text.description}</p>
+        <div class="cv-content flex-grow-1">
+          <h5 class="cv-title">${text.title}</h5>
+          <span class="cv-specialization">${text.specialization}</span>
+          <p class="cv-description">${text.description}</p>
+        </div>
         <div class="cv-actions">
-          <button class="btn btn-primary btn-sm w-100" onclick="showCVDownloadModal('${cv.id}')">
+          <button class="btn btn-download w-100" onclick="showCVDownloadModal('${cv.id}')">
             <i class="bi bi-download me-2"></i>${text.downloadBtn}
           </button>
         </div>
@@ -123,31 +128,31 @@ function showCVDownloadModal(cvId) {
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
           <div class="modal-body">
-            <p class="mb-3">${text.downloadMessage}</p>
-            <div class="d-flex flex-column gap-2">
+            <p class="mb-3 fw-medium">${text.downloadMessage}</p>
+            <div class="d-flex flex-column gap-3">
   `;
 
   if (hasPDF) {
     modalContent += `
-      <a href="${cv.files.pdf}" download class="btn btn-outline-primary" onclick="trackCVDownload('${cvId}', 'pdf')">
-        <i class="bi bi-file-earmark-pdf me-2"></i>${text.pdf}
+      <a href="${cv.files.pdf}" download class="btn btn-download-option btn-outline-primary" onclick="trackCVDownload('${cvId}', 'pdf')">
+        <i class="bi bi-file-earmark-pdf me-2 fs-5"></i>${text.pdf}
       </a>
     `;
   }
 
   if (hasDOCX) {
     modalContent += `
-      <a href="${cv.files.docx}" download class="btn btn-outline-primary" onclick="trackCVDownload('${cvId}', 'docx')">
-        <i class="bi bi-file-earmark-word me-2"></i>${text.docx}
+      <a href="${cv.files.docx}" download class="btn btn-download-option btn-outline-primary" onclick="trackCVDownload('${cvId}', 'docx')">
+        <i class="bi bi-file-earmark-word me-2 fs-5"></i>${text.docx}
       </a>
     `;
   }
 
   if (hasPDF && hasDOCX) {
     modalContent += `
-      <hr class="my-2">
-      <a href="${cv.files.pdf}" download class="btn btn-success" onclick="trackCVDownload('${cvId}', 'both')">
-        <i class="bi bi-download me-2"></i>${text.both}
+      <hr class="border-secondary opacity-25">
+      <a href="${cv.files.pdf}" download class="btn btn-download-option btn-success" onclick="trackCVDownload('${cvId}', 'both')">
+        <i class="bi bi-download me-2 fs-5"></i>${text.both}
       </a>
     `;
   }
@@ -156,7 +161,7 @@ function showCVDownloadModal(cvId) {
             </div>
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">${text.cancel}</button>
+            <button type="button" class="btn btn-light" data-bs-dismiss="modal">${text.cancel}</button>
           </div>
         </div>
       </div>

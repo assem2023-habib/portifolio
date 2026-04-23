@@ -1695,37 +1695,189 @@ body.dark-mode section.section {
 /*--------------------------------------------------------------
 # CV Section Styles
 --------------------------------------------------------------*/
+#cv {
+  background-color: var(--surface-color);
+}
+
 .cv-card {
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  background: var(--surface-color);
+  border: 1px solid var(--border-color, #e5e7eb);
+  border-radius: 16px;
+  padding: 1.5rem;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.cv-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, var(--accent-color), #67c4f5);
+  opacity: 0;
+  transition: opacity 0.3s ease;
 }
 
 .cv-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1) !important;
+  transform: translateY(-8px);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+  border-color: var(--accent-color);
+}
+
+.cv-card:hover::before {
+  opacity: 1;
+}
+
+.cv-icon-wrapper {
+  margin-bottom: 1rem;
+}
+
+.cv-icon {
+  width: 60px;
+  height: 60px;
+  border-radius: 12px;
+  background: linear-gradient(135deg, var(--accent-color), #67c4f5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.cv-icon i {
+  font-size: 1.75rem;
+  color: white;
 }
 
 .cv-title {
   color: var(--heading-color);
+  font-weight: 700;
+  font-size: 1.1rem;
+  margin-bottom: 0.5rem;
+}
+
+.cv-specialization {
+  display: inline-block;
+  font-size: 0.75rem;
   font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--accent-color);
+  margin-bottom: 0.75rem;
 }
 
 .cv-description {
+  color: var(--default-color);
+  font-size: 0.875rem;
   line-height: 1.6;
+  margin-bottom: 1.25rem;
+  opacity: 0.85;
 }
 
-.cv-header .badge {
-  font-size: 0.75rem;
-  padding: 0.35em 0.65em;
-}
-
-.cv-actions .btn {
+.cv-actions .btn-download {
+  background: linear-gradient(90deg, var(--accent-color), #67c4f5);
+  border: none;
+  color: white;
+  font-weight: 600;
+  padding: 0.75rem 1.5rem;
+  border-radius: 10px;
   transition: all 0.3s ease;
 }
 
-.cv-actions .btn:hover {
+.cv-actions .btn-download:hover {
   transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(5, 99, 187, 0.3);
+  background: linear-gradient(90deg, #045ba1, var(--accent-color));
 }
 
 #cv .section-title {
-  margin-bottom: 40px;
+  margin-bottom: 3rem;
+}
+
+#cv .section-title h2 {
+  font-size: 2rem;
+  font-weight: 800;
+  color: var(--heading-color);
+}
+
+#cv .section-title p {
+  color: var(--default-color);
+  opacity: 0.8;
+}
+
+/* Dark mode styles for CV section */
+.dark-background .cv-card {
+  background: var(--surface-color);
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
+.dark-background .cv-card:hover {
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+}
+
+.dark-background .cv-description {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.dark-background .cv-title {
+  color: var(--heading-color);
+}
+
+.dark-background #cv .section-title p {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+/* CV Download Modal Styles */
+#cvDownloadModal .modal-content {
+  background: var(--surface-color);
+  border: 1px solid var(--border-color, #e5e7eb);
+  border-radius: 16px;
+}
+
+#cvDownloadModal .modal-header {
+  border-bottom: 1px solid var(--border-color, #e5e7eb);
+  padding: 1.25rem 1.5rem;
+}
+
+#cvDownloadModal .modal-title {
+  color: var(--heading-color);
+  font-weight: 700;
+}
+
+#cvDownloadModal .modal-body {
+  padding: 1.5rem;
+}
+
+#cvDownloadModal .modal-body p {
+  color: var(--default-color);
+}
+
+#cvDownloadModal .modal-footer {
+  border-top: 1px solid var(--border-color, #e5e7eb);
+  padding: 1rem 1.5rem;
+}
+
+#cvDownloadModal .btn-download-option {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.875rem 1.25rem;
+  border-radius: 10px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+#cvDownloadModal .btn-download-option:hover {
+  transform: translateY(-2px);
+}
+
+.dark-background #cvDownloadModal .modal-content {
+  background: var(--surface-color);
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
+.dark-background #cvDownloadModal .modal-header,
+.dark-background #cvDownloadModal .modal-footer {
+  border-color: rgba(255, 255, 255, 0.1);
 }

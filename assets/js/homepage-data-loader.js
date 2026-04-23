@@ -3,7 +3,7 @@
  * تحميل بيانات الصفحة الرئيسية من JSON
  */
 
-const HOMEPAGE_PROJECTS_LIMIT = 4;
+const HOMEPAGE_PROJECTS_LIMIT = 5;
 const HOMEPAGE_SERVICES_LIMIT = 6;
 
 let loadedData = null;

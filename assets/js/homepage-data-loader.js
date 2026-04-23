@@ -31,18 +31,19 @@ async function initHomepageData() {
     }
     
     loadedData = await response.json();
-    console.log('✅ Data loaded:', loadedData);
+    console.log('✅ Projects loaded:', loadedData.projects.length);
+    console.log('📋 Projects:', loadedData.projects);
     
     // تحميل الخدمات
     if (typeof servicesData !== 'undefined') {
       loadedData.services = servicesData;
     }
-    
+
     // تحميل الآراء
     if (typeof testimonialsData !== 'undefined') {
       loadedData.testimonials = testimonialsData;
     }
-    
+
     // تشغيل الدوال
     populatePortfolioItems();
     populateServiceItems();
@@ -124,8 +125,10 @@ function populatePortfolioItems() {
   // مسح المحتوى
   portfolioContainer.innerHTML = '';
   
-  // الحصول على المشاريع (المحدود بـ 6 للصفحة الرئيسية)
+  // الحصول على المشاريع (المحدود بـ 5 للصفحة الرئيسية)
   const projects = loadedData.projects.slice(0, HOMEPAGE_PROJECTS_LIMIT);
+  console.log('🎨 Displaying projects on homepage:', projects.length);
+  console.log('📊 Projects being displayed:', projects);
   
   projects.forEach((project, index) => {
     const projectClone = portfolioTemplate.cloneNode(true);

@@ -1812,46 +1812,80 @@ body.dark-mode section.section {
 }
 
 /* Dark mode styles for CV section */
-.dark-background .cv-card {
+body.dark-mode .cv-card {
   background: var(--surface-color);
   border-color: rgba(255, 255, 255, 0.1);
 }
 
-.dark-background .cv-card:hover {
+body.dark-mode .cv-card:hover {
   box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
 }
 
-.dark-background .cv-description {
-  color: rgba(255, 255, 255, 0.7);
+body.dark-mode .cv-icon {
+  background: linear-gradient(135deg, var(--accent-color), #67c4f5);
 }
 
-.dark-background .cv-title {
+body.dark-mode .cv-title {
   color: var(--heading-color);
 }
 
-.dark-background #cv .section-title p {
+body.dark-mode .cv-specialization {
+  color: var(--accent-color);
+}
+
+body.dark-mode .cv-description {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+body.dark-mode .cv-actions .btn-download {
+  background: var(--accent-color);
+}
+
+body.dark-mode #cvModal .section-title p {
   color: rgba(255, 255, 255, 0.7);
 }
 
 /* CV Download Modal Styles */
+#cvModal .modal-content,
 #cvDownloadModal .modal-content {
   background: var(--surface-color);
   border: 1px solid var(--border-color, #e5e7eb);
   border-radius: 16px;
 }
 
+#cvModal .modal-header,
 #cvDownloadModal .modal-header {
   border-bottom: 1px solid var(--border-color, #e5e7eb);
   padding: 1.25rem 1.5rem;
 }
 
+#cvModal .modal-title,
 #cvDownloadModal .modal-title {
   color: var(--heading-color);
   font-weight: 700;
 }
 
+#cvModal .modal-body,
 #cvDownloadModal .modal-body {
   padding: 1.5rem;
+}
+
+/* Dark mode for CV modals */
+body.dark-mode #cvModal .modal-content,
+body.dark-mode #cvDownloadModal .modal-content {
+  background: var(--surface-color);
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
+body.dark-mode #cvModal .modal-header,
+body.dark-mode #cvDownloadModal .modal-header {
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
+body.dark-mode #cvModal .modal-title,
+body.dark-mode #cvDownloadModal .modal-title {
+  color: var(--heading-color);
+}
 }
 
 #cvDownloadModal .modal-body p {

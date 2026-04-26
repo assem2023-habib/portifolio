@@ -1886,6 +1886,17 @@ body.dark-mode #cvModal .modal-title,
 body.dark-mode #cvDownloadModal .modal-title {
   color: var(--heading-color);
 }
+
+body.dark-mode #cvModal .btn-close,
+body.dark-mode #cvDownloadModal .btn-close {
+  filter: invert(1);
+  opacity: 0.5;
+}
+
+body.dark-mode #cvModal .btn-close:hover,
+body.dark-mode #cvDownloadModal .btn-close:hover {
+  opacity: 1;
+}
 }
 
 #cvDownloadModal .modal-body p {

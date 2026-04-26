@@ -252,6 +252,28 @@ body.dark-mode .portfolio .portfolio-item .portfolio-info {
   background: color-mix(in srgb, var(--background-color), transparent 20%);
 }
 
+body.dark-mode .portfolio-filters li {
+  border-color: rgba(255, 255, 255, 0.2);
+  color: rgba(255, 255, 255, 0.8);
+}
+
+body.dark-mode .portfolio-filters li:hover,
+body.dark-mode .portfolio-filters li.filter-active {
+  border-color: var(--accent-color);
+  color: #fff;
+}
+
+body.dark-mode .all-projects .portfolio-filters li {
+  border-color: rgba(255, 255, 255, 0.2);
+  color: rgba(255, 255, 255, 0.8);
+}
+
+body.dark-mode .all-projects .portfolio-filters li:hover,
+body.dark-mode .all-projects .portfolio-filters li.filter-active {
+  border-color: var(--accent-color);
+  color: #fff;
+}
+
 body.dark-mode .services .service-item {
   background-color: var(--surface-color);
   border: 1px solid color-mix(in srgb, var(--default-color), transparent 90%);
@@ -990,26 +1012,102 @@ body.dark-mode section.section {
   margin: 0 auto 20px auto;
   list-style: none;
   text-align: center;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
 }
 
 .portfolio .portfolio-filters li {
   cursor: pointer;
   display: inline-block;
-  padding: 8px 20px 10px 20px;
+  padding: 12px 24px 14px 24px;
   margin: 0;
-  font-size: 15px;
-  font-weight: 500;
+  font-size: 14px;
+  font-weight: 600;
   line-height: 1;
-  margin-bottom: 5px;
   border-radius: 50px;
   transition: all 0.3s ease-in-out;
   font-family: var(--heading-font);
+  background: transparent;
+  border: 2px solid var(--border-color, #e5e7eb);
+  color: var(--default-color);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
 }
 
 .portfolio .portfolio-filters li:hover,
 .portfolio .portfolio-filters li.filter-active {
-  color: var(--contrast-color);
+  color: #fff;
   background-color: var(--accent-color);
+  border-color: var(--accent-color);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+}
+
+.portfolio .portfolio-filters li.filter-active {
+  animation: filterPulse 0.3s ease;
+}
+
+@keyframes filterPulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+  100% { transform: scale(1); }
+}
+
+.portfolio .portfolio-filters li .filter-count {
+  font-size: 0.75em;
+  opacity: 0.8;
+  margin-left: 4px;
+}
+
+/* All Projects Page - Portfolio Filters */
+.all-projects .portfolio-filters {
+  padding: 0;
+  margin: 0 auto 20px auto;
+  list-style: none;
+  text-align: center;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+}
+
+.all-projects .portfolio-filters li {
+  cursor: pointer;
+  display: inline-block;
+  padding: 12px 24px 14px 24px;
+  margin: 0;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1;
+  border-radius: 50px;
+  transition: all 0.3s ease-in-out;
+  font-family: var(--heading-font);
+  background: transparent;
+  border: 2px solid var(--border-color, #e5e7eb);
+  color: var(--default-color);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.all-projects .portfolio-filters li:hover,
+.all-projects .portfolio-filters li.filter-active {
+  color: #fff;
+  background-color: var(--accent-color);
+  border-color: var(--accent-color);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+}
+
+.all-projects .portfolio-filters li.filter-active {
+  animation: filterPulse 0.3s ease;
+}
+
+.all-projects .portfolio-filters li .filter-count {
+  font-size: 0.75em;
+  opacity: 0.8;
+  margin-left: 4px;
 }
 
 .portfolio .portfolio-filters li:first-child {

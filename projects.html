@@ -322,13 +322,22 @@
     // Setup filters
     function setupFilters() {
       const filterContainer = document.querySelector('.portfolio-filters');
-      if (!filterContainer) return;
+      console.log('🔍 Filter container:', filterContainer);
+      if (!filterContainer) {
+        console.error('❌ Filter container not found');
+        return;
+      }
       
       const filterButtons = filterContainer.querySelectorAll('li[data-filter]');
+      console.log('🔍 Filter buttons found:', filterButtons.length);
       
       filterButtons.forEach(btn => {
+        btn.style.cursor = 'pointer';
+        btn.style.transition = 'all 0.3s ease';
+        
         btn.addEventListener('click', async function() {
           const filter = this.getAttribute('data-filter');
+          console.log('🖱️ Filter clicked:', filter);
           
           filterButtons.forEach(b => b.classList.remove('filter-active'));
           this.classList.add('filter-active');
@@ -349,6 +358,7 @@
           }, 100);
         });
       });
+      console.log('✅ Filters setup complete');
     }
 
     // Initialize Isotope

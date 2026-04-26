@@ -213,6 +213,23 @@ async function initCVLoader() {
   await loadCVsData();
   console.log('✅ CV Loader initialized');
   console.log('📄 CVs loaded:', getAllCVs().length);
+
+  // Render CVs in modal container
+  const modalContainer = document.getElementById('cv-modal-container');
+  if (modalContainer) {
+    const cvs = getAllCVs();
+    modalContainer.innerHTML = '';
+    cvs.forEach((cv, index) => {
+      modalContainer.innerHTML += createCVElement(cv);
+    });
+    console.log(`✅ Displayed ${cvs.length} CVs in modal`);
+  }
+
+  // Also try old container for backwards compatibility
+  const oldContainer = document.getElementById('cv-container');
+  if (oldContainer) {
+    renderCVs(oldContainer);
+  }
 }
 
 /**

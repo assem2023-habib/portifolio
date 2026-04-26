@@ -89,12 +89,6 @@
             >
           </li>
           <li>
-            <a href="#cv"
-              ><i class="bi bi-file-earmark-arrow-down navicon"></i
-              <span>CV</span></a
-            >
-          </li>
-          <li>
             <a href="#portfolio"
               ><i class="bi bi-images navicon"></i><span>Project</span></a
             >
@@ -496,27 +490,15 @@
             </div>
           </div>
         </div>
+
+        <!-- CV Button -->
+        <div class="text-center mt-4">
+          <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#cvModal">
+            <i class="bi bi-file-earmark-arrow-down"></i> See My CVs
+          </button>
+        </div>
       </section>
       <!-- /Resume Section -->
-
-      <!-- CV Section -->
-      <section id="cv" class="cv section">
-        <!-- Section Title -->
-        <div class="container section-title" data-aos="fade-up">
-          <h2 data-i18n="cv_section_title">Download CV</h2>
-          <p data-i18n="cv_section_desc">
-            Download my resume in different formats for your convenience
-          </p>
-        </div>
-        <!-- End Section Title -->
-
-        <div class="container">
-          <div class="row g-4" id="cv-container">
-            <!-- CV items will be loaded dynamically -->
-          </div>
-        </div>
-      </section>
-      <!-- /CV Section -->
 
       <!-- Project Section -->
       <section id="portfolio" class="portfolio section">
@@ -812,5 +794,22 @@
     <script src="assets/js/cv-loader.js"></script>
     <script src="assets/js/main.js"></script>
     <script src="assets/js/homepage-data-loader.js"></script>
+
+    <!-- CV Modal -->
+    <div class="modal fade" id="cvModal" tabindex="-1" aria-hidden="true">
+      <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">My CVs</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <div class="row g-4" id="cv-modal-container">
+              <!-- CV items will be loaded dynamically -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </body>
 </html>

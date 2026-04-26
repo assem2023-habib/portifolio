@@ -1897,6 +1897,16 @@ body.dark-mode #cvModal .btn-close:hover,
 body.dark-mode #cvDownloadModal .btn-close:hover {
   opacity: 1;
 }
+
+body.dark-mode #cvDownloadModal .modal-footer .btn-light {
+  background: var(--surface-color);
+  border-color: rgba(255, 255, 255, 0.1);
+  color: var(--default-color);
+}
+
+body.dark-mode #cvDownloadModal .modal-footer .btn-light:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
 }
 
 #cvDownloadModal .modal-body p {
@@ -1922,14 +1932,21 @@ body.dark-mode #cvDownloadModal .btn-close:hover {
   transform: translateY(-2px);
 }
 
-.dark-background #cvDownloadModal .modal-content {
+body.dark-mode #cvDownloadModal .btn-download-option {
   background: var(--surface-color);
-  border-color: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.2);
+  color: var(--default-color);
 }
 
-.dark-background #cvDownloadModal .modal-header,
-.dark-background #cvDownloadModal .modal-footer {
-  border-color: rgba(255, 255, 255, 0.1);
+body.dark-mode #cvDownloadModal .btn-download-option:hover {
+  border-color: var(--accent-color);
+  color: var(--accent-color);
+}
+
+body.dark-mode #cvDownloadModal .btn-download-option.btn-success {
+  background: var(--accent-color);
+  border-color: var(--accent-color);
+  color: white;
 }
 
 /*--------------------------------------------------------------

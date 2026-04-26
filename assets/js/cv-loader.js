@@ -112,8 +112,12 @@ function renderCVs(container) {
  * إنشاء وعرض Modal لتحميل الـ CV
  */
 function showCVDownloadModal(cvId) {
+  console.log(`🔽 CV download requested for: ${cvId}`);
   const cv = getCVById(cvId);
-  if (!cv) return;
+  if (!cv) {
+    console.error(`❌ CV not found: ${cvId}`);
+    return;
+  }
 
   const text = getCVLocalizedText(cv, currentCVLang);
   const hasPDF = cv.files && cv.files.pdf;
@@ -177,6 +181,7 @@ function showCVDownloadModal(cvId) {
 
   const modal = new bootstrap.Modal(document.getElementById('cvDownloadModal'));
   modal.show();
+  console.log(`📋 CV download modal shown for: ${cvId}`);
 }
 
 /**
@@ -221,6 +226,7 @@ async function initCVLoader() {
     modalContainer.innerHTML = '';
     cvs.forEach((cv, index) => {
       modalContainer.innerHTML += createCVElement(cv);
+      console.log(`🔄 CV item ${index + 1} displayed: ${cv.title}`);
     });
     console.log(`✅ Displayed ${cvs.length} CVs in modal`);
   }

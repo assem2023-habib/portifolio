@@ -230,12 +230,6 @@ async function initCVLoader() {
     });
     console.log(`✅ Displayed ${cvs.length} CVs in modal`);
   }
-
-  // Also try old container for backwards compatibility
-  const oldContainer = document.getElementById('cv-container');
-  if (oldContainer) {
-    renderCVs(oldContainer);
-  }
 }
 
 /**

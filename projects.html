@@ -207,14 +207,38 @@
       return lang === 'ar' ? (project.descriptionAr || project.description) : project.description;
     }
 
+    // Create default template if not found
+    function createDefaultTemplate() {
+      const template = document.createElement('div');
+      template.className = 'col-lg-4 col-md-6 portfolio-item isotope-item filter-web portfolio-template';
+      template.style.display = 'none';
+      template.innerHTML = `
+        <img src="" class="img-fluid" alt="">
+        <div class="portfolio-info">
+          <h4 class="portfolio-title">Project Title</h4>
+          <p class="portfolio-description">Project description</p>
+          <a href="" title="" data-gallery="" class="glightbox preview-link"><i class="bi bi-zoom-in"></i></a>
+          <a href="" title="More Details" class="details-link"><i class="bi bi-link-45deg"></i></a>
+        </div>
+      `;
+      return template;
+    }
+
     // Function to populate all portfolio items
     async function populateAllPortfolioItems(category = '*') {
       console.log('🔍 Looking for container...');
       const portfolioContainer = document.querySelector("#all-projects .isotope-container");
       console.log('🔍 Container:', portfolioContainer);
       
-      const portfolioTemplate = document.querySelector('.portfolio-template');
+      // Cache template reference to use when filtering
+      let portfolioTemplate = document.querySelector('.portfolio-template');
       console.log('🔍 Template:', portfolioTemplate);
+
+      // If template exists but container is empty, restore template
+      if (!portfolioTemplate && portfolioContainer) {
+        console.log('🔄 Restoring template...');
+        portfolioTemplate = createDefaultTemplate();
+      }
 
       if (!portfolioContainer) {
         console.error('❌ Container not found: #all-projects .isotope-container');
@@ -223,7 +247,8 @@
       
       if (!portfolioTemplate) {
         console.error('❌ Template not found: .portfolio-template');
-        return;
+        // Create a default template if none exists
+        portfolioTemplate = createDefaultTemplate();
       }
 
       if (!myProjectsData) {

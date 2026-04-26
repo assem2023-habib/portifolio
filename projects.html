@@ -209,11 +209,20 @@
 
     // Function to populate all portfolio items
     async function populateAllPortfolioItems(category = '*') {
+      console.log('🔍 Looking for container...');
       const portfolioContainer = document.querySelector("#all-projects .isotope-container");
+      console.log('🔍 Container:', portfolioContainer);
+      
       const portfolioTemplate = document.querySelector('.portfolio-template');
+      console.log('🔍 Template:', portfolioTemplate);
 
-      if (!portfolioContainer || !portfolioTemplate) {
-        console.error('Container or template not found');
+      if (!portfolioContainer) {
+        console.error('❌ Container not found: #all-projects .isotope-container');
+        return;
+      }
+      
+      if (!portfolioTemplate) {
+        console.error('❌ Template not found: .portfolio-template');
         return;
       }
 
@@ -374,6 +383,16 @@
 
     // Initialize when page loads
     document.addEventListener("DOMContentLoaded", async () => {
+      console.log('📄 DOM loaded, initializing...');
+      
+      // Wait for DOM to be ready
+      await new Promise(resolve => setTimeout(resolve, 100));
+      
+      console.log('🔍 Looking for elements:');
+      console.log('  - #all-projects:', document.querySelector('#all-projects'));
+      console.log('  - .isotope-container:', document.querySelector('#all-projects .isotope-container'));
+      console.log('  - .portfolio-template:', document.querySelector('.portfolio-template'));
+      
       await populateAllPortfolioItems();
       setupFilters();
       initIsotope();

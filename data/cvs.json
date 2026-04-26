@@ -12,6 +12,19 @@
       },
       "description": "Backend Developer with expertise in NestJS, Node.js, Express, and databases. Experienced in building scalable APIs and microservices architecture.",
       "descriptionAr": "مطور Backend بخبرة في NestJS و Node.js و Express وقواعد البيانات. خبير في بناء APIs قابلة للتوسع وهندسة الخدمات المصغرة."
+    },
+    {
+      "id": "laravel",
+      "title": "Laravel Developer CV",
+      "titleAr": "سيرة ذاتية - مطور Laravel",
+      "specialization": "Backend Development",
+      "specializationAr": "تطوير Backend",
+      "files": {
+        "pdf": "assets/cvs/Back-End Laravel/Assem_habib_CV_Laravel.pdf",
+        "docx": "assets/cvs/Back-End Laravel/Assem_habib_CV_Laravel.docx"
+      },
+      "description": "Backend Developer with expertise in Laravel, PHP, MySQL, and databases. Experienced in building robust web applications and RESTful APIs.",
+      "descriptionAr": "مطور Backend بخبرة في Laravel و PHP و MySQL وقواعد البيانات. خبير في بناء تطبيقات الويب القوية و RESTful APIs."
     }
   ],
   "metadata": {
@@ -19,6 +32,6 @@
     "createdAt": "2026-04-23",
     "author": "Assem Adel Habib",
     "contact": "099assemhb@gmail.com",
-    "totalCVs": 1
+    "totalCVs": 2
   }
 }

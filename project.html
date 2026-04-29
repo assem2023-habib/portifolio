@@ -576,11 +576,13 @@
 
         // Update project gallery images (if available in data)
         const galleryImages = document.querySelectorAll('.project-gallery-image');
-        if (project.galleryImages && galleryImages.length > 0) {
-          project.galleryImages.forEach((imageSrc, index) => {
-            if (galleryImages[index]) {
-              galleryImages[index].src = imageSrc;
-              galleryImages[index].alt = `${project.title} - Image ${index + 1}`;
+        const projectImages = project.screenshots || project.galleryImages || [];
+        if (projectImages.length > 0) {
+          galleryImages.forEach((img, index) => {
+            if (projectImages[index]) {
+              img.src = projectImages[index];
+              img.alt = `${project.title} - Image ${index + 1}`;
+              img.style.display = 'block';
             }
           });
         }

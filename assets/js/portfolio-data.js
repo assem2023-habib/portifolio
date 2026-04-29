@@ -264,5 +264,35 @@ const portfolioData = {
       "assets/img/portfolio/app-2.jpg",
       "assets/img/portfolio/product-2.jpg"
     ]
+  },
+  rma: {
+    title: "RMA - Parcel Management System",
+    category: "web",
+    image: "assets/img/Projects_Images/RMA/FULL_STACK_DASHBOARD_WEB/Admin_home_page.png",
+    description: "Comprehensive parcel management and shipping system built with Laravel 12 and Filament Admin Panel. Features real-time tracking, multi-branch support, customer and employee chat, and advanced shipping management with WebSocket support.",
+    detailsUrl: "project.html",
+    gallery: "portfolio-gallery-web",
+    technologies: "Laravel 12, Filament 3.3, MySQL, WebSocket, Firebase",
+    status: "Completed",
+    url: "#",
+    features: [
+      "Real-time parcel tracking with unique tracking numbers",
+      "Multi-branch and route management",
+      "Appointment booking system",
+      "Parcel authorization with OTP codes",
+      "Real-time chat between customers and employees",
+      "WebSocket support via Laravel Reverb",
+      "Filament Admin Panel with 20+ resources",
+      "Multi-step parcel creation wizard"
+    ],
+    galleryImages: [
+      "assets/img/Projects_Images/RMA/FULL_STACK_DASHBOARD_WEB/Admin_home_page.png",
+      "assets/img/Projects_Images/RMA/FULL_STACK_DASHBOARD_WEB/Admin_login.png",
+      "assets/img/Projects_Images/RMA/FULL_STACK_DASHBOARD_WEB/Parcel/Admin_Show_Parcels.png",
+      "assets/img/Projects_Images/RMA/FULL_STACK_DASHBOARD_WEB/users/Admin_users.png",
+      "assets/img/Projects_Images/RMA/FULL_STACK_DASHBOARD_WEB/Employee/Admin_Show_Employees.png",
+      "assets/img/Projects_Images/RMA/FULL_STACK_DASHBOARD_WEB/shipments/admin_shipments.png",
+      "assets/img/Projects_Images/RMA/FULL_STACK_DASHBOARD_WEB/trucks/admin_trucks.png"
+    ]
   }
 };

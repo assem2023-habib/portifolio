@@ -450,6 +450,7 @@
       "id": "rma",
       "title": "RMA - Parcel Management System",
       "titleAr": "نظام إدارة الطرود والشحن",
+      "categories": ["web", "backend", "frontend"],
       "category": "web",
       "image": "assets/img/Projects_Images/RMA/FULL_STACK_DASHBOARD_WEB/Admin_home_page.png",
       "thumbnail": "assets/img/Projects_Images/RMA/FULL_STACK_DASHBOARD_WEB/Admin_home_page.png",

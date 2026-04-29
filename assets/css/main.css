@@ -1222,21 +1222,26 @@ body.dark-mode section.section {
 
 /* Ensure action links are hidden by default and shown on hover */
 .portfolio .portfolio-item .portfolio-info .preview-link,
-.portfolio .portfolio-item .portfolio-info .details-link {
+.portfolio .portfolio-item .portfolio-info .details-link,
+.all-projects .portfolio-item .portfolio-info .preview-link,
+.all-projects .portfolio-item .portfolio-info .details-link {
   position: absolute;
   bottom: 10px;
   transform: translateY(20px);
   opacity: 0;
+  transition: all 0.3s ease;
 }
 
-.portfolio .portfolio-item:hover .portfolio-info .preview-link {
+.portfolio .portfolio-item:hover .portfolio-info .preview-link,
+.all-projects .portfolio-item:hover .portfolio-info .preview-link {
   transform: translateY(0);
   opacity: 1;
   left: 50%;
   margin-left: -35px;
 }
 
-.portfolio .portfolio-item:hover .portfolio-info .details-link {
+.portfolio .portfolio-item:hover .portfolio-info .details-link,
+.all-projects .portfolio-item:hover .portfolio-info .details-link {
   transform: translateY(0);
   opacity: 1;
   left: 50%;

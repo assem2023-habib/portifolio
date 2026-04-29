@@ -560,8 +560,18 @@
         // Update project URL
         const projectUrl = document.querySelector('.project-url');
         if (projectUrl) {
-          projectUrl.href = project.url || '#';
-          projectUrl.textContent = project.url ? 'Visit Project' : 'View Details';
+          const url = project.repoUrl || project.url || '#';
+          projectUrl.href = url;
+          if (project.repoUrl) {
+            projectUrl.textContent = 'View Code';
+            projectUrl.className = 'project-url btn btn-outline-primary btn-sm';
+          } else if (project.url) {
+            projectUrl.textContent = 'Visit Project';
+            projectUrl.className = 'project-url btn btn-outline-primary btn-sm';
+          } else {
+            projectUrl.textContent = 'View Details';
+            projectUrl.className = 'project-url btn btn-outline-secondary btn-sm';
+          }
         }
 
         // Update project features (if available in data)

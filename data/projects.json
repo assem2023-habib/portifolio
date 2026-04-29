@@ -445,6 +445,64 @@
         "complexity": "high",
         "architecture": "Clean Architecture with Domain-Driven Design"
       }
+    },
+    {
+      "id": "rma",
+      "title": "RMA - Parcel Management System",
+      "titleAr": "نظام إدارة الطرود والشحن",
+      "category": "web",
+      "image": "assets/img/Projects_Images/RMA/FULL_STACK_DASHBOARD_WEB/Admin_home_page.png",
+      "thumbnail": "assets/img/Projects_Images/RMA/FULL_STACK_DASHBOARD_WEB/Admin_home_page.png",
+      "description": "Comprehensive parcel management and shipping system built with Laravel 12 and Filament Admin Panel. Features real-time tracking, multi-branch support, customer and employee chat, and advanced shipping management with WebSocket support.",
+      "descriptionAr": "نظام شامل لإدارة الطرود والشحن مبني بـ Laravel 12 ولوحة Filament-admin. يتميز بتتبع لحظي ودعم الفروع المتعددة ومحادثات بين العملاء والموظفين وإدارة الشحن المتقدمة مع دعم WebSocket.",
+      "status": "completed",
+      "year": 2025,
+      "duration": "12 شهر",
+      "technologies": ["Laravel 12", "PHP 8.2+", "MySQL 8.0+", "Filament 3.3", "Tailwind CSS 4.0", "Laravel Reverb", "Spatie Permission", "Firebase"],
+      "role": "Lead Developer",
+      "client": "شركة شحن محلية",
+      "liveUrl": null,
+      "repoUrl": null,
+      "features": [
+        "Real-time parcel tracking with unique tracking numbers",
+        "Guest and registered user parcel creation",
+        "Multi-branch and route management",
+        "Appointment booking system",
+        "Parcel authorization with OTP codes",
+        "Real-time chat between customers and employees",
+        "WebSocket support via Laravel Reverb",
+        "Filament Admin Panel with 20+ resources",
+        "Multi-step parcel creation wizard",
+        "Smart pricing based on weight and policies"
+      ],
+      "featuresAr": [
+        "تتبع الطرود لحظياً بأرقام تتبع فريدة",
+        "إنشاء طرود للضيوف والمستخدمين المسجلين",
+        "إدارة الفروع والمسارات المتعددة",
+        "نظام حجز المواعيد",
+        "تخويل الاستلام برمز OTP",
+        "محادثات فورية بين العملاء والموظفين",
+        "دعم WebSocket عبر Laravel Reverb",
+        "لوحة Filament مع أكثر من 20 مورد",
+        "معالج إنشاء طرود متعدد الخطوات",
+        "تسعير ذكي بناءً على الوزن والسياسات"
+      ],
+      "challenges": "Building a comprehensive system that handles complex logistics including multi-branch management, real-time tracking, WebSocket chat, and automated pricing while maintaining high security standards.",
+      "challengesAr": "كان التحدي بناء نظام شامل يتعامل مع اللوجستيات المعقدة بما في ذلك إدارة الفروع المتعددة والتتبع اللحظي ومحادثات WebSocket والتسعير الآلي مع الحفاظ على معايير أمنية عالية.",
+      "screenshots": [
+        "assets/img/Projects_Images/RMA/FULL_STACK_DASHBOARD_WEB/Admin_home_page.png",
+        "assets/img/Projects_Images/RMA/FULL_STACK_DASHBOARD_WEB/Parcel/Admin_Show_Parcels.png"
+      ],
+      "docs": {
+        "readme": "assets/Docs_Project/RMA_GRADUATION_PROJECT.md",
+        "type": "comprehensive"
+      },
+      "highlights": {
+        "isFeatured": true,
+        "isMajor": true,
+        "complexity": "high",
+        "architecture": "Modular Architecture with Filament Admin Panel"
+      }
     }
   ],
   "categories": [
@@ -487,7 +545,7 @@
   "metadata": {
     "version": "1.0.0",
     "lastUpdated": "2025-04-15",
-    "totalProjects": 11,
+    "totalProjects": 12,
     "author": "Assem Adel Habib",
     "contact": "099assemhb@gmail.com"
   }

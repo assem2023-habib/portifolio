@@ -492,7 +492,20 @@
       "challengesAr": "كان التحدي بناء نظام شامل يتعامل مع اللوجستيات المعقدة بما في ذلك إدارة الفروع المتعددة والتتبع اللحظي ومحادثات WebSocket والتسعير الآلي مع الحفاظ على معايير أمنية عالية.",
       "screenshots": [
         "assets/img/Projects_Images/RMA/FULL_STACK_DASHBOARD_WEB/Admin_home_page.png",
-        "assets/img/Projects_Images/RMA/FULL_STACK_DASHBOARD_WEB/Parcel/Admin_Show_Parcels.png"
+        "assets/img/Projects_Images/RMA/FULL_STACK_DASHBOARD_WEB/Admin_login.png",
+        "assets/img/Projects_Images/RMA/FULL_STACK_DASHBOARD_WEB/Parcel/Admin_Show_Parcels.png",
+        "assets/img/Projects_Images/RMA/FULL_STACK_DASHBOARD_WEB/Parcel/Admin_Create_Parcel_1.png",
+        "assets/img/Projects_Images/RMA/FULL_STACK_DASHBOARD_WEB/Parcel/Admin_Update_Parcel.png",
+        "assets/img/Projects_Images/RMA/FULL_STACK_DASHBOARD_WEB/users/Admin_users.png",
+        "assets/img/Projects_Images/RMA/FULL_STACK_DASHBOARD_WEB/users/Admin_create_users.png",
+        "assets/img/Projects_Images/RMA/FULL_STACK_DASHBOARD_WEB/Employee/Admin_Show_Employees.png",
+        "assets/img/Projects_Images/RMA/FULL_STACK_DASHBOARD_WEB/branches/admin_branches.png",
+        "assets/img/Projects_Images/RMA/FULL_STACK_DASHBOARD_WEB/shipments/admin_shipments.png",
+        "assets/img/Projects_Images/RMA/FULL_STACK_DASHBOARD_WEB/trucks/admin_trucks.png",
+        "assets/img/Projects_Images/RMA/FULL_STACK_DASHBOARD_WEB/conversations/Admin_conversations.png",
+        "assets/img/Projects_Images/RMA/FULL_STACK_DASHBOARD_WEB/parcel-authorizations/admin_parcel-authorizations-show.png",
+        "assets/img/Projects_Images/RMA/FULL_STACK_DASHBOARD_WEB/Appointments/Admin_Appointments.png",
+        "assets/img/Projects_Images/RMA/FULL_STACK_DASHBOARD_WEB/cities/admin_cities.png"
       ],
       "docs": {
         "readme": "assets/Docs_Project/RMA_GRADUATION_PROJECT.md",

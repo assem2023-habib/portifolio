@@ -351,4 +351,23 @@
   // Initialize language display
   updateLanguageDisplay();
 
+  // Add hover event listeners for portfolio items (for console logging)
+  const portfolioItems = document.querySelectorAll('.portfolio .portfolio-item');
+  portfolioItems.forEach((item, index) => {
+    item.addEventListener('mouseenter', function() {
+      const title = this.querySelector('.portfolio-title')?.textContent || 'Unknown';
+      console.log(`🖱️ Portfolio item hovered: ${title} (index: ${index})`);
+      const previewLink = this.querySelector('.preview-link');
+      const detailsLink = this.querySelector('.details-link');
+      if (previewLink) {
+        console.log(`📎 Preview link opacity: ${getComputedStyle(previewLink).opacity}, transform: ${getComputedStyle(previewLink).transform}`);
+      }
+      if (detailsLink) {
+        console.log(`📎 Details link opacity: ${getComputedStyle(detailsLink).opacity}, transform: ${getComputedStyle(detailsLink).transform}`);
+      }
+    });
+  });
+  
+  console.log(`✅ Added hover listeners to ${portfolioItems.length} portfolio items`);
+
 })();

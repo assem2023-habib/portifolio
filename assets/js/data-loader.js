@@ -37,7 +37,11 @@ function getAllProjects() {
 function filterProjectsByCategory(category) {
   const projects = getAllProjects();
   if (category === '*') return projects;
-  return projects.filter(p => p.category === category);
+  return projects.filter(p => {
+    if (p.category === category) return true;
+    if (p.categories && p.categories.includes(category)) return true;
+    return false;
+  });
 }
 
 /**

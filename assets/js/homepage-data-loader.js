@@ -81,7 +81,11 @@ function updateFilterCounts() {
       count = projects.length;
     } else {
       const category = filter.replace('.filter-', '');
-      count = projects.filter(p => p.category === category).length;
+      count = projects.filter(p => {
+        if (p.category === category) return true;
+        if (p.categories && p.categories.includes(category)) return true;
+        return false;
+      }).length;
     }
     
     console.log('🔢 Filter', filter, 'has', count, 'projects');
@@ -142,6 +146,13 @@ function populatePortfolioItems() {
     
     projectClone.classList.remove('portfolio-template');
     projectClone.classList.add(`filter-${project.category}`);
+    
+    // إضافة التصنيفات المتعددة إذا كانت موجودة
+    if (project.categories && Array.isArray(project.categories)) {
+      project.categories.forEach(cat => {
+        projectClone.classList.add(`filter-${cat}`);
+      });
+    }
     
     // إضافة كلاس للعنصر العريض
     if (isWide) {
@@ -311,7 +322,11 @@ function setupPortfolioFilters() {
       let filteredProjects = loadedData.projects;
       if (filter !== '*') {
         const category = filter.replace('.filter-', '');
-        filteredProjects = loadedData.projects.filter(p => p.category === category);
+        filteredProjects = loadedData.projects.filter(p => {
+          if (p.category === category) return true;
+          if (p.categories && p.categories.includes(category)) return true;
+          return false;
+        });
         console.log('📂 Category filtered:', category);
       } else {
         console.log('📂 Showing all projects');
@@ -349,6 +364,14 @@ function portfolioTemplateClone(project, index) {
   const clone = template.cloneNode(true);
   clone.classList.remove('portfolio-template');
   clone.classList.add(`filter-${project.category}`);
+  
+  // إضافة التصنيفات المتعددة إذا كانت موجودة
+  if (project.categories && Array.isArray(project.categories)) {
+    project.categories.forEach(cat => {
+      clone.classList.add(`filter-${cat}`);
+    });
+  }
+  
   clone.style.display = 'block';
   clone.setAttribute('data-aos-delay', 100 + index * 100);
   

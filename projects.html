@@ -266,7 +266,11 @@
       let projects = myProjectsData.projects;
       console.log('📊 Filter category:', category);
       if (category !== '*') {
-        projects = projects.filter(p => p.category === category);
+        projects = projects.filter(p => {
+          if (p.category === category) return true;
+          if (p.categories && p.categories.includes(category)) return true;
+          return false;
+        });
         console.log('📊 Filtered projects:', projects.length);
       }
 
@@ -284,6 +288,14 @@
 
         projectClone.classList.remove('portfolio-template');
         projectClone.classList.add(`filter-${project.category}`);
+        
+        // إضافة التصنيفات المتعددة إذا كانت موجودة
+        if (project.categories && Array.isArray(project.categories)) {
+          project.categories.forEach(cat => {
+            projectClone.classList.add(`filter-${cat}`);
+          });
+        }
+        
         projectClone.style.display = 'block';
 
         const delay = 100 + (index * 100);
@@ -338,7 +350,11 @@
           count = allProjects.length;
         } else {
           const category = filter.replace('.filter-', '');
-          count = allProjects.filter(p => p.category === category).length;
+          count = allProjects.filter(p => {
+            if (p.category === category) return true;
+            if (p.categories && p.categories.includes(category)) return true;
+            return false;
+          }).length;
         }
         
         const existingCount = btn.querySelector('.filter-count');

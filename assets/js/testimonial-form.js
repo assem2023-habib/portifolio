@@ -10,6 +10,63 @@ document.addEventListener('DOMContentLoaded', function() {
 
   let currentFormLang = 'en';
 
+  // Interactive Star Rating
+  const starRating = document.getElementById('starRating');
+  const ratingInput = document.getElementById('testimonialRating');
+  
+  if (starRating && ratingInput) {
+    const stars = starRating.querySelectorAll('i');
+    
+    // Initialize stars
+    stars.forEach((star, index) => {
+      // Click event
+      star.addEventListener('click', function() {
+        const rating = parseInt(this.getAttribute('data-rating'));
+        ratingInput.value = rating;
+        
+        // Update star display
+        stars.forEach((s, i) => {
+          if (i < rating) {
+            s.classList.remove('bi-star');
+            s.classList.add('bi-star-fill', 'filled');
+          } else {
+            s.classList.remove('bi-star-fill', 'filled');
+            s.classList.add('bi-star');
+          }
+        });
+        
+        console.log('⭐ Rating selected:', rating);
+      });
+      
+      // Hover effect
+      star.addEventListener('mouseenter', function() {
+        const rating = parseInt(this.getAttribute('data-rating'));
+        stars.forEach((s, i) => {
+          if (i < rating) {
+            s.classList.add('hover');
+          } else {
+            s.classList.remove('hover');
+          }
+        });
+      });
+    });
+    
+    // Reset on mouse leave
+    starRating.addEventListener('mouseleave', function() {
+      const currentRating = parseInt(ratingInput.value) || 0;
+      stars.forEach((s, i) => {
+        s.classList.remove('hover');
+        if (i < currentRating) {
+          s.classList.add('filled');
+        } else {
+          s.classList.remove('filled');
+        }
+      });
+    });
+    
+    console.log('✅ Interactive star rating initialized');
+  }
+
   // Language toggle for form
   if (toggleBtn) {
     toggleBtn.addEventListener('click', function() {

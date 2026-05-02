@@ -728,19 +728,24 @@
                   </div>
                 </div>
 
-                <!-- Rating -->
+                <!-- Rating - Interactive Stars -->
                 <div class="mb-3">
                   <label class="form-label">
                     <span class="lang-en">Rating</span>
                     <span class="lang-ar" style="display:none;">التقييم</span>
                   </label>
-                  <select class="form-select" id="testimonialRating" required>
-                    <option value="5">★★★★★ (5)</option>
-                    <option value="4">★★★★☆ (4)</option>
-                    <option value="3">★★★☆☆ (3)</option>
-                    <option value="2">★★☆☆☆ (2)</option>
-                    <option value="1">★☆☆☆☆ (1)</option>
-                  </select>
+                  <div class="star-rating" id="starRating">
+                    <i class="bi bi-star" data-rating="1" title="1 Star"></i>
+                    <i class="bi bi-star" data-rating="2" title="2 Stars"></i>
+                    <i class="bi bi-star" data-rating="3" title="3 Stars"></i>
+                    <i class="bi bi-star" data-rating="4" title="4 Stars"></i>
+                    <i class="bi bi-star" data-rating="5" title="5 Stars"></i>
+                    <input type="hidden" id="testimonialRating" name="rating" value="0" required>
+                  </div>
+                  <small class="form-text text-muted">
+                    <span class="lang-en">Click on a star to rate</span>
+                    <span class="lang-ar" style="display:none;">اضغط على النجوم للتقييم</span>
+                  </small>
                 </div>
 
                 <!-- Image Upload -->

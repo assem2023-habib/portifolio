@@ -2472,3 +2472,54 @@ body.dark-mode #cvDownloadModal .btn-download-option.btn-success {
     height: 220px;
   }
 }
+
+/*--------------------------------------------------------------
+# Interactive Star Rating
+--------------------------------------------------------------*/
+.star-rating {
+  display: flex;
+  gap: 5px;
+  font-size: 24px;
+  cursor: pointer;
+}
+
+.star-rating i {
+  color: #ddd;
+  transition: color 0.2s ease;
+}
+
+.star-rating i.bi-star-fill,
+.star-rating i.filled {
+  color: #ffc107;
+}
+
+.star-rating i:hover,
+.star-rating i:hover ~ i {
+  color: #ffc107;
+}
+
+.star-rating i:hover ~ i {
+  color: #ddd;
+}
+
+.star-rating i {
+  position: relative;
+}
+
+.star-rating i::before {
+  content: "\F588"; /* Bootstrap icon star */
+}
+
+.star-rating i.filled::before {
+  content: "\F586"; /* Bootstrap icon star-fill */
+}
+
+/* Dark mode support */
+[data-theme="dark"] .star-rating i {
+  color: #555;
+}
+
+[data-theme="dark"] .star-rating i.bi-star-fill,
+[data-theme="dark"] .star-rating i.filled {
+  color: #ffc107;
+}

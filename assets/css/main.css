@@ -2149,66 +2149,188 @@ body.dark-mode .testimonials .swiper-pagination .swiper-pagination-bullet-active
   opacity: 0.8;
 }
 
-/* Dark mode styles for CV section */
-body.dark-mode .cv-card {
-  background: var(--surface-color);
-  border-color: rgba(255, 255, 255, 0.1);
-}
-
-body.dark-mode .cv-card:hover {
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
-}
-
-body.dark-mode .cv-icon {
-  background: linear-gradient(135deg, var(--accent-color), #67c4f5);
-}
-
-body.dark-mode .cv-title {
-  color: var(--heading-color);
-}
-
-body.dark-mode .cv-specialization {
-  color: var(--accent-color);
-}
-
-body.dark-mode .cv-description {
-  color: rgba(255, 255, 255, 0.7);
-}
-
-body.dark-mode .cv-actions .btn-download {
+/*--------------------------------------------------------------
+# Add Testimonial Button & Modal Styles
+--------------------------------------------------------------*/
+.btn-add-testimonial {
+  margin-left: 15px;
   background: var(--accent-color);
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 50px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
 }
 
-body.dark-mode #cvModal .section-title p {
-  color: rgba(255, 255, 255, 0.7);
+.btn-add-testimonial:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(5, 99, 187, 0.3);
+  background: linear-gradient(90deg, var(--accent-color), #67c4f5);
 }
 
-/* CV Download Modal Styles */
-#cvModal .modal-content,
-#cvDownloadModal .modal-content {
+.btn-add-testimonial i {
+  font-size: 1.1em;
+}
+
+/* Modal Styles */
+#addTestimonialModal .modal-content {
   background: var(--surface-color);
   border: 1px solid var(--border-color, #e5e7eb);
   border-radius: 16px;
+  box-shadow: 0 10px 50px rgba(0, 0, 0, 0.2);
 }
 
-#cvModal .modal-header,
-#cvDownloadModal .modal-header {
+#addTestimonialModal .modal-header {
   border-bottom: 1px solid var(--border-color, #e5e7eb);
   padding: 1.25rem 1.5rem;
 }
 
-#cvModal .modal-title,
-#cvDownloadModal .modal-title {
+#addTestimonialModal .modal-title {
   color: var(--heading-color);
   font-weight: 700;
 }
 
-#cvModal .modal-body,
-#cvDownloadModal .modal-body {
+#addTestimonialModal .modal-body {
   padding: 1.5rem;
 }
 
-/* Dark mode for CV modals */
+#addTestimonialModal .form-label {
+  color: var(--default-color);
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+#addTestimonialModal .form-control,
+#addTestimonialModal .form-select {
+  background: var(--background-color);
+  border: 1px solid var(--border-color, #e5e7eb);
+  color: var(--default-color);
+  border-radius: 8px;
+  padding: 0.75rem 1rem;
+  transition: all 0.3s ease;
+}
+
+#addTestimonialModal .form-control:focus,
+#addTestimonialModal .form-select:focus {
+  border-color: var(--accent-color);
+  box-shadow: 0 0 0 0.2rem rgba(5, 99, 187, 0.25);
+}
+
+#addTestimonialModal .form-text {
+  color: var(--default-color);
+  opacity: 0.7;
+  font-size: 0.875rem;
+}
+
+#addTestimonialModal .btn-close {
+  filter: invert(0.5);
+}
+
+#addTestimonialModal .modal-footer {
+  border-top: 1px solid var(--border-color, #e5e7eb);
+  padding: 1rem 1.5rem;
+}
+
+/* Dark mode styles for modal */
+body.dark-mode #addTestimonialModal .modal-content {
+  background: var(--surface-color);
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
+body.dark-mode #addTestimonialModal .modal-header,
+body.dark-mode #addTestimonialModal .modal-footer {
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
+body.dark-mode #addTestimonialModal .modal-title {
+  color: var(--heading-color);
+}
+
+body.dark-mode #addTestimonialModal .form-control,
+body.dark-mode #addTestimonialModal .form-select {
+  background: var(--background-color);
+  border-color: rgba(255, 255, 255, 0.2);
+  color: var(--default-color);
+}
+
+body.dark-mode #addTestimonialModal .form-label {
+  color: var(--default-color);
+}
+
+body.dark-mode #addTestimonialModal .btn-close {
+  filter: invert(1);
+  opacity: 0.5;
+}
+
+body.dark-mode #addTestimonialModal .btn-close:hover {
+  opacity: 1;
+}
+
+/* Language toggle button in form */
+#toggleFormLanguage {
+  background: var(--surface-color);
+  border: 1px solid var(--border-color, #e5e7eb);
+  color: var(--default-color);
+  border-radius: 8px;
+  padding: 0.5rem 1rem;
+  transition: all 0.3s ease;
+}
+
+#toggleFormLanguage:hover {
+  background: var(--accent-color);
+  color: white;
+  border-color: var(--accent-color);
+}
+
+/* Form message styles */
+#formMessage .alert {
+  border-radius: 10px;
+  padding: 1rem 1.25rem;
+  border: none;
+}
+
+#formMessage .alert-success {
+  background: rgba(5, 150, 105, 0.1);
+  color: #059652;
+  border-left: 4px solid #059652;
+}
+
+body.dark-mode #formMessage .alert-success {
+  background: rgba(5, 150, 105, 0.2);
+}
+
+#formMessage .alert-danger {
+  background: rgba(220, 53, 69, 0.1);
+  color: #dc3545;
+  border-left: 4px solid #dc3545;
+}
+
+body.dark-mode #formMessage .alert-danger {
+  background: rgba(220, 53, 69, 0.2);
+}
+
+/* Image upload preview */
+#testimonialImage {
+  padding: 0.5rem;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .btn-add-testimonial {
+    margin-left: 10px;
+    padding: 8px 16px;
+    font-size: 0.9rem;
+  }
+  
+  #addTestimonialModal .modal-dialog {
+    margin: 0.5rem auto;
+    max-width: 95%;
+  }
+}
+
+/* Dark mode styles for CV section */
 body.dark-mode #cvModal .modal-content,
 body.dark-mode #cvDownloadModal .modal-content {
   background: var(--surface-color);

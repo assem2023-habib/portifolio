@@ -1,0 +1,77 @@
+{
+  "testimonials": [
+    {
+      "id": "saul",
+      "name": "Saul Goodman",
+      "nameAr": "سول غودمان",
+      "role": "CEO & Founder",
+      "roleAr": "الرئيس التنفيذي والمؤسس",
+      "image": "assets/img/testimonials/testimonials-1.jpg",
+      "content": "Assem delivered exceptional Laravel applications with clean, efficient code. His attention to detail and problem-solving skills made our project a success. Highly recommended for any web development needs.",
+      "contentAr": "قدم أسامة تطبيقات Laravel استثنائية بكود نظيف وفعال. كان انتباه للتفاصيل ومهارات حل المشكلات سبباً في نجاح مشروعنا. أنصح به بشدة لأي احتياجات تطوير ويب.",
+      "rating": 5
+    },
+    {
+      "id": "sarah",
+      "name": "Sarah Johnson",
+      "nameAr": "سارة جونسون",
+      "role": "Project Manager",
+      "roleAr": "مديرة مشروع",
+      "image": "assets/img/testimonials/testimonials-2.jpg",
+      "content": "Working with Assem was a pleasure. He built our e-commerce platform from scratch using modern technologies. The API integration and database optimization exceeded our expectations. Professional and reliable developer.",
+      "contentAr": "العمل مع أسامة كان متعة. لقد بنى منصة التجارة الإلكترونية الخاصة بنا من الصفر باستخدام تقنيات حديثة. تكامل API وتحسين قاعدة البيانات تجاوز توقعاتنا. مطور محترف وموثوق.",
+      "rating": 5
+    },
+    {
+      "id": "mike",
+      "name": "Mike Chen",
+      "nameAr": "مايك تشين",
+      "role": "Tech Entrepreneur",
+      "roleAr": "رائد أعمال تقني",
+      "image": "assets/img/testimonials/testimonials-3.jpg",
+      "content": "Assem's expertise in Laravel and modern web technologies is impressive. He delivered our parcel management system on time and within budget. The code quality and documentation were excellent. Will definitely work with him again.",
+      "contentAr": "خبرة أسامة في Laravel وتقنيات الويب الحديثة مذهلة. لقد سلم نظام إدارة الطرود في الوقت والميزانية المحددة. جودة الكود والتوثيق كانت ممتازة. بالتأكيد سأعمل معه مرة أخرى.",
+      "rating": 5
+    },
+    {
+      "id": "alex",
+      "name": "Alex Rodriguez",
+      "nameAr": "أليكس رودريغيز",
+      "role": "Software Engineer",
+      "roleAr": "مهندس برمجيات",
+      "image": "assets/img/testimonials/testimonials-4.jpg",
+      "content": "Outstanding backend development work! Assem created a robust API system and optimized our database performance significantly. His technical knowledge and communication skills are top-notch. Highly recommended for complex projects.",
+      "contentAr": "عمل استثنائي في تطوير الـ Backend! أسامة أنشأ نظام API قوياً وحسن أداء قاعدة البيانات بشكل ملحوظ. معرفته التقنية ومهارات التواصل من الطراز الأول. أنصح به بشدة للمشاريع المعقدة.",
+      "rating": 5
+    },
+    {
+      "id": "emily",
+      "name": "Emily Davis",
+      "nameAr": "إيميلي ديفيس",
+      "role": "Marketing Director",
+      "roleAr": "مديرة التسويق",
+      "image": "assets/img/testimonials/testimonials-5.jpg",
+      "content": "Assem's full-stack development expertise transformed our marketing platform completely. The Laravel backend integration with modern frontend technologies created a seamless user experience that our clients love.",
+      "contentAr": "خبرة أسامة في تطوير Full Stack حولت منصة التسويق الخاصة بنا بالكامل. تكامل Laravel في الـ Backend مع تقنيات الواجهة الحديثة خلق تجربة مستخدم سلسة أحبها عملاؤنا.",
+      "rating": 5
+    },
+    {
+      "id": "david",
+      "name": "David Wilson",
+      "nameAr": "ديفيد ويلسون",
+      "role": "Startup Founder",
+      "roleAr": "مؤسس شركة ناشئة",
+      "image": "assets/img/testimonials/testimonials-6.jpg",
+      "content": "Working with Assem on our fintech application was exceptional. His attention to security details and performance optimization made our product enterprise-ready. Highly skilled and professional developer.",
+      "contentAr": "العمل مع أسامة في تطبيق التقنية المالية كان استثنائياً. انتباه لتفاصيل الأمان وتحسين الأداء جعل منتجنا جاهزاً للمؤسسات. مطور ماهر ومحترف.",
+      "rating": 5
+    }
+  ],
+  "metadata": {
+    "version": "1.0.0",
+    "lastUpdated": "2026-05-02",
+    "totalTestimonials": 6,
+    "author": "Assem Adel Habib",
+    "contact": "099assemhb@gmail.com"
+  }
+}

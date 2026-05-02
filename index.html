@@ -845,19 +845,42 @@
     <script src="assets/js/cv-loader.js"></script>
     <script src="assets/js/main.js"></script>
     <script src="assets/js/homepage-data-loader.js"></script>
-    <script src="assets/js/testimonials-data.js"></script>
-
     <script>
-      // Load and display testimonials
-      document.addEventListener('DOMContentLoaded', function() {
+      // Load and display testimonials from JSON
+      let testimonialsData = null;
+      let currentLang = localStorage.getItem('portfolio_language') || 'en';
+
+      async function loadTestimonialsFromJSON() {
+        try {
+          const response = await fetch('data/testimonials.json');
+          if (!response.ok) throw new Error('Failed to load testimonials.json');
+          const data = await response.json();
+          testimonialsData = data;
+          return data;
+        } catch (error) {
+          console.error('Error loading testimonials:', error);
+          return null;
+        }
+      }
+
+      function getLocalizedText(item, field, lang) {
+        const localizedField = field + (lang === 'ar' ? 'Ar' : '');
+        return item[localizedField] || item[field];
+      }
+
+      document.addEventListener('DOMContentLoaded', async function() {
         const wrapper = document.getElementById('testimonials-wrapper');
-        if (!wrapper || typeof testimonialsData === 'undefined') return;
+        if (!wrapper) return;
+
+        // Load testimonials data
+        const data = await loadTestimonialsFromJSON();
+        if (!data || !data.testimonials) return;
 
         // Clear any existing content
         wrapper.innerHTML = '';
 
-        // Convert testimonials object to array
-        const testimonials = Object.values(testimonialsData);
+        const testimonials = data.testimonials;
+        const lang = localStorage.getItem('portfolio_language') || 'en';
 
         // Create slides for each testimonial
         testimonials.forEach((testimonial, index) => {
@@ -866,21 +889,27 @@
           slide.setAttribute('data-aos', 'fade-up');
           slide.setAttribute('data-aos-delay', (index * 100).toString());
 
+          // Get localized content
+          const name = getLocalizedText(testimonial, 'name', lang);
+          const role = getLocalizedText(testimonial, 'role', lang);
+          const content = getLocalizedText(testimonial, 'content', lang);
+
           // Generate stars based on rating
-          const stars = Array(testimonial.rating || 5).fill('<i class="bi bi-star-fill"></i>').join('');
+          const starsCount = testimonial.rating || 5;
+          const stars = Array(starsCount).fill('<i class="bi bi-star-fill"></i>').join('');
 
           slide.innerHTML = `
             <div class="testimonial-item">
               <div class="testimonial-content">
                 <i class="bi bi-quote quote-icon-left"></i>
-                <p>${testimonial.content}</p>
+                <p>${content}</p>
                 <i class="bi bi-quote quote-icon-right"></i>
               </div>
               <div class="testimonial-author d-flex align-items-center mt-4">
-                <img src="${testimonial.image}" class="testimonial-img" alt="${testimonial.name}">
+                <img src="${testimonial.image}" class="testimonial-img" alt="${name}">
                 <div class="ms-3">
-                  <h3>${testimonial.name}</h3>
-                  <h4>${testimonial.role}</h4>
+                  <h3>${name}</h3>
+                  <h4>${role}</h4>
                   <div class="stars text-warning">
                     ${stars}
                   </div>
@@ -892,7 +921,7 @@
           wrapper.appendChild(slide);
         });
 
-        console.log(`✅ Loaded ${testimonials.length} testimonials`);
+        console.log(`✅ Loaded ${testimonials.length} testimonials from JSON`);
 
         // Refresh AOS after content is loaded
         setTimeout(() => {

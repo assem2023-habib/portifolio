@@ -4,6 +4,7 @@
  */
 
 let projectsData = null;
+let testimonialsData = null;
 let currentLanguage = 'en';
 let currentFilter = '*';
 
@@ -58,6 +59,38 @@ function getCategories() {
 function getProjectById(id) {
   const projects = getAllProjects();
   return projects.find(p => p.id === id);
+}
+
+/**
+ * تحميل بيانات التوصيات من JSON
+ */
+async function loadTestimonialsData() {
+  try {
+    const response = await fetch('data/testimonials.json');
+    if (!response.ok) throw new Error('Failed to load testimonials.json');
+    const data = await response.json();
+    testimonialsData = data;
+    return data;
+  } catch (error) {
+    console.error('Error loading testimonials:', error);
+    return null;
+  }
+}
+
+/**
+ * الحصول على جميع التوصيات
+ */
+function getAllTestimonials() {
+  if (!testimonialsData) return [];
+  return testimonialsData.testimonials || [];
+}
+
+/**
+ * الحصول على توصية معينة بالمعرف
+ */
+function getTestimonialById(id) {
+  const testimonials = getAllTestimonials();
+  return testimonials.find(t => t.id === id);
 }
 
 /**
@@ -257,6 +290,10 @@ window.DataLoader = {
   setLanguage,
   loadSavedLanguage,
   initDataLoader,
+  // Testimonials functions
+  loadTestimonialsData,
+  getAllTestimonials,
+  getTestimonialById,
   get currentLanguage() { return currentLanguage; },
   set currentLanguage(val) { currentLanguage = val; },
   get currentFilter() { return currentFilter; },

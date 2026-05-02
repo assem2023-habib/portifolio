@@ -16,76 +16,82 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     exit();
 }
 
-// Rate limiting (prevent spam)
-session_start();
-$ip = $_SERVER['REMOTE_ADDR'];
-$timeWindow = 300; // 5 minutes
-$maxAttempts = 5; // Max 5 attempts per 5 minutes
+// ==================== Configuration ====================
+$config = [
+    'timeWindow' => 300,        // 5 minutes
+    'maxAttempts' => 5,         // Max 5 attempts per 5 minutes
+    'maxFileSize' => 2 * 1024 * 1024, // 2MB
+    'allowedMimeTypes' => ['image/jpeg', 'image/png', 'image/jpg'],
+    'allowedExtensions' => ['jpg', 'jpeg', 'png'],
+    'jsonFile' => '../data/testimonials.json',
+    'logFile' => '../logs/testimonials.log',
+    'uploadDir' => '../assets/img/testimonials/',
+    'defaultImage' => 'assets/img/testimonials/testimonials-1.jpg'
+];
 
+// ==================== Initialize Session for Rate Limiting ====================
+session_start();
+
+$ip = $_SERVER['REMOTE_ADDR'];
+
+// Initialize session array if not set
 if (!isset($_SESSION['testimonial_attempts'])) {
     $_SESSION['testimonial_attempts'] = [];
 }
 
-// Clean old attempts
-$_SESSION['testimonial_attempts'] = array_filter($_SESSION['testimonial_attempts'], function($attempt) use ($timeWindow) {
-    return (time() - $attempt['time']) < $timeWindow;
+// Clean old attempts (older than time window)
+$_SESSION['testimonial_attempts'] = array_filter($_SESSION['testimonial_attempts'], function($attempt) use ($config) {
+    return (time() - $attempt['time']) < $config['timeWindow'];
 });
 
 // Count attempts from this IP
-$attempts = array_filter($_SESSION['testimonial_attempts'], function($attempt) use ($ip) {
+$ipAttempts = array_filter($_SESSION['testimonial_attempts'], function($attempt) use ($ip) {
     return $attempt['ip'] === $ip;
 });
 
-if (count($attempts) >= $maxAttempts) {
-    echo json_encode(['success' => false, 'message' => 'Too many attempts. Please try again later.']);
+if (count($ipAttempts) >= $config['maxAttempts']) {
+    echo json_encode(['success' => false, 'message' => 'Too many attempts. Please try again in 5 minutes.']);
     exit();
 }
 
-// Function to sanitize input for storage
+// ==================== Helper Functions ====================
+
+// Sanitize input for storage
 function sanitizeInput($input) {
     $input = trim($input);
     $input = stripslashes($input);
-    // For storage, we don't use htmlspecialchars - we'll escape on output
     return $input;
 }
 
-// Function to escape for JSON/HTML output
-function escapeOutput($input) {
-    return htmlspecialchars($input, ENT_QUOTES, 'UTF-8');
-}
-
-// Function to generate unique ID
+// Generate unique ID
 function generateId($name) {
     $clean = preg_replace('/[^a-z0-9\s]/', '', strtolower($name));
     $clean = preg_replace('/\s+/', '_', $clean);
     return substr($clean, 0, 20) . '_' . time() . '_' . bin2hex(random_bytes(4));
 }
 
-// Function to handle image upload with enhanced security
-function handleImageUpload($file) {
+// Handle image upload with security checks
+function handleImageUpload($file, $config) {
     if (!isset($file) || $file['error'] !== UPLOAD_ERR_OK) {
         return null; // No image or upload error
     }
 
-    // Check file type by MIME
-    $allowedTypes = ['image/jpeg', 'image/png', 'image/jpg'];
+    // Check file MIME type using finfo
     $finfo = new finfo(FILEINFO_MIME_TYPE);
     $mime = $finfo->file($file['tmp_name']);
     
-    if (!in_array($mime, $allowedTypes)) {
-        return ['error' => 'Only JPG and PNG images are allowed'];
+    if (!in_array($mime, $config['allowedMimeTypes'])) {
+        return ['error' => 'Only JPEG and PNG images are allowed'];
     }
 
     // Check file extension
-    $allowedExts = ['jpg', 'jpeg', 'png'];
     $ext = strtolower(pathinfo($file['name'], PATHINFO_EXTENSION));
-    if (!in_array($ext, $allowedExts)) {
+    if (!in_array($ext, $config['allowedExtensions'])) {
         return ['error' => 'Invalid file extension'];
     }
 
-    // Check file size (2MB max)
-    $maxFileSize = 2 * 1024 * 1024;
-    if ($file['size'] > $maxFileSize) {
+    // Check file size
+    if ($file['size'] > $config['maxFileSize']) {
         return ['error' => 'Image size must be less than 2MB'];
     }
 
@@ -97,17 +103,16 @@ function handleImageUpload($file) {
 
     // Generate cryptographically secure filename
     $secureName = bin2hex(random_bytes(16)) . '_' . time() . '.' . $ext;
-    $uploadDir = '../assets/img/testimonials/';
-    $uploadPath = $uploadDir . $secureName;
-
+    
     // Ensure upload directory exists
-    if (!is_dir($uploadDir)) {
-        mkdir($uploadDir, 0755, true);
+    if (!is_dir($config['uploadDir'])) {
+        mkdir($config['uploadDir'], 0755, true);
     }
+
+    $uploadPath = $config['uploadDir'] . $secureName;
 
     // Move uploaded file
     if (move_uploaded_file($file['tmp_name'], $uploadPath)) {
-        // Set proper permissions
         chmod($uploadPath, 0644);
         return 'assets/img/testimonials/' . $secureName;
     }
@@ -115,31 +120,20 @@ function handleImageUpload($file) {
     return ['error' => 'Failed to upload image'];
 }
 
+// Log attempts
+function logAttempt($logFile, $name, $ip) {
+    $logDir = dirname($logFile);
+    if (!is_dir($logDir)) {
+        mkdir($logDir, 0755, true);
+    }
+    $logEntry = date('Y-m-d H:i:s') . " - New testimonial submitted: {$name} (IP: {$ip})\n";
+    file_put_contents($logFile, $logEntry, FILE_APPEND | LOCK_EX);
+}
+
+// ==================== Main Logic ====================
 try {
-    // Rate limiting check
-    if (!isset($_SESSION['testimonial_attempts'])) {
-        $_SESSION['testimonial_attempts'] = [];
-    }
-
-    // Clean old attempts (older than 5 minutes)
-    $_SESSION['testimonial_attempts'] = array_filter($_SESSION['testimonial_attempts'], function($attempt) {
-        return (time() - $attempt['time']) < 300;
-    });
-
-    // Count attempts from this IP
-    $ipAttempts = array_filter($_SESSION['testimonial_attempts'], function($attempt) use ($ip) {
-        return $attempt['ip'] === $ip;
-    });
-
-    if (count($ipAttempts) >= 5) {
-        echo json_encode(['success' => false, 'message' => 'Too many attempts. Please try again in 5 minutes.']);
-        exit();
-    }
-
-    // Get JSON input
+    // Get input (JSON or POST)
     $input = json_decode(file_get_contents('php://input'), true);
-    
-    // If not JSON, try POST
     if (!$input) {
         $input = $_POST;
     }
@@ -170,7 +164,7 @@ try {
         'approved' => false, // Requires approval
         'created_at' => date('Y-m-d H:i:s'),
         'ip_address' => $ip,
-        'image' => 'assets/img/testimonials/testimonials-1.jpg' // Default image
+        'image' => $config['defaultImage']
     ];
 
     // Add Arabic fields if provided
@@ -184,9 +178,9 @@ try {
         $testimonial['contentAr'] = sanitizeInput($input['contentAr']);
     }
 
-    // Handle image upload (if using FormData)
+    // Handle image upload
     if (isset($_FILES['image']) && $_FILES['image']['error'] === UPLOAD_ERR_OK) {
-        $imageResult = handleImageUpload($_FILES['image']);
+        $imageResult = handleImageUpload($_FILES['image'], $config);
         if (is_array($imageResult) && isset($imageResult['error'])) {
             echo json_encode(['success' => false, 'message' => $imageResult['error']]);
             exit();
@@ -197,7 +191,7 @@ try {
     }
 
     // Read existing testimonials
-    $jsonFile = '../data/testimonials.json';
+    $jsonFile = $config['jsonFile'];
     
     if (!file_exists($jsonFile)) {
         echo json_encode(['success' => false, 'message' => 'Testimonials data file not found']);
@@ -238,14 +232,8 @@ try {
         'name' => $testimonial['name']
     ];
 
-    // Simple logging (optional)
-    $logFile = '../logs/testimonials.log';
-    $logDir = dirname($logFile);
-    if (!is_dir($logDir)) {
-        mkdir($logDir, 0755, true);
-    }
-    $logEntry = date('Y-m-d H:i:s') . " - New testimonial submitted: {$testimonial['name']} (IP: $ip)\n";
-    file_put_contents($logFile, $logEntry, FILE_APPEND | LOCK_EX);
+    // Write to log file
+    logAttempt($config['logFile'], $testimonial['name'], $ip);
 
     echo json_encode([
         'success' => true,

@@ -294,6 +294,8 @@ window.DataLoader = {
   loadTestimonialsData,
   getAllTestimonials,
   getTestimonialById,
+  get testimonialsData() { return testimonialsData; },
+  set testimonialsData(val) { testimonialsData = val; },
   get currentLanguage() { return currentLanguage; },
   set currentLanguage(val) { currentLanguage = val; },
   get currentFilter() { return currentFilter; },

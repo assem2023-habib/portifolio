@@ -40,8 +40,8 @@ async function initHomepageData() {
     }
 
     // تحميل الآراء
-    if (typeof testimonialsData !== 'undefined') {
-      loadedData.testimonials = testimonialsData;
+    if (window.DataLoader && window.DataLoader.testimonialsData) {
+      loadedData.testimonials = window.DataLoader.testimonialsData;
     }
 
     // تشغيل الدوال

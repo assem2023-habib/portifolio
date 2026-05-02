@@ -954,10 +954,9 @@
     <script src="assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
     <script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
 
-<!-- Main JS File -->
+    <!-- Main JS File -->
     <script src="assets/js/services-data.js"></script>
     <script src="assets/js/portfolio-data.js"></script>
-    <script src="assets/js/testimonials-data.js"></script>
     <script src="assets/js/data-loader.js"></script>
     <script src="assets/js/cv-loader.js"></script>
     <script src="assets/js/main.js"></script>
@@ -965,7 +964,7 @@
     <script src="assets/js/testimonial-form.js"></script>
     <script>
       // Load and display testimonials from JSON
-      let testimonialsData = null;
+      // testimonialsData is declared in data-loader.js (window.DataLoader)
       let currentLang = localStorage.getItem('portfolio_language') || 'en';
 
       async function loadTestimonialsFromJSON() {
@@ -973,7 +972,10 @@
           const response = await fetch('data/testimonials.json');
           if (!response.ok) throw new Error('Failed to load testimonials.json');
           const data = await response.json();
-          testimonialsData = data;
+          // Update the variable declared in data-loader.js via DataLoader
+          if (window.DataLoader) {
+            window.DataLoader.testimonialsData = data;
+          }
           return data;
         } catch (error) {
           console.error('Error loading testimonials:', error);

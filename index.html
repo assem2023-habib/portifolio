@@ -965,9 +965,9 @@
     <script>
       // Load and display testimonials from JSON
       // testimonialsData is declared in data-loader.js (window.DataLoader)
-      let currentLang = localStorage.getItem('portfolio_language') || 'en';
+      // Use window.DataLoader.currentLanguage instead of redeclaring currentLang
       console.log('🚀 Step 1: Starting testimonials loading process...');
-      console.log('🌐 Current language:', currentLang);
+      console.log('🌐 Current language:', window.DataLoader?.currentLanguage || 'en');
 
       async function loadTestimonialsFromJSON() {
         try {
@@ -1018,11 +1018,11 @@
         console.log('🧹 Step 8: Cleared existing content');
 
         const testimonials = data.testimonials;
-        const lang = localStorage.getItem('portfolio_language') || 'en';
+        const lang = window.DataLoader?.currentLanguage || localStorage.getItem('portfolio_language') || 'en';
         console.log('🔤 Step 9: Using language:', lang);
         console.log('🎯 Step 10: Processing', testimonials.length, 'testimonials...');
 
-          // Create slides for each testimonial
+        // Create slides for each testimonial
         testimonials.forEach((testimonial, index) => {
           console.log(`🎨 Step 11.${index + 1}: Creating slide for testimonial ${index + 1}/${testimonials.length}`);
           console.log('👤 Testimonial data:', testimonial);

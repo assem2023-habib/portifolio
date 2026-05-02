@@ -66,13 +66,21 @@ function getProjectById(id) {
  */
 async function loadTestimonialsData() {
   try {
+    console.log('📥 [DataLoader] Step 1: Fetching testimonials.json...');
     const response = await fetch('data/testimonials.json');
     if (!response.ok) throw new Error('Failed to load testimonials.json');
     const data = await response.json();
+    console.log('✅ [DataLoader] Step 2: Testimonials JSON loaded successfully');
+    console.log('📊 [DataLoader] Raw data:', data);
+    console.log('📋 [DataLoader] Number of testimonials:', data.testimonials?.length || 0);
+    
     testimonialsData = data;
+    console.log('💾 [DataLoader] Step 3: Data saved to testimonialsData variable');
+    console.log('🎯 [DataLoader] Step 4: First testimonial sample:', data.testimonials?.[0]);
+    
     return data;
   } catch (error) {
-    console.error('Error loading testimonials:', error);
+    console.error('❌ [DataLoader] Error loading testimonials:', error);
     return null;
   }
 }

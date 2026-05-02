@@ -605,8 +605,59 @@
       <!-- /Services Section -->
 
       <!-- Testimonials Section -->
-      
-      <!-- /Testimonials Section -->
+      <section id="testimonials" class="testimonials section">
+
+        <!-- Section Title -->
+        <div class="container section-title" data-aos="fade-up">
+          <h2>Testimonials</h2>
+          <p>What clients and colleagues say about my work and professional collaboration</p>
+        </div><!-- End Section Title -->
+
+        <div class="container" data-aos="fade-up" data-aos-delay="100">
+
+          <div class="testimonials-slider swiper init-swiper">
+            <script type="application/json" class="swiper-config">
+              {
+                "loop": true,
+                "speed": 800,
+                "autoplay": {
+                  "delay": 5000,
+                  "disableOnInteraction": false
+                },
+                "slidesPerView": 1,
+                "spaceBetween": 30,
+                "breakpoints": {
+                  "768": {
+                    "slidesPerView": 2
+                  },
+                  "1200": {
+                    "slidesPerView": 3
+                  }
+                },
+                "pagination": {
+                  "el": ".swiper-pagination",
+                  "type": "bullets",
+                  "clickable": true
+                },
+                "navigation": {
+                  "nextEl": ".swiper-button-next",
+                  "prevEl": ".swiper-button-prev"
+                }
+              }
+            </script>
+
+            <div class="swiper-wrapper" id="testimonials-wrapper">
+              <!-- Testimonials will be loaded dynamically -->
+            </div>
+
+            <div class="swiper-pagination"></div>
+            <div class="swiper-button-prev"></div>
+            <div class="swiper-button-next"></div>
+          </div>
+
+        </div>
+
+      </section><!-- /Testimonials Section -->
 
       <!-- Contact Section -->
       <section id="contact" class="contact section">
@@ -794,6 +845,63 @@
     <script src="assets/js/cv-loader.js"></script>
     <script src="assets/js/main.js"></script>
     <script src="assets/js/homepage-data-loader.js"></script>
+    <script src="assets/js/testimonials-data.js"></script>
+
+    <script>
+      // Load and display testimonials
+      document.addEventListener('DOMContentLoaded', function() {
+        const wrapper = document.getElementById('testimonials-wrapper');
+        if (!wrapper || typeof testimonialsData === 'undefined') return;
+
+        // Clear any existing content
+        wrapper.innerHTML = '';
+
+        // Convert testimonials object to array
+        const testimonials = Object.values(testimonialsData);
+
+        // Create slides for each testimonial
+        testimonials.forEach((testimonial, index) => {
+          const slide = document.createElement('div');
+          slide.className = 'swiper-slide';
+          slide.setAttribute('data-aos', 'fade-up');
+          slide.setAttribute('data-aos-delay', (index * 100).toString());
+
+          // Generate stars based on rating
+          const stars = Array(testimonial.rating || 5).fill('<i class="bi bi-star-fill"></i>').join('');
+
+          slide.innerHTML = `
+            <div class="testimonial-item">
+              <div class="testimonial-content">
+                <i class="bi bi-quote quote-icon-left"></i>
+                <p>${testimonial.content}</p>
+                <i class="bi bi-quote quote-icon-right"></i>
+              </div>
+              <div class="testimonial-author d-flex align-items-center mt-4">
+                <img src="${testimonial.image}" class="testimonial-img" alt="${testimonial.name}">
+                <div class="ms-3">
+                  <h3>${testimonial.name}</h3>
+                  <h4>${testimonial.role}</h4>
+                  <div class="stars text-warning">
+                    ${stars}
+                  </div>
+                </div>
+              </div>
+            </div>
+          `;
+
+          wrapper.appendChild(slide);
+        });
+
+        console.log(`✅ Loaded ${testimonials.length} testimonials`);
+
+        // Refresh AOS after content is loaded
+        setTimeout(() => {
+          if (typeof AOS !== 'undefined') {
+            AOS.refresh();
+          }
+        }, 300);
+      });
+    </script>
 
     <!-- CV Modal -->
     <div class="modal fade" id="cvModal" tabindex="-1" aria-hidden="true">

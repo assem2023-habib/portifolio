@@ -1,43 +1,6 @@
 {
   "projects": [
     {
-      "id": "smartship",
-      "title": "SmartShip",
-      "titleAr": "سمارت شيب",
-      "category": "web",
-      "image": "assets/img/masonry-portfolio/masonry-portfolio-1.jpg",
-      "thumbnail": "assets/img/masonry-portfolio/masonry-portfolio-1.jpg",
-      "description": "Integrated parcel management system with advanced tracking and user management features for efficient logistics operations",
-      "descriptionAr": "نظام إدارة طرود متكامل مع تتبع متقدم وإدارة المستخدمين لعمليات لوجستية فعالة",
-      "status": "completed",
-      "year": 2023,
-      "duration": "6 أشهر",
-      "technologies": ["Laravel", "PHP", "MySQL", "RESTful APIs", "Bootstrap", "JavaScript"],
-      "role": "Full Stack Developer",
-      "client": "شركة لوجستية محلية",
-      "liveUrl": null,
-      "repoUrl": null,
-      "features": [
-        "Real-time package tracking",
-        "Automated notifications system",
-        "Multi-warehouse support",
-        "Advanced reporting dashboard",
-        "Mobile-responsive design",
-        "Secure payment integration"
-      ],
-      "featuresAr": [
-        "تتبع الطرود لحظياً",
-        "نظام إشعارات آلية",
-        "دعم مستودعات متعددة",
-        "لوحة تحكم متقدمة للتقارير",
-        "تصميم متجاوب للجوال",
-        "تكامل بوابات دفع آمنة"
-      ],
-      "challenges": "تحسين أداء النظام مع زيادة عدد المستخدمين وتنوع حالات الشحن",
-      "challengesAr": "كان التحدي الرئيسي هو التعامل مع الحجم الكبير للطلبات وضمان تحديث المخزون لحظياً",
-      "screenshots": []
-    },
-    {
       "id": "stitchhub",
       "title": "StitchHub Mobile",
       "titleAr": "ستيتش هب - موبايل",
@@ -49,7 +12,13 @@
       "status": "completed",
       "year": 2023,
       "duration": "5 أشهر",
-      "technologies": ["React Native", "Node.js", "MongoDB", "Express.js", "Redux"],
+      "technologies": [
+        "React Native",
+        "Node.js",
+        "MongoDB",
+        "Express.js",
+        "Redux"
+      ],
       "role": "Full Stack Developer",
       "client": "منصة ستيتش هب",
       "liveUrl": null,
@@ -86,7 +55,14 @@
       "status": "completed",
       "year": 2024,
       "duration": "8 أشهر",
-      "technologies": ["Python", "PySide6", "Pandas", "XlsxWriter", "FPDF2", "Qt"],
+      "technologies": [
+        "Python",
+        "PySide6",
+        "Pandas",
+        "XlsxWriter",
+        "FPDF2",
+        "Qt"
+      ],
       "role": "Lead Developer",
       "client": "مصانع السجاد المحلية",
       "liveUrl": null,
@@ -115,171 +91,72 @@
         "assets/img/portfolio/cutoptimizer-main.png",
         "assets/img/portfolio/cutoptimizer-results.png"
       ],
-        "docs": {
-          "readme": "assets/Docs_Project/README_CUTOPTIMIZER.md",
-          "type": "comprehensive"
-        }
-      },
-      {
-        "id": "jeeb",
-        "title": "Jeeb Backend API",
-        "titleAr": "جيب - النظام الخلفي",
-        "category": "backend",
-        "image": "assets/img/masonry-portfolio/masonry-portfolio-5.jpg",
-        "thumbnail": "assets/img/masonry-portfolio/masonry-portfolio-5.jpg",
-        "description": "Comprehensive delivery, wallet, and merchant management backend API built with NestJS, featuring real-time tracking, multi-currency wallets, and AI integration",
-        "descriptionAr": "نظام خلفي شامل لإدارة التوصيل، المحافظ المالية، والمطاعم مبني بـ NestJS، يتضمن تتبعاً لحظياً، محافظ متعددة العملات، وتكامل الذكاء الاصطناعي",
-        "status": "completed",
-        "year": 2024,
-        "duration": "8 أشهر",
-        "technologies": ["NestJS v11", "PostgreSQL", "Redis", "Firebase Admin", "TypeORM", "BullMQ", "JWT", "Socket.io", "Nodemailer", "Sharp", "OpenAI API"],
-        "role": "Backend Developer & System Architect",
-        "client": "شركة جيب (Jeeb Company)",
-        "liveUrl": null,
-        "repoUrl": "https://github.com/assem2023-habib/Jeeb_NestJs",
-        "mobileUrl": "https://github.com/assem2023-habib/portifolio/releases/download/Jeeb_Customer_release/Jeeb_App.apk",
-        "features": [
-          "Smart delivery management with driver scoring algorithm",
-          "Multi-currency wallet system with Ledger Pattern auditing",
-          "Real-time order lifecycle (10 states from pending to complete)",
-          "Multi-channel notification system (WhatsApp, Email, SMS, FCM)",
-          "Loyalty system with point expiration after 6 months",
-          "Smart coupon engine with targeted discounts",
-          "Modular Monolith architecture with Pipeline and Strategy patterns",
-          "AI integration via Blaze API (OpenAI-compatible)",
-          "Role-based access control (RBAC) with 5 user roles",
-          "Automated cron jobs for cleanup and order monitoring"
-        ],
-        "featuresAr": [
-          "إدارة توصيل ذكية مع خوارزمية تقييم السائقين",
-          "نظام محافظ مالية متعدد العملات مع تدقيق Ledger",
-          "دورة حياة الطلبات لحظياً (10 حالات من الانتظار للإكمال)",
-          "نظام إشعارات متعدد القنوات (واتساب، إيميل، SMS، FCM)",
-          "نظام ولاء مع انتهاء صلاحية النقاط بعد 6 أشهر",
-          "محرك كوبونات ذكي مع خصومات مستهدفة",
-          "بنية Modular Monolith مع أنماط Pipeline و Strategy",
-          "تكامل الذكاء الاصطناعي عبر Blaze API (متوافق مع OpenAI)",
-          "التحكم بالوصول بناءً على الأدوار (RBAC) مع 5 أدوار مستخدمين",
-          "مهام مجدولة تلقائية للتنظيف ومراقبة الطلبات"
-        ],
-        "challenges": "Building a centralized system synchronizing real-time data between customers, drivers, restaurants, and admin with complex financial auditing and multi-currency support",
-        "challengesAr": "بناء نظام مركزي يزامن البيانات لحظياً بين العملاء، السائقين، المطاعم، والإدارة مع تدقيق مالي معقد ودعم متعدد العملات",
-        "screenshots": [],
-        "docs": {
-          "readme": "assets/Docs_Project/README_Jeeb_BackEnd.md",
-          "type": "comprehensive"
-        }
-      },
-      {
-        "id": "socialbackend",
-      "title": "Social Backend",
-      "titleAr": "باك إند سوشيال",
-      "category": "web",
-      "image": "assets/img/masonry-portfolio/masonry-portfolio-4.jpg",
-      "thumbnail": "assets/img/masonry-portfolio/masonry-portfolio-4.jpg",
-      "description": "Real-time messaging system backend with advanced chat features and media sharing capabilities",
-      "descriptionAr": "باك إند نظام رسائل فورية مع ميزات دردشة متقدمة وإمكانية مشاركة الوسائط",
-      "status": "completed",
-      "year": 2022,
-      "duration": "4 أشهر",
-      "technologies": ["Node.js", "Socket.io", "MongoDB", "Express.js", "JWT", "Redis"],
-      "role": "Backend Developer",
-      "client": "تطبيق سوشيال ميديا",
-      "liveUrl": null,
-      "repoUrl": null,
-      "features": [
-        "Real-time messaging with Socket.io",
-        "File and media sharing",
-        "Group chat support",
-        "End-to-end message encryption",
-        "User authentication with JWT",
-        "Scalable microservices architecture"
-      ],
-      "featuresAr": [
-        "رسائل فورية باستخدام Socket.io",
-        "مشاركة الملفات والوسائط",
-        "دعم المحادثات الجماعية",
-        "تشفير الرسائل من طرف لطرف",
-        "مصادقة المستخدمين بـ JWT",
-        "بنية microservices قابلة للتوسع"
-      ],
-      "challenges": "بناء نظام رسائل فورية يخدم آلاف المستخدمين المتزامنين",
-      "challengesAr": "كان التحدي ضمان أداء عالٍ مع آلاف الاتصالات المتزامنة مع الحفاظ على أمان الرسائل",
-      "screenshots": []
+      "docs": {
+        "readme": "assets/Docs_Project/README_CUTOPTIMIZER.md",
+        "type": "comprehensive"
+      }
     },
     {
-      "id": "taskflow",
-      "title": "TaskFlow Mobile",
-      "titleAr": "تاسك فلو - موبايل",
-      "category": "mobile",
+      "id": "jeeb",
+      "title": "Jeeb Backend API",
+      "titleAr": "جيب - النظام الخلفي",
+      "category": "backend",
       "image": "assets/img/masonry-portfolio/masonry-portfolio-5.jpg",
       "thumbnail": "assets/img/masonry-portfolio/masonry-portfolio-5.jpg",
-      "description": "Advanced task management application with team collaboration and progress tracking features",
-      "descriptionAr": "تطبيق متقدم لإدارة المهام مع ميزات التعاون الفريق وتتبع التقدم",
+      "description": "Comprehensive delivery, wallet, and merchant management backend API built with NestJS, featuring real-time tracking, multi-currency wallets, and AI integration",
+      "descriptionAr": "نظام خلفي شامل لإدارة التوصيل، المحافظ المالية، والمطاعم مبني بـ NestJS، يتضمن تتبعاً لحظياً، محافظ متعددة العملات، وتكامل الذكاء الاصطناعي",
       "status": "completed",
-      "year": 2023,
-      "duration": "4 أشهر",
-      "technologies": ["Flutter", "Firebase", "Dart", "Cloud Functions", "Provider"],
-      "role": "Mobile Developer",
-      "client": "فريق داخلي",
+      "year": 2024,
+      "duration": "8 أشهر",
+      "technologies": [
+        "NestJS v11",
+        "PostgreSQL",
+        "Redis",
+        "Firebase Admin",
+        "TypeORM",
+        "BullMQ",
+        "JWT",
+        "Socket.io",
+        "Nodemailer",
+        "Sharp",
+        "OpenAI API"
+      ],
+      "role": "Backend Developer & System Architect",
+      "client": "شركة جيب (Jeeb Company)",
       "liveUrl": null,
-      "repoUrl": null,
+      "repoUrl": "https://github.com/assem2023-habib/Jeeb_NestJs",
+      "mobileUrl": "https://github.com/assem2023-habib/portifolio/releases/download/Jeeb_Customer_release/Jeeb_App.apk",
       "features": [
-        "Team collaboration tools",
-        "Progress tracking dashboard",
-        "File attachments support",
-        "Real-time updates",
-        "Offline synchronization",
-        "Advanced filtering and search"
+        "Smart delivery management with driver scoring algorithm",
+        "Multi-currency wallet system with Ledger Pattern auditing",
+        "Real-time order lifecycle (10 states from pending to complete)",
+        "Multi-channel notification system (WhatsApp, Email, SMS, FCM)",
+        "Loyalty system with point expiration after 6 months",
+        "Smart coupon engine with targeted discounts",
+        "Modular Monolith architecture with Pipeline and Strategy patterns",
+        "AI integration via Blaze API (OpenAI-compatible)",
+        "Role-based access control (RBAC) with 5 user roles",
+        "Automated cron jobs for cleanup and order monitoring"
       ],
       "featuresAr": [
-        "أدوات التعاون الفريق",
-        "لوحة تتبع التقدم",
-        "إرفاق الملفات",
-        "تحديثات فورية",
-        "مزامنة بدون إنترنت",
-        "تصفية وبحث متقدم"
+        "إدارة توصيل ذكية مع خوارزمية تقييم السائقين",
+        "نظام محافظ مالية متعدد العملات مع تدقيق Ledger",
+        "دورة حياة الطلبات لحظياً (10 حالات من الانتظار للإكمال)",
+        "نظام إشعارات متعدد القنوات (واتساب، إيميل، SMS، FCM)",
+        "نظام ولاء مع انتهاء صلاحية النقاط بعد 6 أشهر",
+        "محرك كوبونات ذكي مع خصومات مستهدفة",
+        "بنية Modular Monolith مع أنماط Pipeline و Strategy",
+        "تكامل الذكاء الاصطناعي عبر Blaze API (متوافق مع OpenAI)",
+        "التحكم بالوصول بناءً على الأدوار (RBAC) مع 5 أدوار مستخدمين",
+        "مهام مجدولة تلقائية للتنظيف ومراقبة الطلبات"
       ],
-      "challenges": "تحقيق مزامنة سلسة بين الأجهزة مع العمل بدون إنترنت",
-      "challengesAr": "كان التحدي الرئيسي بناء نظام مزامنة يعمل بسلاسة عند عودة الاتصال بالإنترنت",
-      "screenshots": []
-    },
-    {
-      "id": "dataanalyzer",
-      "title": "DataAnalyzer",
-      "titleAr": "ديتا أنالايزر",
-      "category": "desktop",
-      "image": "assets/img/masonry-portfolio/masonry-portfolio-6.jpg",
-      "thumbnail": "assets/img/masonry-portfolio/masonry-portfolio-6.jpg",
-      "description": "Desktop data analysis tool with advanced visualization and reporting capabilities for business intelligence",
-      "descriptionAr": "أداة تحليل بيانات مكتبية مع رسوم بيانية متقدمة وإمكانيات إعداد تقارير لاستخبارات الأعمال",
-      "status": "completed",
-      "year": 2023,
-      "duration": "5 أشهر",
-      "technologies": ["Python", "PyQt", "Pandas", "Matplotlib", "SQLite", "Seaborn"],
-      "role": "Lead Developer",
-      "client": "شركات تحليل البيانات",
-      "liveUrl": null,
-      "repoUrl": null,
-      "features": [
-        "Interactive data visualization",
-        "Multiple data source support (Excel, CSV, Database)",
-        "Custom report generation",
-        "Statistical analysis tools",
-        "Export to multiple formats (PDF, Excel, HTML)",
-        "Real-time data processing"
-      ],
-      "featuresAr": [
-        "تصور البيانات التفاعلي",
-        "دعم مصادر بيانات متعددة",
-        "إنشاء تقارير مخصصة",
-        "أدوات التحليل الإحصائي",
-        "تصدير لصيغ متعددة",
-        "معالجة البيانات لحظياً"
-      ],
-      "challenges": "بناء واجهة مستخدم معقدة تدعم تحليلات بيانات متنوعة",
-      "challengesAr": "كان التحدي تصميم واجهة مرنة تدعم أنواع تحليل مختلفة مع الحفاظ على سهولة الاستخدام",
-      "screenshots": []
+      "challenges": "Building a centralized system synchronizing real-time data between customers, drivers, restaurants, and admin with complex financial auditing and multi-currency support",
+      "challengesAr": "بناء نظام مركزي يزامن البيانات لحظياً بين العملاء، السائقين، المطاعم، والإدارة مع تدقيق مالي معقد ودعم متعدد العملات",
+      "screenshots": [],
+      "docs": {
+        "readme": "assets/Docs_Project/README_Jeeb_BackEnd.md",
+        "type": "comprehensive"
+      }
     },
     {
       "id": "inventorypro",
@@ -293,7 +170,14 @@
       "status": "completed",
       "year": 2022,
       "duration": "6 أشهر",
-      "technologies": ["Laravel", "PHP", "MySQL", "Barcode API", "Chart.js", "JavaScript"],
+      "technologies": [
+        "Laravel",
+        "PHP",
+        "MySQL",
+        "Barcode API",
+        "Chart.js",
+        "JavaScript"
+      ],
       "role": "Full Stack Developer",
       "client": "محلات تجارية محلية",
       "liveUrl": null,
@@ -330,7 +214,12 @@
       "status": "completed",
       "year": 2023,
       "duration": "3 أشهر",
-      "technologies": ["React Native", "AsyncStorage", "React Navigation", "Chart.js"],
+      "technologies": [
+        "React Native",
+        "AsyncStorage",
+        "React Navigation",
+        "Chart.js"
+      ],
       "role": "Mobile Developer",
       "client": "تطبيق شخصي",
       "liveUrl": null,
@@ -356,43 +245,6 @@
       "screenshots": []
     },
     {
-      "id": "codeeditor",
-      "title": "CodeEditor Pro",
-      "titleAr": "كود إديتور برو",
-      "category": "desktop",
-      "image": "assets/img/masonry-portfolio/masonry-portfolio-9.jpg",
-      "thumbnail": "assets/img/masonry-portfolio/masonry-portfolio-9.jpg",
-      "description": "Professional code editor with syntax highlighting and project management features for developers",
-      "descriptionAr": "محرر أكواد احترافي مع تمييز الصيغة وإدارة المشاريع للمطورين",
-      "status": "completed",
-      "year": 2024,
-      "duration": "4 أشهر",
-      "technologies": ["Electron", "Monaco Editor", "Node.js", "TypeScript", "JavaScript"],
-      "role": "Lead Developer",
-      "client": "مطورون محليون",
-      "liveUrl": null,
-      "repoUrl": null,
-      "features": [
-        "Advanced syntax highlighting for 50+ languages",
-        "Intelligent code completion",
-        "Project file tree navigation",
-        "Multiple theme support",
-        "Plugin system for extensions",
-        "Git integration and version control"
-      ],
-      "featuresAr": [
-        "تمييز صيغة متقدم لأكثر من 50 لغة",
-        "إكمال أكواد ذكي",
-        "تنقل شجرة ملفات المشروع",
-        "دعم ثيمات متعددة",
-        "نظام إضافات للتوسعات",
-        "تكامل Git ومراقبة الإصدارات"
-      ],
-      "challenges": "تحقيق أداء محرر أكواد سريع مثل VS Code",
-      "challengesAr": "كان التحدي بناء محرر يوفر تجربة مشابهة لـ VS Code مع الحفاظ على حجم تطبيق صغير",
-      "screenshots": []
-    },
-    {
       "id": "shehrezad",
       "title": "Shehrezad Backend",
       "titleAr": "باك إند شهرزاد",
@@ -404,7 +256,17 @@
       "status": "completed",
       "year": 2025,
       "duration": "12 شهر",
-      "technologies": ["Node.js", "Express", "MySQL", "Firebase", "JWT", "Puppeteer", "PDFKit", "Sharp", "Bcrypt"],
+      "technologies": [
+        "Node.js",
+        "Express",
+        "MySQL",
+        "Firebase",
+        "JWT",
+        "Puppeteer",
+        "PDFKit",
+        "Sharp",
+        "Bcrypt"
+      ],
       "role": "Lead Backend Developer",
       "client": "شركة شهرزاد للأزياء",
       "liveUrl": null,
@@ -459,7 +321,15 @@
       "status": "completed",
       "year": 2025,
       "duration": "10 أشهر",
-      "technologies": ["Flutter", "Bloc", "Drift (SQLite)", "Speech To Text", "PDF", "Clean Architecture", "GetIt"],
+      "technologies": [
+        "Flutter",
+        "Bloc",
+        "Drift (SQLite)",
+        "Speech To Text",
+        "PDF",
+        "Clean Architecture",
+        "GetIt"
+      ],
       "role": "Lead Mobile Developer",
       "client": "شركات محلية متعددة",
       "liveUrl": null,
@@ -502,7 +372,11 @@
       "id": "rma",
       "title": "RMA - Parcel Management System",
       "titleAr": "نظام إدارة الطرود والشحن",
-      "categories": ["web", "backend", "frontend"],
+      "categories": [
+        "web",
+        "backend",
+        "frontend"
+      ],
       "category": "web",
       "image": "assets/img/Projects_Images/RMA/FULL_STACK_DASHBOARD_WEB/Admin_home_page.png",
       "thumbnail": "assets/img/Projects_Images/RMA/FULL_STACK_DASHBOARD_WEB/Admin_home_page.png",
@@ -511,7 +385,16 @@
       "status": "completed",
       "year": 2025,
       "duration": "12 شهر",
-      "technologies": ["Laravel 12", "PHP 8.2+", "MySQL 8.0+", "Filament 3.3", "Tailwind CSS 4.0", "Laravel Reverb", "Spatie Permission", "Firebase"],
+      "technologies": [
+        "Laravel 12",
+        "PHP 8.2+",
+        "MySQL 8.0+",
+        "Filament 3.3",
+        "Tailwind CSS 4.0",
+        "Laravel Reverb",
+        "Spatie Permission",
+        "Firebase"
+      ],
       "role": "Lead Developer",
       "client": "شركة شحن محلية",
       "liveUrl": null,
@@ -577,21 +460,21 @@
       "name": "Web App",
       "nameAr": "تطبيق ويب",
       "icon": "bi-globe",
-      "count": 5
+      "count": 3
     },
     {
       "id": "mobile",
       "name": "Mobile Application",
       "nameAr": "تطبيق جوال",
       "icon": "bi-phone",
-      "count": 3
+      "count": 2
     },
     {
       "id": "desktop",
       "name": "Desktop Application",
       "nameAr": "تطبيق سطح المكتب",
       "icon": "bi-laptop",
-      "count": 3
+      "count": 1
     },
     {
       "id": "backend",
@@ -610,8 +493,8 @@
   ],
   "metadata": {
     "version": "1.0.0",
-    "lastUpdated": "2025-04-15",
-    "totalProjects": 12,
+    "lastUpdated": "2025-05-03",
+    "totalProjects": 8,
     "author": "Assem Adel Habib",
     "contact": "099assemhb@gmail.com"
   }

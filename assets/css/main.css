@@ -2367,7 +2367,6 @@ body.dark-mode #cvDownloadModal .modal-footer .btn-light {
 body.dark-mode #cvDownloadModal .modal-footer .btn-light:hover {
   background: rgba(255, 255, 255, 0.1);
 }
-}
 
 #cvDownloadModal .modal-body p {
   color: var(--default-color);

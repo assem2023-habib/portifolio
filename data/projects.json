@@ -454,6 +454,64 @@
         "complexity": "high",
         "architecture": "Modular Architecture with Filament Admin Panel"
       }
+    },
+    {
+      "id": "mizaneyati",
+      "title": "Mizaneyati Pro",
+      "titleAr": "ميزانيتي",
+      "category": "mobile",
+      "image": "assets/img/masonry-portfolio/masonry-portfolio-4.jpg",
+      "thumbnail": "assets/img/masonry-portfolio/masonry-portfolio-4.jpg",
+      "description": "Comprehensive personal financial management system built with Clean Architecture standards, featuring advanced tracking, visual documentation, and interactive intelligence.",
+      "descriptionAr": "نظام متكامل للإدارة المالية الشخصية المبني بمعايير Clean Architecture، يتميز بتتبع متقدم، توثيق بصري، وذكاء مالي تفاعلي.",
+      "status": "completed",
+      "year": 2025,
+      "duration": "6 أشهر",
+      "technologies": [
+        "Flutter",
+        "Dart",
+        "Riverpod",
+        "Drift (SQLite)",
+        "fl_chart",
+        "Clean Architecture",
+        "Result Pattern"
+      ],
+      "role": "Lead Mobile Developer",
+      "client": "Personal Project",
+      "liveUrl": null,
+      "repoUrl": "https://github.com/assem2023-habib/mizaneyati.git",
+      "mobileUrl": "https://github.com/assem2023-habib/portifolio/releases/download/Mizaneyati_App/Mizaneyati.apk",
+      "features": [
+        "Integrated transactions and internal transfers system",
+        "Advanced visual documentation (Receipt scanning)",
+        "Interactive financial intelligence with fl_chart",
+        "Clean Architecture with Feature-First structure",
+        "Offline-first database with Drift (Type-safe)",
+        "Robust validation logic (11+ strict validators)",
+        "Automated unit testing (50+ tests)"
+      ],
+      "featuresAr": [
+        "نظام متكامل للمعاملات والتحويلات الداخلية",
+        "توثيق بصري متقدم (مسح الإيصالات)",
+        "ذكاء مالي تفاعلي باستخدام fl_chart",
+        "بنية هندسية Clean Architecture مع Feature-First",
+        "قاعدة بيانات تعمل بدون إنترنت (Drift الآمنة)",
+        "منطق أمان وتحقق صارم (11+ مدقق)",
+        "اختبارات وحدة آلية (أكثر من 50 اختبار)"
+      ],
+      "challenges": "Implementing a high-precision financial engine with 100% accuracy while adhering to strict Clean Architecture principles and ensuring local data integrity.",
+      "challengesAr": "تحقيق دقة محاسبية بنسبة 100% مع تطبيق معايير Clean Architecture الصارمة وضمان سلامة البيانات المحلية.",
+      "screenshots": [],
+      "docs": {
+        "readme": "assets/Docs_Project/README_MIZANEYATI.md",
+        "type": "comprehensive"
+      },
+      "highlights": {
+        "isFeatured": true,
+        "isMajor": true,
+        "complexity": "high",
+        "architecture": "Clean Architecture with Riverpod & Drift"
+      }
     }
   ],
   "categories": [
@@ -469,7 +527,7 @@
       "name": "Mobile Application",
       "nameAr": "تطبيق جوال",
       "icon": "bi-phone",
-      "count": 2
+      "count": 4
     },
     {
       "id": "desktop",
@@ -494,9 +552,9 @@
     }
   ],
   "metadata": {
-    "version": "1.0.0",
-    "lastUpdated": "2025-05-03",
-    "totalProjects": 8,
+    "version": "1.1.0",
+    "lastUpdated": "2026-05-03",
+    "totalProjects": 9,
     "author": "Assem Adel Habib",
     "contact": "099assemhb@gmail.com"
   }

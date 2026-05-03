@@ -115,13 +115,51 @@
         "assets/img/portfolio/cutoptimizer-main.png",
         "assets/img/portfolio/cutoptimizer-results.png"
       ],
-      "docs": {
-        "readme": "assets/Docs_Project/README_CUTOPTIMIZER.md",
-        "type": "comprehensive"
-      }
-    },
-    {
-      "id": "socialbackend",
+        "docs": {
+          "readme": "assets/Docs_Project/README_CUTOPTIMIZER.md",
+          "type": "comprehensive"
+        }
+      },
+      {
+        "id": "jeeb",
+        "title": "Jeeb",
+        "titleAr": "جيب",
+        "category": "mobile",
+        "image": "assets/img/masonry-portfolio/masonry-portfolio-5.jpg",
+        "thumbnail": "assets/img/masonry-portfolio/masonry-portfolio-5.jpg",
+        "description": "Smart mobile app for smart shopping and payment solutions with seamless user experience",
+        "descriptionAr": "تطبيق ذكي للتسوق والدفع الإلكتروني مع تجربة مستخدم سلسة",
+        "status": "completed",
+        "year": 2024,
+        "duration": "6 أشهر",
+        "technologies": ["Flutter", "Firebase", "RESTful APIs", "Dart", "Google Maps API"],
+        "role": "Mobile Developer",
+        "client": "شركة تجارية",
+        "liveUrl": null,
+        "repoUrl": null,
+        "mobileUrl": "https://github.com/assem2023-habib/portifolio/releases/download/Jeeb_Customer_release/Jeeb_App.apk",
+        "features": [
+          "Smart shopping cart",
+          "QR code payment integration",
+          "Real-time order tracking",
+          "Loyalty program integration",
+          "Multi-store support",
+          "Push notifications"
+        ],
+        "featuresAr": [
+          "سلة تسوق ذكية",
+          "تكامل الدفع عبر QR Code",
+          "تتبع الطلبات لحظياً",
+          "برنامج نقاط الولاء",
+          "دعم متاجر متعددة",
+          "إشعارات فورية"
+        ],
+        "challenges": "تطوير نظام دفع موثوق وسريع مع دعم متاجر متعددة ومزامنة لحظية",
+        "challengesAr": "كان التحدي هو بناء نظام دفع موثوق وسريع مع ضمان مزامنة البيانات لحظياً بين المتاجر",
+        "screenshots": []
+      },
+      {
+        "id": "socialbackend",
       "title": "Social Backend",
       "titleAr": "باك إند سوشيال",
       "category": "web",

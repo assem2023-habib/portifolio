@@ -208,6 +208,9 @@
                     <a href="#" class="project-mobile-url btn btn-outline-success btn-sm ms-2" target="_blank" style="display:none;">
                       <i class="bi bi-download me-1"></i> Download Mobile App
                     </a>
+                    <a href="#" class="project-desktop-url btn btn-outline-info btn-sm ms-2" target="_blank" style="display:none;">
+                      <i class="bi bi-laptop me-1"></i> Download Desktop App
+                    </a>
                   </li>
                 </ul>
               </div>
@@ -587,6 +590,19 @@
             console.log('📱 Mobile URL added:', project.mobileUrl);
           } else {
             mobileUrl.style.display = 'none';
+          }
+        }
+
+        // Update desktop download URL
+        const desktopUrl = document.querySelector('.project-desktop-url');
+        if (desktopUrl) {
+          if (project.desktopUrl) {
+            desktopUrl.href = project.desktopUrl;
+            desktopUrl.style.display = 'inline-block';
+            desktopUrl.innerHTML = '<i class="bi bi-laptop me-1"></i> Download Desktop App';
+            console.log('💻 Desktop URL added:', project.desktopUrl);
+          } else {
+            desktopUrl.style.display = 'none';
           }
         }
 

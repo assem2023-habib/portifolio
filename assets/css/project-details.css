@@ -1,0 +1,233 @@
+/* Project details page specific styles */
+
+.project-image-container {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+    background: #f8f9fa;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.project-image {
+    max-height: 400px;
+    width: 100%;
+    object-fit: cover;
+    border-radius: 8px;
+    transition: transform 0.3s ease;
+}
+
+.project-image:hover {
+    transform: scale(1.02);
+}
+
+/* Gallery images styling */
+.gallery-item {
+    position: relative;
+    overflow: hidden;
+    border-radius: 8px;
+    transition: transform 0.3s ease;
+}
+
+.gallery-item:hover {
+    transform: translateY(-5px);
+}
+
+.project-gallery-image {
+    transition: transform 0.3s ease;
+    cursor: pointer;
+}
+
+.project-gallery-image:hover {
+    transform: scale(1.05);
+}
+
+/* Dark mode specific styles */
+.dark-mode {
+    background-color: #1a202c;
+    color: #e0e0e0;
+}
+
+.dark-mode .project-image-container {
+    background: #2d3748;
+    border: 1px solid #4a5568;
+}
+
+.dark-mode .project-image {
+    border: 1px solid #4a5568;
+}
+
+.dark-mode .project-features {
+    background: linear-gradient(135deg, #1e3a1e 0%, #2d4a2d 100%);
+    border: 1px solid #4a5d4a;
+}
+
+.dark-mode .project-details {
+    background: linear-gradient(135deg, #3d2914 0%, #4d3914 100%);
+    border: 1px solid #6b4d1f;
+}
+
+.dark-mode .project-features h4,
+.dark-mode .project-details h4 {
+    color: #fff;
+}
+
+.dark-mode .project-features li,
+.dark-mode .project-details p {
+    color: #e0e0e0;
+}
+
+.dark-mode .project-features .text-muted {
+    color: #b0b0b0 !important;
+}
+
+/* Dark mode card styling */
+.dark-mode .card {
+    background-color: #2d3748;
+    border-color: #4a5568;
+}
+
+.dark-mode .card-title {
+    color: #fff;
+}
+
+.dark-mode .card-body {
+    color: #e0e0e0;
+}
+
+/* Dark mode project information text styling */
+.dark-mode .portfolio-info h3 {
+    color: #fff;
+}
+
+.dark-mode .portfolio-info strong {
+    color: #fff;
+}
+
+.dark-mode .portfolio-info .text-muted {
+    color: #a0a0a0 !important;
+}
+
+.dark-mode .portfolio-info li {
+    color: #e0e0e0;
+}
+
+/* Dark mode projects list styling */
+.dark-mode .projects-list h4 {
+    color: #fff;
+}
+
+.dark-mode .projects-list .fw-bold {
+    color: #b9b8b8;
+}
+
+.dark-mode .projects-list .text-muted {
+    color: #888 !important;
+}
+
+.dark-mode .projects-list a {
+    background-color: #374151;
+    color: #f0f0f0;
+    border: 1px solid #4a5568;
+}
+
+.dark-mode .projects-list a:hover {
+    background-color: #4a5568;
+    color: #fff;
+    border-color: #5a6578;
+}
+
+.dark-mode .projects-list .active a {
+    background-color: #3182ce;
+    color: #fff;
+    border-color: #3182ce;
+}
+
+/* Dark mode badge styling */
+.dark-mode .badge {
+    color: #fff;
+}
+
+.dark-mode .badge.bg-success {
+    background-color: #38a169 !important;
+}
+
+/* Cards hover effects */
+.card {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+/* Projects list styling */
+.projects-list .card {
+    border: 1px solid #e9ecef;
+}
+
+.projects-list h4 {
+    color: #333;
+}
+
+.projects-list .fw-bold {
+    color: #333;
+}
+
+.projects-list .text-muted {
+    color: #6c757d !important;
+}
+
+.projects-list a {
+    text-decoration: none;
+    border-radius: 6px;
+    background-color: #f8f9fa;
+    color: #333;
+    border: 1px solid #dee2e6;
+}
+
+.projects-list a:hover {
+    text-decoration: none;
+    background-color: #e9ecef;
+    color: #000;
+}
+
+.projects-list .active a {
+    background-color: #007bff;
+    color: #fff;
+    border-color: #007bff;
+}
+
+/* Badge styling */
+.badge {
+    font-size: 0.8em;
+    padding: 0.5em 0.8em;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .project-image-container {
+        max-width: 100%;
+        padding: 15px;
+    }
+
+    .project-image {
+        max-height: 300px;
+    }
+
+    .project-features,
+    .project-details {
+        padding: 15px;
+    }
+}
+
+@media (max-width: 576px) {
+    .project-image {
+        max-height: 250px;
+    }
+
+    .gallery-item {
+        margin-bottom: 15px;
+    }
+}

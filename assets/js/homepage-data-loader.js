@@ -24,19 +24,26 @@ function getLocalizedDescription(project) {
  */
 async function initHomepageData() {
   try {
-    // تحميل JSON
-    const response = await fetch('data/projects.json');
-    if (!response.ok) {
+    // تحميل المشاريع
+    const projectsResponse = await fetch('data/projects.json');
+    if (!projectsResponse.ok) {
       throw new Error('Failed to load projects.json');
     }
-    
-    loadedData = await response.json();
+    const projectsData = await projectsResponse.json();
+    loadedData = { projects: projectsData.projects };
     console.log('✅ Projects loaded:', loadedData.projects.length);
-    console.log('📋 Projects:', loadedData.projects);
     
     // تحميل الخدمات
-    if (typeof servicesData !== 'undefined') {
-      loadedData.services = servicesData;
+    const servicesResponse = await fetch('data/services.json');
+    if (servicesResponse.ok) {
+      const servicesData = await servicesResponse.json();
+      loadedData.services = servicesData.services;
+      console.log('✅ Services loaded:', loadedData.services.length);
+    } else {
+      console.warn('Could not load services.json, trying fallback');
+      if (typeof servicesData !== 'undefined') {
+        loadedData.services = Object.values(servicesData);
+      }
     }
 
     // تحميل الآراء
@@ -52,7 +59,6 @@ async function initHomepageData() {
     
   } catch (error) {
     console.error('Error loading data:', error);
-    //Fallback للبيانات القديمة
     if (typeof populatePortfolioItemsOld === 'function') {
       populatePortfolioItemsOld();
     }
@@ -228,30 +234,17 @@ function populateServiceItems() {
   const servicesContainer = document.querySelector('#services .container .row');
   const serviceTemplate = document.querySelector('#services .service-item-template');
   
-  if (!servicesContainer || !serviceTemplate) {
-    console.warn('Services container or template not found');
+  if (!servicesContainer || !serviceTemplate || !loadedData || !loadedData.services) {
+    console.warn('Services container or data not found');
     return;
   }
   
-  // استخدام servicesData من الملف القديم إذا كان موجوداً
-  let services = null;
-  
-  if (loadedData && loadedData.services) {
-    services = Object.values(loadedData.services);
-  } else if (typeof servicesData !== 'undefined') {
-    services = Object.values(servicesData);
-  }
-  
-  if (!services) {
-    console.warn('Services data not found');
-    return;
-  }
+  const services = Array.isArray(loadedData.services) ? loadedData.services : Object.values(loadedData.services);
   
   // مسح المحتوى
   servicesContainer.innerHTML = '';
   
   const colors = ['item-cyan', 'item-orange', 'item-teal', 'item-red', 'item-indigo', 'item-pink'];
-  const icons = ['bi-activity', 'bi-broadcast', 'bi-easel', 'bi-bounding-box-circles', 'bi-calendar4-week', 'bi-chat-square-text'];
   
   services.slice(0, HOMEPAGE_SERVICES_LIMIT).forEach((service, index) => {
     const serviceClone = serviceTemplate.cloneNode(true);
@@ -261,7 +254,7 @@ function populateServiceItems() {
     serviceClone.setAttribute('data-aos-delay', 100 + index * 100);
     
     const color = colors[index % colors.length];
-    const icon = icons[index % icons.length];
+    const icon = service.icon || 'bi-activity'; // استخدام الأيقونة من JSON
     
     const serviceItem = serviceClone.querySelector('.service-item');
     if (serviceItem) {
@@ -280,12 +273,12 @@ function populateServiceItems() {
     
     const titleElement = serviceClone.querySelector('.service-title');
     if (titleElement) {
-      titleElement.textContent = service.title;
+      titleElement.textContent = currentLang === 'ar' ? (service.titleAr || service.title) : service.title;
     }
     
     const descElement = serviceClone.querySelector('.service-description');
     if (descElement) {
-      descElement.textContent = service.description;
+      descElement.textContent = currentLang === 'ar' ? (service.descriptionAr || service.description) : service.description;
     }
     
     servicesContainer.appendChild(serviceClone);

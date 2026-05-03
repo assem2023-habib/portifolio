@@ -271,6 +271,7 @@
       "client": "شركة شهرزاد للأزياء",
       "liveUrl": null,
       "repoUrl": null,
+      "mobileUrl": "https://github.com/assem2023-habib/portifolio/releases/download/Shahrazad_Customer_Release/Shahrzad.apk",
       "features": [
         "Integrated e-commerce and CRM platform",
         "Complete order management (Cart to Invoice)",
@@ -334,6 +335,7 @@
       "client": "شركات محلية متعددة",
       "liveUrl": null,
       "repoUrl": null,
+      "mobileUrl": "https://github.com/assem2023-habib/portifolio/releases/download/ShiftPay_Release/ShiftPay.apk",
       "features": [
         "Advanced Voice Assistant (Egyptian Dialect support)",
         "Automated Payroll and Financial management",

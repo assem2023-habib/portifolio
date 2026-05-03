@@ -82,7 +82,7 @@
       "image": "assets/img/masonry-portfolio/masonry-portfolio-3.jpg",
       "thumbnail": "assets/img/masonry-portfolio/masonry-portfolio-3.jpg",
       "description": "Smart carpet cutting optimization tool for textile industry efficiency and waste reduction using advanced algorithms",
-      "descriptionAr": "أداة ذكية لتحسين قص السجاد في صناعة النسيج لتقليل الهادر وتحسين الكفاءة",
+      "descriptionAr": "أداة ذكية لتحسين قص السجاد في صناعة النسيج لتقليل الهدر وتحسين الكفاءة",
       "status": "completed",
       "year": 2024,
       "duration": "8 أشهر",
@@ -91,6 +91,7 @@
       "client": "مصانع السجاد المحلية",
       "liveUrl": null,
       "repoUrl": null,
+      "mobileUrl": "https://github.com/assem2023-habib/portifolio/releases/download/CutOptimizer_App/Sajadee.apk",
       "features": [
         "AI-powered cutting optimization algorithms",
         "Material waste reduction up to 30%",

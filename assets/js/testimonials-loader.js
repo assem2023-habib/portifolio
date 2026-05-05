@@ -35,8 +35,19 @@ document.addEventListener('DOMContentLoaded', async function() {
     if (!data || !data.testimonials) return;
 
     wrapper.innerHTML = '';
-    const testimonials = data.testimonials;
+    let testimonials = data.testimonials;
     const lang = window.DataLoader?.currentLanguage || localStorage.getItem('portfolio_language') || 'en';
+
+    // Load local testimonials from localStorage (fallback for static hosting)
+    try {
+        const localTestimonials = JSON.parse(localStorage.getItem('localTestimonials') || '[]');
+        if (localTestimonials.length > 0) {
+            console.log(`📱 Loading ${localTestimonials.length} local testimonials`);
+            testimonials = [...testimonials, ...localTestimonials];
+        }
+    } catch (error) {
+        console.warn('Error loading local testimonials:', error);
+    }
 
     testimonials.forEach((testimonial, index) => {
         const slide = document.createElement('div');
@@ -69,6 +80,8 @@ document.addEventListener('DOMContentLoaded', async function() {
         `;
         wrapper.appendChild(slide);
     });
+
+    console.log(`✅ Total testimonials loaded: ${testimonials.length}`);
 
     if (typeof AOS !== 'undefined') {
         setTimeout(() => AOS.refresh(), 300);

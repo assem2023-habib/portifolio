@@ -272,7 +272,7 @@ document.addEventListener('DOMContentLoaded', function() {
       submitBtn.disabled = true;
 
       try {
-        // Send to PHP API
+        // Try PHP API first (works on servers with PHP support)
         const response = await fetch('api/save-testimonial.php', {
           method: 'POST',
           body: formData
@@ -305,13 +305,76 @@ document.addEventListener('DOMContentLoaded', function() {
           showMessage('error', result.message || 'Failed to submit testimonial');
         }
       } catch (error) {
-        console.error('Error submitting testimonial:', error);
-        showMessage('error', 'Server error. Please try again later.');
+        // Fallback to localStorage (for GitHub Pages / static hosting)
+        console.warn('PHP API not available, saving to localStorage...');
+        saveTestimonialToLocal(name, role, content, rating, nameAr, roleAr, contentAr);
       } finally {
         submitBtn.innerHTML = originalText;
         submitBtn.disabled = false;
       }
     });
+  }
+
+  // Save testimonial to localStorage (fallback for static hosting)
+  function saveTestimonialToLocal(name, role, content, rating, nameAr, roleAr, contentAr) {
+    try {
+      // Get existing local testimonials
+      let localTestimonials = JSON.parse(localStorage.getItem('localTestimonials') || '[]');
+      
+      // Create new testimonial object
+      const newTestimonial = {
+        id: 'local_' + Date.now(),
+        name: name,
+        role: role,
+        content: content,
+        rating: parseInt(rating),
+        nameAr: nameAr,
+        roleAr: roleAr,
+        contentAr: contentAr,
+        image: 'assets/img/testimonials/testimonials-1.jpg', // Default image
+        date: new Date().toISOString(),
+        approved: true // Auto-approve for local display
+      };
+
+      // Add to array
+      localTestimonials.push(newTestimonial);
+      
+      // Save back to localStorage
+      localStorage.setItem('localTestimonials', JSON.stringify(localTestimonials));
+      
+      console.log('✅ Testimonial saved to localStorage:', newTestimonial);
+      
+      // Show success message
+      showMessage('success', '✅ Testimonial saved locally! It will appear immediately.');
+      
+      // Reset form
+      form.reset();
+      imageInput.value = '';
+      if (imagePreview) {
+        imagePreview.style.display = 'none';
+        imagePreview.src = '';
+      }
+      if (imageUploadArea) {
+        imageUploadArea.classList.remove('has-image');
+      }
+      
+      // Reload testimonials to show the new one
+      if (typeof loadTestimonialsFromJSON === 'function') {
+        loadTestimonialsFromJSON();
+      }
+      
+      // Close modal after 2 seconds
+      setTimeout(() => {
+        const modalInstance = bootstrap.Modal.getInstance(modal);
+        if (modalInstance) {
+          modalInstance.hide();
+        }
+      }, 2000);
+      
+    } catch (error) {
+      console.error('Error saving to localStorage:', error);
+      showMessage('error', 'Error saving testimonial. Please try again.');
+    }
   }
 
   // Reset form when modal is closed

@@ -1430,6 +1430,12 @@ body.dark-mode section.section {
   flex-direction: column;
   position: relative;
   overflow: hidden;
+  min-height: 320px;
+}
+
+.testimonials .swiper-slide {
+  height: auto;
+  display: flex;
 }
 
 .testimonials .testimonial-item::before {
@@ -1469,6 +1475,12 @@ body.dark-mode section.section {
   margin: 0;
   padding-left: 30px;
   position: relative;
+  display: -webkit-box;
+  -webkit-line-clamp: 4;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-height: 108px;
 }
 
 .testimonials .quote-icon-left {

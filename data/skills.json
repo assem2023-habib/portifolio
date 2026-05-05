@@ -1,0 +1,196 @@
+{
+  "skills": [
+    {
+      "id": "php",
+      "name": "PHP",
+      "nameAr": "PHP",
+      "level": "excellent",
+      "levelAr": "ممتاز",
+      "category": "backend",
+      "featured": true
+    },
+    {
+      "id": "laravel",
+      "name": "Laravel",
+      "nameAr": "Laravel",
+      "level": "excellent",
+      "levelAr": "ممتاز",
+      "category": "backend",
+      "featured": true
+    },
+    {
+      "id": "nest.js",
+      "name": "NestJS",
+      "nameAr": "NestJS",
+      "level": "excellent",
+      "levelAr": "ممتاز",
+      "category": "backend",
+      "featured": true
+    },
+    {
+      "id": "mysql",
+      "name": "MySQL",
+      "nameAr": "MySQL",
+      "level": "very-good",
+      "levelAr": "جيد جداً",
+      "category": "backend",
+      "featured": true
+    },
+    {
+      "id": "javascript",
+      "name": "JavaScript",
+      "nameAr": "JavaScript",
+      "level": "very-good",
+      "levelAr": "جيد جداً",
+      "category": "frontend",
+      "featured": true
+    },
+    {
+      "id": "html-css",
+      "name": "HTML & CSS",
+      "nameAr": "HTML و CSS",
+      "level": "very-good",
+      "levelAr": "جيد جداً",
+      "category": "frontend",
+      "featured": true
+    },
+    {
+      "id": "postgresql",
+      "name": "PostgreSQL",
+      "nameAr": "PostgreSQL",
+      "level": "very-good",
+      "levelAr": "جيد جداً",
+      "category": "backend",
+      "featured": false
+    },
+    {
+      "id": "redis",
+      "name": "Redis",
+      "nameAr": "Redis",
+      "level": "good",
+      "levelAr": "جيد",
+      "category": "backend",
+      "featured": false
+    },
+    {
+      "id": "node.js",
+      "name": "Node.js",
+      "nameAr": "Node.js",
+      "level": "good",
+      "levelAr": "جيد",
+      "category": "backend",
+      "featured": false
+    },
+    {
+      "id": "flutter",
+      "name": "Flutter",
+      "nameAr": "Flutter",
+      "level": "good",
+      "levelAr": "جيد",
+      "category": "mobile",
+      "featured": false
+    },
+    {
+      "id": "react-native",
+      "name": "React Native",
+      "nameAr": "React Native",
+      "level": "good",
+      "levelAr": "جيد",
+      "category": "mobile",
+      "featured": false
+    },
+    {
+      "id": "firebase",
+      "name": "Firebase",
+      "nameAr": "Firebase",
+      "level": "very-good",
+      "levelAr": "جيد جداً",
+      "category": "backend",
+      "featured": false
+    },
+    {
+      "id": "docker",
+      "name": "Docker",
+      "nameAr": "Docker",
+      "level": "good",
+      "levelAr": "جيد",
+      "category": "devops",
+      "featured": false
+    },
+    {
+      "id": "git",
+      "name": "Git",
+      "nameAr": "Git",
+      "level": "excellent",
+      "levelAr": "ممتاز",
+      "category": "tools",
+      "featured": false
+    },
+    {
+      "id": "python",
+      "name": "Python",
+      "nameAr": "Python",
+      "level": "good",
+      "levelAr": "جيد",
+      "category": "backend",
+      "featured": false
+    },
+    {
+      "id": "tailwind",
+      "name": "Tailwind CSS",
+      "nameAr": "Tailwind CSS",
+      "level": "very-good",
+      "levelAr": "جيد جداً",
+      "category": "frontend",
+      "featured": false
+    },
+    {
+      "id": "bootstrap",
+      "name": "Bootstrap",
+      "nameAr": "Bootstrap",
+      "level": "excellent",
+      "levelAr": "ممتاز",
+      "category": "frontend",
+      "featured": false
+    },
+    {
+      "id": "typescript",
+      "name": "TypeScript",
+      "nameAr": "TypeScript",
+      "level": "good",
+      "levelAr": "جيد",
+      "category": "frontend",
+      "featured": false
+    },
+    {
+      "id": "socket.io",
+      "name": "Socket.io",
+      "nameAr": "Socket.io",
+      "level": "very-good",
+      "levelAr": "جيد جداً",
+      "category": "backend",
+      "featured": false
+    },
+    {
+      "id": "mongodb",
+      "name": "MongoDB",
+      "nameAr": "MongoDB",
+      "level": "good",
+      "levelAr": "جيد",
+      "category": "backend",
+      "featured": false
+    }
+  ],
+  "levels": {
+    "excellent": { "label": "Excellent", "labelAr": "ممتاز", "color": "#28a745", "colorDark": "#4caf50" },
+    "very-good": { "label": "Very Good", "labelAr": "جيد جداً", "color": "#007bff", "colorDark": "#4a90d9" },
+    "good": { "label": "Good", "labelAr": "جيد", "color": "#fd7e14", "colorDark": "#ff9800" },
+    "average": { "label": "Average", "labelAr": "متوسط", "color": "#6c757d", "colorDark": "#9e9e9e" }
+  },
+  "metadata": {
+    "version": "1.0.0",
+    "lastUpdated": "2025-05-05",
+    "totalSkills": 20,
+    "author": "Assem Adel Habib"
+  }
+}

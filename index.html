@@ -245,70 +245,16 @@
         <!-- End Section Title -->
 
         <div class="container" data-aos="fade-up" data-aos-delay="100">
-          <div class="row skills-content skills-animation">
-            <div class="col-lg-6">
-              <div class="skill-box">
-                <div class="skill-header">
-                  <span class="skill-name">PHP</span>
-                </div>
-                <div class="skill-bar">
-                  <div class="skill-progress" style="width: 95%"></div>
-                </div>
-              </div>
-              <!-- End Skills Item -->
-
-              <div class="skill-box">
-                <div class="skill-header">
-                  <span class="skill-name">Laravel</span>
-                </div>
-                <div class="skill-bar">
-                  <div class="skill-progress" style="width: 90%"></div>
-                </div>
-              </div>
-              <!-- End Skills Item -->
-
-              <div class="skill-box">
-                <div class="skill-header">
-                  <span class="skill-name">MySQL</span>
-                </div>
-                <div class="skill-bar">
-                  <div class="skill-progress" style="width: 85%"></div>
-                </div>
-              </div>
-              <!-- End Skills Item -->
-            </div>
-
-            <div class="col-lg-6">
-              <div class="skill-box">
-                <div class="skill-header">
-                  <span class="skill-name">JavaScript</span>
-                </div>
-                <div class="skill-bar">
-                  <div class="skill-progress" style="width: 80%"></div>
-                </div>
-              </div>
-              <!-- End Skills Item -->
-
-              <div class="skill-box">
-                <div class="skill-header">
-                  <span class="skill-name">HTML</span>
-                </div>
-                <div class="skill-bar">
-                  <div class="skill-progress" style="width: 90%"></div>
-                </div>
-              </div>
-              <!-- End Skills Item -->
-
-              <div class="skill-box">
-                <div class="skill-header">
-                  <span class="skill-name">CSS</span>
-                </div>
-                <div class="skill-bar">
-                  <div class="skill-progress" style="width: 85%"></div>
-                </div>
-              </div>
-              <!-- End Skills Item -->
-            </div>
+          <!-- Skills will be loaded dynamically from skills.json -->
+          <div id="skills-container"></div>
+          
+          <!-- Show More Button -->
+          <div class="skills-show-more">
+            <button type="button" id="showMoreSkills" class="btn-show-more" style="display: none;">
+              <i class="bi bi-plus-circle"></i>
+              <span class="lang-en">Show All Skills</span>
+              <span class="lang-ar" style="display:none;">عرض كل المهارات</span>
+            </button>
           </div>
         </div>
       </section>
@@ -910,8 +856,8 @@
     <script src="assets/js/main.js"></script>
     <script src="assets/js/homepage-data-loader.js"></script>
     <script src="assets/js/testimonial-form.js"></script>
-    
     <script src="assets/js/testimonials-loader.js"></script>
+    <script src="assets/js/skills-loader.js"></script>
 
     <!-- CV Modal -->
     <div class="modal fade" id="cvModal" tabindex="-1" aria-hidden="true">

@@ -49,7 +49,7 @@ function createSkillElement(skill) {
       <div class="skill-header">
         <span class="skill-name">${name}</span>
       </div>
-      <div class="skill-level-badge" style="background-color: ${color}20; border-color: ${color}40; color: ${color}">
+      <div class="skill-level-badge" style="--badge-color: ${color}">
         <span class="badge-level">${levelText}</span>
       </div>
     </div>

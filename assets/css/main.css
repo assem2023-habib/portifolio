@@ -894,61 +894,66 @@ body.dark-mode section.section {
 /* Custom Skill Boxes Styling */
 .skill-box {
   background-color: var(--surface-color);
-  border-radius: 8px;
-  padding: 20px;
-  margin-bottom: 20px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+  border-radius: 12px;
+  padding: 18px 22px;
+  margin-bottom: 16px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
   transition: all 0.3s ease;
-  border: 1px solid color-mix(in srgb, var(--default-color), transparent 90%);
+  border: 1px solid color-mix(in srgb, var(--default-color), transparent 92%);
   display: flex;
-  flex-direction: column;
   align-items: center;
+  justify-content: space-between;
+  gap: 12px;
 }
 
 .skill-box:hover {
   transform: translateY(-2px);
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.12);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
   border-color: color-mix(in srgb, var(--accent-color), transparent 80%);
 }
 
 .skill-header {
   display: flex;
-  justify-content: center;
   align-items: center;
-  margin-bottom: 12px;
-  width: 100%;
+  flex: 1;
+  min-width: 0;
 }
 
 .skill-name {
-  font-size: 16px;
+  font-size: 15px;
   font-weight: 600;
   color: var(--heading-color);
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
+  letter-spacing: 0.3px;
 }
 
-/* New: Skill Level Badge (replaces progress bar) */
+/* New: Clean Level Badge - No background */
 .skill-level-badge {
   display: inline-flex;
   align-items: center;
-  justify-content: center;
-  padding: 6px 16px;
-  border-radius: 20px;
-  font-size: 13px;
-  font-weight: 600;
-  letter-spacing: 0.5px;
-  transition: all 0.3s ease;
-  border-width: 1px;
-  border-style: solid;
-  width: fit-content;
+  gap: 6px;
+  padding: 4px 0;
+  flex-shrink: 0;
+}
+
+/* Colored dot indicator */
+.skill-level-badge::before {
+  content: '';
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: var(--badge-color, #28a745);
+  box-shadow: 0 0 6px var(--badge-color, #28a745);
+  flex-shrink: 0;
 }
 
 .skill-level-badge .badge-level {
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.3px;
+  color: var(--badge-color, #28a745);
   text-transform: uppercase;
-}
-
-.skill-level-badge:hover {
-  transform: scale(1.05);
+  white-space: nowrap;
 }
 
 /* Remove old progress bar styles */
@@ -961,9 +966,14 @@ body.dark-mode section.section {
 }
 
 @media (max-width: 768px) {
-  .skill-box { padding: 15px; margin-bottom: 15px; }
+  .skill-box { 
+    padding: 14px 16px; 
+    margin-bottom: 12px;
+    flex-wrap: wrap;
+  }
   .skill-name { font-size: 14px; }
-  .skill-level-badge { padding: 5px 12px; font-size: 12px; }
+  .skill-level-badge .badge-level { font-size: 12px; }
+  .skill-level-badge::before { width: 7px; height: 7px; }
 }
 
 /* Show More Skills Button */

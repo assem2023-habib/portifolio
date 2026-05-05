@@ -87,17 +87,36 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Initialize stars
     stars.forEach((star, index) => {
-      // Click event
+      // Click event with staggered animation
       star.addEventListener('click', function() {
         const rating = parseInt(this.getAttribute('data-rating'));
         ratingInput.value = rating;
         
-        // Update star display
+        // Update star display with staggered animation
         stars.forEach((s, i) => {
+          // Remove existing animation classes
+          s.classList.remove('animate-pop', 'animate-glow');
+          
           if (i < rating) {
+            // Fill this star
             s.classList.remove('bi-star');
             s.classList.add('bi-star-fill', 'filled');
+            
+            // Add staggered animation with delay
+            const delay = i * 80; // 80ms delay per star
+            setTimeout(() => {
+              s.classList.add('animate-pop', 'animate-glow');
+              
+              // Create sparkle effect for each star
+              createSparkles(s, 4);
+              
+              // Remove animation classes after animation completes
+              setTimeout(() => {
+                s.classList.remove('animate-pop', 'animate-glow');
+              }, 500);
+            }, delay);
           } else {
+            // Empty this star
             s.classList.remove('bi-star-fill', 'filled');
             s.classList.add('bi-star');
           }
@@ -105,6 +124,43 @@ document.addEventListener('DOMContentLoaded', function() {
         
         console.log('⭐ Rating selected:', rating);
       });
+
+      // Sparkle effect function
+      function createSparkles(starElement, count) {
+        const container = starRating.querySelector('.sparkles-container');
+        if (!container) return;
+        
+        const starRect = starElement.getBoundingClientRect();
+        const containerRect = container.getBoundingClientRect();
+        
+        const centerX = starRect.left - containerRect.left + starRect.width / 2;
+        const centerY = starRect.top - containerRect.top + starRect.height / 2;
+        
+        for (let j = 0; j < count; j++) {
+          const sparkle = document.createElement('div');
+          sparkle.className = 'sparkle';
+          
+          // Random direction
+          const angle = (Math.PI * 2 * j) / count + (Math.random() - 0.5) * 0.5;
+          const distance = 15 + Math.random() * 15;
+          const tx = Math.cos(angle) * distance;
+          const ty = Math.sin(angle) * distance;
+          
+          sparkle.style.left = `${centerX}px`;
+          sparkle.style.top = `${centerY}px`;
+          sparkle.style.setProperty('--tx', `${tx}px`);
+          sparkle.style.setProperty('--ty', `${ty}px`);
+          
+          container.appendChild(sparkle);
+          
+          // Remove sparkle after animation
+          setTimeout(() => {
+            if (sparkle.parentNode) {
+              sparkle.parentNode.removeChild(sparkle);
+            }
+          }, 600);
+        }
+      }
       
       // Hover effect
       star.addEventListener('mouseenter', function() {

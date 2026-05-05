@@ -2522,3 +2522,111 @@ body.dark-mode #cvDownloadModal .btn-download-option.btn-success {
 [data-theme="dark"] .star-rating i.filled {
   color: #ffc107;
 }
+
+/* Star rating hint text - follows dark/light mode */
+.star-rating-hint {
+  color: var(--caption-color, #6c757d);
+  transition: color 0.3s ease;
+}
+
+[data-theme="dark"] .star-rating-hint {
+  color: #adb5bd;
+}
+
+/*--------------------------------------------------------------
+# Resizable Textarea
+--------------------------------------------------------------*/
+.resizable-textarea {
+  resize: vertical;
+  min-height: 70px;
+  max-height: 300px;
+  transition: height 0.2s ease;
+}
+
+/*--------------------------------------------------------------
+# Image Upload Area - Drag & Drop
+--------------------------------------------------------------*/
+.image-upload-area {
+  border: 2px dashed var(--border-color, #dee2e6);
+  border-radius: 12px;
+  padding: 30px 20px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  background: var(--surface-color, #f8f9fa);
+  position: relative;
+  overflow: hidden;
+}
+
+.image-upload-area:hover {
+  border-color: var(--accent-color, #0d6efd);
+  background: var(--surface-hover-color, #e9ecef);
+}
+
+.image-upload-area.drag-over {
+  border-color: var(--accent-color, #0d6efd);
+  background: color-mix(in srgb, var(--accent-color), transparent 90%);
+  transform: scale(1.02);
+}
+
+.image-upload-area.has-image {
+  padding: 10px;
+  border-style: solid;
+  border-color: var(--accent-color, #0d6efd);
+}
+
+.upload-icon {
+  font-size: 48px;
+  color: var(--accent-color, #0d6efd);
+  margin-bottom: 10px;
+  transition: transform 0.3s ease;
+}
+
+.image-upload-area:hover .upload-icon {
+  transform: translateY(-5px);
+}
+
+.upload-text {
+  font-size: 16px;
+  font-weight: 500;
+  margin: 0;
+  color: var(--default-color, #212529);
+}
+
+.upload-hint {
+  font-size: 12px;
+  margin: 5px 0 0 0;
+  color: var(--caption-color, #6c757d);
+}
+
+.upload-preview {
+  max-width: 100%;
+  max-height: 200px;
+  object-fit: contain;
+  border-radius: 8px;
+  margin-top: 10px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Dark mode support for upload area */
+[data-theme="dark"] .image-upload-area {
+  border-color: #444;
+  background: #1e1e1e;
+}
+
+[data-theme="dark"] .image-upload-area:hover {
+  border-color: var(--accent-color, #0d6efd);
+  background: #2a2a2a;
+}
+
+[data-theme="dark"] .upload-text {
+  color: #e0e0e0;
+}
+
+[data-theme="dark"] .upload-hint {
+  color: #999;
+}
+
+[data-theme="dark"] .upload-icon {
+  color: var(--accent-color, #0d6efd);
+}

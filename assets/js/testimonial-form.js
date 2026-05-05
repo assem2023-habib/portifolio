@@ -10,6 +10,74 @@ document.addEventListener('DOMContentLoaded', function() {
 
   let currentFormLang = 'en';
 
+  // Image Upload - Drag & Drop + Preview
+  const imageUploadArea = document.getElementById('imageUploadArea');
+  const imagePreview = document.getElementById('imagePreview');
+  
+  if (imageUploadArea && imageInput) {
+    // Click to upload
+    imageUploadArea.addEventListener('click', function(e) {
+      if (e.target !== imagePreview || imagePreview.style.display === 'none') {
+        imageInput.click();
+      }
+    });
+
+    // File input change
+    imageInput.addEventListener('change', function() {
+      previewImage(this.files[0]);
+    });
+
+    // Drag events
+    imageUploadArea.addEventListener('dragover', function(e) {
+      e.preventDefault();
+      this.classList.add('drag-over');
+    });
+
+    imageUploadArea.addEventListener('dragleave', function(e) {
+      e.preventDefault();
+      this.classList.remove('drag-over');
+    });
+
+    imageUploadArea.addEventListener('drop', function(e) {
+      e.preventDefault();
+      this.classList.remove('drag-over');
+      
+      const file = e.dataTransfer.files[0];
+      if (file && file.type.startsWith('image/')) {
+        imageInput.files = e.dataTransfer.files;
+        previewImage(file);
+      }
+    });
+
+    // Preview image function
+    function previewImage(file) {
+      if (!file) return;
+
+      // Validate file size (2MB max)
+      if (file.size > 2 * 1024 * 1024) {
+        alert('Image size must be less than 2MB');
+        return;
+      }
+
+      // Validate file type
+      const allowedTypes = ['image/jpeg', 'image/png', 'image/jpg'];
+      if (!allowedTypes.includes(file.type)) {
+        alert('Only JPG and PNG images are allowed');
+        return;
+      }
+
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        imagePreview.src = e.target.result;
+        imagePreview.style.display = 'block';
+        imageUploadArea.classList.add('has-image');
+      };
+      reader.readAsDataURL(file);
+    }
+
+    console.log('✅ Image upload with drag & drop initialized');
+  }
+
   // Interactive Star Rating
   const starRating = document.getElementById('starRating');
   const ratingInput = document.getElementById('testimonialRating');
@@ -162,6 +230,13 @@ document.addEventListener('DOMContentLoaded', function() {
           // Reset form
           form.reset();
           imageInput.value = '';
+          if (imagePreview) {
+            imagePreview.style.display = 'none';
+            imagePreview.src = '';
+          }
+          if (imageUploadArea) {
+            imageUploadArea.classList.remove('has-image');
+          }
           
           // Close modal after 2 seconds
           setTimeout(() => {
@@ -189,6 +264,14 @@ document.addEventListener('DOMContentLoaded', function() {
       form.reset();
       messageDiv.innerHTML = '';
       imageInput.value = '';
+      if (imagePreview) {
+        imagePreview.style.display = 'none';
+        imagePreview.src = '';
+      }
+      if (imageUploadArea) {
+        imageUploadArea.classList.remove('has-image');
+        imageUploadArea.classList.remove('drag-over');
+      }
       currentFormLang = 'en';
       englishFields.style.display = 'block';
       arabicFields.style.display = 'none';

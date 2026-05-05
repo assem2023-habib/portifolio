@@ -617,42 +617,46 @@
 
                 <!-- English Fields -->
                 <div class="english-fields">
-                  <div class="mb-3">
-                    <label for="testimonialName" class="form-label">
-                      <span class="lang-en">Name</span>
-                      <span class="lang-ar" style="display:none;">الاسم</span>
-                    </label>
-                    <input type="text" class="form-control" id="testimonialName" required>
-                  </div>
-                  <div class="mb-3">
-                    <label for="testimonialRole" class="form-label">
-                      <span class="lang-en">Role/Title</span>
-                      <span class="lang-ar" style="display:none;">الدور/المسمى الوظيفي</span>
-                    </label>
-                    <input type="text" class="form-control" id="testimonialRole" required>
+                  <div class="row g-3 mb-3">
+                    <div class="col-md-6">
+                      <label for="testimonialName" class="form-label">
+                        <span class="lang-en">Name</span>
+                        <span class="lang-ar" style="display:none;">الاسم</span>
+                      </label>
+                      <input type="text" class="form-control" id="testimonialName" required>
+                    </div>
+                    <div class="col-md-6">
+                      <label for="testimonialRole" class="form-label">
+                        <span class="lang-en">Role/Title</span>
+                        <span class="lang-ar" style="display:none;">الدور/المسمى الوظيفي</span>
+                      </label>
+                      <input type="text" class="form-control" id="testimonialRole" required>
+                    </div>
                   </div>
                   <div class="mb-3">
                     <label for="testimonialContent" class="form-label">
                       <span class="lang-en">Testimonial Content</span>
                       <span class="lang-ar" style="display:none;">نص التوصية</span>
                     </label>
-                    <textarea class="form-control" id="testimonialContent" rows="4" required></textarea>
+                    <textarea class="form-control resizable-textarea" id="testimonialContent" rows="3" required></textarea>
                   </div>
                 </div>
 
                 <!-- Arabic Fields -->
                 <div class="arabic-fields" style="display:none;">
-                  <div class="mb-3">
-                    <label for="testimonialNameAr" class="form-label">الاسم بالعربية</label>
-                    <input type="text" class="form-control" id="testimonialNameAr">
-                  </div>
-                  <div class="mb-3">
-                    <label for="testimonialRoleAr" class="form-label">الدور بالعربية</label>
-                    <input type="text" class="form-control" id="testimonialRoleAr">
+                  <div class="row g-3 mb-3">
+                    <div class="col-md-6">
+                      <label for="testimonialNameAr" class="form-label">الاسم بالعربية</label>
+                      <input type="text" class="form-control" id="testimonialNameAr">
+                    </div>
+                    <div class="col-md-6">
+                      <label for="testimonialRoleAr" class="form-label">الدور بالعربية</label>
+                      <input type="text" class="form-control" id="testimonialRoleAr">
+                    </div>
                   </div>
                   <div class="mb-3">
                     <label for="testimonialContentAr" class="form-label">نص التوصية بالعربية</label>
-                    <textarea class="form-control" id="testimonialContentAr" rows="4"></textarea>
+                    <textarea class="form-control resizable-textarea" id="testimonialContentAr" rows="3"></textarea>
                   </div>
                 </div>
 
@@ -670,22 +674,32 @@
                     <i class="bi bi-star" data-rating="5" title="5 Stars"></i>
                     <input type="hidden" id="testimonialRating" name="rating" value="0" required>
                   </div>
-                  <small class="form-text text-muted">
+                  <small class="form-text star-rating-hint">
                     <span class="lang-en">Click on a star to rate</span>
                     <span class="lang-ar" style="display:none;">اضغط على النجوم للتقييم</span>
                   </small>
                 </div>
 
-                <!-- Image Upload -->
+                <!-- Image Upload - Drag & Drop -->
                 <div class="mb-3">
-                  <label for="testimonialImage" class="form-label">
+                  <label class="form-label">
                     <span class="lang-en">Profile Image (Optional)</span>
                     <span class="lang-ar" style="display:none;">صورة الملف (اختياري)</span>
                   </label>
-                  <input type="file" class="form-control" id="testimonialImage" accept="image/*">
-                  <div class="form-text">
-                    <span class="lang-en">Max 2MB, JPG/PNG only</span>
-                    <span class="lang-ar" style="display:none;">الحد الأقصى 2 ميجابايت، JPG/PNG فقط</span>
+                  <div class="image-upload-area" id="imageUploadArea">
+                    <div class="upload-icon">
+                      <i class="bi bi-cloud-arrow-up"></i>
+                    </div>
+                    <p class="upload-text">
+                      <span class="lang-en">Click to upload or drag & drop</span>
+                      <span class="lang-ar" style="display:none;">اضغط للرفع أو اسحب وأفلت</span>
+                    </p>
+                    <p class="upload-hint">
+                      <span class="lang-en">Max 2MB, JPG/PNG only</span>
+                      <span class="lang-ar" style="display:none;">الحد الأقصى 2 ميجابايت، JPG/PNG فقط</span>
+                    </p>
+                    <img id="imagePreview" class="upload-preview" style="display:none;" alt="Preview">
+                    <input type="file" class="form-control" id="testimonialImage" accept="image/*" hidden>
                   </div>
                 </div>
 

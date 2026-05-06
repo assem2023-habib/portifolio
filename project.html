@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
@@ -12,10 +11,96 @@
   <link href="assets/img/favicon.png" rel="icon">
   <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
 
-  <!-- Fonts -->
-  <link href="https://fonts.googleapis.com" rel="preconnect">
-  <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Raleway:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1&display=swap" rel="stylesheet">
+  
+  <style>
+    body { font-family: 'Inter', sans-serif; -webkit-font-smoothing: antialiased; }
+    .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0; }
+    .glass-card { background: rgba(255, 255, 255, 0.6); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border: 1px solid rgba(255, 255, 255, 0.3); }
+    .custom-scrollbar::-webkit-scrollbar { display: none; }
+    .custom-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+  </style>
+  
+  <script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+            "tertiary-fixed-dim": "#b1c5ff",
+            "on-tertiary-container": "#fefcff",
+            "surface-bright": "#f7f9ff",
+            "secondary": "#006d41",
+            "background": "#f7f9ff",
+            "tertiary-fixed": "#dae2ff",
+            "inverse-surface": "#2d3135",
+            "on-primary": "#ffffff",
+            "secondary-fixed-dim": "#77da9f",
+            "on-secondary": "#ffffff",
+            "secondary-container": "#90f4b7",
+            "primary": "#0058bc",
+            "surface": "#f7f9ff",
+            "error": "#ba1a1a",
+            "on-primary-container": "#fefcff",
+            "inverse-on-surface": "#eef1f6",
+            "surface-container-highest": "#e0e3e8",
+            "surface-dim": "#d7dadf",
+            "surface-container-high": "#e5e8ee",
+            "on-tertiary-fixed-variant": "#00419e",
+            "on-primary-fixed": "#001a41",
+            "on-secondary-container": "#007144",
+            "outline": "#717786",
+            "surface-container": "#ebeef3",
+            "primary-fixed-dim": "#adc6ff",
+            "on-surface-variant": "#414755",
+            "outline-variant": "#c1c6d7",
+            "primary-fixed": "#d8e2ff"
+          },
+          "borderRadius": {
+            "DEFAULT": "0.25rem",
+            "lg": "0.5rem",
+            "xl": "0.75rem",
+            "full": "9999px"
+          },
+          "spacing": {
+            "xl": "32px",
+            "gutter": "16px",
+            "margin": "20px",
+            "lg": "24px",
+            "base": "8px",
+            "xs": "4px",
+            "md": "16px",
+            "sm": "8px"
+          },
+          "fontFamily": {
+            "headline-sm": ["Inter"],
+            "label-sm": ["Inter"],
+            "label-md": ["Inter"],
+            "body-lg": ["Inter"],
+            "headline-lg": ["Inter"],
+            "headline-md": ["Inter"],
+            "body-md": ["Inter"],
+            "body-sm": ["Inter"]
+          },
+          "fontSize": {
+            "headline-sm": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+            "label-sm": ["11px", {"lineHeight": "14px", "fontWeight": "500"}],
+            "label-md": ["12px", {"lineHeight": "16px", "fontWeight": "600"}],
+            "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+            "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+            "headline-md": ["24px", {"lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+            "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+            "body-sm": ["14px", {"lineHeight": "20px", "fontWeight": "400"}]
+          }
+        }
+      }
+    }
+  </script>
 
   <!-- Vendor CSS Files -->
   <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -27,13 +112,6 @@
   <!-- Main CSS File -->
   <link href="assets/css/main.css" rel="stylesheet">
 
-  <!-- =======================================================
-  * Template Name: MyResume
-  * Template URL: https://bootstrapmade.com/free-html-bootstrap-template-my-resume/
-  * Updated: Jun 29 2024 with Bootstrap v5.3.3
-  * Author: BootstrapMade.com
-  * License: https://bootstrapmade.com/license/
-  ======================================================== -->
 </head>
 
 <body class="portfolio-details-page">
@@ -84,35 +162,19 @@
     <!-- Portfolio Details Section -->
     <section id="portfolio-details" class="portfolio-details section">
 
-      <div class="container" data-aos="fade-up">
-
-        <div class="portfolio-details-slider swiper init-swiper">
-          <script type="application/json" class="swiper-config">
-            {
-              "loop": true,
-              "speed": 600,
-              "autoplay": {
-                "delay": 5000
-              },
-              "slidesPerView": 1,
-              "centeredSlides": true,
-              "spaceBetween": 0,
-              "navigation": {
-                "nextEl": ".swiper-button-next",
-                "prevEl": ".swiper-button-prev"
-              },
-              "pagination": {
-                "el": ".swiper-pagination",
-                "type": "bullets",
-                "clickable": true
-              }
-            }
-          </script>
-          <div class="swiper-wrapper align-items-center">
-            <div class="swiper-slide">
-              <div class="project-image-container">
-                <img src="assets/img/services.jpg" alt="" class="project-image img-fluid">
-              </div>
+      <!-- Hero Section (Bento Style) -->
+      <section class="px-margin mb-xl">
+        <div class="relative w-full aspect-[4/3] rounded-xl overflow-hidden shadow-lg shadow-primary/5">
+          <img alt="Project Main Image" class="w-full h-full object-cover" src="assets/img/portfolio-1.jpg">
+          <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex flex-col justify-end p-lg">
+            <h1 class="text-white font-headline-lg text-headline-lg mb-xs">Project Title</h1>
+            <div class="flex items-center gap-xs">
+              <span class="px-sm py-1 bg-primary text-white text-label-md font-label-md rounded-full">SaaS</span>
+              <span class="px-sm py-1 bg-secondary text-white text-label-md font-label-md rounded-full">E-commerce</span>
+            </div>
+          </div>
+        </div>
+      </section>
             </div>
           </div>
           <div class="swiper-button-prev"></div>
@@ -120,26 +182,64 @@
           <div class="swiper-pagination"></div>
         </div>
 
-        <div class="row justify-content-between gy-4 mt-4">
+        <!-- Overview Section -->
+        <section class="px-margin mb-xl">
+          <h2 class="font-headline-sm text-headline-sm text-on-surface mb-base">Overview</h2>
+          <div class="glass-card p-lg rounded-xl">
+            <p class="font-body-md text-body-md text-on-surface-variant leading-relaxed">
+              Project description will be loaded here...
+            </p>
+          </div>
+        </section>
 
-          <div class="col-lg-8" data-aos="fade-up">
-            <div class="portfolio-description">
-              <h2 class="project-title text-primary mb-3">Project Title</h2>
-              <p class="project-description lead mb-4">
-                Project description will be loaded here...
-              </p>
+        <!-- Project Info (Bento Grid) -->
+        <section class="px-margin mb-xl grid grid-cols-1 md:grid-cols-2 gap-md">
+          <!-- Category -->
+          <div class="glass-card p-md rounded-xl col-span-1">
+            <span class="text-primary material-symbols-outlined mb-xs" data-icon="category">category</span>
+            <p class="text-label-sm font-label-sm text-on-surface-variant uppercase tracking-wider">Category</p>
+            <p class="font-headline-sm text-headline-sm text-on-surface" id="project-category">Mobile App</p>
+          </div>
 
-              <!-- Project Features Section -->
-              <div class="project-features mt-4 p-4 bg-light rounded">
-                <h4 class="text-success mb-3"><i class="bi bi-check-circle me-2"></i>Key Features</h4>
-                <div class="row">
-                  <div class="col-md-6">
-                    <ul class="list-unstyled">
-                      <li class="mb-2"><i class="bi bi-check-circle-fill text-success me-2"></i><span>Feature 1</span></li>
-                      <li class="mb-2"><i class="bi bi-check-circle-fill text-success me-2"></i><span>Feature 2</span></li>
-                      <li class="mb-2"><i class="bi bi-check-circle-fill text-success me-2"></i><span>Feature 3</span></li>
-                    </ul>
-                  </div>
+          <!-- Status -->
+          <div class="glass-card p-md rounded-xl col-span-1">
+            <span class="text-secondary material-symbols-outlined mb-xs" data-icon="verified">verified</span>
+            <p class="text-label-sm font-label-sm text-on-surface-variant uppercase tracking-wider">Status</p>
+            <p class="font-headline-sm text-headline-sm text-on-surface" id="project-status">Completed</p>
+          </div>
+
+          <!-- Technologies -->
+          <div class="glass-card p-md rounded-xl col-span-2">
+            <p class="text-label-sm font-label-sm text-on-surface-variant uppercase tracking-wider mb-sm">Technologies</p>
+            <div class="flex flex-wrap gap-xs" id="project-technologies">
+              <span class="px-sm py-1 bg-surface-container-high rounded text-label-md font-label-md text-on-surface-variant">React Native</span>
+              <span class="px-sm py-1 bg-surface-container-high rounded text-label-md font-label-md text-on-surface-variant">Node.js</span>
+            </div>
+          </div>
+
+          <!-- Visit Button -->
+          <button class="col-span-2 bg-primary text-white py-lg rounded-xl font-headline-sm text-headline-sm shadow-md shadow-primary/20 active:scale-95 transition-transform flex items-center justify-center gap-sm">
+            <span>Visit Project</span>
+            <span class="material-symbols-outlined" data-icon="open_in_new">open_in_new</span>
+          </button>
+        </section>
+
+        <!-- Key Features Section -->
+        <section class="px-margin mb-xl">
+          <h2 class="font-headline-sm text-headline-sm text-on-surface mb-md">Key Features</h2>
+          <div class="space-y-md" id="project-features">
+            <div class="flex gap-md items-start p-md bg-white dark:bg-surface-variant rounded-xl shadow-sm">
+              <div class="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center shrink-0">
+                <span class="material-symbols-outlined text-primary" data-icon="translate">translate</span>
+              </div>
+              <div>
+                <h3 class="font-headline-sm text-headline-sm text-on-surface">Feature Title</h3>
+                <p class="font-body-sm text-body-sm text-on-surface-variant">Feature description...</p>
+              </div>
+            </div>
+            <!-- More features will be loaded dynamically -->
+          </div>
+        </section>
                   <div class="col-md-6">
                     <ul class="list-unstyled">
                       <li class="mb-2"><i class="bi bi-check-circle-fill text-success me-2"></i><span>Feature 4</span></li>
@@ -150,14 +250,103 @@
                 </div>
               </div>
 
-              <!-- Project Gallery Section -->
-              <div class="project-gallery mt-4">
-                <h4 class="text-info mb-3"><i class="bi bi-images me-2"></i>Project Gallery</h4>
-                <div class="row g-3">
-                  <div class="col-md-4">
-                    <div class="gallery-item">
-                      <img src="" alt="" class="img-fluid rounded shadow-sm project-gallery-image">
-                    </div>
+        <!-- Project Gallery (Horizontal Scroll) -->
+        <section class="mb-xl">
+          <div class="px-margin flex justify-between items-center mb-md">
+            <h2 class="font-headline-sm text-headline-sm text-on-surface">Gallery</h2>
+            <span class="text-label-md font-label-md text-primary">Slide for more</span>
+          </div>
+          <div class="flex overflow-x-auto gap-md px-margin custom-scrollbar" id="project-gallery">
+            <div class="shrink-0 w-72 h-48 bg-white rounded-xl overflow-hidden shadow-sm border border-outline-variant/30">
+              <img alt="Screenshot 1" class="w-full h-full object-cover" src="assets/img/portfolio-1.jpg">
+            </div>
+            <!-- More images will be loaded dynamically -->
+          </div>
+        </section>
+
+        <!-- Project Details Section -->
+        <section class="px-margin mb-xl">
+          <h2 class="font-headline-sm text-headline-sm text-on-surface mb-base">Project Details</h2>
+          <div class="glass-card p-lg rounded-xl border-l-4 border-secondary/50">
+            <p class="font-body-md text-body-md text-on-surface-variant leading-relaxed">
+              More detailed project information and implementation details will be displayed here.
+            </p>
+          </div>
+        </section>
+
+        <!-- More Projects Section -->
+        <section class="px-margin mb-xl">
+          <h2 class="font-headline-sm text-headline-sm text-on-surface mb-md">More Projects</h2>
+          <div class="space-y-sm" id="more-projects">
+            <div class="flex items-center p-md bg-white rounded-xl hover:bg-primary-container/5 transition-colors border border-transparent hover:border-primary/10">
+              <div class="w-12 h-12 bg-surface-container rounded-lg mr-md flex items-center justify-center">
+                <span class="material-symbols-outlined text-outline">local_shipping</span>
+              </div>
+              <div class="flex-1">
+                <h4 class="font-label-md text-label-md font-bold text-on-surface">SmartShip</h4>
+                <p class="text-body-sm text-on-surface-variant">Logistics Automation</p>
+              </div>
+              <span class="material-symbols-outlined text-outline-variant">chevron_right</span>
+            </div>
+            <!-- More projects will be loaded dynamically -->
+          </div>
+        </section>
+      </div>
+
+      <!-- Right Column -->
+      <div class="col-lg-4" data-aos="fade-up" data-aos-delay="100">
+
+        <!-- Project Info Card -->
+        <div class="portfolio-info card shadow-sm">
+          <div class="card-body">
+            <h4 class="card-title text-primary mb-3"><i class="bi bi-info-circle me-2"></i>Project Information</h4>
+            
+            <ul class="list-unstyled">
+              <li class="mb-3 d-flex align-items-center">
+                <i class="bi bi-tag text-primary me-3 fs-5"></i>
+                <div>
+                  <strong class="text-muted d-block fs-7">Category</strong>
+                  <span id="project-category">Mobile App</span>
+                </div>
+              </li>
+              <li class="mb-3 d-flex align-items-center">
+                <i class="bi bi-calendar text-primary me-3 fs-5"></i>
+                <div>
+                  <strong class="text-muted d-block fs-7">Year</strong>
+                  <span id="project-year">2023</span>
+                </div>
+              </li>
+              <li class="mb-3 d-flex align-items-center">
+                <i class="bi bi-clock text-primary me-3 fs-5"></i>
+                <div>
+                  <strong class="text-muted d-block fs-7">Duration</strong>
+                  <span id="project-duration">5 months</span>
+                </div>
+              </li>
+              <li class="mb-3 d-flex align-items-center">
+                <i class="bi bi-person text-primary me-3 fs-5"></i>
+                <div>
+                  <strong class="text-muted d-block fs-7">Role</strong>
+                  <span id="project-role">Full Stack Developer</span>
+                </div>
+              </li>
+              <li class="mb-3 d-flex align-items-center">
+                <i class="bi bi-building text-primary me-3 fs-5"></i>
+                <div>
+                  <strong class="text-muted d-block fs-7">Client</strong>
+                  <span id="project-client">StitchHub Co.</span>
+                </div>
+              </li>
+            </ul>
+
+            <a href="#" class="btn btn-primary w-100 mt-3" id="project-live-url" target="_blank">
+              <i class="bi bi-box-arrow-up-right me-2"></i>Visit Project
+            </a>
+            <a href="#" class="btn btn-outline-secondary w-100 mt-2" id="project-repo-url" target="_blank">
+              <i class="bi bi-github me-2"></i>View Code
+            </a>
+          </div>
+        </div>
                   </div>
                   <div class="col-md-4">
                     <div class="gallery-item">
@@ -184,46 +373,51 @@
           </div>
 
           <div class="col-lg-4" data-aos="fade-up" data-aos-delay="100">
-            <div class="portfolio-info card shadow-sm">
-              <div class="card-body">
-                <h3 class="card-title text-center mb-4">Project Information</h3>
-                <ul class="list-unstyled">
-                  <li class="mb-3">
-                    <strong class="text-muted">Category:</strong><br>
-                    <span class="project-category badge bg-primary">Web Development</span>
-                  </li>
-                  <li class="mb-3">
-                    <strong class="text-muted">Technologies:</strong><br>
-                    <span class="project-technologies">Laravel, PHP, MySQL</span>
-                  </li>
-                  <li class="mb-3">
-                    <strong class="text-muted">Status:</strong><br>
-                    <span class="project-status badge bg-success">Completed</span>
-                  </li>
-                  <li class="mb-4">
-                    <strong class="text-muted">Project URL:</strong><br>
-                    <a href="#" class="project-url btn btn-outline-primary btn-sm" target="_blank">
-                      <i class="bi bi-box-arrow-up-right me-1"></i>View Project
-                    </a>
-                    <a href="#" class="project-mobile-url btn btn-outline-success btn-sm ms-2" target="_blank" style="display:none;">
-                      <i class="bi bi-download me-1"></i> Download Mobile App
-                    </a>
-                    <a href="#" class="project-desktop-url btn btn-outline-info btn-sm ms-2" target="_blank" style="display:none;">
-                      <i class="bi bi-laptop me-1"></i> Download Desktop App
-                    </a>
-                  </li>
-                </ul>
+            <!-- Project Info Card (Bento Style) -->
+            <div class="bg-white/80 backdrop-blur-xl rounded-xl shadow-[0_4px_12px_rgba(0,88,188,0.08)] p-lg flex flex-col gap-md border border-outline-variant/20">
+              <h3 class="font-headline-sm text-headline-sm text-primary text-center mb-md">Project Information</h3>
+              <div class="space-y-sm">
+                <div class="flex items-center gap-md p-sm hover:bg-primary-container/5 rounded-lg transition-colors">
+                  <span class="material-symbols-outlined text-primary">category</span>
+                  <div>
+                    <span class="font-label-md text-label-md text-on-surface-variant">Category</span>
+                    <p class="font-body-md text-body-md text-on-surface font-semibold project-category">Web Development</p>
+                  </div>
+                </div>
+                <div class="flex items-center gap-md p-sm hover:bg-primary-container/5 rounded-lg transition-colors">
+                  <span class="material-symbols-outlined text-primary">code</span>
+                  <div>
+                    <span class="font-label-md text-label-md text-on-surface-variant">Technologies</span>
+                    <p class="font-body-md text-body-md text-on-surface font-semibold project-technologies">Laravel, PHP, MySQL</p>
+                  </div>
+                </div>
+                <div class="flex items-center gap-md p-sm hover:bg-primary-container/5 rounded-lg transition-colors">
+                  <span class="material-symbols-outlined text-primary">check_circle</span>
+                  <div>
+                    <span class="font-label-md text-label-md text-on-surface-variant">Status</span>
+                    <p class="font-body-md text-body-md text-on-surface font-semibold project-status">Completed</p>
+                  </div>
+                </div>
+              </div>
+              <div class="flex flex-col gap-sm mt-md">
+                <a href="#" class="project-url bg-primary text-on-primary font-label-md text-label-md py-sm px-md rounded-lg text-center hover:bg-primary-container transition-colors active:scale-95" target="_blank">
+                  <span class="material-symbols-outlined align-middle mr-xs">open_in_new</span> View Project
+                </a>
+                <a href="#" class="project-mobile-url bg-secondary text-on-secondary font-label-md text-label-md py-sm px-md rounded-lg text-center hover:bg-secondary-container transition-colors active:scale-95" target="_blank" style="display:none;">
+                  <span class="material-symbols-outlined align-middle mr-xs">download</span> Download Mobile
+                </a>
+                <a href="#" class="project-desktop-url bg-tertiary-fixed-dim text-on-tertiary-container font-label-md text-label-md py-sm px-md rounded-lg text-center hover:bg-tertiary-fixed transition-colors active:scale-95" target="_blank" style="display:none;">
+                  <span class="material-symbols-outlined align-middle mr-xs">computer</span> Download Desktop
+                </a>
               </div>
             </div>
 
-            <!-- Projects List Sidebar -->
-            <div class="projects-list mt-4 card shadow-sm">
-              <div class="card-body">
-                <h4 class="card-title text-center mb-3">Other Projects</h4>
-                <ul class="list-unstyled">
-                  <!-- Other projects will be populated here -->
-                </ul>
-              </div>
+            <!-- Other Projects (Bento Style) -->
+            <div class="bg-white/80 backdrop-blur-xl rounded-xl shadow-[0_4px_12px_rgba(0,88,188,0.08)] p-lg flex flex-col gap-md border border-outline-variant/20 mt-lg">
+              <h4 class="font-headline-sm text-headline-sm text-primary text-center">Other Projects</h4>
+              <ul class="space-y-sm list-unstyled">
+                <!-- Other projects will be populated here -->
+              </ul>
             </div>
           </div>
 
@@ -235,52 +429,36 @@
 
   </main>
 
-  <footer id="footer" class="footer position-relative light-background">
-    <div class="container">
-      <h3 class="sitename">Assem Adel Habib</h3>
-      <p>Web developer specializing in building modern applications and innovative software solutions using the latest technologies</p>
-      <div class="social-links d-flex justify-content-center">
-        <a href="https://github.com/assem2023-habib" target="_blank"><i class="bi bi-github"></i></a>
-        <a href="https://linkedin.com/in/assem-habib-5236a423b" target="_blank"><i class="bi bi-linkedin"></i></a>
-      </div>
-      <div class="container">
-        <div class="copyright">
-          <span>Copyright</span> <strong class="px-1 sitename">Assem Adel Habib</strong> <span>All Rights Reserved</span>
-        </div>
-        <div class="credits">
-          Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a> Distribuited by <a href="https://themewagon.com">ThemeWagon</a>
-        </div>
-      </div>
+  <!-- Footer (Glass Style) -->
+  <footer class="bg-surface/60 backdrop-blur-xl w-full mt-auto py-xl px-margin text-center flex flex-col items-center justify-center gap-md">
+    <div class="font-headline-sm text-headline-sm font-black text-primary">AH</div>
+    <p class="font-body-sm text-body-sm text-on-surface-variant">© 2024 Assem Adel Habib</p>
+    <div class="flex gap-lg">
+      <a class="text-primary underline font-body-sm text-body-sm hover:opacity-80 transition-opacity" href="#">LinkedIn</a>
+      <a class="text-on-surface-variant font-body-sm text-body-sm hover:text-primary transition-colors" href="#">GitHub</a>
+      <a class="text-on-surface-variant font-body-sm text-body-sm hover:text-primary transition-colors" href="#">Portfolio</a>
     </div>
   </footer>
 
-  <!-- Scroll Top -->
-  <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
-
-  <!-- Preloader -->
-  <div id="preloader"></div>
-
-  <!-- Vendor JS Files -->
-  <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-  <script src="assets/vendor/php-email-form/validate.js"></script>
-  <script src="assets/vendor/aos/aos.js"></script>
-  <script src="assets/vendor/typed.js/typed.umd.js"></script>
-  <script src="assets/vendor/purecounter/purecounter_vanilla.js"></script>
-  <script src="assets/vendor/waypoints/noframework.waypoints.js"></script>
-  <script src="assets/vendor/glightbox/js/glightbox.min.js"></script>
-  <script src="assets/vendor/imagesloaded/imagesloaded.pkgd.min.js"></script>
-  <script src="assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
-  <script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
-
-  <!-- Main JS File -->
-  <script src="assets/js/services-data.js"></script>
-  <script src="assets/js/portfolio-data.js"></script>
-  <script src="assets/js/main.js"></script>
-
-  <link href="assets/css/project-details.css" rel="stylesheet">
-
-  <script src="assets/js/project-loader.js"></script>
+  <!-- Bottom Navigation (Mobile Only) -->
+  <nav class="bg-surface/60 backdrop-blur-xl fixed bottom-0 w-full z-50 rounded-t-xl shadow-[0_-4px_12px_rgba(0,88,188,0.08)] flex justify-around items-center w-full px-base py-sm pb-safe">
+    <div class="flex flex-col items-center justify-center text-on-surface-variant font-label-md text-label-md hover:bg-primary-container/20 p-2 rounded-lg transition-all active:scale-90">
+      <span class="material-symbols-outlined" data-icon="home">home</span>
+      <span>Home</span>
+    </div>
+    <div class="flex flex-col items-center justify-center text-primary font-bold font-label-md text-label-md p-2 rounded-lg transition-all active:scale-90">
+      <span class="material-symbols-outlined" data-icon="folder_open">folder_open</span>
+      <span>Projects</span>
+    </div>
+    <div class="flex flex-col items-center justify-center text-on-surface-variant font-label-md text-label-md hover:bg-primary-container/20 p-2 rounded-lg transition-all active:scale-90">
+      <span class="material-symbols-outlined" data-icon="search">search</span>
+      <span>Search</span>
+    </div>
+    <div class="flex flex-col items-center justify-center text-on-surface-variant font-label-md text-label-md hover:bg-primary-container/20 p-2 rounded-lg transition-all active:scale-90">
+      <span class="material-symbols-outlined" data-icon="person">person</span>
+      <span>Profile</span>
+    </div>
+  </nav>
 
 </body>
-
 </html>

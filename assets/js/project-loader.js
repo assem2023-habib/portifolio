@@ -1,6 +1,7 @@
 /**
  * Project Details Loader
  * Handles dynamic content population for the project.html page based on URL parameters.
+ * Updated to use Tailwind CSS classes (Bento Grid design)
  */
 
 // Function to get URL parameter
@@ -9,7 +10,7 @@ function getURLParameter(name) {
     return urlParams.get(name);
 }
 
-// Function to update projects list sidebar
+// Function to update projects list sidebar (Bento Style)
 function updateProjectsList(activeProject) {
     const projectsList = document.querySelector('.projects-list ul');
     if (projectsList && typeof portfolioData !== 'undefined') {
@@ -18,13 +19,15 @@ function updateProjectsList(activeProject) {
         Object.keys(portfolioData).forEach(projectId => {
             const project = portfolioData[projectId];
             const li = document.createElement('li');
-            li.className = `mb-2 ${projectId === activeProject ? 'active' : ''}`;
+            li.className = `mb-sm ${projectId === activeProject ? 'opacity-100' : 'opacity-80'}`;
+            
+            const isActive = projectId === activeProject;
             li.innerHTML = `
-            <a href="project.html?project=${projectId}" class="d-flex align-items-center p-2 rounded ${projectId === activeProject ? 'bg-primary text-white' : 'bg-light hover-bg-primary'}" style="transition: all 0.3s ease;">
-                <i class="bi ${projectId === activeProject ? 'bi-circle-fill' : 'bi-circle'} me-2"></i>
+            <a href="project.html?project=${projectId}" class="flex items-center gap-md p-sm rounded-lg transition-all hover:bg-primary-container/20 ${isActive ? 'bg-primary-container/30 text-primary font-bold' : 'text-on-surface-variant hover:text-primary'}">
+                <span class="material-symbols-outlined text-sm">${isActive ? 'radio_button_checked' : 'radio_button_unchecked'}</span>
                 <div>
-                <div class="fw-bold">${project.title}</div>
-                <small class="text-muted">${project.category}</small>
+                    <div class="font-label-md text-label-md">${project.title}</div>
+                    <span class="font-body-sm text-body-sm text-on-surface-variant">${project.category}</span>
                 </div>
             </a>
             `;
@@ -39,8 +42,9 @@ function updateProjectDetails() {
 
     if (projectId && typeof portfolioData !== 'undefined' && portfolioData[projectId]) {
         const project = portfolioData[projectId];
+        
         // Update page title
-        document.title = project.title + " - MyResume Bootstrap Template";
+        document.title = project.title + " - Assem Adel Habib";
 
         // Update breadcrumb and main title
         const projectTitleElements = document.querySelectorAll('.project-title');
@@ -67,7 +71,7 @@ function updateProjectDetails() {
             projectDescription.textContent = project.description;
         }
 
-        // Update project technologies (if available in data)
+        // Update project technologies
         const projectTechnologies = document.querySelector('.project-technologies');
         if (projectTechnologies) {
             projectTechnologies.textContent = project.technologies || 'Laravel, PHP, MySQL';
@@ -79,20 +83,17 @@ function updateProjectDetails() {
             projectStatus.textContent = project.status || 'Completed';
         }
 
-        // Update project URL
+        // Update project URL (View Project button)
         const projectUrl = document.querySelector('.project-url');
         if (projectUrl) {
             const url = project.repoUrl || project.url || '#';
             projectUrl.href = url;
             if (project.repoUrl) {
-                projectUrl.textContent = 'View Code';
-                projectUrl.className = 'project-url btn btn-outline-primary btn-sm';
+                projectUrl.innerHTML = '<span class="material-symbols-outlined align-middle mr-xs">code</span> View Code';
             } else if (project.url) {
-                projectUrl.textContent = 'Visit Project';
-                projectUrl.className = 'project-url btn btn-outline-primary btn-sm';
+                projectUrl.innerHTML = '<span class="material-symbols-outlined align-middle mr-xs">open_in_new</span> Visit Project';
             } else {
-                projectUrl.textContent = 'View Details';
-                projectUrl.className = 'project-url btn btn-outline-secondary btn-sm';
+                projectUrl.innerHTML = '<span class="material-symbols-outlined align-middle mr-xs">info</span> View Details';
             }
         }
 
@@ -101,8 +102,8 @@ function updateProjectDetails() {
         if (mobileUrl) {
             if (project.mobileUrl) {
                 mobileUrl.href = project.mobileUrl;
-                mobileUrl.style.display = 'inline-block';
-                mobileUrl.innerHTML = '<i class="bi bi-download me-1"></i> Download Mobile App';
+                mobileUrl.style.display = 'block';
+                mobileUrl.innerHTML = '<span class="material-symbols-outlined align-middle mr-xs">download</span> Download Mobile App';
                 console.log('📱 Mobile URL added:', project.mobileUrl);
             } else {
                 mobileUrl.style.display = 'none';
@@ -114,15 +115,15 @@ function updateProjectDetails() {
         if (desktopUrl) {
             if (project.desktopUrl) {
                 desktopUrl.href = project.desktopUrl;
-                desktopUrl.style.display = 'inline-block';
-                desktopUrl.innerHTML = '<i class="bi bi-laptop me-1"></i> Download Desktop App';
+                desktopUrl.style.display = 'block';
+                desktopUrl.innerHTML = '<span class="material-symbols-outlined align-middle mr-xs">computer</span> Download Desktop App';
                 console.log('💻 Desktop URL added:', project.desktopUrl);
             } else {
                 desktopUrl.style.display = 'none';
             }
         }
 
-        // Update project features (if available in data)
+        // Update project features
         const featureElements = document.querySelectorAll('.project-features .list-unstyled li span');
         if (project.features && featureElements.length > 0) {
             project.features.forEach((feature, index) => {
@@ -132,7 +133,7 @@ function updateProjectDetails() {
             });
         }
 
-        // Update project gallery images (if available in data)
+        // Update project gallery images
         const galleryImages = document.querySelectorAll('.project-gallery-image');
         const projectImages = project.screenshots || project.galleryImages || [];
         if (projectImages.length > 0) {
@@ -147,6 +148,8 @@ function updateProjectDetails() {
 
         // Update projects list sidebar
         updateProjectsList(projectId);
+        
+        console.log('✅ Project loaded:', project.title);
     } else {
         console.log('❌ No project data found, redirecting...');
         // Default to first project if no valid project ID

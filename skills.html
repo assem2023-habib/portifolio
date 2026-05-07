@@ -22,38 +22,38 @@
       darkMode: "class",
       theme: {
         extend: {
-          "colors": {
-            "tertiary-fixed-dim": "#b1c5ff",
-            "on-tertiary-container": "#fefcff",
-            "surface-bright": "#f7f9ff",
-            "secondary": "#006d41",
-            "background": "#f7f9ff",
-            "tertiary-fixed": "#dae2ff",
-            "inverse-surface": "#2d3135",
-            "on-primary": "#ffffff",
-            "secondary-fixed-dim": "#77da9f",
-            "on-secondary": "#ffffff",
-            "secondary-container": "#90f4b7",
-            "primary": "#0058bc",
-            "surface-tint": "#005bc1",
-            "on-tertiary": "#ffffff",
-            "primary-container": "#0070eb",
-            "surface": "#f7f9ff",
-            "error": "#ba1a1a",
-            "on-primary-container": "#fefcff",
-            "inverse-on-surface": "#eef1f6",
-            "surface-container-highest": "#e0e3e8",
-            "surface-dim": "#d7dadf",
-            "surface-container-high": "#e5e8ee",
-            "on-tertiary-fixed-variant": "#00419e",
-            "on-primary-fixed": "#001a41",
-            "on-secondary-container": "#007144",
-            "outline": "#717786",
-            "surface-container": "#ebeef3",
-            "primary-fixed-dim": "#adc6ff",
-            "on-surface-variant": "#414755",
-            "outline-variant": "#c1c6d7",
-            "primary-fixed": "#d8e2ff"
+          colors: {
+            // Use CSS variables for dynamic theming
+            'primary': 'var(--color-primary)',
+            'primary-container': 'var(--color-primary-container)',
+            'on-primary': 'var(--color-on-primary)',
+            'on-primary-container': 'var(--color-on-primary-container)',
+            'secondary': 'var(--color-secondary)',
+            'secondary-container': 'var(--color-secondary-container)',
+            'on-secondary': 'var(--color-on-secondary)',
+            'surface': 'var(--color-surface)',
+            'surface-bright': 'var(--color-surface-bright)',
+            'surface-container': 'var(--color-surface-container)',
+            'surface-container-high': 'var(--color-surface-container-high)',
+            'surface-container-highest': 'var(--color-surface-container-highest)',
+            'on-surface': 'var(--color-on-surface)',
+            'on-surface-variant': 'var(--color-on-surface-variant)',
+            'outline': 'var(--color-outline)',
+            'outline-variant': 'var(--color-outline-variant)',
+            'background': 'var(--color-background)',
+            'error': '#ba1a1a',
+            'tertiary-fixed': '#dae2ff',
+            'tertiary-fixed-dim': '#b1c5ff',
+            'inverse-surface': 'var(--color-inverse-surface)',
+            'inverse-on-surface': 'var(--color-inverse-on-surface)',
+            'primary-fixed': '#d8e2ff',
+            'primary-fixed-dim': '#adc6ff',
+            'on-tertiary-container': '#fefcff',
+            'surface-dim': 'var(--color-surface-dim)',
+            'surface-tint': 'var(--color-surface-tint)',
+            'on-tertiary-fixed-variant': '#00419e',
+            'on-primary-fixed': '#001a41',
+            'on-secondary-container': '#007144',
           },
           "borderRadius": {
             "DEFAULT": "0.25rem",
@@ -96,11 +96,116 @@
     }
   </script>
   
-  <!-- Main CSS -->
-  <link href="assets/css/main.css" rel="stylesheet">
+  <style>
+    /* CSS Variables for Light/Dark Mode */
+    :root, html.light {
+      --color-primary: #0058bc;
+      --color-primary-container: #0070eb;
+      --color-on-primary: #ffffff;
+      --color-on-primary-container: #fefcff;
+      --color-secondary: #006d41;
+      --color-secondary-container: #90f4b7;
+      --color-on-secondary: #ffffff;
+      --color-surface: #f7f9ff;
+      --color-surface-bright: #f7f9ff;
+      --color-surface-container: #ebeef3;
+      --color-surface-container-high: #e5e8ee;
+      --color-surface-container-highest: #e0e3e8;
+      --color-on-surface: #272829;
+      --color-on-surface-variant: #414755;
+      --color-outline: #717786;
+      --color-outline-variant: #c1c6d7;
+      --color-background: #f7f9ff;
+      --color-inverse-surface: #2d3135;
+      --color-inverse-on-surface: #eef1f6;
+      --color-surface-dim: #d7dadf;
+      --color-surface-tint: #005bc1;
+    }
+    
+    html.dark {
+      --color-primary: #adc6ff;
+      --color-primary-container: #00419e;
+      --color-on-primary: #001a41;
+      --color-on-primary-container: #d8e2ff;
+      --color-secondary: #77da9f;
+      --color-secondary-container: #004d2a;
+      --color-on-secondary: #003914;
+      --color-surface: #1a1a2e;
+      --color-surface-bright: #25253d;
+      --color-surface-container: #25253d;
+      --color-surface-container-high: #2d2d45;
+      --color-surface-container-highest: #35354d;
+      --color-on-surface: #eef1f6;
+      --color-on-surface-variant: #c1c6d7;
+      --color-outline: #717786;
+      --color-outline-variant: #414755;
+      --color-background: #12121e;
+      --color-inverse-surface: #eef1f6;
+      --color-inverse-on-surface: #2d3135;
+      --color-surface-dim: #12121e;
+      --color-surface-tint: #adc6ff;
+    }
+    
+    body { 
+      font-family: 'Inter', sans-serif; 
+      -webkit-font-smoothing: antialiased; 
+      background-color: var(--color-background);
+      color: var(--color-on-surface);
+    }
+    
+    .material-symbols-outlined { 
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; 
+      font-size: 24px;
+      line-height: 1;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+    
+    .glass-card { 
+      background: rgba(255, 255, 255, 0.6); 
+      backdrop-filter: blur(20px); 
+      -webkit-backdrop-filter: blur(20px); 
+      border: 1px solid rgba(255, 255, 255, 0.3); 
+    }
+    
+    html.dark .glass-card {
+      background: rgba(26, 26, 46, 0.6);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    
+    .custom-scrollbar::-webkit-scrollbar { display: none; }
+    .custom-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+    
+    /* Icon container for proper alignment */
+    .icon-container {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+    
+    /* Dark mode toggle button */
+    #darkModeToggle {
+      transition: all 0.3s ease;
+    }
+    
+    #darkModeToggle:hover {
+      transform: scale(1.05);
+    }
+    
+    #darkModeToggle:active {
+      transform: scale(0.95);
+    }
+  </style>
 </head>
 
 <body class="bg-surface text-on-surface min-h-screen flex flex-col">
+  
+  <!-- Dark Mode Toggle Button (Mobile Only) -->
+  <button id="darkModeToggle" class="fixed top-4 right-4 z-50 p-3 rounded-xl bg-white/80 backdrop-blur-xl shadow-[0_4px_12px_rgba(0,88,188,0.08)] border border-outline-variant/20 hover:bg-primary-container/20 transition-all active:scale-90 md:hidden" title="تبديل الوضع المظلم / Toggle Dark Mode">
+    <span class="material-symbols-outlined text-on-surface-variant" id="darkModeIcon">dark_mode</span>
+  </button>
+
   <!-- Main Content -->
   <main class="flex-1">
     <!-- Skills Section -->
@@ -205,6 +310,50 @@
           });
         })
         .catch(error => console.error('Error loading skills:', error));
+    });
+  
+    // Dark Mode Toggle Script
+    const darkModeToggle = document.getElementById('darkModeToggle');
+    const darkModeIcon = document.getElementById('darkModeIcon');
+    const htmlElement = document.documentElement;
+    
+    // Check for saved theme preference
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme === 'dark') {
+      htmlElement.classList.add('dark');
+      if (darkModeIcon) darkModeIcon.textContent = 'light_mode';
+    } else {
+      htmlElement.classList.remove('dark');
+      if (darkModeIcon) darkModeIcon.textContent = 'dark_mode';
+    }
+    
+    // Toggle dark mode on button click
+    if (darkModeToggle) {
+      darkModeToggle.addEventListener('click', function() {
+        const isDark = htmlElement.classList.toggle('dark');
+        
+        if (darkModeIcon) {
+          darkModeIcon.textContent = isDark ? 'light_mode' : 'dark_mode';
+        }
+        
+        // Save preference to localStorage
+        localStorage.setItem('theme', isDark ? 'dark' : 'light');
+        
+        console.log('🌙 Dark mode:', isDark ? 'ON' : 'OFF');
+      });
+    }
+    
+    // Sync with other pages
+    window.addEventListener('storage', function(e) {
+      if (e.key === 'theme') {
+        if (e.newValue === 'dark') {
+          htmlElement.classList.add('dark');
+          if (darkModeIcon) darkModeIcon.textContent = 'light_mode';
+        } else {
+          htmlElement.classList.remove('dark');
+          if (darkModeIcon) darkModeIcon.textContent = 'dark_mode';
+        }
+      }
     });
   </script>
 </body>

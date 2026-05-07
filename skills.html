@@ -16,44 +16,21 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   
-  <!-- Tailwind Config (مطابق للقالب) -->
+  <!-- Tailwind Config (Unified with index.html) -->
   <script id="tailwind-config">
     tailwind.config = {
       darkMode: "class",
       theme: {
         extend: {
           colors: {
-            // Use CSS variables for dynamic theming
-            'primary': 'var(--color-primary)',
-            'primary-container': 'var(--color-primary-container)',
-            'on-primary': 'var(--color-on-primary)',
-            'on-primary-container': 'var(--color-on-primary-container)',
-            'secondary': 'var(--color-secondary)',
-            'secondary-container': 'var(--color-secondary-container)',
-            'on-secondary': 'var(--color-on-secondary)',
-            'surface': 'var(--color-surface)',
-            'surface-bright': 'var(--color-surface-bright)',
-            'surface-container': 'var(--color-surface-container)',
-            'surface-container-high': 'var(--color-surface-container-high)',
-            'surface-container-highest': 'var(--color-surface-container-highest)',
-            'on-surface': 'var(--color-on-surface)',
-            'on-surface-variant': 'var(--color-on-surface-variant)',
-            'outline': 'var(--color-outline)',
-            'outline-variant': 'var(--color-outline-variant)',
-            'background': 'var(--color-background)',
+            // Use CSS variables matching index.html (main.css)
+            'primary': 'var(--color-primary)',        // #0563bb (accent-color)
+            'surface': 'var(--color-surface)',        // #ffffff (surface-color)
+            'on-surface': 'var(--color-on-surface)',  // #272829 (default-color)
+            'background': 'var(--color-background)',  // #ffffff (background-color)
+            'heading': 'var(--color-heading)',      // #45505b (heading-color)
+            'contrast': 'var(--color-contrast)',    // #ffffff (contrast-color)
             'error': '#ba1a1a',
-            'tertiary-fixed': '#dae2ff',
-            'tertiary-fixed-dim': '#b1c5ff',
-            'inverse-surface': 'var(--color-inverse-surface)',
-            'inverse-on-surface': 'var(--color-inverse-on-surface)',
-            'primary-fixed': '#d8e2ff',
-            'primary-fixed-dim': '#adc6ff',
-            'on-tertiary-container': '#fefcff',
-            'surface-dim': 'var(--color-surface-dim)',
-            'surface-tint': 'var(--color-surface-tint)',
-            'on-tertiary-fixed-variant': '#00419e',
-            'on-primary-fixed': '#001a41',
-            'on-secondary-container': '#007144',
           },
           "borderRadius": {
             "DEFAULT": "0.25rem",
@@ -96,92 +73,14 @@
     }
   </script>
   
+  <!-- Main CSS (Unified with index.html) -->
+  <link href="assets/css/main.css" rel="stylesheet">
+  
   <style>
-    /* CSS Variables for Light/Dark Mode */
-    :root, html.light {
-      --color-primary: #0058bc;
-      --color-primary-container: #0070eb;
-      --color-on-primary: #ffffff;
-      --color-on-primary-container: #fefcff;
-      --color-secondary: #006d41;
-      --color-secondary-container: #90f4b7;
-      --color-on-secondary: #ffffff;
-      --color-surface: #f7f9ff;
-      --color-surface-bright: #f7f9ff;
-      --color-surface-container: #ebeef3;
-      --color-surface-container-high: #e5e8ee;
-      --color-surface-container-highest: #e0e3e8;
-      --color-on-surface: #272829;
-      --color-on-surface-variant: #414755;
-      --color-outline: #717786;
-      --color-outline-variant: #c1c6d7;
-      --color-background: #f7f9ff;
-      --color-inverse-surface: #2d3135;
-      --color-inverse-on-surface: #eef1f6;
-      --color-surface-dim: #d7dadf;
-      --color-surface-tint: #005bc1;
-    }
-    
-    html.dark {
-      --color-primary: #adc6ff;
-      --color-primary-container: #00419e;
-      --color-on-primary: #001a41;
-      --color-on-primary-container: #d8e2ff;
-      --color-secondary: #77da9f;
-      --color-secondary-container: #004d2a;
-      --color-on-secondary: #003914;
-      --color-surface: #1a1a2e;
-      --color-surface-bright: #25253d;
-      --color-surface-container: #25253d;
-      --color-surface-container-high: #2d2d45;
-      --color-surface-container-highest: #35354d;
-      --color-on-surface: #eef1f6;
-      --color-on-surface-variant: #c1c6d7;
-      --color-outline: #717786;
-      --color-outline-variant: #414755;
-      --color-background: #12121e;
-      --color-inverse-surface: #eef1f6;
-      --color-inverse-on-surface: #2d3135;
-      --color-surface-dim: #12121e;
-      --color-surface-tint: #adc6ff;
-    }
-    
+    /* Override for Tailwind compatibility */
     body { 
-      font-family: 'Inter', sans-serif; 
+      font-family: 'Inter', sans-serif !important; 
       -webkit-font-smoothing: antialiased; 
-      background-color: var(--color-background);
-      color: var(--color-on-surface);
-    }
-    
-    .material-symbols-outlined { 
-      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; 
-      font-size: 24px;
-      line-height: 1;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-    }
-    
-    .glass-card { 
-      background: rgba(255, 255, 255, 0.6); 
-      backdrop-filter: blur(20px); 
-      -webkit-backdrop-filter: blur(20px); 
-      border: 1px solid rgba(255, 255, 255, 0.3); 
-    }
-    
-    html.dark .glass-card {
-      background: rgba(26, 26, 46, 0.6);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-    }
-    
-    .custom-scrollbar::-webkit-scrollbar { display: none; }
-    .custom-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
-    
-    /* Icon container for proper alignment */
-    .icon-container {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
     }
     
     /* Dark mode toggle button */
@@ -195,6 +94,22 @@
     
     #darkModeToggle:active {
       transform: scale(0.95);
+    }
+    
+    /* Icon alignment */
+    .material-symbols-outlined { 
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; 
+      font-size: 24px;
+      line-height: 1;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+    
+    .icon-container {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
     }
   </style>
 </head>
@@ -236,37 +151,60 @@
     </div>
   </footer>
 
-  <!-- Bottom Navigation (Mobile Only - مطابق للقالب) -->
-  <nav class="bg-surface/60 backdrop-blur-xl fixed bottom-0 w-full z-50 rounded-t-xl shadow-[0_-4px_12px_rgba(0,88,188,0.08)] flex justify-around items-center w-full px-base py-sm pb-safe">
-    <a href="index.html" class="flex flex-col items-center justify-center text-on-surface-variant font-label-md text-label-md hover:bg-primary-container/20 p-2 rounded-lg transition-all active:scale-90">
-      <span class="material-symbols-outlined" data-icon="home">home</span>
-      <span>Home</span>
-    </a>
-    <a href="projects.html" class="flex flex-col items-center justify-center text-on-surface-variant font-label-md text-label-md hover:bg-primary-container/20 p-2 rounded-lg transition-all active:scale-90">
-      <span class="material-symbols-outlined" data-icon="folder_open">folder_open</span>
-      <span>Projects</span>
-    </a>
-    <a href="skills.html" class="flex flex-col items-center justify-center text-primary font-bold font-label-md text-label-md p-2 rounded-lg transition-all active:scale-90">
-      <span class="material-symbols-outlined" data-icon="code">code</span>
-      <span>Skills</span>
-    </a>
-    <a href="index.html#testimonials" class="flex flex-col items-center justify-center text-on-surface-variant font-label-md text-label-md hover:bg-primary-container/20 p-2 rounded-lg transition-all active:scale-90">
-      <span class="material-symbols-outlined" data-icon="person">person</span>
-      <span>Profile</span>
-    </a>
-  </nav>
-
-  <!-- Scripts -->
+  <!-- Dark Mode Toggle Script (Unified with index.html) -->
   <script>
-    // تحميل جميع المهارات من data/skills.json
     document.addEventListener('DOMContentLoaded', function() {
+      const darkModeToggle = document.getElementById('darkModeToggle');
+      const darkModeIcon = document.getElementById('darkModeIcon');
+      const body = document.body;
+      
+      // Check for saved theme preference (matching index.html system)
+      const savedTheme = localStorage.getItem('theme');
+      if (savedTheme === 'dark') {
+        body.classList.add('dark-mode');
+        if (darkModeIcon) darkModeIcon.textContent = 'light_mode';
+      } else {
+        body.classList.remove('dark-mode');
+        if (darkModeIcon) darkModeIcon.textContent = 'dark_mode';
+      }
+      
+      // Toggle dark mode on button click
+      if (darkModeToggle) {
+        darkModeToggle.addEventListener('click', function() {
+          const isDark = body.classList.toggle('dark-mode');
+          
+          if (darkModeIcon) {
+            darkModeIcon.textContent = isDark ? 'light_mode' : 'dark_mode';
+          }
+          
+          // Save preference to localStorage
+          localStorage.setItem('theme', isDark ? 'dark' : 'light');
+          
+          console.log('🌙 Dark mode:', isDark ? 'ON' : 'OFF');
+        });
+      }
+      
+      // Sync with other pages
+      window.addEventListener('storage', function(e) {
+        if (e.key === 'theme') {
+          if (e.newValue === 'dark') {
+            body.classList.add('dark-mode');
+            if (darkModeIcon) darkModeIcon.textContent = 'light_mode';
+          } else {
+            body.classList.remove('dark-mode');
+            if (darkModeIcon) darkModeIcon.textContent = 'dark_mode';
+          }
+        }
+      });
+      
+      // Load skills (error fixed)
       fetch('data/skills.json')
         .then(response => response.json())
-        .then(skills => {
+        .then(data => {
+          const skills = data.skills || data;
           const container = document.getElementById('skills-container');
           container.innerHTML = '';
           
-          // ألوان مستويات المهارات (مطابق للقالب)
           const levelColors = {
             'excellent': '#28a745',
             'very-good': '#007bff',
@@ -274,7 +212,6 @@
             'average': '#6c757d'
           };
           
-          // تسميات المستويات (باللغتين)
           const levelLabels = {
             'excellent': { en: 'Excellent', ar: 'ممتاز' },
             'very-good': { en: 'Very Good', ar: 'جيد جداً' },
@@ -282,15 +219,14 @@
             'average': { en: 'Average', ar: 'متوسط' }
           };
           
-          // إنشاء بطاقات المهارات (Bento Style)
           skills.forEach(skill => {
             const skillCard = document.createElement('div');
             skillCard.className = 'bg-white/80 backdrop-blur-xl rounded-xl shadow-[0_4px_12px_rgba(0,88,188,0.08)] p-md flex items-center justify-between border border-outline-variant/20 hover:border-primary/30 transition-all';
             
             skillCard.innerHTML = `
               <div class="flex items-center gap-md">
-                <div class="w-10 h-10 rounded-lg bg-primary-container/20 flex items-center justify-center">
-                  <span class="material-symbols-outlined text-primary">${skill.icon || 'code'}</span>
+                <div class="w-10 h-10 rounded-lg bg-blue-100 flex items-center justify-center">
+                  <span class="material-symbols-outlined text-blue-600">${skill.icon || 'code'}</span>
                 </div>
                 <div>
                   <h3 class="font-label-md text-label-md text-on-surface font-bold">${skill.name}</h3>
@@ -310,50 +246,6 @@
           });
         })
         .catch(error => console.error('Error loading skills:', error));
-    });
-  
-    // Dark Mode Toggle Script
-    const darkModeToggle = document.getElementById('darkModeToggle');
-    const darkModeIcon = document.getElementById('darkModeIcon');
-    const htmlElement = document.documentElement;
-    
-    // Check for saved theme preference
-    const savedTheme = localStorage.getItem('theme');
-    if (savedTheme === 'dark') {
-      htmlElement.classList.add('dark');
-      if (darkModeIcon) darkModeIcon.textContent = 'light_mode';
-    } else {
-      htmlElement.classList.remove('dark');
-      if (darkModeIcon) darkModeIcon.textContent = 'dark_mode';
-    }
-    
-    // Toggle dark mode on button click
-    if (darkModeToggle) {
-      darkModeToggle.addEventListener('click', function() {
-        const isDark = htmlElement.classList.toggle('dark');
-        
-        if (darkModeIcon) {
-          darkModeIcon.textContent = isDark ? 'light_mode' : 'dark_mode';
-        }
-        
-        // Save preference to localStorage
-        localStorage.setItem('theme', isDark ? 'dark' : 'light');
-        
-        console.log('🌙 Dark mode:', isDark ? 'ON' : 'OFF');
-      });
-    }
-    
-    // Sync with other pages
-    window.addEventListener('storage', function(e) {
-      if (e.key === 'theme') {
-        if (e.newValue === 'dark') {
-          htmlElement.classList.add('dark');
-          if (darkModeIcon) darkModeIcon.textContent = 'light_mode';
-        } else {
-          htmlElement.classList.remove('dark');
-          if (darkModeIcon) darkModeIcon.textContent = 'dark_mode';
-        }
-      }
     });
   </script>
 </body>

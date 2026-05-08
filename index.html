@@ -712,6 +712,9 @@
                     class="info-item d-flex"
                     data-aos="fade-up"
                     data-aos-delay="300"
+                    onclick="copyToClipboard('+963 994 636 381', this)"
+                    style="cursor: pointer;"
+                    title="Click to copy"
                   >
                     <i class="bi bi-telephone flex-shrink-0"></i>
                     <div>
@@ -870,6 +873,22 @@
     <!-- <script src="assets/js/testimonial-form.js"></script> -->
     <!-- <script src="assets/js/testimonials-loader.js"></script> -->
     <script src="assets/js/skills-loader.js"></script>
+
+    <script>
+      function copyToClipboard(text, el) {
+        navigator.clipboard.writeText(text).then(() => {
+          const original = el.querySelector('h3').textContent;
+          el.querySelector('h3').textContent = 'Copied!';
+          el.style.borderColor = '#28a745';
+          setTimeout(() => {
+            el.querySelector('h3').textContent = original;
+            el.style.borderColor = '';
+          }, 1500);
+        }).catch(() => {
+          alert('Failed to copy');
+        });
+      }
+    </script>
 
     <!-- CV Modal -->
     <div class="modal fade" id="cvModal" tabindex="-1" aria-hidden="true">

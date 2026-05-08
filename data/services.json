@@ -119,12 +119,32 @@
         "تحسين الميزات",
         "دعم تقني"
       ]
+    },
+    {
+      "id": "mobile",
+      "title": "Mobile App Development",
+      "titleAr": "تطوير تطبيقات الهاتف",
+      "icon": "bi-phone",
+      "description": "Building native and cross-platform mobile applications using Flutter and React Native with clean architecture and offline-first approach.",
+      "descriptionAr": "بناء تطبيقات هواتف أصلية ومتعددة المنصات باستخدام Flutter و React Native مع معمارية نظيفة",
+      "features": [
+        "Cross-platform mobile apps (Flutter & React Native)",
+        "Offline-first architecture",
+        "Push notifications & real-time updates",
+        "App store deployment & maintenance"
+      ],
+      "featuresAr": [
+        "تطبيقات متعددة المنصات (Flutter و React Native)",
+        "معمارية تعمل بدون إنترنت",
+        "إشعارات فورية وتحديثات لحظية",
+        "نشر وصيانة على متاجر التطبيقات"
+      ]
     }
   ],
   "metadata": {
     "version": "1.0.0",
     "lastUpdated": "2025-04-15",
-    "totalServices": 6,
+    "totalServices": 7,
     "author": "Assem Adel Habib",
     "contact": "099assemhb@gmail.com"
   }

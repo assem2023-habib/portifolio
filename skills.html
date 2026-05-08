@@ -1,255 +1,270 @@
 <!DOCTYPE html>
-<html lang="en" class="light">
+<html lang="en">
 <head>
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
   <title>Skills - Assem Adel Habib</title>
-  
-  <!-- Tailwind CSS -->
-  <script src="https://cdn.tailwindcss.com"></script>
-  
-  <!-- Material Symbols Outlined -->
+  <meta content="" name="description">
+  <meta content="" name="keywords">
+
+  <!-- Favicons -->
+  <link href="assets/img/favicon.png" rel="icon">
+  <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com" rel="preconnect">
+  <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Raleway:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+
+  <!-- Vendor CSS Files -->
+  <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+  <link href="assets/vendor/aos/aos.css" rel="stylesheet">
+  <link href="assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
+  <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+
+  <!-- Material Symbols Outlined (for skill icons) -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&display=swap">
-  
-  <!-- Inter Font -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-  
-  <!-- Tailwind Config (Unified with index.html) -->
-  <script id="tailwind-config">
-    tailwind.config = {
-      darkMode: "class",
-      theme: {
-        extend: {
-          colors: {
-            // Use CSS variables matching index.html (main.css)
-            'primary': 'var(--color-primary)',        // #0563bb (accent-color)
-            'surface': 'var(--color-surface)',        // #ffffff (surface-color)
-            'on-surface': 'var(--color-on-surface)',  // #272829 (default-color)
-            'background': 'var(--color-background)',  // #ffffff (background-color)
-            'heading': 'var(--color-heading)',      // #45505b (heading-color)
-            'contrast': 'var(--color-contrast)',    // #ffffff (contrast-color)
-            'error': '#ba1a1a',
-          },
-          "borderRadius": {
-            "DEFAULT": "0.25rem",
-            "lg": "0.5rem",
-            "xl": "0.75rem",
-            "full": "9999px"
-          },
-          "spacing": {
-            "xl": "32px",
-            "gutter": "16px",
-            "margin": "20px",
-            "lg": "24px",
-            "base": "8px",
-            "xs": "4px",
-            "md": "16px",
-            "sm": "8px"
-          },
-          "fontFamily": {
-            "headline-sm": ["Inter"],
-            "label-sm": ["Inter"],
-            "label-md": ["Inter"],
-            "body-lg": ["Inter"],
-            "headline-lg": ["Inter"],
-            "headline-md": ["Inter"],
-            "body-md": ["Inter"],
-            "body-sm": ["Inter"]
-          },
-          "fontSize": {
-            "headline-sm": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
-            "label-sm": ["11px", {"lineHeight": "14px", "fontWeight": "500"}],
-            "label-md": ["12px", {"lineHeight": "16px", "fontWeight": "600"}],
-            "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
-            "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
-            "headline-md": ["24px", {"lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
-            "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
-            "body-sm": ["14px", {"lineHeight": "20px", "fontWeight": "400"}]
-          }
-        }
+
+  <!-- Main CSS File -->
+  <link href="assets/css/main.css" rel="stylesheet">
+
+  <style>
+    .skills-page .skills-container {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 16px;
+    }
+    @media (min-width: 768px) {
+      .skills-page .skills-container {
+        grid-template-columns: 1fr 1fr;
       }
     }
-  </script>
-  
-  <!-- Main CSS (Unified with index.html) -->
-  <link href="assets/css/main.css" rel="stylesheet">
-  
-  <style>
-    /* Override for Tailwind compatibility */
-    body { 
-      font-family: 'Inter', sans-serif !important; 
-      -webkit-font-smoothing: antialiased; 
+    @media (min-width: 992px) {
+      .skills-page .skills-container {
+        grid-template-columns: 1fr 1fr 1fr;
+      }
     }
-    
-    /* Dark mode toggle button */
-    #darkModeToggle {
+    .skill-card {
+      background: rgba(255, 255, 255, 0.8);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid rgba(0, 0, 0, 0.08);
+      border-radius: 12px;
+      padding: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
       transition: all 0.3s ease;
     }
-    
-    #darkModeToggle:hover {
-      transform: scale(1.05);
+    .skill-card:hover {
+      border-color: var(--accent-color);
+      box-shadow: 0 4px 12px rgba(5, 99, 187, 0.08);
     }
-    
-    #darkModeToggle:active {
-      transform: scale(0.95);
+    body.dark-mode .skill-card {
+      background: rgba(37, 37, 37, 0.8);
+      border-color: rgba(255, 255, 255, 0.08);
     }
-    
-    /* Icon alignment */
-    .material-symbols-outlined { 
-      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; 
+    body.dark-mode .skill-card:hover {
+      border-color: var(--accent-color);
+    }
+    .page-header {
+      background: rgba(255, 255, 255, 0.6);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid rgba(0, 0, 0, 0.08);
+      border-radius: 12px;
+      padding: 24px;
+      text-align: center;
+      margin-bottom: 24px;
+    }
+    body.dark-mode .page-header {
+      background: rgba(37, 37, 37, 0.6);
+      border-color: rgba(255, 255, 255, 0.08);
+    }
+    .header-divider {
+      width: 64px;
+      height: 3px;
+      background: var(--accent-color);
+      opacity: 0.3;
+      border-radius: 999px;
+      margin: 12px auto;
+    }
+    body.dark-mode .header-divider {
+      background: var(--accent-color);
+    }
+    .skill-icon-box {
+      width: 40px;
+      height: 40px;
+      background: #e8f0fe;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    body.dark-mode .skill-icon-box {
+      background: rgba(5, 99, 187, 0.2);
+    }
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
       font-size: 24px;
       line-height: 1;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
     }
-    
-    .icon-container {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
+    .level-dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      display: inline-block;
+      flex-shrink: 0;
     }
   </style>
 </head>
 
-<body class="bg-surface text-on-surface min-h-screen flex flex-col">
-  
-  <!-- Dark Mode Toggle Button (Mobile Only) -->
-  <button id="darkModeToggle" class="fixed top-4 right-4 z-50 p-3 rounded-xl bg-white/80 backdrop-blur-xl shadow-[0_4px_12px_rgba(0,88,188,0.08)] border border-outline-variant/20 hover:bg-primary-container/20 transition-all active:scale-90" title="تبديل الوضع المظلم / Toggle Dark Mode">
-    <span class="material-symbols-outlined text-on-surface-variant" id="darkModeIcon">dark_mode</span>
+<body class="index-page skills-page">
+
+  <!-- Dark Mode Toggle Button -->
+  <button id="darkModeToggle" class="dark-mode-toggle" title="تبديل الوضع المظلم">
+    <i class="bi bi-moon-fill"></i>
   </button>
 
-  <!-- Main Content -->
-  <main class="flex-1">
-    
-    <!-- Skills Section with Bento Style Header -->
-    <section class="px-[20px] py-xl">
-      <!-- Title Card (Bento Style) -->
-      <div class="bg-white/80 backdrop-blur-xl rounded-xl shadow-[0_4px_12px_rgba(0,88,188,0.08)] p-lg mb-xl border border-outline-variant/20 text-center">
-        <h1 class="font-headline-lg text-headline-lg text-primary mb-md">Skills</h1>
-        <div class="w-16 h-1 bg-primary/30 rounded-full mx-auto mb-md"></div>
-        <p class="font-body-md text-body-md text-on-surface-variant max-w-2xl mx-auto">
+  <header id="header" class="header d-flex flex-column justify-content-center">
+    <i class="header-toggle d-xl-none bi bi-list"></i>
+
+    <nav id="navmenu" class="navmenu">
+      <ul>
+        <li><a href="index.html"><i class="bi bi-house navicon"></i><span>Home</span></a></li>
+        <li><a href="index.html#about"><i class="bi bi-person navicon"></i><span>About</span></a></li>
+        <li><a href="skills.html" class="active"><i class="bi bi-gear navicon"></i><span>Skills</span></a></li>
+        <li><a href="index.html#resume"><i class="bi bi-file-earmark-text navicon"></i><span>Resume</span></a></li>
+        <li><a href="projects.html"><i class="bi bi-images navicon"></i><span>Project</span></a></li>
+        <li><a href="index.html#services"><i class="bi bi-hdd-stack navicon"></i><span>Services</span></a></li>
+        <li><a href="index.html#contact"><i class="bi bi-envelope navicon"></i><span>Contact</span></a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main class="main">
+
+    <!-- Page Title -->
+    <div class="page-title" data-aos="fade">
+      <div class="container">
+        <nav class="breadcrumbs">
+          <ol>
+            <li><a href="index.html">Home</a></li>
+            <li class="current">Skills</li>
+          </ol>
+        </nav>
+        <h1>Skills</h1>
+      </div>
+    </div>
+
+    <!-- Skills Section -->
+    <section id="skills" class="skills section">
+
+      <div class="container section-title" data-aos="fade-up">
+        <h2>Skills</h2>
+        <p>
           <span class="lang-en">All my technical skills and proficiency levels</span>
           <span class="lang-ar" style="display: none">كل مهاراتي التقنية ومستويات الكفاءة</span>
         </p>
       </div>
-      
-      <!-- Skills Grid (Bento Style) -->
-      <div id="skills-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-md">
-        <!-- سيتم تحميل المهارات ديناميكيًا من data/skills.json -->
+
+      <div class="container" data-aos="fade-up" data-aos-delay="100">
+        <div class="skills-container" id="skills-container">
+          <!-- Skills will be loaded dynamically from skills.json -->
+        </div>
       </div>
+
     </section>
+
   </main>
 
-  <!-- Footer (Glass Style - مطابق للقالب) -->
-  <footer class="bg-surface/60 backdrop-blur-xl w-full mt-auto py-xl px-margin text-center flex flex-col items-center justify-center gap-md">
-    <div class="font-headline-sm text-headline-sm font-black text-primary">AH</div>
-    <p class="font-body-sm text-body-sm text-on-surface-variant">© 2024 Assem Adel Habib</p>
-    <div class="flex gap-lg">
-      <a class="text-primary underline font-body-sm text-body-sm hover:opacity-80 transition-opacity" href="https://linkedin.com/in/assem-habib-5236a423b" target="_blank">LinkedIn</a>
-      <a class="text-on-surface-variant font-body-sm text-body-sm hover:text-primary transition-colors" href="https://github.com/assem2023-habib" target="_blank">GitHub</a>
-      <a class="text-on-surface-variant font-body-sm text-body-sm hover:text-primary transition-colors" href="index.html">Portfolio</a>
+  <footer id="footer" class="footer position-relative light-background">
+    <div class="container">
+      <h3 class="sitename">Assem Adel Habib</h3>
+      <p>
+        <span class="lang-en">Web developer specializing in building modern applications and innovative software solutions using the latest technologies</span>
+        <span class="lang-ar" style="display: none">مطور ويب متخصص في بناء التطبيقات الحديثة وحلول البرمجيات المبتكرة باستخدام أحدث التقنيات</span>
+      </p>
+      <div class="social-links d-flex justify-content-center">
+        <a href="https://github.com/assem2023-habib" target="_blank"><i class="bi bi-github"></i></a>
+        <a href="https://linkedin.com/in/assem-habib-5236a423b" target="_blank"><i class="bi bi-linkedin"></i></a>
+      </div>
+      <div class="container">
+        <div class="copyright">
+          <span>Copyright</span> <strong class="px-1 sitename">Assem Adel Habib</strong> <span>All Rights Reserved</span>
+        </div>
+        <div class="credits">
+          Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a>
+        </div>
+      </div>
     </div>
   </footer>
 
-  <!-- Dark Mode Toggle Script (Unified with index.html) -->
+  <!-- Scroll Top -->
+  <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+
+  <!-- Vendor JS Files -->
+  <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="assets/vendor/aos/aos.js"></script>
+  <script src="assets/vendor/glightbox/js/glightbox.min.js"></script>
+  <script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
+
+  <!-- Main JS File -->
+  <script src="assets/js/main.js"></script>
+
+  <!-- Skills Loader Script -->
   <script>
     document.addEventListener('DOMContentLoaded', function() {
-      const darkModeToggle = document.getElementById('darkModeToggle');
-      const darkModeIcon = document.getElementById('darkModeIcon');
-      const body = document.body;
-      
-      // Check for saved theme preference (matching index.html system)
-      const savedTheme = localStorage.getItem('theme');
-      if (savedTheme === 'dark') {
-        body.classList.add('dark-mode');
-        if (darkModeIcon) darkModeIcon.textContent = 'light_mode';
-      } else {
-        body.classList.remove('dark-mode');
-        if (darkModeIcon) darkModeIcon.textContent = 'dark_mode';
-      }
-      
-      // Toggle dark mode on button click
-      if (darkModeToggle) {
-        darkModeToggle.addEventListener('click', function() {
-          const isDark = body.classList.toggle('dark-mode');
-          
-          if (darkModeIcon) {
-            darkModeIcon.textContent = isDark ? 'light_mode' : 'dark_mode';
-          }
-          
-          // Save preference to localStorage
-          localStorage.setItem('theme', isDark ? 'dark' : 'light');
-          
-          console.log('🌙 Dark mode:', isDark ? 'ON' : 'OFF');
-        });
-      }
-      
-      // Sync with other pages
-      window.addEventListener('storage', function(e) {
-        if (e.key === 'theme') {
-          if (e.newValue === 'dark') {
-            body.classList.add('dark-mode');
-            if (darkModeIcon) darkModeIcon.textContent = 'light_mode';
-          } else {
-            body.classList.remove('dark-mode');
-            if (darkModeIcon) darkModeIcon.textContent = 'dark_mode';
-          }
-        }
-      });
-      
-      // Load skills (error fixed)
       fetch('data/skills.json')
         .then(response => response.json())
         .then(data => {
           const skills = data.skills || data;
           const container = document.getElementById('skills-container');
           container.innerHTML = '';
-          
+
           const levelColors = {
             'excellent': '#28a745',
             'very-good': '#007bff',
             'good': '#fd7e14',
             'average': '#6c757d'
           };
-          
+
           const levelLabels = {
             'excellent': { en: 'Excellent', ar: 'ممتاز' },
             'very-good': { en: 'Very Good', ar: 'جيد جداً' },
             'good': { en: 'Good', ar: 'جيد' },
             'average': { en: 'Average', ar: 'متوسط' }
           };
-          
+
           skills.forEach(skill => {
-            const skillCard = document.createElement('div');
-            skillCard.className = 'bg-white/80 backdrop-blur-xl rounded-xl shadow-[0_4px_12px_rgba(0,88,188,0.08)] p-md flex items-center justify-between border border-outline-variant/20 hover:border-primary/30 transition-all';
-            
-            skillCard.innerHTML = `
-              <div class="flex items-center gap-md">
-                <div class="w-10 h-10 rounded-lg bg-blue-100 flex items-center justify-center">
-                  <span class="material-symbols-outlined text-blue-600">${skill.icon || 'code'}</span>
+            const card = document.createElement('div');
+            card.className = 'skill-card';
+            card.innerHTML = `
+              <div class="d-flex align-items-center gap-3">
+                <div class="skill-icon-box">
+                  <span class="material-symbols-outlined text-primary">${skill.icon || 'code'}</span>
                 </div>
                 <div>
-                  <h3 class="font-label-md text-label-md text-on-surface font-bold">${skill.name}</h3>
-                  <p class="font-body-sm text-body-sm text-on-surface-variant">${skill.description || ''}</p>
+                  <h6 class="fw-bold mb-0">${skill.name}</h6>
+                  <small class="text-muted">${skill.description || ''}</small>
                 </div>
               </div>
-              <div class="flex items-center gap-sm">
-                <div class="w-3 h-3 rounded-full" style="background-color: ${levelColors[skill.level]}"></div>
-                <span class="font-label-md text-label-md text-on-surface-variant">
+              <div class="d-flex align-items-center gap-2">
+                <span class="level-dot" style="background-color: ${levelColors[skill.level]}"></span>
+                <small class="text-muted">
                   <span class="lang-en">${levelLabels[skill.level].en}</span>
                   <span class="lang-ar" style="display: none">${levelLabels[skill.level].ar}</span>
-                </span>
+                </small>
               </div>
             `;
-            
-            container.appendChild(skillCard);
+            container.appendChild(card);
           });
         })
         .catch(error => console.error('Error loading skills:', error));
     });
   </script>
+
 </body>
 </html>

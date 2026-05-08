@@ -9,9 +9,12 @@
   const headerToggleBtn = document.querySelector('.header-toggle');
 
   function headerToggle() {
-    document.querySelector('#header').classList.toggle('header-show');
+    const header = document.querySelector('#header');
+    header.classList.toggle('header-show');
     headerToggleBtn.classList.toggle('bi-list');
     headerToggleBtn.classList.toggle('bi-x');
+    const darkToggle = document.querySelector('#darkModeToggle');
+    if (darkToggle) darkToggle.classList.toggle('header-show');
   }
   headerToggleBtn.addEventListener('click', headerToggle);
 
@@ -20,7 +23,7 @@
    */
   document.querySelectorAll('#navmenu a').forEach(navmenu => {
     navmenu.addEventListener('click', () => {
-      if (document.querySelector('.header-show')) {
+      if (document.querySelector('#header.header-show')) {
         headerToggle();
       }
     });

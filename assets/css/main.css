@@ -177,6 +177,11 @@ h1, h2, h3, h4, h5, h6 {
   transform: rotate(180deg);
 }
 
+.dark-mode-toggle.header-show {
+  background: color-mix(in srgb, var(--accent-color), black 15%);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent-color), transparent 50%);
+}
+
 /* Language Toggle Button */
 .language-toggle {
   position: fixed;

@@ -1378,7 +1378,7 @@ body.dark-mode .skills-show-more .btn-show-more:hover {
   height: 100%;
   padding: 60px 30px;
   text-align: center;
-  transition: 0.3s;
+  transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   border-radius: 5px;
 }
 
@@ -1423,7 +1423,12 @@ body.dark-mode .skills-show-more .btn-show-more:hover {
 }
 
 .services .service-item:hover {
-  box-shadow: 0px 5px 35px 0px rgba(0, 0, 0, 0.1);
+  transform: translateY(-8px);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.12), 0 4px 12px rgba(0, 0, 0, 0.06);
+}
+
+body.dark-mode .services .service-item:hover {
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4), 0 4px 12px rgba(0, 0, 0, 0.2);
 }
 
 .services .service-item.item-cyan i { color: #0dcaf0; }

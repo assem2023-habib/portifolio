@@ -289,6 +289,10 @@ body.dark-mode .all-projects .portfolio-filters li.filter-active {
   color: #fff;
 }
 
+body.dark-mode .text-muted {
+  color: color-mix(in srgb, #adb5bd, white 40%) !important;
+}
+
 body.dark-mode .services .service-item {
   background-color: var(--surface-color);
   border: 1px solid color-mix(in srgb, var(--default-color), transparent 90%);

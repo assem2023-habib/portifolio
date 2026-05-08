@@ -1456,7 +1456,7 @@ body.dark-mode .services .service-item:hover {
 
 @media (min-width: 1200px) {
   .services .container { max-width: 1200px; }
-  .services .service-item { padding: 35px 40px; }
+  .services .service-item { padding: 20px 25px; }
   .services .service-item h3 { font-size: 24px; margin: 15px 0 20px 0; }
   .services .service-item p { font-size: 15px; line-height: 1.6; }
   .services .service-item .icon { width: 120px; height: 120px; margin-bottom: 20px; }

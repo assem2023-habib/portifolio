@@ -25,22 +25,25 @@ const portfolioData = {
     ]
   },
   stitchhub: {
-    title: "StitchHub Mobile",
-    category: "mobile",
+    title: "Sewing Store",
+    category: "web",
     image: "assets/img/masonry-portfolio/masonry-portfolio-2.jpg",
-    description: "Comprehensive e-commerce platform for tailoring services with multi-language support and advanced order management",
+    description: "Comprehensive e-commerce platform for sewing and tailoring supplies with multi-language support, advanced admin dashboard, and hierarchical micro-inventory management",
     detailsUrl: "project.html",
-    gallery: "portfolio-gallery-mobile",
-    technologies: "React Native, Node.js, MongoDB, Express.js",
+    gallery: "portfolio-gallery-web",
+    technologies: "Laravel 10.x, PHP 8.1+, MySQL, Spatie Translatable, MVC Architecture",
     status: "Completed",
     url: "#",
     features: [
-      "Multi-language support (Arabic/English)",
-      "Real-time order tracking",
-      "Secure payment gateway",
-      "Customer reviews system",
-      "Push notifications",
-      "Offline mode support"
+      "Multi-language support (Arabic/English) with deep i18n and RTL",
+      "Hierarchical product and category management (Micro-Inventory)",
+      "Advanced admin dashboard with real-time statistics",
+      "Role-based access control with Admin Middleware",
+      "Multilingual SEO with meta data optimization",
+      "Image management with automatic cleanup on update",
+      "Shopping cart system with secure quantity management",
+      "Admin authority: ban, freeze, and role upgrade controls",
+      "Promotional offers management system"
     ],
     galleryImages: [
       "assets/img/masonry-portfolio/masonry-portfolio-2.jpg",

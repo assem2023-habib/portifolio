@@ -1,0 +1,138 @@
+<!-- Add Testimonial Modal - مؤقتاً خارج الخدمة -->
+<!-- يمكنك استرجاعه بنسخ هذا المحتوى إلى index.html داخل <body> -->
+
+<div class="modal fade" id="addTestimonialModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-lg modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">
+          <span class="lang-en">Add New Testimonial</span>
+          <span class="lang-ar" style="display:none;">إضافة توصية جديدة</span>
+        </h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form id="addTestimonialForm">
+          <!-- Language Toggle in Form -->
+          <!-- TODO: Re-enable if needed later
+          <div class="mb-3 text-end">
+            <button type="button" class="btn btn-sm btn-outline-secondary" id="toggleFormLanguage">
+              <i class="bi bi-translate me-1"></i>
+              <span class="lang-en" style="display: inline;">Switch to Arabic</span>
+              <span class="lang-ar" style="display:none;">التبديل للإنجليزية</span>
+            </button>
+          </div>
+          -->
+
+          <!-- English Fields (Commented Out)
+          <div class="english-fields">
+            <div class="row g-3 mb-3">
+              <div class="col-md-6">
+                <label for="testimonialName" class="form-label">
+                  <span class="lang-en">Name</span>
+                  <span class="lang-ar" style="display:none;">الاسم</span>
+                </label>
+                <input type="text" class="form-control" id="testimonialName" required>
+              </div>
+              <div class="col-md-6">
+                <label for="testimonialRole" class="form-label">
+                  <span class="lang-en">Role/Title</span>
+                  <span class="lang-ar" style="display:none;">الدور/المسمى الوظيفي</span>
+                </label>
+                <input type="text" class="form-control" id="testimonialRole" required>
+              </div>
+            </div>
+            <div class="mb-3">
+              <label for="testimonialContent" class="form-label">
+                <span class="lang-en">Testimonial Content</span>
+                <span class="lang-ar" style="display:none;">نص التوصية</span>
+              </label>
+              <textarea class="form-control resizable-textarea" id="testimonialContent" rows="3" required></textarea>
+            </div>
+          </div>
+          -->
+
+          <!-- Arabic Fields -->
+          <div class="arabic-fields" style="display:none;">
+            <div class="row g-3 mb-3">
+              <div class="col-md-6">
+                <label for="testimonialNameAr" class="form-label">الاسم بالعربية</label>
+                <input type="text" class="form-control" id="testimonialNameAr">
+              </div>
+              <div class="col-md-6">
+                <label for="testimonialRoleAr" class="form-label">الدور بالعربية</label>
+                <input type="text" class="form-control" id="testimonialRoleAr">
+              </div>
+            </div>
+            <div class="mb-3">
+              <label for="testimonialContentAr" class="form-label">نص التوصية بالعربية</label>
+              <textarea class="form-control resizable-textarea" id="testimonialContentAr" rows="3"></textarea>
+            </div>
+          </div>
+
+          <!-- Rating - Interactive Stars (Commented Out)
+          <div class="mb-3">
+            <label class="form-label">
+              <span class="lang-en">Rating</span>
+              <span class="lang-ar" style="display:none;">التقييم</span>
+            </label>
+            <div class="star-rating" id="starRating">
+              <i class="bi bi-star" data-rating="1" title="1 Star"></i>
+              <i class="bi bi-star" data-rating="2" title="2 Stars"></i>
+              <i class="bi bi-star" data-rating="3" title="3 Stars"></i>
+              <i class="bi bi-star" data-rating="4" title="4 Stars"></i>
+              <i class="bi bi-star" data-rating="5" title="5 Stars"></i>
+              <input type="hidden" id="testimonialRating" name="rating" value="0" required>
+              <div class="sparkles-container" aria-hidden="true"></div>
+            </div>
+            <small class="form-text star-rating-hint">
+              <span class="lang-en">Click on a star to rate</span>
+              <span class="lang-ar" style="display:none;">اضغط على النجوم للتقييم</span>
+            </small>
+          </div>
+          -->
+
+          <!-- Image Upload - Drag & Drop (Commented Out)
+          <div class="mb-3">
+            <label class="form-label">
+              <span class="lang-en">Profile Image (Optional)</span>
+              <span class="lang-ar" style="display:none;">صورة الملف (اختياري)</span>
+            </label>
+            <div class="image-upload-area" id="imageUploadArea">
+              <div class="upload-icon">
+                <i class="bi bi-cloud-arrow-up"></i>
+              </div>
+              <p class="upload-text">
+                <span class="lang-en">Click to upload or drag & drop</span>
+                <span class="lang-ar" style="display:none;">اضغط للرفع أو اسحب وأفلت</span>
+              </p>
+              <p class="upload-hint">
+                <span class="lang-en">Max 2MB, JPG/PNG only</span>
+                <span class="lang-ar" style="display:none;">الحد الأقصى 2 ميجابايت، JPG/PNG فقط</span>
+              </p>
+              <img id="imagePreview" class="upload-preview" style="display:none;" alt="Preview">
+              <input type="file" class="form-control" id="testimonialImage" accept="image/*" hidden>
+            </div>
+          </div>
+          -->
+
+          <!-- Form Messages -->
+          <div id="formMessage"></div>
+          <!-- modal-footer (Commented Out)
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+              <span class="lang-en">Cancel</span>
+              <span class="lang-ar" style="display:none;">إلغاء</span>
+            </button>
+            <button type="submit" class="btn btn-primary">
+              <i class="bi bi-check-circle me-1"></i>
+              <span class="lang-en">Submit Testimonial</span>
+              <span class="lang-ar" style="display:none;">إرسال التوصية</span>
+            </button>
+          </div>
+          -->
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

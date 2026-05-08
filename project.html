@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en" class="light">
+<html lang="en">
+
 <head>
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
@@ -11,416 +12,278 @@
   <link href="assets/img/favicon.png" rel="icon">
   <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
 
-  <!-- Tailwind CSS -->
-  <script src="https://cdn.tailwindcss.com"></script>
-  
-  <!-- Material Symbols Outlined -->
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&display=swap">
-  
-  <!-- Inter Font -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-  
-  <!-- Tailwind Config with CSS Variables for Dark Mode -->
-  <script id="tailwind-config">
-    tailwind.config = {
-      darkMode: "class",
-      theme: {
-        extend: {
-          colors: {
-            // Use CSS variables for dynamic theming
-            'primary': 'var(--color-primary)',
-            'primary-container': 'var(--color-primary-container)',
-            'on-primary': 'var(--color-on-primary)',
-            'on-primary-container': 'var(--color-on-primary-container)',
-            'secondary': 'var(--color-secondary)',
-            'secondary-container': 'var(--color-secondary-container)',
-            'on-secondary': 'var(--color-on-secondary)',
-            'surface': 'var(--color-surface)',
-            'surface-bright': 'var(--color-surface-bright)',
-            'surface-container': 'var(--color-surface-container)',
-            'surface-container-high': 'var(--color-surface-container-high)',
-            'surface-container-highest': 'var(--color-surface-container-highest)',
-            'on-surface': 'var(--color-on-surface)',
-            'on-surface-variant': 'var(--color-on-surface-variant)',
-            'outline': 'var(--color-outline)',
-            'outline-variant': 'var(--color-outline-variant)',
-            'background': 'var(--color-background)',
-            'error': '#ba1a1a',
-            'tertiary-fixed': '#dae2ff',
-            'tertiary-fixed-dim': '#b1c5ff',
-            'inverse-surface': 'var(--color-inverse-surface)',
-            'inverse-on-surface': 'var(--color-inverse-on-surface)',
-            'primary-fixed': '#d8e2ff',
-            'primary-fixed-dim': '#adc6ff',
-            'on-tertiary-container': '#fefcff',
-            'surface-dim': 'var(--color-surface-dim)',
-            'surface-tint': 'var(--color-surface-tint)',
-            'on-tertiary-fixed-variant': '#00419e',
-            'on-primary-fixed': '#001a41',
-            'on-secondary-container': '#007144',
-          },
-          "borderRadius": {
-            "DEFAULT": "0.25rem",
-            "lg": "0.5rem",
-            "xl": "0.75rem",
-            "full": "9999px"
-          },
-          "spacing": {
-            "xl": "32px",
-            "gutter": "16px",
-            "margin": "20px",
-            "lg": "24px",
-            "base": "8px",
-            "xs": "4px",
-            "md": "16px",
-            "sm": "8px"
-          },
-          "fontFamily": {
-            "headline-sm": ["Inter"],
-            "label-sm": ["Inter"],
-            "label-md": ["Inter"],
-            "body-lg": ["Inter"],
-            "headline-lg": ["Inter"],
-            "headline-md": ["Inter"],
-            "body-md": ["Inter"],
-            "body-sm": ["Inter"]
-          },
-          "fontSize": {
-            "headline-sm": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
-            "label-sm": ["11px", {"lineHeight": "14px", "fontWeight": "500"}],
-            "label-md": ["12px", {"lineHeight": "16px", "fontWeight": "600"}],
-            "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
-            "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
-            "headline-md": ["24px", {"lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
-            "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
-            "body-sm": ["14px", {"lineHeight": "20px", "fontWeight": "400"}]
-          }
-        }
-      }
-    }
-  </script>
-  
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com" rel="preconnect">
+  <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Raleway:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+
+  <!-- Vendor CSS Files -->
+  <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+  <link href="assets/vendor/aos/aos.css" rel="stylesheet">
+  <link href="assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
+  <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+
+  <!-- Main CSS File -->
+  <link href="assets/css/main.css" rel="stylesheet">
+
   <style>
-    /* CSS Variables for Light/Dark Mode */
-    :root, html.light {
-      --color-primary: #0058bc;
-      --color-primary-container: #0070eb;
-      --color-on-primary: #ffffff;
-      --color-on-primary-container: #fefcff;
-      --color-secondary: #006d41;
-      --color-secondary-container: #90f4b7;
-      --color-on-secondary: #ffffff;
-      --color-surface: #f7f9ff;
-      --color-surface-bright: #f7f9ff;
-      --color-surface-container: #ebeef3;
-      --color-surface-container-high: #e5e8ee;
-      --color-surface-container-highest: #e0e3e8;
-      --color-on-surface: #272829;
-      --color-on-surface-variant: #414755;
-      --color-outline: #717786;
-      --color-outline-variant: #c1c6d7;
-      --color-background: #f7f9ff;
-      --color-inverse-surface: #2d3135;
-      --color-inverse-on-surface: #eef1f6;
-      --color-surface-dim: #d7dadf;
-      --color-surface-tint: #005bc1;
+    .glass-card {
+      background: rgba(255, 255, 255, 0.6);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.3);
     }
-    
-    html.dark {
-      --color-primary: #adc6ff;
-      --color-primary-container: #00419e;
-      --color-on-primary: #001a41;
-      --color-on-primary-container: #d8e2ff;
-      --color-secondary: #77da9f;
-      --color-secondary-container: #004d2a;
-      --color-on-secondary: #003914;
-      --color-surface: #1a1a2e;
-      --color-surface-bright: #25253d;
-      --color-surface-container: #25253d;
-      --color-surface-container-high: #2d2d45;
-      --color-surface-container-highest: #35354d;
-      --color-on-surface: #eef1f6;
-      --color-on-surface-variant: #c1c6d7;
-      --color-outline: #717786;
-      --color-outline-variant: #414755;
-      --color-background: #12121e;
-      --color-inverse-surface: #eef1f6;
-      --color-inverse-on-surface: #2d3135;
-      --color-surface-dim: #12121e;
-      --color-surface-tint: #adc6ff;
-    }
-    
-    body { 
-      font-family: 'Inter', sans-serif; 
-      -webkit-font-smoothing: antialiased; 
-      background-color: var(--color-background);
-      color: var(--color-on-surface);
-    }
-    
-    .material-symbols-outlined { 
-      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; 
-      font-size: 24px;
-      line-height: 1;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-    }
-    
-    .glass-card { 
-      background: rgba(255, 255, 255, 0.6); 
-      backdrop-filter: blur(20px); 
-      -webkit-backdrop-filter: blur(20px); 
-      border: 1px solid rgba(255, 255, 255, 0.3); 
-    }
-    
-    html.dark .glass-card {
+    body.dark-mode .glass-card {
       background: rgba(26, 26, 46, 0.6);
       border: 1px solid rgba(255, 255, 255, 0.1);
     }
-    
     .custom-scrollbar::-webkit-scrollbar { display: none; }
     .custom-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
-    
-    /* Icon container for proper alignment */
     .icon-container {
       display: inline-flex;
       align-items: center;
       justify-content: center;
     }
-    
-    /* Dark mode toggle button */
-    #darkModeToggle {
-      transition: all 0.3s ease;
+    .transition-colors { transition: color 0.2s, background-color 0.2s, border-color 0.2s; }
+    .hero-aspect {
+      aspect-ratio: 16/9;
     }
-    
-    #darkModeToggle:hover {
-      transform: scale(1.05);
+    @media (min-width: 768px) {
+      .hero-aspect {
+        aspect-ratio: 21/9;
+      }
     }
-    
-    #darkModeToggle:active {
-      transform: scale(0.95);
+    .feature-icon-box {
+      width: 48px;
+      height: 48px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 0.5rem;
+      flex-shrink: 0;
+    }
+    .project-gallery-img {
+      width: 18rem;
+      height: 12rem;
+      object-fit: cover;
+      border-radius: 0.75rem;
+    }
+    @media (min-width: 768px) {
+      .project-gallery-img {
+        width: 20rem;
+        height: 14rem;
+      }
     }
   </style>
 </head>
 
-<body class="bg-background text-on-surface min-h-screen flex flex-col">
-  
-  <!-- Dark Mode Toggle Button (Mobile Only) -->
-  <button id="darkModeToggle" class="fixed top-4 right-4 z-50 p-3 rounded-xl bg-white/80 backdrop-blur-xl shadow-[0_4px_12px_rgba(0,88,188,0.08)] border border-outline-variant/20 hover:bg-primary-container/20 transition-all active:scale-90" title="تبديل الوضع المظلم / Toggle Dark Mode">
-    <span class="material-symbols-outlined text-on-surface-variant" id="darkModeIcon">dark_mode</span>
-  </button>
+<body class="project-details-page">
 
-  <!-- Main Content -->
-  <main class="flex-1">
-    
+  <header id="header" class="header d-flex flex-column justify-content-center">
+    <i class="header-toggle d-xl-none bi bi-list"></i>
+
+    <button id="languageToggle" class="language-toggle" title="Change Language" style="display: none;">
+      <i class="bi bi-translate"></i>
+    </button>
+
+    <button id="darkModeToggle" class="dark-mode-toggle" title="Toggle Dark Mode">
+      <i class="bi bi-moon-fill"></i>
+    </button>
+
+    <nav id="navmenu" class="navmenu">
+      <ul>
+        <li><a href="index.html#hero"><i class="bi bi-house navicon"></i><span>Home</span></a></li>
+        <li><a href="index.html#about"><i class="bi bi-person navicon"></i><span>About</span></a></li>
+        <li><a href="index.html#skills"><i class="bi bi-gear navicon"></i><span>Skills</span></a></li>
+        <li><a href="index.html#resume"><i class="bi bi-file-earmark-text navicon"></i><span>Resume</span></a></li>
+        <li><a href="index.html#portfolio"><i class="bi bi-images navicon"></i><span>Project</span></a></li>
+        <li><a href="index.html#services"><i class="bi bi-hdd-stack navicon"></i><span>Services</span></a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main class="main">
+
     <!-- Page Title -->
-    <div class="px-[20px] py-lg">
-      <nav class="flex items-center gap-sm text-sm text-on-surface-variant mb-md">
-        <a href="index.html" class="hover:text-primary transition-colors">Home</a>
-        <span class="material-symbols-outlined text-sm">chevron_right</span>
-        <a href="projects.html" class="hover:text-primary transition-colors">Portfolio</a>
-        <span class="material-symbols-outlined text-sm">chevron_right</span>
-        <span class="project-title text-on-surface font-semibold">Project Details</span>
-      </nav>
-      <h1 class="font-headline-lg text-headline-lg text-on-surface project-title">Project Details</h1>
+    <div class="page-title" data-aos="fade">
+      <div class="container">
+        <nav class="breadcrumbs">
+          <ol>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="projects.html">Portfolio</a></li>
+            <li class="current project-title">Project Details</li>
+          </ol>
+        </nav>
+        <h1 class="project-title">Project Details</h1>
+      </div>
     </div>
 
     <!-- Portfolio Details Section -->
-    <section class="px-[20px] mb-xl">
-      
-      <!-- Hero Section (Bento Style) -->
-      <div class="relative w-full aspect-[16/9] md:aspect-[21/9] rounded-xl overflow-hidden shadow-lg mb-xl">
-        <img alt="Project Main Image" class="project-image w-full h-full object-cover" src="" loading="lazy">
-        <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent flex flex-col justify-end p-lg md:p-xl">
-          <h1 class="text-white font-headline-lg text-headline-lg mb-sm project-title">Project Title</h1>
-          <div class="flex items-center gap-sm flex-wrap" id="project-badges">
-            <span class="px-md py-1 bg-primary text-on-primary text-label-md font-label-md rounded-full">Category</span>
+    <section class="portfolio-details section">
+      <div class="container">
+
+        <!-- Hero Section -->
+        <div class="hero-aspect rounded-3 overflow-hidden shadow mb-5 position-relative" data-aos="fade-up">
+          <img alt="Project Main Image" class="project-image w-100 h-100 object-fit-cover" src="" loading="lazy">
+          <div class="position-absolute bottom-0 start-0 end-0 p-4" style="background: linear-gradient(to top, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.2) 60%, transparent 100%);">
+            <h1 class="text-white fw-bold project-title" style="font-size: 2rem;">Project Title</h1>
+            <div class="d-flex flex-wrap gap-2" id="project-badges">
+              <span class="badge bg-primary">Category</span>
+            </div>
           </div>
         </div>
+
+        <!-- Two Column Layout -->
+        <div class="row g-4">
+
+          <!-- Left Column (Main Content) -->
+          <div class="col-lg-8">
+
+            <!-- Overview -->
+            <section data-aos="fade-up">
+              <h2 class="mb-3 fw-semibold">Overview</h2>
+              <div class="glass-card rounded-3 p-4 shadow-sm">
+                <p class="text-muted mb-0 project-description lh-lg">
+                  Project description will be loaded here...
+                </p>
+              </div>
+            </section>
+
+            <!-- Key Features -->
+            <section class="mt-4" data-aos="fade-up">
+              <h2 class="mb-3 fw-semibold">Key Features</h2>
+              <div id="project-features">
+                <!-- Features will be loaded dynamically -->
+              </div>
+            </section>
+
+            <!-- Gallery -->
+            <section class="mt-4" data-aos="fade-up">
+              <div class="d-flex justify-content-between align-items-center mb-3">
+                <h2 class="fw-semibold mb-0">Gallery</h2>
+                <small class="text-primary fw-medium">Scroll for more</small>
+              </div>
+              <div class="d-flex overflow-x-auto gap-3 pb-3 custom-scrollbar" id="project-gallery">
+                <!-- Gallery images will be loaded dynamically -->
+              </div>
+            </section>
+
+            <!-- Project Details -->
+            <section class="mt-4" data-aos="fade-up">
+              <h2 class="mb-3 fw-semibold">Project Details</h2>
+              <div class="glass-card rounded-3 p-4 shadow-sm border-start border-4 border-primary">
+                <p class="text-muted mb-0 lh-lg">
+                  More detailed project information and implementation details will be displayed here.
+                </p>
+              </div>
+            </section>
+
+            <!-- More Projects -->
+            <section class="mt-4" data-aos="fade-up">
+              <h2 class="mb-3 fw-semibold">More Projects</h2>
+              <div id="more-projects">
+                <!-- More projects will be loaded dynamically -->
+              </div>
+            </section>
+
+          </div>
+
+          <!-- Right Column (Project Info) -->
+          <div class="col-lg-4">
+
+            <!-- Project Info Card -->
+            <div class="glass-card rounded-3 p-4 shadow-sm" data-aos="fade-up">
+              <h4 class="text-primary text-center mb-4 fw-semibold">Project Information</h4>
+
+              <div class="d-flex align-items-center gap-3 p-2 rounded-2 mb-2" style="transition: background 0.2s;">
+                <span class="text-primary icon-container flex-shrink-0"><i class="bi bi-grid"></i></span>
+                <div>
+                  <small class="text-muted d-block">Category</small>
+                  <strong class="project-category">Web Development</strong>
+                </div>
+              </div>
+
+              <div class="d-flex align-items-center gap-3 p-2 rounded-2 mb-2" style="transition: background 0.2s;">
+                <span class="text-primary icon-container flex-shrink-0"><i class="bi bi-code-slash"></i></span>
+                <div>
+                  <small class="text-muted d-block">Technologies</small>
+                  <strong class="project-technologies">Laravel, PHP, MySQL</strong>
+                </div>
+              </div>
+
+              <div class="d-flex align-items-center gap-3 p-2 rounded-2" style="transition: background 0.2s;">
+                <span class="text-primary icon-container flex-shrink-0"><i class="bi bi-check-circle"></i></span>
+                <div>
+                  <small class="text-muted d-block">Status</small>
+                  <strong class="project-status">Completed</strong>
+                </div>
+              </div>
+
+              <div class="d-flex flex-column gap-2 mt-4">
+                <a href="#" class="project-url btn btn-primary d-flex align-items-center justify-content-center gap-2" target="_blank">
+                  <i class="bi bi-box-arrow-up-right"></i>
+                  <span>Visit Project</span>
+                </a>
+                <a href="#" class="project-mobile-url btn btn-secondary d-flex align-items-center justify-content-center gap-2" target="_blank" style="display:none;">
+                  <i class="bi bi-download"></i>
+                  <span>Download Mobile</span>
+                </a>
+                <a href="#" class="project-desktop-url btn btn-outline-primary d-flex align-items-center justify-content-center gap-2" target="_blank" style="display:none;">
+                  <i class="bi bi-pc-display"></i>
+                  <span>Download Desktop</span>
+                </a>
+              </div>
+            </div>
+
+            <!-- Other Projects -->
+            <div class="glass-card rounded-3 p-4 shadow-sm mt-4" data-aos="fade-up">
+              <h4 class="text-primary text-center mb-3 fw-semibold">Other Projects</h4>
+              <ul class="list-unstyled mb-0" id="other-projects-list">
+                <!-- Other projects will be populated here -->
+              </ul>
+            </div>
+
+          </div>
+        </div>
+
       </div>
-
-      <!-- Two Column Layout -->
-      <div class="grid grid-cols-1 lg:grid-cols-3 gap-xl">
-        
-        <!-- Left Column (Main Content) -->
-        <div class="lg:col-span-2 space-y-xl">
-          
-          <!-- Overview Section -->
-          <section>
-            <h2 class="font-headline-sm text-headline-sm text-on-surface mb-md">Overview</h2>
-            <div class="bg-white/80 backdrop-blur-xl rounded-xl shadow-[0_4px_12px_rgba(0,88,188,0.08)] p-lg border border-outline-variant/20">
-              <p class="font-body-md text-body-md text-on-surface-variant leading-relaxed project-description">
-                Project description will be loaded here...
-              </p>
-            </div>
-          </section>
-
-          <!-- Key Features Section -->
-          <section>
-            <h2 class="font-headline-sm text-headline-sm text-on-surface mb-md">Key Features</h2>
-            <div class="space-y-md" id="project-features">
-              <!-- Features will be loaded dynamically -->
-            </div>
-          </section>
-
-          <!-- Project Gallery (Horizontal Scroll) -->
-          <section>
-            <div class="flex justify-between items-center mb-md">
-              <h2 class="font-headline-sm text-headline-sm text-on-surface">Gallery</h2>
-              <span class="text-label-md font-label-md text-primary">Scroll for more</span>
-            </div>
-            <div class="flex overflow-x-auto gap-md pb-md custom-scrollbar" id="project-gallery">
-              <!-- Gallery images will be loaded dynamically -->
-            </div>
-          </section>
-
-          <!-- Project Details Section -->
-          <section>
-            <h2 class="font-headline-sm text-headline-sm text-on-surface mb-md">Project Details</h2>
-            <div class="bg-white/80 backdrop-blur-xl rounded-xl shadow-[0_4px_12px_rgba(0,88,188,0.08)] p-lg border-l-4 border-primary/50 border border-outline-variant/20">
-              <p class="font-body-md text-body-md text-on-surface-variant leading-relaxed">
-                More detailed project information and implementation details will be displayed here.
-              </p>
-            </div>
-          </section>
-
-          <!-- More Projects Section -->
-          <section>
-            <h2 class="font-headline-sm text-headline-sm text-on-surface mb-md">More Projects</h2>
-            <div class="space-y-sm" id="more-projects">
-              <!-- More projects will be loaded dynamically -->
-            </div>
-          </section>
-
-        </div>
-
-        <!-- Right Column (Project Info) -->
-        <div class="space-y-lg">
-          
-          <!-- Project Info Card (Bento Style) -->
-          <div class="bg-white/80 backdrop-blur-xl rounded-xl shadow-[0_4px_12px_rgba(0,88,188,0.08)] p-lg border border-outline-variant/20">
-            <h3 class="font-headline-sm text-headline-sm text-primary text-center mb-lg">Project Information</h3>
-            
-            <div class="space-y-sm">
-              <div class="flex items-center gap-md p-sm hover:bg-primary-container/5 rounded-lg transition-colors">
-                <span class="material-symbols-outlined text-primary icon-container">category</span>
-                <div>
-                  <span class="font-label-md text-label-md text-on-surface-variant">Category</span>
-                  <p class="font-body-md text-body-md text-on-surface font-semibold project-category">Web Development</p>
-                </div>
-              </div>
-              
-              <div class="flex items-center gap-md p-sm hover:bg-primary-container/5 rounded-lg transition-colors">
-                <span class="material-symbols-outlined text-primary icon-container">code</span>
-                <div>
-                  <span class="font-label-md text-label-md text-on-surface-variant">Technologies</span>
-                  <p class="font-body-md text-body-md text-on-surface font-semibold project-technologies">Laravel, PHP, MySQL</p>
-                </div>
-              </div>
-              
-              <div class="flex items-center gap-md p-sm hover:bg-primary-container/5 rounded-lg transition-colors">
-                <span class="material-symbols-outlined text-primary icon-container">check_circle</span>
-                <div>
-                  <span class="font-label-md text-label-md text-on-surface-variant">Status</span>
-                  <p class="font-body-md text-body-md text-on-surface font-semibold project-status">Completed</p>
-                </div>
-              </div>
-            </div>
-
-            <div class="flex flex-col gap-sm mt-lg">
-              <a href="#" class="project-url bg-primary text-on-primary font-label-md text-label-md py-md px-lg rounded-lg text-center hover:bg-primary-container transition-colors active:scale-95 inline-flex items-center justify-center gap-sm" target="_blank">
-                <span class="material-symbols-outlined">open_in_new</span> 
-                <span>Visit Project</span>
-              </a>
-              <a href="#" class="project-mobile-url bg-secondary text-on-secondary font-label-md text-label-md py-md px-lg rounded-lg text-center hover:bg-secondary-container transition-colors active:scale-95 inline-flex items-center justify-center gap-sm" target="_blank" style="display:none;">
-                <span class="material-symbols-outlined">download</span> 
-                <span>Download Mobile</span>
-              </a>
-              <a href="#" class="project-desktop-url bg-tertiary-fixed-dim text-on-tertiary-container font-label-md text-label-md py-md px-lg rounded-lg text-center hover:bg-tertiary-fixed transition-colors active:scale-95 inline-flex items-center justify-center gap-sm" target="_blank" style="display:none;">
-                <span class="material-symbols-outlined">computer</span> 
-                <span>Download Desktop</span>
-              </a>
-            </div>
-          </div>
-
-          <!-- Other Projects (Bento Style) -->
-          <div class="bg-white/80 backdrop-blur-xl rounded-xl shadow-[0_4px_12px_rgba(0,88,188,0.08)] p-lg border border-outline-variant/20">
-            <h4 class="font-headline-sm text-headline-sm text-primary text-center mb-md">Other Projects</h4>
-            <ul class="space-y-sm list-unstyled" id="other-projects-list">
-              <!-- Other projects will be populated here -->
-            </ul>
-          </div>
-
-        </div>
-      </div>
-
     </section>
+
   </main>
 
-  <!-- Footer (Glass Style) -->
-  <footer class="bg-surface/60 backdrop-blur-xl w-full mt-auto py-xl px-[20px] text-center flex flex-col items-center justify-center gap-md">
-    <div class="font-headline-sm text-headline-sm font-black text-primary">AH</div>
-    <p class="font-body-sm text-body-sm text-on-surface-variant">© 2024 Assem Adel Habib</p>
-    <div class="flex gap-lg">
-      <a class="text-primary underline font-body-sm text-body-sm hover:opacity-80 transition-opacity" href="https://linkedin.com/in/assem-habib-5236a423b" target="_blank">LinkedIn</a>
-      <a class="text-on-surface-variant font-body-sm text-body-sm hover:text-primary transition-colors" href="https://github.com/assem2023-habib" target="_blank">GitHub</a>
-      <a class="text-on-surface-variant font-body-sm text-body-sm hover:text-primary transition-colors" href="index.html">Portfolio</a>
+  <footer id="footer" class="footer position-relative light-background">
+    <div class="container">
+      <h3 class="sitename">Assem Adel Habib</h3>
+      <p>
+        Software engineer specializing in building modern applications and
+        innovative software solutions using the latest technologies
+      </p>
+      <div class="social-links d-flex justify-content-center">
+        <a href="https://github.com/assem2023-habib" target="_blank"><i class="bi bi-github"></i></a>
+        <a href="https://linkedin.com/in/assem-habib-5236a423b" target="_blank"><i class="bi bi-linkedin"></i></a>
+      </div>
     </div>
   </footer>
 
-  <!-- Scripts -->
+  <!-- Scroll Top -->
+  <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center">
+    <i class="bi bi-arrow-up-short"></i>
+  </a>
+
+  <!-- Preloader -->
+  <div id="preloader"></div>
+
+  <!-- Vendor JS Files -->
+  <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="assets/vendor/aos/aos.js"></script>
+  <script src="assets/vendor/glightbox/js/glightbox.min.js"></script>
+  <script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
+
+  <!-- Main JS File -->
   <script src="assets/js/portfolio-data.js"></script>
   <script src="assets/js/project-loader.js"></script>
-  
-  <!-- Dark Mode Toggle Script -->
-  <script>
-    document.addEventListener('DOMContentLoaded', function() {
-      const darkModeToggle = document.getElementById('darkModeToggle');
-      const darkModeIcon = document.getElementById('darkModeIcon');
-      const htmlElement = document.documentElement;
-      
-      // Check for saved theme preference or default to light mode
-      const savedTheme = localStorage.getItem('theme');
-      if (savedTheme === 'dark') {
-        htmlElement.classList.add('dark');
-        if (darkModeIcon) darkModeIcon.textContent = 'light_mode';
-      } else {
-        htmlElement.classList.remove('dark');
-        if (darkModeIcon) darkModeIcon.textContent = 'dark_mode';
-      }
-      
-      // Toggle dark mode on button click
-      if (darkModeToggle) {
-        darkModeToggle.addEventListener('click', function() {
-          const isDark = htmlElement.classList.toggle('dark');
-          
-          if (darkModeIcon) {
-            darkModeIcon.textContent = isDark ? 'light_mode' : 'dark_mode';
-          }
-          
-          // Save preference to localStorage
-          localStorage.setItem('theme', isDark ? 'dark' : 'light');
-          
-          console.log('🌙 Dark mode:', isDark ? 'ON' : 'OFF');
-        });
-      }
-      
-      // Sync with other pages: check localStorage on page load
-      window.addEventListener('storage', function(e) {
-        if (e.key === 'theme') {
-          if (e.newValue === 'dark') {
-            htmlElement.classList.add('dark');
-            if (darkModeIcon) darkModeIcon.textContent = 'light_mode';
-          } else {
-            htmlElement.classList.remove('dark');
-            if (darkModeIcon) darkModeIcon.textContent = 'dark_mode';
-          }
-        }
-      });
-    });
-  </script>
+  <script src="assets/js/main.js"></script>
 
 </body>
 </html>

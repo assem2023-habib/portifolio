@@ -1,7 +1,7 @@
 /**
  * Project Details Loader
  * Handles dynamic content population for the project.html page based on URL parameters.
- * Updated for Bento Grid + Tailwind CSS design with icon fixes
+ * Updated for Bootstrap design
  */
 
 // Function to get URL parameter
@@ -19,15 +19,18 @@ function updateProjectsList(activeProject) {
         Object.keys(portfolioData).forEach(projectId => {
             const project = portfolioData[projectId];
             const li = document.createElement('li');
-            li.className = `mb-xs`;
-            
+            li.className = 'mb-2';
+
             const isActive = projectId === activeProject;
+            const activeClass = isActive ? 'bg-primary bg-opacity-10 text-primary fw-bold' : 'text-muted';
+            const iconClass = isActive ? 'bi-dot-fill' : 'bi-circle';
+
             li.innerHTML = `
-            <a href="project.html?project=${projectId}" class="flex items-center gap-md p-sm rounded-lg transition-all hover:bg-primary-container/20 ${isActive ? 'bg-primary-container/30 text-primary font-bold' : 'text-on-surface-variant hover:text-primary'}">
-                <span class="material-symbols-outlined text-sm">${isActive ? 'radio_button_checked' : 'radio_button_unchecked'}</span>
-                <div>
-                    <div class="font-label-md text-label-md">${project.title}</div>
-                    <span class="font-body-sm text-body-sm text-on-surface-variant">${project.category}</span>
+            <a href="project.html?project=${projectId}" class="d-flex align-items-center gap-3 p-2 rounded-2 text-decoration-none transition-colors ${activeClass}">
+                <i class="bi ${iconClass} flex-shrink-0"></i>
+                <div class="min-w-0">
+                    <div class="fw-semibold" style="font-size: 0.875rem;">${project.title}</div>
+                    <small class="text-muted d-block">${project.category}</small>
                 </div>
             </a>
             `;
@@ -42,7 +45,7 @@ function updateProjectDetails() {
 
     if (projectId && typeof portfolioData !== 'undefined' && portfolioData[projectId]) {
         const project = portfolioData[projectId];
-        
+
         // Update page title
         document.title = project.title + " - Assem Adel Habib";
 
@@ -90,11 +93,11 @@ function updateProjectDetails() {
             const url = project.repoUrl || project.url || '#';
             projectUrl.href = url;
             if (project.repoUrl) {
-                projectUrl.innerHTML = '<span class="material-symbols-outlined">code</span><span>View Code</span>';
+                projectUrl.innerHTML = '<i class="bi bi-code-slash"></i><span>View Code</span>';
             } else if (project.url) {
-                projectUrl.innerHTML = '<span class="material-symbols-outlined">open_in_new</span><span>Visit Project</span>';
+                projectUrl.innerHTML = '<i class="bi bi-box-arrow-up-right"></i><span>Visit Project</span>';
             } else {
-                projectUrl.innerHTML = '<span class="material-symbols-outlined">info</span><span>View Details</span>';
+                projectUrl.innerHTML = '<i class="bi bi-info-circle"></i><span>View Details</span>';
             }
         }
 
@@ -104,8 +107,8 @@ function updateProjectDetails() {
             if (project.mobileUrl) {
                 mobileUrl.href = project.mobileUrl;
                 mobileUrl.style.display = 'flex';
-                mobileUrl.innerHTML = '<span class="material-symbols-outlined">download</span><span>Download Mobile App</span>';
-                console.log('📱 Mobile URL added:', project.mobileUrl);
+                mobileUrl.innerHTML = '<i class="bi bi-download"></i><span>Download Mobile App</span>';
+                console.log('Mobile URL added:', project.mobileUrl);
             } else {
                 mobileUrl.style.display = 'none';
             }
@@ -117,8 +120,8 @@ function updateProjectDetails() {
             if (project.desktopUrl) {
                 desktopUrl.href = project.desktopUrl;
                 desktopUrl.style.display = 'flex';
-                desktopUrl.innerHTML = '<span class="material-symbols-outlined">computer</span><span>Download Desktop App</span>';
-                console.log('💻 Desktop URL added:', project.desktopUrl);
+                desktopUrl.innerHTML = '<i class="bi bi-pc-display"></i><span>Download Desktop App</span>';
+                console.log('Desktop URL added:', project.desktopUrl);
             } else {
                 desktopUrl.style.display = 'none';
             }
@@ -128,33 +131,33 @@ function updateProjectDetails() {
         const featuresContainer = document.getElementById('project-features');
         if (featuresContainer && project.features) {
             featuresContainer.innerHTML = '';
-            
-            // Icon mapping for features
+
+            // Icon mapping for features (Bootstrap Icons)
             const featureIcons = {
-                'translate': 'translate',
-                'language': 'language',
-                'settings': 'settings',
-                'dashboard': 'dashboard',
-                'security': 'security',
-                'analytics': 'analytics',
-                'payment': 'payment',
-                'search': 'search',
-                'default': 'check_circle'
+                'translate': 'bi-translate',
+                'language': 'bi-translate',
+                'settings': 'bi-gear',
+                'dashboard': 'bi-speedometer2',
+                'security': 'bi-shield-check',
+                'analytics': 'bi-graph-up-arrow',
+                'payment': 'bi-credit-card',
+                'search': 'bi-search',
+                'default': 'bi-check-circle'
             };
-            
-            project.features.forEach((feature, index) => {
+
+            project.features.forEach((feature) => {
                 const featureDiv = document.createElement('div');
-                featureDiv.className = 'flex gap-md items-start p-md bg-white/80 backdrop-blur-xl rounded-xl shadow-[0_4px_12px_rgba(0,88,188,0.08)] border border-outline-variant/20 hover:border-primary/30 transition-all';
-                
-                const iconName = feature.icon || featureIcons.default;
-                
+                featureDiv.className = 'd-flex gap-3 align-items-start p-3 glass-card rounded-3 shadow-sm mb-3';
+
+                const iconName = featureIcons[feature.icon] || featureIcons.default;
+
                 featureDiv.innerHTML = `
-                    <div class="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center shrink-0">
-                        <span class="material-symbols-outlined text-primary">${iconName}</span>
+                    <div class="feature-icon-box bg-primary bg-opacity-10">
+                        <i class="bi ${iconName} text-primary"></i>
                     </div>
                     <div>
-                        <h3 class="font-headline-sm text-headline-sm text-on-surface mb-xs">${feature.title || 'Feature'}</h3>
-                        <p class="font-body-sm text-body-sm text-on-surface-variant">${feature.description || feature}</p>
+                        <h6 class="fw-semibold mb-1">${feature.title || 'Feature'}</h6>
+                        <small class="text-muted d-block">${feature.description || feature}</small>
                     </div>
                 `;
                 featuresContainer.appendChild(featureDiv);
@@ -165,28 +168,29 @@ function updateProjectDetails() {
         const galleryContainer = document.getElementById('project-gallery');
         if (galleryContainer) {
             galleryContainer.innerHTML = '';
-            
+
             const projectImages = project.screenshots || project.galleryImages || [];
-            
+
             if (projectImages.length > 0) {
                 projectImages.forEach((imgSrc, index) => {
                     const imgDiv = document.createElement('div');
-                    imgDiv.className = 'shrink-0 w-72 md:w-80 h-48 md:h-56 bg-white rounded-xl overflow-hidden shadow-sm border border-outline-variant/30 hover:shadow-md transition-shadow';
-                    
+                    imgDiv.className = 'flex-shrink-0';
+
                     const img = document.createElement('img');
                     img.src = imgSrc;
                     img.alt = `${project.title} - Screenshot ${index + 1}`;
-                    img.className = 'w-full h-full object-cover';
+                    img.className = 'project-gallery-img shadow-sm border';
                     img.loading = 'lazy';
-                    
+
                     imgDiv.appendChild(img);
                     galleryContainer.appendChild(imgDiv);
                 });
             } else {
                 // Add placeholder if no images
                 const placeholderDiv = document.createElement('div');
-                placeholderDiv.className = 'shrink-0 w-72 h-48 bg-surface-container rounded-xl flex items-center justify-center';
-                placeholderDiv.innerHTML = '<span class="material-symbols-outlined text-4xl text-outline-variant">image</span>';
+                placeholderDiv.className = 'flex-shrink-0 d-flex align-items-center justify-content-center';
+                placeholderDiv.style.cssText = 'width: 18rem; height: 12rem; background: var(--color-surface-container, #e9ecef); border-radius: 0.75rem;';
+                placeholderDiv.innerHTML = '<i class="bi bi-image text-muted" style="font-size: 2.5rem;"></i>';
                 galleryContainer.appendChild(placeholderDiv);
             }
         }
@@ -195,36 +199,36 @@ function updateProjectDetails() {
         const moreProjectsContainer = document.getElementById('more-projects');
         if (moreProjectsContainer && typeof portfolioData !== 'undefined') {
             moreProjectsContainer.innerHTML = '';
-            
+
             Object.keys(portfolioData).forEach(pid => {
                 if (pid === projectId) return; // Skip current project
-                
+
                 const p = portfolioData[pid];
                 const projectDiv = document.createElement('a');
                 projectDiv.href = `project.html?project=${pid}`;
-                projectDiv.className = 'flex items-center p-md bg-white/80 backdrop-blur-xl rounded-xl hover:bg-primary-container/5 transition-colors border border-outline-variant/20 hover:border-primary/30';
-                
+                projectDiv.className = 'd-flex align-items-center p-3 glass-card rounded-3 text-decoration-none mb-2 transition-colors';
+
                 projectDiv.innerHTML = `
-                    <div class="w-12 h-12 bg-surface-container rounded-lg mr-md flex items-center justify-center">
-                        <span class="material-symbols-outlined text-outline">${p.icon || 'code'}</span>
+                    <div class="d-flex align-items-center justify-content-center flex-shrink-0 me-3" style="width: 48px; height: 48px; border-radius: 0.5rem; background: var(--color-surface-container, #e9ecef);">
+                        <i class="bi ${p.icon ? 'bi-' + p.icon : 'bi-code-slash'} text-muted"></i>
                     </div>
-                    <div class="flex-1">
-                        <h4 class="font-label-md text-label-md font-bold text-on-surface">${p.title}</h4>
-                        <p class="text-body-sm text-on-surface-variant">${p.category}</p>
+                    <div class="flex-grow-1 min-w-0">
+                        <h6 class="fw-bold mb-0" style="font-size: 0.875rem;">${p.title}</h6>
+                        <small class="text-muted d-block">${p.category}</small>
                     </div>
-                    <span class="material-symbols-outlined text-outline-variant">chevron_right</span>
+                    <i class="bi bi-chevron-right text-muted flex-shrink-0"></i>
                 `;
-                
+
                 moreProjectsContainer.appendChild(projectDiv);
             });
         }
 
         // Update projects list sidebar
         updateProjectsList(projectId);
-        
-        console.log('✅ Project loaded:', project.title);
+
+        console.log('Project loaded:', project.title);
     } else {
-        console.log('❌ No project data found, redirecting...');
+        console.log('No project data found, redirecting...');
         // Default to first project if no valid project ID
         if (typeof portfolioData !== 'undefined') {
             const firstProjectId = Object.keys(portfolioData)[0];

@@ -69,8 +69,8 @@
       "title": "Shehrezad Backend",
       "titleAr": "باك إند شهرزاد",
       "category": "web",
-      "image": "assets/img/masonry-portfolio/masonry-portfolio-1.jpg",
-      "thumbnail": "assets/img/masonry-portfolio/masonry-portfolio-1.jpg",
+      "image": "assets/img/Projects_Images/shahrazad/shahrazad_customer/main_page.png",
+      "thumbnail": "assets/img/Projects_Images/shahrazad/shahrazad_customer/main_page.png",
       "description": "Integrated e-commerce and CRM backend system with advanced APIs for product, order, and debt management with multi-currency support",
       "descriptionAr": "باك إند متكامل للتجارة الإلكترونية وإدارة علاقات العملاء مع APIs متقدمة لإدارة المنتجات والطلبات والديون",
       "status": "completed",
@@ -118,7 +118,14 @@
       ],
       "challenges": "بناء نظام مالي معقد يدعم تعدد العملات والديون مع الحفاظ على أمان عالي",
       "challengesAr": "كان أكبر تحدٍ بناء نظام محاسبة يربط بين العملات المختلفة ويتعامل مع الديون بشكل عادل ودقيق",
-      "screenshots": [],
+      "screenshots": [
+        "assets/img/Projects_Images/shahrazad/shahrazad_customer/main_page.png",
+        "assets/img/Projects_Images/shahrazad/shahrazad_customer/Screenshot_٢٠٢٦٠٥٠٨-٠٨١٨١٨.png",
+        "assets/img/Projects_Images/shahrazad/shahrazad_customer/Screenshot_٢٠٢٦٠٥٠٨-٠٨١٨٢١.png",
+        "assets/img/Projects_Images/shahrazad/shahrazad_customer/Screenshot_٢٠٢٦٠٥٠٨-٠٨١٨٢٦.png",
+        "assets/img/Projects_Images/shahrazad/shahrazad_dashboard/main_page.png",
+        "assets/img/Projects_Images/shahrazad/shahrazad_dashboard/Screenshot_٢٠٢٦٠٥٠٨-٠٨٢١١٦.png"
+      ],
       "docs": {
         "readme": "assets/Docs_Project/README_SHEHRAZAD_BACKEND.md",
         "type": "comprehensive"
@@ -447,8 +454,8 @@
       "title": "CutOptimizer",
       "titleAr": "كيت أوبتمايزر",
       "category": "desktop",
-      "image": "assets/img/masonry-portfolio/masonry-portfolio-3.jpg",
-      "thumbnail": "assets/img/masonry-portfolio/masonry-portfolio-3.jpg",
+      "image": "assets/img/Projects_Images/CutOptimizer/Desktop/main_page.png",
+      "thumbnail": "assets/img/Projects_Images/CutOptimizer/Desktop/main_page.png",
       "description": "Smart carpet cutting optimization tool for textile industry efficiency and waste reduction using advanced algorithms",
       "descriptionAr": "أداة ذكية لتحسين قص السجاد في صناعة النسيج لتقليل الهدر وتحسين الكفاءة",
       "status": "completed",
@@ -487,8 +494,12 @@
       "challenges": "تطوير خوارزميات معقدة لحل مشكلة Cutting Stock problem مع مراعاة القيود الهندسية",
       "challengesAr": "كان التحدي هو تصميم خوارزمية ذكية تجد أفضل ترتيب لقطع السجاد على ماكينات بعرض محدد مع تقليل الهادر",
       "screenshots": [
-        "assets/img/portfolio/cutoptimizer-main.png",
-        "assets/img/portfolio/cutoptimizer-results.png"
+        "assets/img/Projects_Images/CutOptimizer/Desktop/main_page.png",
+        "assets/img/Projects_Images/CutOptimizer/Desktop/Screenshot (612).png",
+        "assets/img/Projects_Images/CutOptimizer/Desktop/Screenshot (613).png",
+        "assets/img/Projects_Images/CutOptimizer/sjade/main_page.png",
+        "assets/img/Projects_Images/CutOptimizer/sjade/Screenshot_٢٠٢٦٠٥٠٨-٠٧٤٨١٢.png",
+        "assets/img/Projects_Images/CutOptimizer/sjade/Screenshot_٢٠٢٦٠٥٠٨-٠٧٤٩١٥.png"
       ],
       "docs": {
         "readme": "assets/Docs_Project/README_CUTOPTIMIZER.md",

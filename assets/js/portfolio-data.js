@@ -58,7 +58,7 @@ const portfolioData = {
   cutoptimizer: {
     title: "CutOptimizer",
     category: "desktop",
-    image: "assets/img/masonry-portfolio/masonry-portfolio-3.jpg",
+    image: "assets/img/Projects_Images/CutOptimizer/Desktop/main_page.png",
     description: "Smart carpet cutting optimization tool for textile industry efficiency and waste reduction",
     detailsUrl: "project.html",
     gallery: "portfolio-gallery-desktop",
@@ -74,9 +74,10 @@ const portfolioData = {
       "Batch processing"
     ],
     galleryImages: [
-      "assets/img/masonry-portfolio/masonry-portfolio-3.jpg",
-      "assets/img/portfolio/app-3.jpg",
-      "assets/img/portfolio/product-2.jpg"
+      "assets/img/Projects_Images/CutOptimizer/Desktop/main_page.png",
+      "assets/img/Projects_Images/CutOptimizer/Desktop/Screenshot (612).png",
+      "assets/img/Projects_Images/CutOptimizer/sjade/main_page.png",
+      "assets/img/Projects_Images/CutOptimizer/sjade/Screenshot_٢٠٢٦٠٥٠٨-٠٧٤٨١٢.png"
     ]
   },
   socialbackend: {
@@ -226,7 +227,7 @@ const portfolioData = {
   shehrezad: {
     title: "Shehrezad Backend",
     category: "web",
-    image: "assets/img/masonry-portfolio/masonry-portfolio-1.jpg",
+    image: "assets/img/Projects_Images/shahrazad/shahrazad_customer/main_page.png",
     description: "Integrated e-commerce and CRM backend system with advanced APIs for product, order, and debt management",
     detailsUrl: "project.html",
     gallery: "portfolio-gallery-web",
@@ -243,9 +244,10 @@ const portfolioData = {
       "Cron Jobs for system maintenance"
     ],
     galleryImages: [
-      "assets/img/masonry-portfolio/masonry-portfolio-1.jpg",
-      "assets/img/portfolio/app-1.jpg",
-      "assets/img/portfolio/product-1.jpg"
+      "assets/img/Projects_Images/shahrazad/shahrazad_customer/main_page.png",
+      "assets/img/Projects_Images/shahrazad/shahrazad_customer/Screenshot_٢٠٢٦٠٥٠٨-٠٨١٨١٨.png",
+      "assets/img/Projects_Images/shahrazad/shahrazad_customer/Screenshot_٢٠٢٦٠٥٠٨-٠٨١٨٢١.png",
+      "assets/img/Projects_Images/shahrazad/shahrazad_dashboard/main_page.png"
     ]
   },
   mizaneyati: {

@@ -275,21 +275,8 @@ Software engineer specializing in building modern applications and
         <!-- End Section Title -->
 
         <div class="container">
-          <div class="row justify-content-center">
-            <div class="col-lg-8" data-aos="fade-up">
-              <div class="cv-cta-card text-center p-5 glass-card rounded-4 shadow-sm" style="cursor: pointer;" data-bs-toggle="modal" data-bs-target="#cvModal">
-                <div class="mb-4">
-                  <i class="bi bi-file-earmark-text" style="font-size: 4rem; color: var(--color-primary, #0563bb);"></i>
-                </div>
-                <h3 class="fw-bold mb-2">Download My Resume</h3>
-                <p class="text-muted mb-4">
-                  View and download my professional CVs in PDF or Word format
-                </p>
-                <button class="btn btn-primary btn-lg px-5">
-                  <i class="bi bi-eye me-2"></i>View CVs
-                </button>
-              </div>
-            </div>
+          <div class="row justify-content-center g-4" id="cv-direct-container">
+            <!-- CVs will be loaded directly here -->
           </div>
         </div>
       </section>
@@ -715,21 +702,5 @@ Software engineer specializing in building modern applications and
       }
     </script>
 
-    <!-- CV Modal -->
-    <div class="modal fade" id="cvModal" tabindex="-1" aria-hidden="true">
-      <div class="modal-dialog modal-lg modal-dialog-centered">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title">My CVs</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-          </div>
-          <div class="modal-body">
-            <div class="row g-4" id="cv-modal-container">
-              <!-- CV items will be loaded dynamically -->
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
   </body>
 </html>

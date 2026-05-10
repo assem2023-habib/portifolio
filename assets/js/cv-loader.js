@@ -66,23 +66,39 @@ function createCVElement(cv) {
   const hasPDF = cv.files && cv.files.pdf;
   const hasDOCX = cv.files && cv.files.docx;
 
+  let downloadButtons = '';
+  if (hasPDF) {
+    downloadButtons += `
+      <a href="${cv.files.pdf}" download class="btn btn-outline-primary btn-sm flex-grow-1" onclick="trackCVDownload('${cv.id}', 'pdf')">
+        <i class="bi bi-file-earmark-pdf me-1"></i>PDF
+      </a>
+    `;
+  }
+  if (hasDOCX) {
+    downloadButtons += `
+      <a href="${cv.files.docx}" download class="btn btn-outline-primary btn-sm flex-grow-1" onclick="trackCVDownload('${cv.id}', 'docx')">
+        <i class="bi bi-file-earmark-word me-1"></i>Word
+      </a>
+    `;
+  }
+
   return `
     <div class="col-md-6 col-lg-4" data-aos="fade-up">
-      <div class="cv-card d-flex flex-column h-100">
-        <div class="cv-icon-wrapper">
-          <div class="cv-icon">
-            <i class="bi bi-file-earmark-text"></i>
+      <div class="cv-card d-flex flex-column h-100 p-4 glass-card rounded-4 shadow-sm">
+        <div class="cv-icon-wrapper mb-3 text-center">
+          <div class="cv-icon bg-light rounded-circle d-inline-flex align-items-center justify-content-center" style="width: 64px; height: 64px;">
+            <i class="bi bi-file-earmark-text fs-2 text-primary"></i>
           </div>
         </div>
-        <div class="cv-content flex-grow-1">
-          <h5 class="cv-title">${text.title}</h5>
-          <span class="cv-specialization">${text.specialization}</span>
-          <p class="cv-description">${text.description}</p>
+        <div class="cv-content flex-grow-1 text-center">
+          <h5 class="cv-title fw-bold mb-1">${text.title}</h5>
+          <span class="cv-specialization text-muted small d-block mb-3">${text.specialization}</span>
+          <p class="cv-description small mb-4">${text.description}</p>
         </div>
-        <div class="cv-actions">
-          <button class="btn btn-download w-100" onclick="showCVDownloadModal('${cv.id}')">
-            <i class="bi bi-download me-2"></i>${text.downloadBtn}
-          </button>
+        <div class="cv-actions mt-auto">
+          <div class="d-flex gap-2">
+            ${downloadButtons}
+          </div>
         </div>
       </div>
     </div>
@@ -93,10 +109,7 @@ function createCVElement(cv) {
  * عرض الـ CVs في عنصر DOM
  */
 function renderCVs(container) {
-  if (!container) {
-    console.error('Container not found');
-    return;
-  }
+  if (!container) return;
 
   const cvs = getAllCVs();
   container.innerHTML = '';
@@ -105,83 +118,14 @@ function renderCVs(container) {
     container.innerHTML += createCVElement(cv);
   });
 
-  console.log(`✅ Displayed ${cvs.length} CVs`);
+  console.log(`✅ Displayed ${cvs.length} CVs in ${container.id}`);
 }
 
 /**
  * إنشاء وعرض Modal لتحميل الـ CV
  */
 function showCVDownloadModal(cvId) {
-  console.log(`🔽 CV download requested for: ${cvId}`);
-  const cv = getCVById(cvId);
-  if (!cv) {
-    console.error(`❌ CV not found: ${cvId}`);
-    return;
-  }
-
-  const text = getCVLocalizedText(cv, currentCVLang);
-  const hasPDF = cv.files && cv.files.pdf;
-  const hasDOCX = cv.files && cv.files.docx;
-
-  let modalContent = `
-    <div class="modal fade" id="cvDownloadModal" tabindex="-1" aria-labelledby="cvDownloadModalLabel" aria-hidden="true">
-      <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="cvDownloadModalLabel">${text.downloadTitle}</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-          </div>
-          <div class="modal-body">
-            <p class="mb-3 fw-medium">${text.downloadMessage}</p>
-            <div class="d-flex flex-column gap-3">
-  `;
-
-  if (hasPDF) {
-    modalContent += `
-      <a href="${cv.files.pdf}" download class="btn btn-download-option btn-outline-primary" onclick="trackCVDownload('${cvId}', 'pdf')">
-        <i class="bi bi-file-earmark-pdf me-2 fs-5"></i>${text.pdf}
-      </a>
-    `;
-  }
-
-  if (hasDOCX) {
-    modalContent += `
-      <a href="${cv.files.docx}" download class="btn btn-download-option btn-outline-primary" onclick="trackCVDownload('${cvId}', 'docx')">
-        <i class="bi bi-file-earmark-word me-2 fs-5"></i>${text.docx}
-      </a>
-    `;
-  }
-
-  if (hasPDF && hasDOCX) {
-    modalContent += `
-      <hr class="border-secondary opacity-25">
-      <a href="${cv.files.pdf}" download class="btn btn-download-option btn-success" onclick="trackCVDownload('${cvId}', 'both')">
-        <i class="bi bi-download me-2 fs-5"></i>${text.both}
-      </a>
-    `;
-  }
-
-  modalContent += `
-            </div>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-light" data-bs-dismiss="modal">${text.cancel}</button>
-          </div>
-        </div>
-      </div>
-    </div>
-  `;
-
-  const existingModal = document.getElementById('cvDownloadModal');
-  if (existingModal) {
-    existingModal.remove();
-  }
-
-  document.body.insertAdjacentHTML('beforeend', modalContent);
-
-  const modal = new bootstrap.Modal(document.getElementById('cvDownloadModal'));
-  modal.show();
-  console.log(`📋 CV download modal shown for: ${cvId}`);
+  // ... existing code ...
 }
 
 /**
@@ -217,18 +161,19 @@ async function initCVLoader() {
   loadSavedCVLanguage();
   await loadCVsData();
   console.log('✅ CV Loader initialized');
-  console.log('📄 CVs loaded:', getAllCVs().length);
+  
+  const cvs = getAllCVs();
+  
+  // Render in Homepage Direct Container
+  const directContainer = document.getElementById('cv-direct-container');
+  if (directContainer) {
+    renderCVs(directContainer);
+  }
 
-  // Render CVs in modal container
+  // Render in Modal Container (if still used somewhere)
   const modalContainer = document.getElementById('cv-modal-container');
   if (modalContainer) {
-    const cvs = getAllCVs();
-    modalContainer.innerHTML = '';
-    cvs.forEach((cv, index) => {
-      modalContainer.innerHTML += createCVElement(cv);
-      console.log(`🔄 CV item ${index + 1} displayed: ${cv.title}`);
-    });
-    console.log(`✅ Displayed ${cvs.length} CVs in modal`);
+    renderCVs(modalContainer);
   }
 }
 

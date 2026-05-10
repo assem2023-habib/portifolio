@@ -180,18 +180,18 @@ body.dark-mode .cv-carousel-card .card-back {
   font-size: 11px;
   padding: 4px 10px;
   border-radius: 20px;
-  background: color-mix(in srgb, var(--accent-color), transparent 90%);
+  background: color-mix(in srgb, var(--accent-color), transparent 92%);
   color: var(--accent-color);
-  border: 1px solid color-mix(in srgb, var(--accent-color), transparent 80%);
+  border: 1px solid color-mix(in srgb, var(--accent-color), transparent 85%);
   font-weight: 500;
 }
 
 .card-arrow {
   width: 32px; height: 32px;
   border-radius: 50%;
-  border: 1px solid color-mix(in srgb, var(--default-color), transparent 85%);
+  border: 1px solid color-mix(in srgb, var(--accent-color), transparent 80%);
   display: flex; align-items: center; justify-content: center;
-  color: color-mix(in srgb, var(--default-color), transparent 60%);
+  color: var(--accent-color);
   font-size: 14px;
   transition: all 0.3s;
 }

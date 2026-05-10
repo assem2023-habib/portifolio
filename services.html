@@ -36,34 +36,30 @@
   ======================================================== -->
 </head>
 
+  <style>
+    .services-details-page #header { display: none; }
+    .main { margin-left: 0 !important; }
+    @media (max-width: 1199px) {
+      .main { margin-left: 0 !important; }
+    }
+    .glass-card {
+      background: rgba(255, 255, 255, 0.6);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+    }
+    body.dark-mode .glass-card {
+      background: rgba(37, 37, 37, 0.6);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+  </style>
+
+</head>
+
 <body class="services-details-page">
 
   <header id="header" class="header d-flex flex-column justify-content-center">
-
-    <i class="header-toggle d-xl-none bi bi-list"></i>
-
-    <!-- Language Toggle Button -->
-    <button id="languageToggle" class="language-toggle" title="تبديل اللغة / Change Language" style="display: none;">
-      <i class="bi bi-translate"></i>
-    </button>
-
-    <!-- Dark Mode Toggle Button -->
-    <button id="darkModeToggle" class="dark-mode-toggle d-xl-none" title="تبديل الوضع المظلم">
-      <i class="bi bi-moon-fill"></i>
-    </button>
-
-    <nav id="navmenu" class="navmenu">
-      <ul>
-        <li><a href="index.html"><i class="bi bi-house navicon"></i><span>Home</span></a></li>
-        <li><a href="index.html#about"><i class="bi bi-person navicon"></i><span>About</span></a></li>
-        <li><a href="index.html#resume"><i class="bi bi-file-earmark-text navicon"></i><span>Resume</span></a></li>
-        <li><a href="projects.html"><i class="bi bi-images navicon"></i><span>Portfolio</span></a></li>
-        <li><a href="services.html"><i class="bi bi-hdd-stack navicon"></i><span>Services</span></a></li>
-        <!-- <li><a href="index.html#testimonials"><i class="bi bi-chat-quote navicon"></i><span>Testimonials</span></a></li> -->
-        <li><a href="index.html#contact"><i class="bi bi-envelope navicon"></i><span>Contact</span></a></li>
-      </ul>
-    </nav>
-
+    <!-- Header hidden via CSS for full-width layout -->
   </header>
 
   <main class="main">

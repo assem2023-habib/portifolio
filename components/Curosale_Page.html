@@ -1,0 +1,814 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Services Circular Carousel</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --primary: #0a0a1a;
+    --accent: #6c63ff;
+    --accent2: #ff6584;
+    --gold: #ffd700;
+    --card-w: 280px;
+    --card-h: 340px;
+    --radius: 420px;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--primary);
+    font-family: 'Poppins', 'Tajawal', sans-serif;
+    overflow-x: hidden;
+    min-height: 100vh;
+  }
+
+  /* ── Starfield BG ── */
+  .stars {
+    position: fixed; inset: 0; pointer-events: none; z-index: 0;
+    background:
+      radial-gradient(ellipse at 20% 50%, rgba(108,99,255,.15) 0%, transparent 60%),
+      radial-gradient(ellipse at 80% 20%, rgba(255,101,132,.1) 0%, transparent 50%);
+  }
+  .stars::before, .stars::after {
+    content: '';
+    position: absolute; inset: 0;
+    background-image:
+      radial-gradient(1px 1px at 10% 15%, rgba(255,255,255,.8) 0%, transparent 0%),
+      radial-gradient(1px 1px at 25% 40%, rgba(255,255,255,.6) 0%, transparent 0%),
+      radial-gradient(1.5px 1.5px at 50% 10%, rgba(255,255,255,.9) 0%, transparent 0%),
+      radial-gradient(1px 1px at 70% 60%, rgba(255,255,255,.7) 0%, transparent 0%),
+      radial-gradient(1px 1px at 85% 30%, rgba(255,255,255,.5) 0%, transparent 0%),
+      radial-gradient(1px 1px at 40% 80%, rgba(255,255,255,.6) 0%, transparent 0%),
+      radial-gradient(1.5px 1.5px at 90% 80%, rgba(255,255,255,.8) 0%, transparent 0%),
+      radial-gradient(1px 1px at 15% 70%, rgba(255,255,255,.5) 0%, transparent 0%),
+      radial-gradient(1px 1px at 60% 90%, rgba(255,255,255,.7) 0%, transparent 0%),
+      radial-gradient(1px 1px at 35% 55%, rgba(255,255,255,.4) 0%, transparent 0%);
+  }
+
+  /* ── Section ── */
+  .services-section {
+    position: relative;
+    padding: 80px 0 100px;
+    z-index: 1;
+    overflow: hidden;
+  }
+
+  .section-header {
+    text-align: center;
+    margin-bottom: 70px;
+  }
+
+  .section-label {
+    display: inline-block;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--accent);
+    padding: 6px 18px;
+    border: 1px solid rgba(108,99,255,.4);
+    border-radius: 30px;
+    margin-bottom: 20px;
+    background: rgba(108,99,255,.08);
+  }
+
+  .section-title {
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    font-weight: 800;
+    color: #fff;
+    line-height: 1.1;
+    letter-spacing: -1px;
+  }
+
+  .section-title span {
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .section-desc {
+    color: rgba(255,255,255,.5);
+    font-size: 16px;
+    margin-top: 14px;
+    font-weight: 300;
+  }
+
+  /* ── Carousel Stage ── */
+  .carousel-stage {
+    position: relative;
+    height: 520px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .carousel-scene {
+    perspective: 1200px;
+    perspective-origin: 50% 50%;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .carousel-ring {
+    position: relative;
+    width: var(--card-w);
+    height: var(--card-h);
+    transform-style: preserve-3d;
+    transition: transform 0.9s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+
+  /* ── Service Card ── */
+  .service-card {
+    position: absolute;
+    width: var(--card-w);
+    height: var(--card-h);
+    top: 0; left: 0;
+    border-radius: 20px;
+    cursor: pointer;
+    transform-style: preserve-3d;
+    transition: transform 0.85s cubic-bezier(0.25, 0.46, 0.45, 0.94), opacity 0.4s ease, filter 0.4s ease;
+  }
+
+  /* ── Front face ── */
+  .card-inner {
+    position: absolute;
+    inset: 0;
+    padding: 32px 28px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    border-radius: 20px;
+    border: 1px solid rgba(255,255,255,.07);
+    background: rgba(255,255,255,.04);
+    backdrop-filter: blur(20px);
+    transition: all 0.4s ease;
+    overflow: hidden;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+  }
+
+  /* ── Back face ── */
+  .card-back {
+    position: absolute;
+    inset: 0;
+    border-radius: 20px;
+    border: 1px solid rgba(108,99,255,.25);
+    background: rgba(12,10,40,.92);
+    backdrop-filter: blur(20px);
+    overflow: hidden;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    transform: rotateY(180deg);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    padding: 28px;
+  }
+
+  .card-back::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse at 30% 30%, rgba(108,99,255,.2) 0%, transparent 60%),
+      radial-gradient(ellipse at 70% 70%, rgba(255,101,132,.15) 0%, transparent 60%);
+    border-radius: inherit;
+  }
+
+  .back-logo {
+    width: 64px; height: 64px;
+    border-radius: 50%;
+    border: 2px solid rgba(108,99,255,.5);
+    background: rgba(108,99,255,.12);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 26px;
+    position: relative;
+    box-shadow: 0 0 30px rgba(108,99,255,.3);
+  }
+
+  .back-title {
+    font-size: 15px;
+    font-weight: 700;
+    color: rgba(255,255,255,.9);
+    text-align: center;
+    position: relative;
+    letter-spacing: .5px;
+  }
+
+  .back-divider {
+    width: 40px; height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(108,99,255,.7), transparent);
+    position: relative;
+  }
+
+  .back-tag {
+    font-size: 11px;
+    padding: 5px 14px;
+    border-radius: 20px;
+    background: rgba(108,99,255,.15);
+    color: rgba(108,99,255,.9);
+    border: 1px solid rgba(108,99,255,.3);
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    position: relative;
+  }
+
+  .back-num {
+    position: absolute;
+    bottom: 18px; right: 22px;
+    font-size: 48px;
+    font-weight: 800;
+    color: rgba(108,99,255,.08);
+    line-height: 1;
+    letter-spacing: -2px;
+    pointer-events: none;
+  }
+
+  .service-card.active .card-inner {
+    background: rgba(108,99,255,.15);
+    border-color: rgba(108,99,255,.5);
+    box-shadow: 0 0 60px rgba(108,99,255,.3), 0 0 120px rgba(108,99,255,.15);
+  }
+
+  .card-inner::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(108,99,255,.05) 0%, transparent 60%, rgba(255,101,132,.05) 100%);
+    border-radius: inherit;
+  }
+
+  .card-glow {
+    position: absolute;
+    width: 150px; height: 150px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(108,99,255,.3), transparent 70%);
+    top: -40px; right: -40px;
+    pointer-events: none;
+    transition: opacity .4s;
+    opacity: 0;
+  }
+
+  .service-card.active .card-glow { opacity: 1; }
+
+  .card-number {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 3px;
+    color: rgba(108,99,255,.7);
+    text-transform: uppercase;
+  }
+
+  .card-icon-wrap {
+    width: 70px; height: 70px;
+    border-radius: 18px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 30px;
+    margin: 12px 0;
+    position: relative;
+    background: rgba(255,255,255,.06);
+    border: 1px solid rgba(255,255,255,.08);
+    transition: all .4s;
+  }
+
+  .service-card.active .card-icon-wrap {
+    background: rgba(108,99,255,.2);
+    border-color: rgba(108,99,255,.4);
+    box-shadow: 0 8px 32px rgba(108,99,255,.3);
+  }
+
+  .card-content { flex: 1; margin-top: 8px; }
+
+  .card-title {
+    font-size: 18px;
+    font-weight: 700;
+    color: #fff;
+    margin-bottom: 8px;
+    line-height: 1.3;
+  }
+
+  .card-desc {
+    font-size: 13px;
+    color: rgba(255,255,255,.45);
+    line-height: 1.6;
+    font-weight: 300;
+  }
+
+  .card-footer-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 20px;
+    padding-top: 16px;
+    border-top: 1px solid rgba(255,255,255,.07);
+  }
+
+  .card-tag {
+    font-size: 11px;
+    padding: 4px 10px;
+    border-radius: 20px;
+    background: rgba(108,99,255,.15);
+    color: rgba(108,99,255,.9);
+    border: 1px solid rgba(108,99,255,.25);
+    font-weight: 500;
+  }
+
+  .card-arrow {
+    width: 32px; height: 32px;
+    border-radius: 50%;
+    border: 1px solid rgba(255,255,255,.15);
+    display: flex; align-items: center; justify-content: center;
+    color: rgba(255,255,255,.5);
+    font-size: 14px;
+    transition: all .3s;
+  }
+
+  .service-card.active .card-arrow {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: #fff;
+    box-shadow: 0 4px 16px rgba(108,99,255,.5);
+  }
+
+  /* ── Controls ── */
+  .carousel-controls {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 24px;
+    margin-top: 50px;
+    position: relative;
+    z-index: 10;
+  }
+
+  .ctrl-btn {
+    width: 52px; height: 52px;
+    border-radius: 50%;
+    border: 1px solid rgba(255,255,255,.15);
+    background: rgba(255,255,255,.05);
+    color: rgba(255,255,255,.7);
+    font-size: 20px;
+    cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    transition: all .3s ease;
+    backdrop-filter: blur(10px);
+  }
+
+  .ctrl-btn:hover {
+    background: rgba(108,99,255,.3);
+    border-color: rgba(108,99,255,.6);
+    color: #fff;
+    transform: scale(1.1);
+    box-shadow: 0 0 30px rgba(108,99,255,.4);
+  }
+
+  .ctrl-btn:active { transform: scale(0.95); }
+
+  .ctrl-play {
+    width: 64px; height: 64px;
+    font-size: 22px;
+    background: linear-gradient(135deg, var(--accent), #9b59ff);
+    border-color: transparent;
+    color: #fff;
+    box-shadow: 0 0 40px rgba(108,99,255,.5);
+  }
+
+  .ctrl-play:hover {
+    transform: scale(1.12);
+    box-shadow: 0 0 60px rgba(108,99,255,.7);
+    background: linear-gradient(135deg, #9b59ff, var(--accent));
+  }
+
+  /* Dots */
+  .carousel-dots {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+  }
+
+  .dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: rgba(255,255,255,.2);
+    cursor: pointer;
+    transition: all .3s;
+  }
+
+  .dot.active {
+    width: 24px;
+    border-radius: 3px;
+    background: var(--accent);
+    box-shadow: 0 0 12px rgba(108,99,255,.6);
+  }
+
+  /* ── Ground Reflection ── */
+  .ground-line {
+    position: absolute;
+    bottom: 0; left: 50%;
+    transform: translateX(-50%);
+    width: 600px; height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(108,99,255,.3), rgba(255,101,132,.3), transparent);
+    pointer-events: none;
+  }
+
+  /* ── CTA ── */
+  .services-cta {
+    text-align: center;
+    margin-top: 70px;
+    position: relative;
+    z-index: 10;
+  }
+
+  .btn-view-all {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 16px 38px;
+    border-radius: 50px;
+    font-size: 15px;
+    font-weight: 600;
+    text-decoration: none;
+    background: linear-gradient(135deg, var(--accent) 0%, #9b59ff 100%);
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    transition: all .35s ease;
+    box-shadow: 0 8px 40px rgba(108,99,255,.4);
+    letter-spacing: .3px;
+  }
+
+  .btn-view-all:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 16px 60px rgba(108,99,255,.6);
+    color: #fff;
+  }
+
+  .btn-view-all i { font-size: 18px; }
+
+  .cta-sub {
+    margin-top: 14px;
+    color: rgba(255,255,255,.35);
+    font-size: 13px;
+    letter-spacing: .5px;
+  }
+
+  /* ── Responsive ── */
+  @media (max-width: 768px) {
+    :root { --radius: 260px; --card-w: 230px; --card-h: 290px; }
+    .carousel-stage { height: 420px; }
+    .section-title { font-size: 2rem; }
+  }
+</style>
+</head>
+<body>
+
+<div class="stars"></div>
+
+<section class="services-section">
+  <div class="container">
+
+    <!-- Header -->
+    <div class="section-header" data-aos="fade-up">
+      <div class="section-label">What We Offer</div>
+      <h2 class="section-title">Our Professional<br><span>Services</span></h2>
+      <p class="section-desc">Rotate to explore all 7 services — click any card to learn more</p>
+    </div>
+
+    <!-- 3D Carousel -->
+    <div class="carousel-stage">
+      <div class="carousel-scene">
+        <div class="carousel-ring" id="ring"></div>
+      </div>
+      <div class="ground-line"></div>
+    </div>
+
+    <!-- Controls -->
+    <div class="carousel-controls">
+      <button class="ctrl-btn" id="prevBtn" aria-label="Previous">
+        <i class="bi bi-chevron-left"></i>
+      </button>
+      <button class="ctrl-btn ctrl-play" id="playBtn" aria-label="Play/Pause">
+        <i class="bi bi-pause-fill" id="playIcon"></i>
+      </button>
+      <button class="ctrl-btn" id="nextBtn" aria-label="Next">
+        <i class="bi bi-chevron-right"></i>
+      </button>
+    </div>
+
+    <!-- Dots -->
+    <div class="carousel-dots" id="dots" style="justify-content:center;margin-top:24px;"></div>
+
+    <!-- CTA -->
+    <div class="services-cta" data-aos="fade-up" data-aos-delay="300">
+      <a href="services.html" class="btn-view-all">
+        <i class="bi bi-eye"></i>
+        View All Services
+      </a>
+      <p class="cta-sub">Explore all 7 professional services</p>
+    </div>
+
+  </div>
+</section>
+
+<script>
+const SERVICES = [
+  {
+    icon: '💻',
+    num: '01',
+    title: 'Web Development',
+    desc: 'Modern, fast, and responsive websites built with cutting-edge technologies.',
+    tag: 'Frontend & Backend',
+  },
+  {
+    icon: '📱',
+    num: '02',
+    title: 'Mobile Apps',
+    desc: 'Native and cross-platform apps for iOS and Android that users love.',
+    tag: 'iOS & Android',
+  },
+  {
+    icon: '🎨',
+    num: '03',
+    title: 'UI/UX Design',
+    desc: 'Beautiful, intuitive interfaces crafted for maximum user engagement.',
+    tag: 'Design Systems',
+  },
+  {
+    icon: '☁️',
+    num: '04',
+    title: 'Cloud Solutions',
+    desc: 'Scalable cloud architecture and DevOps pipelines for your business.',
+    tag: 'AWS & Azure',
+  },
+  {
+    icon: '🤖',
+    num: '05',
+    title: 'AI Integration',
+    desc: 'Intelligent automation and machine learning solutions for modern needs.',
+    tag: 'Machine Learning',
+  },
+  {
+    icon: '🔒',
+    num: '06',
+    title: 'Cybersecurity',
+    desc: 'Protect your digital assets with enterprise-grade security solutions.',
+    tag: 'Security Audit',
+  },
+  {
+    icon: '📊',
+    num: '07',
+    title: 'Data Analytics',
+    desc: 'Turn raw data into actionable insights with powerful dashboards.',
+    tag: 'Big Data',
+  }
+];
+
+const N = SERVICES.length;
+const ring = document.getElementById('ring');
+const dotsEl = document.getElementById('dots');
+let currentIndex = 0;
+let isPlaying = true;
+let autoTimer = null;
+let isDragging = false;
+let dragStartX = 0;
+let dragDelta = 0;
+
+// ── Tilt system ──
+let tiltAngle   = 0;   // current rendered tilt (degrees)
+let tiltTarget  = 0;   // where tilt wants to go
+let tiltRaf     = null;
+const TILT_MAX  = 14;  // max tilt on button/auto nav
+const TILT_EASE = 0.10; // easing factor (lower = smoother)
+
+function animateTilt() {
+  tiltAngle += (tiltTarget - tiltAngle) * TILT_EASE;
+  positionCards(true); // true = skip tilt override (use tiltAngle)
+  if (Math.abs(tiltAngle - tiltTarget) > 0.05) {
+    tiltRaf = requestAnimationFrame(animateTilt);
+  } else {
+    tiltAngle = tiltTarget;
+    positionCards(true);
+    tiltRaf = null;
+  }
+}
+
+function triggerTilt(dir) {
+  // dir: -1 = next (lean left), +1 = prev (lean right)
+  tiltTarget = dir * TILT_MAX;
+  if (tiltRaf) cancelAnimationFrame(tiltRaf);
+  tiltRaf = requestAnimationFrame(animateTilt);
+  // After peak, ease back to 0
+  setTimeout(() => { tiltTarget = 0; }, 180);
+}
+
+const RADIUS = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--radius')) || 420;
+
+// Build cards
+SERVICES.forEach((s, i) => {
+  const card = document.createElement('div');
+  card.className = 'service-card';
+  card.dataset.index = i;
+  card.innerHTML = `
+    <div class="card-inner">
+      <div class="card-glow"></div>
+      <div>
+        <div class="card-number">${s.num}</div>
+        <div class="card-icon-wrap">${s.icon}</div>
+      </div>
+      <div class="card-content">
+        <div class="card-title">${s.title}</div>
+        <div class="card-desc">${s.desc}</div>
+      </div>
+      <div class="card-footer-row">
+        <span class="card-tag">${s.tag}</span>
+        <div class="card-arrow"><i class="bi bi-arrow-right"></i></div>
+      </div>
+    </div>
+    <div class="card-back">
+      <div class="back-logo">${s.icon}</div>
+      <div class="back-title">${s.title}</div>
+      <div class="back-divider"></div>
+      <div class="back-tag">${s.tag}</div>
+      <div class="back-num">${s.num}</div>
+    </div>
+  `;
+  card.addEventListener('click', () => goTo(i));
+  ring.appendChild(card);
+});
+
+// Build dots
+SERVICES.forEach((_, i) => {
+  const dot = document.createElement('div');
+  dot.className = 'dot';
+  dot.addEventListener('click', () => goTo(i));
+  dotsEl.appendChild(dot);
+});
+
+function getRadius() {
+  return window.innerWidth <= 768 ? 260 : 420;
+}
+
+function positionCards(fromTiltAnim) {
+  const r = getRadius();
+  const cards = ring.querySelectorAll('.service-card');
+  const angleStep = 360 / N;
+
+  // During drag: tilt proportional to drag distance
+  const activeTilt = isDragging
+    ? -dragDelta * 0.45
+    : tiltAngle;
+
+  cards.forEach((card, i) => {
+    const relAngle = ((i - currentIndex) * angleStep + dragDelta) % 360;
+    const rad      = relAngle * Math.PI / 180;
+    const x        = Math.sin(rad) * r;
+    const z        = Math.cos(rad) * r;
+    const scale    = (z + r) / (r * 2);
+    const opacity  = 0.3 + scale * 0.7;
+    const isActive = i === currentIndex && dragDelta === 0;
+
+    // Per-card tilt: active card gets full tilt, side cards get less
+    const cardTilt = activeTilt * (0.5 + scale * 0.5);
+
+    // rotateY: card always faces the center → shows back when at ±180°
+    // normalize relAngle to -180..180 range
+    let normAngle = relAngle % 360;
+    if (normAngle > 180)  normAngle -= 360;
+    if (normAngle < -180) normAngle += 360;
+    const rotY  = -normAngle;
+
+    // skewX: proportional to tilt, peaks during movement
+    const skewVal = activeTilt * 0.38;
+
+    card.style.transform = `translateX(${x}px) translateZ(${z}px) rotateY(${rotY}deg) rotateZ(${cardTilt}deg) skewX(${skewVal}deg)`;
+    card.style.zIndex     = Math.round(scale * 100);
+    card.style.opacity    = opacity;
+    card.style.filter     = isActive ? 'none' : `blur(${(1 - scale) * 2}px)`;
+    card.classList.toggle('active', isActive);
+  });
+
+  dotsEl.querySelectorAll('.dot').forEach((d, i) => {
+    d.classList.toggle('active', i === currentIndex);
+  });
+}
+
+function goTo(index, dir) {
+  currentIndex = ((index % N) + N) % N;
+  dragDelta = 0;
+  if (dir !== undefined) triggerTilt(dir);
+  positionCards();
+}
+
+function next() { goTo(currentIndex + 1, -1); }
+function prev() { goTo(currentIndex - 1, +1); }
+
+document.getElementById('nextBtn').addEventListener('click', next);
+document.getElementById('prevBtn').addEventListener('click', prev);
+
+// Play/Pause
+const playBtn = document.getElementById('playBtn');
+const playIcon = document.getElementById('playIcon');
+
+function startAuto() {
+  stopAuto();
+  autoTimer = setInterval(next, 2800);
+}
+function stopAuto() {
+  if (autoTimer) clearInterval(autoTimer);
+}
+function togglePlay() {
+  isPlaying = !isPlaying;
+  if (isPlaying) {
+    playIcon.className = 'bi bi-pause-fill';
+    startAuto();
+  } else {
+    playIcon.className = 'bi bi-play-fill';
+    stopAuto();
+  }
+}
+
+playBtn.addEventListener('click', togglePlay);
+
+// Drag / swipe
+ring.addEventListener('mousedown', e => {
+  isDragging = true;
+  dragStartX = e.clientX;
+  tiltAngle = 0; tiltTarget = 0;
+  if (tiltRaf) { cancelAnimationFrame(tiltRaf); tiltRaf = null; }
+  stopAuto();
+});
+
+window.addEventListener('mousemove', e => {
+  if (!isDragging) return;
+  dragDelta = (e.clientX - dragStartX) * 0.1;
+  positionCards();
+});
+
+window.addEventListener('mouseup', e => {
+  if (!isDragging) return;
+  isDragging = false;
+  const moved = e.clientX - dragStartX;
+  if (Math.abs(moved) > 60) {
+    moved < 0 ? next() : prev();
+  } else {
+    dragDelta = 0;
+    tiltAngle = 0;
+    positionCards();
+  }
+  if (isPlaying) startAuto();
+});
+
+// Touch
+ring.addEventListener('touchstart', e => {
+  dragStartX = e.touches[0].clientX;
+  isDragging = true;
+  tiltAngle = 0; tiltTarget = 0;
+  if (tiltRaf) { cancelAnimationFrame(tiltRaf); tiltRaf = null; }
+  stopAuto();
+});
+
+ring.addEventListener('touchmove', e => {
+  dragDelta = (e.touches[0].clientX - dragStartX) * 0.1;
+  positionCards();
+  e.preventDefault();
+}, { passive: false });
+
+ring.addEventListener('touchend', e => {
+  isDragging = false;
+  const moved = e.changedTouches[0].clientX - dragStartX;
+  if (Math.abs(moved) > 60) {
+    moved < 0 ? next() : prev();
+  } else {
+    dragDelta = 0;
+    tiltAngle = 0;
+    positionCards();
+  }
+  if (isPlaying) startAuto();
+});
+
+// Keyboard
+window.addEventListener('keydown', e => {
+  if (e.key === 'ArrowLeft') prev();
+  if (e.key === 'ArrowRight') next();
+});
+
+// Init
+positionCards();
+startAuto();
+window.addEventListener('resize', positionCards);
+</script>
+
+</body>
+</html>

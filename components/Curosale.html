@@ -1,0 +1,1354 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>3D Circular Carousel — توثيق الحركات</title>
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800&family=JetBrains+Mono:wght@400;600&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:        #0d0d1a;
+  --surface:   #13131f;
+  --surface2:  #1a1a2e;
+  --border:    rgba(255,255,255,.08);
+  --accent:    #6c63ff;
+  --accent2:   #ff6584;
+  --accent3:   #00d4aa;
+  --accent4:   #ffd166;
+  --text:      #e8e8f0;
+  --muted:     rgba(232,232,240,.45);
+  --code-bg:   #0a0a14;
+  --mono:      'JetBrains Mono', monospace;
+  --sans:      'Inter', 'Tajawal', sans-serif;
+}
+
+* { margin:0; padding:0; box-sizing:border-box; }
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--sans);
+  line-height: 1.7;
+  font-size: 15px;
+}
+
+/* ── LAYOUT ── */
+.page { max-width: 960px; margin: 0 auto; padding: 60px 32px 100px; }
+
+/* ── COVER ── */
+.cover {
+  text-align: center;
+  padding: 80px 0 70px;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 64px;
+  position: relative;
+}
+
+.cover-badge {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  color: var(--accent);
+  border: 1px solid rgba(108,99,255,.35);
+  border-radius: 30px;
+  padding: 6px 20px;
+  margin-bottom: 28px;
+  background: rgba(108,99,255,.07);
+}
+
+.cover h1 {
+  font-size: clamp(2.2rem, 5vw, 3.8rem);
+  font-weight: 800;
+  letter-spacing: -1.5px;
+  line-height: 1.1;
+  margin-bottom: 20px;
+}
+
+.cover h1 span {
+  background: linear-gradient(135deg, var(--accent), var(--accent2));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.cover-sub {
+  color: var(--muted);
+  font-size: 16px;
+  font-weight: 300;
+  max-width: 520px;
+  margin: 0 auto 40px;
+}
+
+.cover-meta {
+  display: flex;
+  gap: 32px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.meta-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  color: var(--muted);
+}
+
+.meta-dot {
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: var(--accent);
+  flex-shrink: 0;
+}
+
+.meta-dot.g2 { background: var(--accent2); }
+.meta-dot.g3 { background: var(--accent3); }
+
+/* ── TOC ── */
+.toc {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 32px 36px;
+  margin-bottom: 56px;
+}
+
+.toc-title {
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 20px;
+}
+
+.toc-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 8px;
+}
+
+.toc-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 12px;
+  border-radius: 8px;
+  text-decoration: none;
+  color: var(--text);
+  font-size: 13px;
+  transition: background .2s;
+}
+
+.toc-item:hover { background: rgba(108,99,255,.1); color: var(--accent); }
+
+.toc-num {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--accent);
+  min-width: 22px;
+  opacity: .7;
+}
+
+/* ── SECTION ── */
+.section {
+  margin-bottom: 72px;
+  scroll-margin-top: 24px;
+}
+
+.section-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 14px;
+}
+
+.section-num {
+  font-family: var(--mono);
+  font-size: 10px;
+  background: rgba(108,99,255,.15);
+  border: 1px solid rgba(108,99,255,.3);
+  border-radius: 4px;
+  padding: 2px 7px;
+}
+
+.section h2 {
+  font-size: clamp(1.5rem, 3vw, 2rem);
+  font-weight: 700;
+  letter-spacing: -0.5px;
+  margin-bottom: 10px;
+  line-height: 1.2;
+}
+
+.section-intro {
+  color: var(--muted);
+  font-size: 15px;
+  margin-bottom: 32px;
+  max-width: 680px;
+  font-weight: 300;
+}
+
+/* ── CARDS ── */
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 28px 32px;
+  margin-bottom: 20px;
+}
+
+.card-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 18px;
+}
+
+.card-icon {
+  width: 38px; height: 38px;
+  border-radius: 10px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 17px;
+  flex-shrink: 0;
+}
+
+.ci-purple { background: rgba(108,99,255,.15); border: 1px solid rgba(108,99,255,.3); }
+.ci-red    { background: rgba(255,101,132,.12); border: 1px solid rgba(255,101,132,.3); }
+.ci-teal   { background: rgba(0,212,170,.12);   border: 1px solid rgba(0,212,170,.3);   }
+.ci-yellow { background: rgba(255,209,102,.12); border: 1px solid rgba(255,209,102,.3); }
+
+.card-label {
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: .3px;
+}
+
+.card-sub {
+  font-size: 12px;
+  color: var(--muted);
+  margin-top: 2px;
+}
+
+/* ── FORMULA BOX ── */
+.formula {
+  background: var(--code-bg);
+  border: 1px solid rgba(108,99,255,.2);
+  border-left: 3px solid var(--accent);
+  border-radius: 10px;
+  padding: 20px 24px;
+  margin: 16px 0;
+  font-family: var(--mono);
+  font-size: 13px;
+  overflow-x: auto;
+  line-height: 1.9;
+}
+
+.formula .kw  { color: var(--accent2); }
+.formula .fn  { color: var(--accent);  }
+.formula .nm  { color: var(--accent4); }
+.formula .cm  { color: rgba(255,255,255,.3); font-style: italic; }
+.formula .vr  { color: var(--accent3); }
+.formula .op  { color: rgba(255,255,255,.5); }
+
+/* ── VALUE TABLE ── */
+.val-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13.5px;
+  margin: 16px 0;
+}
+
+.val-table th {
+  text-align: left;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--muted);
+  padding: 10px 16px;
+  border-bottom: 1px solid var(--border);
+}
+
+.val-table td {
+  padding: 11px 16px;
+  border-bottom: 1px solid rgba(255,255,255,.04);
+  vertical-align: top;
+}
+
+.val-table tr:last-child td { border-bottom: none; }
+
+.val-table tr:hover td { background: rgba(255,255,255,.02); }
+
+.val-name {
+  font-family: var(--mono);
+  color: var(--accent3);
+  font-size: 12.5px;
+  white-space: nowrap;
+}
+
+.val-value {
+  font-family: var(--mono);
+  color: var(--accent4);
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.val-unit {
+  font-size: 11px;
+  color: var(--muted);
+  margin-left: 4px;
+}
+
+.val-desc { color: var(--muted); font-size: 13px; }
+
+/* ── TIMELINE ── */
+.timeline {
+  position: relative;
+  padding-left: 28px;
+  margin: 20px 0;
+}
+
+.timeline::before {
+  content: '';
+  position: absolute;
+  left: 8px; top: 6px; bottom: 6px;
+  width: 1px;
+  background: linear-gradient(to bottom, var(--accent), rgba(108,99,255,.1));
+}
+
+.tl-item {
+  position: relative;
+  margin-bottom: 24px;
+}
+
+.tl-item::before {
+  content: '';
+  position: absolute;
+  left: -24px; top: 7px;
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: var(--accent);
+  border: 2px solid var(--bg);
+  box-shadow: 0 0 8px rgba(108,99,255,.5);
+}
+
+.tl-time {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--accent);
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+
+.tl-title { font-weight: 600; font-size: 14px; margin-bottom: 4px; }
+.tl-desc  { color: var(--muted); font-size: 13px; }
+
+/* ── ANGLE DIAGRAM ── */
+.diagram-wrap {
+  background: var(--code-bg);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 32px;
+  margin: 20px 0;
+  display: flex;
+  justify-content: center;
+}
+
+/* ── TRANSFORM STACK ── */
+.transform-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin: 16px 0;
+}
+
+.tf-row {
+  display: flex;
+  align-items: stretch;
+  gap: 0;
+  border-radius: 8px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+}
+
+.tf-order {
+  font-family: var(--mono);
+  font-size: 11px;
+  font-weight: 700;
+  padding: 10px 14px;
+  background: rgba(108,99,255,.12);
+  color: var(--accent);
+  display: flex;
+  align-items: center;
+  min-width: 36px;
+  justify-content: center;
+  border-right: 1px solid var(--border);
+  flex-shrink: 0;
+}
+
+.tf-name {
+  font-family: var(--mono);
+  font-size: 12.5px;
+  padding: 10px 16px;
+  background: var(--surface2);
+  color: var(--accent3);
+  display: flex;
+  align-items: center;
+  min-width: 200px;
+  border-right: 1px solid var(--border);
+  flex-shrink: 0;
+}
+
+.tf-val {
+  font-family: var(--mono);
+  font-size: 12px;
+  padding: 10px 16px;
+  background: var(--surface);
+  color: var(--accent4);
+  display: flex;
+  align-items: center;
+  flex: 1;
+  border-right: 1px solid var(--border);
+}
+
+.tf-why {
+  font-size: 12.5px;
+  padding: 10px 16px;
+  color: var(--muted);
+  display: flex;
+  align-items: center;
+  flex: 2;
+  background: var(--surface);
+}
+
+/* ── HIGHLIGHT BOX ── */
+.highlight {
+  border-radius: 10px;
+  padding: 16px 20px;
+  margin: 16px 0;
+  font-size: 13.5px;
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+}
+
+.hl-purple { background: rgba(108,99,255,.08); border: 1px solid rgba(108,99,255,.2); }
+.hl-red    { background: rgba(255,101,132,.08); border: 1px solid rgba(255,101,132,.2); }
+.hl-teal   { background: rgba(0,212,170,.08);   border: 1px solid rgba(0,212,170,.2);   }
+.hl-yellow { background: rgba(255,209,102,.08); border: 1px solid rgba(255,209,102,.2); }
+
+.hl-icon { font-size: 16px; flex-shrink: 0; margin-top: 1px; }
+.hl-text { color: var(--text); line-height: 1.6; }
+.hl-text strong { font-weight: 600; }
+
+/* ── GRID 2 ── */
+.grid2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin: 16px 0;
+}
+
+@media (max-width: 640px) { .grid2 { grid-template-columns: 1fr; } }
+
+/* ── RESPONSE TABLE ── */
+.resp-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 16px 0;
+  font-size: 13.5px;
+}
+
+.resp-table th {
+  font-size: 11px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--muted);
+  padding: 10px 14px;
+  border-bottom: 1px solid var(--border);
+  text-align: left;
+}
+
+.resp-table td {
+  padding: 10px 14px;
+  border-bottom: 1px solid rgba(255,255,255,.04);
+}
+
+.resp-table code {
+  font-family: var(--mono);
+  font-size: 12px;
+  background: rgba(108,99,255,.1);
+  border: 1px solid rgba(108,99,255,.2);
+  border-radius: 4px;
+  padding: 1px 7px;
+  color: var(--accent3);
+}
+
+/* ── DIVIDER ── */
+.divider {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--border) 30%, var(--border) 70%, transparent);
+  margin: 64px 0;
+}
+
+/* ── FOOTER ── */
+.footer {
+  text-align: center;
+  padding: 40px 0 20px;
+  border-top: 1px solid var(--border);
+  color: var(--muted);
+  font-size: 12.5px;
+}
+
+.footer strong { color: var(--accent); }
+
+/* ── TAG INLINE ── */
+code {
+  font-family: var(--mono);
+  font-size: 12.5px;
+  background: rgba(108,99,255,.1);
+  border: 1px solid rgba(108,99,255,.18);
+  border-radius: 4px;
+  padding: 1px 7px;
+  color: var(--accent3);
+}
+
+/* ── BADGE ── */
+.badge {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 600;
+  padding: 3px 10px;
+  border-radius: 20px;
+  margin-right: 6px;
+}
+
+.b-p { background: rgba(108,99,255,.15); color: #a59eff; border: 1px solid rgba(108,99,255,.3); }
+.b-r { background: rgba(255,101,132,.12); color: #ff8fa3; border: 1px solid rgba(255,101,132,.3); }
+.b-t { background: rgba(0,212,170,.12);   color: #4eefd4; border: 1px solid rgba(0,212,170,.3);   }
+.b-y { background: rgba(255,209,102,.12); color: #ffd166; border: 1px solid rgba(255,209,102,.3); }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- ══ COVER ══ -->
+  <div class="cover">
+    <div class="cover-badge">Technical Documentation v1.0</div>
+    <h1>3D Circular Carousel<br><span>توثيق نظام الحركات</span></h1>
+    <p class="cover-sub">شرح شامل لكل انتقال، معادلة، وقيمة عددية في النظام — من التوزيع الهندسي حتى آخر درجة إمالة</p>
+    <div class="cover-meta">
+      <div class="meta-item"><div class="meta-dot"></div>7 كارتات على حلقة دائرية</div>
+      <div class="meta-item"><div class="meta-dot g2"></div>5 تحويلات CSS متداخلة</div>
+      <div class="meta-item"><div class="meta-dot g3"></div>3 أنظمة حركة مستقلة</div>
+    </div>
+  </div>
+
+  <!-- ══ TOC ══ -->
+  <div class="toc">
+    <div class="toc-title">المحتويات</div>
+    <div class="toc-grid">
+      <a href="#s1" class="toc-item"><span class="toc-num">01</span>التوزيع الهندسي</a>
+      <a href="#s2" class="toc-item"><span class="toc-num">02</span>العمق والمقياس</a>
+      <a href="#s3" class="toc-item"><span class="toc-num">03</span>اتجاه الكارت (rotateY)</a>
+      <a href="#s4" class="toc-item"><span class="toc-num">04</span>نظام الإمالة (rotateZ)</a>
+      <a href="#s5" class="toc-item"><span class="toc-num">05</span>نظام الانحراف (skewX)</a>
+      <a href="#s6" class="toc-item"><span class="toc-num">06</span>مكدس التحويلات الكامل</a>
+      <a href="#s7" class="toc-item"><span class="toc-num">07</span>توقيت الانتقالات (CSS)</a>
+      <a href="#s8" class="toc-item"><span class="toc-num">08</span>تفاعل السحب والتمرير</a>
+      <a href="#s9" class="toc-item"><span class="toc-num">09</span>التشغيل التلقائي</a>
+      <a href="#s10" class="toc-item"><span class="toc-num">10</span>الاستجابة (Responsive)</a>
+    </div>
+  </div>
+
+
+  <!-- ══ S1: GEOMETRY ══ -->
+  <div class="section" id="s1">
+    <div class="section-tag"><span class="section-num">01</span>التوزيع الهندسي</div>
+    <h2>توزيع الكارتات على الحلقة</h2>
+    <p class="section-intro">الكارتات السبع موزعة بالتساوي على دائرة خيالية باستخدام المثلثات. كل كارت يُحسب موقعه بزاوية ثابتة بينه وبين الكارت التالي.</p>
+
+    <div class="card">
+      <div class="card-header">
+        <div class="card-icon ci-purple">📐</div>
+        <div><div class="card-label">معادلة توزيع الزوايا</div><div class="card-sub">Angle Distribution Formula</div></div>
+      </div>
+      <div class="formula">
+<span class="cm">// عدد الكارتات</span>
+<span class="vr">N</span> <span class="op">=</span> <span class="nm">7</span>
+
+<span class="cm">// الزاوية بين كل كارت والتالي</span>
+<span class="vr">angleStep</span> <span class="op">=</span> <span class="nm">360</span> <span class="op">/</span> <span class="vr">N</span>
+<span class="vr">angleStep</span> <span class="op">=</span> <span class="nm">360</span> <span class="op">/</span> <span class="nm">7</span>
+<span class="vr">angleStep</span> <span class="op">=</span> <span class="nm">51.43°</span>  <span class="cm">← الزاوية بين كل كارت مجاور</span>
+
+<span class="cm">// الزاوية النسبية للكارت i بالنسبة للكارت النشط</span>
+<span class="vr">relAngle</span> <span class="op">=</span> <span class="op">((</span><span class="vr">i</span> <span class="op">-</span> <span class="vr">currentIndex</span><span class="op">)</span> <span class="op">*</span> <span class="vr">angleStep</span> <span class="op">+</span> <span class="vr">dragDelta</span><span class="op">)</span> <span class="op">%</span> <span class="nm">360</span>
+      </div>
+
+      <table class="val-table">
+        <tr>
+          <th>الكارت</th>
+          <th>الموضع النسبي</th>
+          <th>relAngle</th>
+          <th>الوصف</th>
+        </tr>
+        <tr>
+          <td><span class="val-name">currentIndex</span></td>
+          <td><span class="val-value">0°</span></td>
+          <td><span class="val-value">0°</span></td>
+          <td class="val-desc">الكارت الأمامي — في الصدارة أمام المشاهد</td>
+        </tr>
+        <tr>
+          <td><span class="val-name">i + 1</span></td>
+          <td><span class="val-value">+51.43°</span></td>
+          <td><span class="val-value">51.43°</span></td>
+          <td class="val-desc">الكارت التالي — على اليمين قليلاً في الخلف</td>
+        </tr>
+        <tr>
+          <td><span class="val-name">i + 2</span></td>
+          <td><span class="val-value">+102.86°</span></td>
+          <td><span class="val-value">102.86°</span></td>
+          <td class="val-desc">كارت جانبي أيمن — في العمق</td>
+        </tr>
+        <tr>
+          <td><span class="val-name">i + 3</span></td>
+          <td><span class="val-value">+154.28°</span></td>
+          <td><span class="val-value">154.28°</span></td>
+          <td class="val-desc">شبه خلفي — يكاد لا يُرى</td>
+        </tr>
+        <tr>
+          <td><span class="val-name">i + 3.5</span></td>
+          <td><span class="val-value">±180°</span></td>
+          <td><span class="val-value">±180°</span></td>
+          <td class="val-desc">الكارت الخلفي تماماً — يظهر وجهه الخلفي</td>
+        </tr>
+        <tr>
+          <td><span class="val-name">i - 2</span></td>
+          <td><span class="val-value">-102.86°</span></td>
+          <td><span class="val-value">-102.86°</span></td>
+          <td class="val-desc">كارت جانبي أيسر — في العمق</td>
+        </tr>
+        <tr>
+          <td><span class="val-name">i - 1</span></td>
+          <td><span class="val-value">-51.43°</span></td>
+          <td><span class="val-value">-51.43°</span></td>
+          <td class="val-desc">الكارت السابق — على اليسار قليلاً في الخلف</td>
+        </tr>
+      </table>
+    </div>
+
+    <div class="card">
+      <div class="card-header">
+        <div class="card-icon ci-teal">📏</div>
+        <div><div class="card-label">معادلة الموضع المكاني X و Z</div><div class="card-sub">Spatial Position (translateX + translateZ)</div></div>
+      </div>
+      <p style="color:var(--muted);font-size:13.5px;margin-bottom:16px;">بعد حساب الزاوية، نحوّلها إلى إحداثيات فعلية على محوري X وZ باستخدام sin و cos:</p>
+      <div class="formula">
+<span class="cm">// تحويل الزاوية إلى راديان</span>
+<span class="vr">rad</span> <span class="op">=</span> <span class="vr">relAngle</span> <span class="op">*</span> <span class="op">(</span><span class="nm">Math.PI</span> <span class="op">/</span> <span class="nm">180</span><span class="op">)</span>
+
+<span class="cm">// الإزاحة الأفقية (يمين / يسار)</span>
+<span class="vr">x</span> <span class="op">=</span> <span class="fn">Math.sin</span><span class="op">(</span><span class="vr">rad</span><span class="op">)</span> <span class="op">*</span> <span class="vr">r</span>
+
+<span class="cm">// الإزاحة العميقة (أمام / خلف)</span>
+<span class="vr">z</span> <span class="op">=</span> <span class="fn">Math.cos</span><span class="op">(</span><span class="vr">rad</span><span class="op">)</span> <span class="op">*</span> <span class="vr">r</span>
+
+<span class="cm">// r = نصف قطر الحلقة</span>
+<span class="vr">r</span> <span class="op">=</span> <span class="nm">420px</span>  <span class="cm">← Desktop</span>
+<span class="vr">r</span> <span class="op">=</span> <span class="nm">260px</span>  <span class="cm">← Mobile (≤768px)</span>
+      </div>
+
+      <table class="val-table">
+        <tr><th>الزاوية</th><th>x = sin(θ) × 420</th><th>z = cos(θ) × 420</th><th>الموضع البصري</th></tr>
+        <tr><td><span class="val-value">0°</span></td>    <td><span class="val-value">0px</span></td>      <td><span class="val-value">+420px</span></td>  <td class="val-desc">المركز أمام المشاهد تماماً</td></tr>
+        <tr><td><span class="val-value">51.4°</span></td> <td><span class="val-value">+328px</span></td>  <td><span class="val-value">+262px</span></td>  <td class="val-desc">يمين — نصف أمام، نصف جانب</td></tr>
+        <tr><td><span class="val-value">90°</span></td>   <td><span class="val-value">+420px</span></td>  <td><span class="val-value">0px</span></td>      <td class="val-desc">أقصى اليمين — على مستوى المحور</td></tr>
+        <tr><td><span class="val-value">180°</span></td>  <td><span class="val-value">0px</span></td>      <td><span class="val-value">-420px</span></td> <td class="val-desc">الخلف تماماً — أبعد نقطة</td></tr>
+        <tr><td><span class="val-value">-90°</span></td>  <td><span class="val-value">-420px</span></td> <td><span class="val-value">0px</span></td>      <td class="val-desc">أقصى اليسار — على مستوى المحور</td></tr>
+      </table>
+    </div>
+
+    <div class="diagram-wrap">
+      <svg viewBox="0 0 500 320" width="500" height="320" xmlns="http://www.w3.org/2000/svg" style="max-width:100%">
+        <defs>
+          <marker id="arr" markerWidth="6" markerHeight="6" refX="3" refY="3" orient="auto">
+            <path d="M0,0 L6,3 L0,6 Z" fill="rgba(108,99,255,.7)"/>
+          </marker>
+        </defs>
+        <!-- axes -->
+        <line x1="250" y1="20" x2="250" y2="300" stroke="rgba(255,255,255,.1)" stroke-width="1" stroke-dasharray="4,4"/>
+        <line x1="20" y1="160" x2="480" y2="160" stroke="rgba(255,255,255,.1)" stroke-width="1" stroke-dasharray="4,4"/>
+        <!-- circle -->
+        <ellipse cx="250" cy="160" rx="160" ry="60" fill="none" stroke="rgba(108,99,255,.3)" stroke-width="1.5" stroke-dasharray="6,4"/>
+        <!-- radius label -->
+        <line x1="250" y1="160" x2="410" y2="160" stroke="rgba(108,99,255,.5)" stroke-width="1" marker-end="url(#arr)"/>
+        <text x="325" y="152" fill="rgba(108,99,255,.9)" font-family="JetBrains Mono,monospace" font-size="11">r = 420px</text>
+        <!-- Z axis label -->
+        <text x="254" y="28" fill="rgba(255,255,255,.35)" font-family="JetBrains Mono,monospace" font-size="11">Z+</text>
+        <text x="254" y="298" fill="rgba(255,255,255,.35)" font-family="JetBrains Mono,monospace" font-size="11">Z-</text>
+        <text x="462" y="164" fill="rgba(255,255,255,.35)" font-family="JetBrains Mono,monospace" font-size="11">X+</text>
+        <text x="14" y="164" fill="rgba(255,255,255,.35)" font-family="JetBrains Mono,monospace" font-size="11">X-</text>
+        <!-- cards as rects -->
+        <!-- front 0° -->
+        <rect x="228" y="88" width="44" height="28" rx="4" fill="rgba(108,99,255,.7)" stroke="rgba(108,99,255,1)" stroke-width="1.5"/>
+        <text x="250" y="107" text-anchor="middle" fill="white" font-size="10" font-weight="700" font-family="JetBrains Mono,monospace">01</text>
+        <text x="250" y="78" text-anchor="middle" fill="rgba(108,99,255,.9)" font-size="10" font-family="JetBrains Mono,monospace">0° أمام</text>
+        <!-- right +51° -->
+        <rect x="358" y="121" width="36" height="22" rx="3" fill="rgba(0,212,170,.35)" stroke="rgba(0,212,170,.7)" stroke-width="1"/>
+        <text x="376" y="136" text-anchor="middle" fill="white" font-size="9" font-family="JetBrains Mono,monospace">02</text>
+        <text x="376" y="115" text-anchor="middle" fill="rgba(0,212,170,.8)" font-size="9" font-family="JetBrains Mono,monospace">+51°</text>
+        <!-- far right +103° -->
+        <rect x="400" y="149" width="30" height="20" rx="3" fill="rgba(0,212,170,.18)" stroke="rgba(0,212,170,.4)" stroke-width="1"/>
+        <text x="415" y="163" text-anchor="middle" fill="rgba(255,255,255,.6)" font-size="9" font-family="JetBrains Mono,monospace">03</text>
+        <!-- back 180° -->
+        <rect x="228" y="212" width="44" height="20" rx="3" fill="rgba(255,101,132,.2)" stroke="rgba(255,101,132,.5)" stroke-width="1" stroke-dasharray="3,2"/>
+        <text x="250" y="226" text-anchor="middle" fill="rgba(255,101,132,.9)" font-size="9" font-family="JetBrains Mono,monospace">خلف ±180°</text>
+        <!-- left -51° -->
+        <rect x="106" y="121" width="36" height="22" rx="3" fill="rgba(0,212,170,.35)" stroke="rgba(0,212,170,.7)" stroke-width="1"/>
+        <text x="124" y="136" text-anchor="middle" fill="white" font-size="9" font-family="JetBrains Mono,monospace">07</text>
+        <text x="124" y="115" text-anchor="middle" fill="rgba(0,212,170,.8)" font-size="9" font-family="JetBrains Mono,monospace">-51°</text>
+        <!-- far left -->
+        <rect x="70" y="149" width="30" height="20" rx="3" fill="rgba(0,212,170,.18)" stroke="rgba(0,212,170,.4)" stroke-width="1"/>
+        <text x="85" y="163" text-anchor="middle" fill="rgba(255,255,255,.6)" font-size="9" font-family="JetBrains Mono,monospace">06</text>
+        <!-- viewer eye -->
+        <text x="250" y="316" text-anchor="middle" fill="rgba(255,255,255,.4)" font-size="11" font-family="JetBrains Mono,monospace">👁 المشاهد</text>
+        <!-- angle arc -->
+        <path d="M 250,160 L 250,100 A 60,22 0 0,1 302,140 Z" fill="rgba(108,99,255,.08)" stroke="rgba(108,99,255,.3)" stroke-width="1"/>
+        <text x="280" y="128" fill="rgba(108,99,255,.7)" font-size="9" font-family="JetBrains Mono,monospace">51.4°</text>
+      </svg>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- ══ S2: SCALE & OPACITY ══ -->
+  <div class="section" id="s2">
+    <div class="section-tag"><span class="section-num">02</span>العمق والمقياس</div>
+    <h2>محاكاة العمق — Scale & Opacity</h2>
+    <p class="section-intro">الكارتات البعيدة تبدو أصغر وأكثر شفافية لمحاكاة المنظور ثلاثي الأبعاد. يُحسب المقياس من موضع Z.</p>
+
+    <div class="card">
+      <div class="formula">
+<span class="cm">// تطبيع z إلى مدى 0..1 (0=خلف، 1=أمام)</span>
+<span class="vr">scale</span>   <span class="op">=</span> <span class="op">(</span><span class="vr">z</span> <span class="op">+</span> <span class="vr">r</span><span class="op">)</span> <span class="op">/</span> <span class="op">(</span><span class="vr">r</span> <span class="op">*</span> <span class="nm">2</span><span class="op">)</span>
+
+<span class="cm">// الشفافية: أدنى قيمة 0.30 — أعلى قيمة 1.0</span>
+<span class="vr">opacity</span> <span class="op">=</span> <span class="nm">0.30</span> <span class="op">+</span> <span class="vr">scale</span> <span class="op">*</span> <span class="nm">0.70</span>
+
+<span class="cm">// ضبابية: الكارت النشط صفر، الخلفي أقصاه 2px</span>
+<span class="vr">blur</span>    <span class="op">=</span> <span class="op">(</span><span class="nm">1</span> <span class="op">-</span> <span class="vr">scale</span><span class="op">)</span> <span class="op">*</span> <span class="nm">2</span>   <span class="cm">← px</span>
+
+<span class="cm">// ترتيب الطبقات (z-index)</span>
+<span class="vr">zIndex</span>  <span class="op">=</span> <span class="fn">Math.round</span><span class="op">(</span><span class="vr">scale</span> <span class="op">*</span> <span class="nm">100</span><span class="op">)</span>
+      </div>
+
+      <table class="val-table">
+        <tr><th>الموضع</th><th>z</th><th>scale</th><th>opacity</th><th>blur</th><th>zIndex</th></tr>
+        <tr>
+          <td class="val-desc">أمام (0°)</td>
+          <td><span class="val-value">+420px</span></td>
+          <td><span class="val-value">1.00</span></td>
+          <td><span class="val-value">1.00</span></td>
+          <td><span class="val-value">0px</span></td>
+          <td><span class="val-value">100</span></td>
+        </tr>
+        <tr>
+          <td class="val-desc">جانب ±51°</td>
+          <td><span class="val-value">+262px</span></td>
+          <td><span class="val-value">0.81</span></td>
+          <td><span class="val-value">0.87</span></td>
+          <td><span class="val-value">0.38px</span></td>
+          <td><span class="val-value">81</span></td>
+        </tr>
+        <tr>
+          <td class="val-desc">جانب ±103°</td>
+          <td><span class="val-value">-47px</span></td>
+          <td><span class="val-value">0.44</span></td>
+          <td><span class="val-value">0.61</span></td>
+          <td><span class="val-value">1.12px</span></td>
+          <td><span class="val-value">44</span></td>
+        </tr>
+        <tr>
+          <td class="val-desc">خلفي (±180°)</td>
+          <td><span class="val-value">-420px</span></td>
+          <td><span class="val-value">0.00</span></td>
+          <td><span class="val-value">0.30</span></td>
+          <td><span class="val-value">2px</span></td>
+          <td><span class="val-value">0</span></td>
+        </tr>
+      </table>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- ══ S3: ROTATEY ══ -->
+  <div class="section" id="s3">
+    <div class="section-tag"><span class="section-num">03</span>اتجاه الكارت</div>
+    <h2>rotateY — الكارت يواجه المركز دائماً</h2>
+    <p class="section-intro">كل كارت يدور حول محور Y بمقدار عكسي لزاويته، فيظل واجهاً للمشاهد طوال الدوران. عند الوصول لـ ±180° تظهر الواجهة الخلفية تلقائياً.</p>
+
+    <div class="card">
+      <div class="formula">
+<span class="cm">// تطبيع relAngle إلى النطاق [-180, +180]</span>
+<span class="kw">let</span> <span class="vr">normAngle</span> <span class="op">=</span> <span class="vr">relAngle</span> <span class="op">%</span> <span class="nm">360</span>
+<span class="kw">if</span> <span class="op">(</span><span class="vr">normAngle</span> <span class="op">&gt;</span>  <span class="nm">180</span><span class="op">)</span>  <span class="vr">normAngle</span> <span class="op">-=</span> <span class="nm">360</span>
+<span class="kw">if</span> <span class="op">(</span><span class="vr">normAngle</span> <span class="op">&lt;</span> <span class="op">-</span><span class="nm">180</span><span class="op">)</span>  <span class="vr">normAngle</span> <span class="op">+=</span> <span class="nm">360</span>
+
+<span class="cm">// الدوران المضاد (الكارت يواجه المركز)</span>
+<span class="vr">rotY</span> <span class="op">=</span> <span class="op">-</span><span class="vr">normAngle</span>
+      </div>
+    </div>
+
+    <table class="val-table" style="margin:0">
+      <tr><th>موضع الكارت</th><th>relAngle</th><th>rotY المُطبَّق</th><th>ما يراه المشاهد</th></tr>
+      <tr>
+        <td class="val-desc">🟢 أمام</td>
+        <td><span class="val-value">0°</span></td>
+        <td><span class="val-value">rotateY(0°)</span></td>
+        <td class="val-desc">الواجهة الأمامية بالكامل</td>
+      </tr>
+      <tr>
+        <td class="val-desc">➡ يمين</td>
+        <td><span class="val-value">+51.4°</span></td>
+        <td><span class="val-value">rotateY(-51.4°)</span></td>
+        <td class="val-desc">الواجهة الأمامية مائلة، واجهة لليمين</td>
+      </tr>
+      <tr>
+        <td class="val-desc">⬆ جانب أيمن</td>
+        <td><span class="val-value">+90°</span></td>
+        <td><span class="val-value">rotateY(-90°)</span></td>
+        <td class="val-desc">حافة الكارت فقط (edge)</td>
+      </tr>
+      <tr>
+        <td class="val-desc">🔴 خلف</td>
+        <td><span class="val-value">±180°</span></td>
+        <td><span class="val-value">rotateY(∓180°)</span></td>
+        <td class="val-desc"><strong>الواجهة الخلفية (card-back)</strong></td>
+      </tr>
+      <tr>
+        <td class="val-desc">⬆ جانب أيسر</td>
+        <td><span class="val-value">-90°</span></td>
+        <td><span class="val-value">rotateY(+90°)</span></td>
+        <td class="val-desc">حافة الكارت، الواجهة تتجه لليسار</td>
+      </tr>
+      <tr>
+        <td class="val-desc">⬅ يسار</td>
+        <td><span class="val-value">-51.4°</span></td>
+        <td><span class="val-value">rotateY(+51.4°)</span></td>
+        <td class="val-desc">الواجهة الأمامية مائلة، واجهة لليسار</td>
+      </tr>
+    </table>
+
+    <div class="highlight hl-teal" style="margin-top:20px">
+      <span class="hl-icon">💡</span>
+      <div class="hl-text"><strong>سر الـ Backface:</strong> كلٌّ من <code>.card-inner</code> (الأمامية) و<code>.card-back</code> (الخلفية) لديهما <code>backface-visibility: hidden</code>. والخلفية مُدوَّرة مسبقاً بـ <code>rotateY(180deg)</code>. لذا حين يصل الكارت لـ ±180°، الأمامية تختفي والخلفية تظهر — تلقائياً بدون أي JS.</div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- ══ S4: TILT ══ -->
+  <div class="section" id="s4">
+    <div class="section-tag"><span class="section-num">04</span>نظام الإمالة</div>
+    <h2>rotateZ — إمالة الكارتات عند الانتقال</h2>
+    <p class="section-intro">عند الضغط على Next/Prev أو السحب، تميل الكارتات على محور Z لإعطاء إحساس الحركة والزخم. يتحرك الميل بـ Exponential Easing حتى يعود للصفر.</p>
+
+    <div class="grid2">
+      <div class="card">
+        <div class="card-header">
+          <div class="card-icon ci-purple">⚙️</div>
+          <div><div class="card-label">ثوابت النظام</div><div class="card-sub">Tilt Constants</div></div>
+        </div>
+        <table class="val-table">
+          <tr><th>الثابت</th><th>القيمة</th></tr>
+          <tr>
+            <td><span class="val-name">TILT_MAX</span></td>
+            <td><span class="val-value">14°</span></td>
+          </tr>
+          <tr>
+            <td><span class="val-name">TILT_EASE</span></td>
+            <td><span class="val-value">0.10</span></td>
+          </tr>
+          <tr>
+            <td><span class="val-name">tiltTarget reset</span></td>
+            <td><span class="val-value">180ms</span></td>
+          </tr>
+          <tr>
+            <td><span class="val-name">stop threshold</span></td>
+            <td><span class="val-value">0.05°</span></td>
+          </tr>
+        </table>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <div class="card-icon ci-red">🎯</div>
+          <div><div class="card-label">الاتجاه والإشارة</div><div class="card-sub">Direction Sign</div></div>
+        </div>
+        <table class="val-table">
+          <tr><th>الحدث</th><th>dir</th><th>tiltTarget</th></tr>
+          <tr>
+            <td class="val-desc">Next ←</td>
+            <td><span class="val-value">-1</span></td>
+            <td><span class="val-value">-14°</span></td>
+          </tr>
+          <tr>
+            <td class="val-desc">Prev →</td>
+            <td><span class="val-value">+1</span></td>
+            <td><span class="val-value">+14°</span></td>
+          </tr>
+          <tr>
+            <td class="val-desc">Auto Play</td>
+            <td><span class="val-value">-1</span></td>
+            <td><span class="val-value">-14°</span></td>
+          </tr>
+          <tr>
+            <td class="val-desc">بعد 180ms</td>
+            <td><span class="val-value">—</span></td>
+            <td><span class="val-value">0°</span></td>
+          </tr>
+        </table>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header">
+        <div class="card-icon ci-yellow">📈</div>
+        <div><div class="card-label">معادلة Easing التدريجي</div><div class="card-sub">Exponential Easing per Frame</div></div>
+      </div>
+      <div class="formula">
+<span class="cm">// كل إطار في requestAnimationFrame:</span>
+<span class="vr">tiltAngle</span> <span class="op">+=</span> <span class="op">(</span><span class="vr">tiltTarget</span> <span class="op">-</span> <span class="vr">tiltAngle</span><span class="op">)</span> <span class="op">*</span> <span class="nm">0.10</span>
+
+<span class="cm">// مثال: من 0° نحو -14° (next pressed)</span>
+<span class="cm">// Frame 1:  tiltAngle = 0  + (-14 - 0)  * 0.10 = -1.4°</span>
+<span class="cm">// Frame 2:  tiltAngle = -1.4 + (-14-(-1.4)) * 0.10 = -2.66°</span>
+<span class="cm">// Frame 10: tiltAngle ≈ -8.9°</span>
+<span class="cm">// Frame 20: tiltAngle ≈ -12.1°</span>
+<span class="cm">// ثم بعد 180ms: tiltTarget = 0 → يعود بنفس الطريقة</span>
+
+<span class="cm">// إيقاف الحلقة عند الاقتراب الكافي</span>
+<span class="kw">if</span> <span class="op">(</span><span class="fn">Math.abs</span><span class="op">(</span><span class="vr">tiltAngle</span> <span class="op">-</span> <span class="vr">tiltTarget</span><span class="op">)</span> <span class="op">&lt;</span> <span class="nm">0.05</span><span class="op">)</span> <span class="fn">stopAnimation</span><span class="op">()</span>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header">
+        <div class="card-icon ci-teal">🃏</div>
+        <div><div class="card-label">إمالة كل كارت بحسب عمقه</div><div class="card-sub">Per-Card Tilt Weight</div></div>
+      </div>
+      <p style="color:var(--muted);font-size:13.5px;margin-bottom:14px;">الكارت النشط (scale=1) يأخذ الإمالة الكاملة، الكارتات الخلفية أقل — يُعطي إحساس العمق الحقيقي:</p>
+      <div class="formula">
+<span class="cm">// وزن الإمالة = 50% ثابت + 50% حسب العمق</span>
+<span class="vr">cardTilt</span> <span class="op">=</span> <span class="vr">activeTilt</span> <span class="op">*</span> <span class="op">(</span><span class="nm">0.5</span> <span class="op">+</span> <span class="vr">scale</span> <span class="op">*</span> <span class="nm">0.5</span><span class="op">)</span>
+
+<span class="cm">// مثال عند activeTilt = -14°:</span>
+<span class="cm">// الكارت الأمامي  (scale=1.00): cardTilt = -14 * 1.0  = -14.0°</span>
+<span class="cm">// الكارت ±51°     (scale=0.81): cardTilt = -14 * 0.91 = -12.7°</span>
+<span class="cm">// الكارت ±103°    (scale=0.44): cardTilt = -14 * 0.72 = -10.1°</span>
+<span class="cm">// الكارت الخلفي  (scale=0.00): cardTilt = -14 * 0.5  =  -7.0°</span>
+      </div>
+    </div>
+
+    <div class="highlight hl-purple">
+      <span class="hl-icon">⏱</span>
+      <div class="hl-text">
+        <strong>التسلسل الزمني للإمالة عند Autoplay (2800ms interval):</strong><br>
+        <code>t=0ms</code> — triggerTilt(-1) → tiltTarget = -14° → تبدأ حلقة rAF<br>
+        <code>t=180ms</code> — tiltTarget = 0° → بدأ العودة<br>
+        <code>t≈600ms</code> — tiltAngle ≈ 0° (تقريباً) → توقف rAF<br>
+        <code>t=2800ms</code> — next() يُطلق من جديد
+      </div>
+    </div>
+
+    <!-- tilt timeline visual -->
+    <div class="diagram-wrap" style="padding:28px 40px">
+      <svg viewBox="0 0 460 140" width="460" height="140" xmlns="http://www.w3.org/2000/svg" style="max-width:100%">
+        <!-- grid -->
+        <line x1="40" y1="70" x2="440" y2="70" stroke="rgba(255,255,255,.08)" stroke-width="1"/>
+        <line x1="40" y1="20" x2="440" y2="20" stroke="rgba(255,101,132,.15)" stroke-width="1" stroke-dasharray="3,3"/>
+        <line x1="40" y1="120" x2="440" y2="120" stroke="rgba(255,101,132,.15)" stroke-width="1" stroke-dasharray="3,3"/>
+        <!-- labels -->
+        <text x="30" y="74" text-anchor="end" fill="rgba(255,255,255,.4)" font-size="10" font-family="JetBrains Mono,monospace">0°</text>
+        <text x="30" y="24" text-anchor="end" fill="rgba(255,101,132,.6)" font-size="10" font-family="JetBrains Mono,monospace">+14°</text>
+        <text x="30" y="124" text-anchor="end" fill="rgba(255,101,132,.6)" font-size="10" font-family="JetBrains Mono,monospace">-14°</text>
+        <!-- next curve (goes negative) -->
+        <path d="M40,70 C60,70 75,130 110,125 C145,120 155,75 180,71 C210,69 230,70 440,70"
+              fill="none" stroke="rgba(108,99,255,.8)" stroke-width="2"/>
+        <!-- prev curve (goes positive) -->
+        <path d="M40,70 C60,70 75,15 110,20 C145,25 155,68 180,70 C200,71 220,70 440,70"
+              fill="none" stroke="rgba(255,101,132,.6)" stroke-width="2" stroke-dasharray="5,3"/>
+        <!-- markers -->
+        <line x1="40" y1="10" x2="40" y2="130" stroke="rgba(108,99,255,.3)" stroke-width="1"/>
+        <line x1="110" y1="10" x2="110" y2="130" stroke="rgba(255,209,102,.2)" stroke-width="1" stroke-dasharray="3,3"/>
+        <line x1="180" y1="10" x2="180" y2="130" stroke="rgba(0,212,170,.2)" stroke-width="1" stroke-dasharray="3,3"/>
+        <!-- time labels -->
+        <text x="40" y="8" text-anchor="middle" fill="rgba(108,99,255,.8)" font-size="9" font-family="JetBrains Mono,monospace">t=0</text>
+        <text x="110" y="8" text-anchor="middle" fill="rgba(255,209,102,.6)" font-size="9" font-family="JetBrains Mono,monospace">t=180ms</text>
+        <text x="180" y="8" text-anchor="middle" fill="rgba(0,212,170,.6)" font-size="9" font-family="JetBrains Mono,monospace">t≈600ms</text>
+        <!-- legend -->
+        <rect x="290" y="100" width="12" height="3" rx="1" fill="rgba(108,99,255,.8)"/>
+        <text x="308" y="104" fill="rgba(255,255,255,.5)" font-size="9" font-family="JetBrains Mono,monospace">Next (يمين→يسار)</text>
+        <line x1="290" y1="117" x2="302" y2="117" stroke="rgba(255,101,132,.6)" stroke-width="2" stroke-dasharray="5,3"/>
+        <text x="308" y="120" fill="rgba(255,255,255,.5)" font-size="9" font-family="JetBrains Mono,monospace">Prev (يسار→يمين)</text>
+      </svg>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- ══ S5: SKEW ══ -->
+  <div class="section" id="s5">
+    <div class="section-tag"><span class="section-num">05</span>نظام الانحراف</div>
+    <h2>skewX — انحراف الكارت أثناء الحركة</h2>
+    <p class="section-intro">يُضاف skewX بنسبة مباشرة من قيمة tiltAngle. يُعطي إحساساً بالسرعة والدفع أثناء الانتقال.</p>
+
+    <div class="card">
+      <div class="formula">
+<span class="cm">// skewX مشتق مباشرة من activeTilt</span>
+<span class="vr">skewVal</span> <span class="op">=</span> <span class="vr">activeTilt</span> <span class="op">*</span> <span class="nm">0.38</span>
+
+<span class="cm">// مثال عند ذروة الإمالة (activeTilt = -14°):</span>
+<span class="vr">skewVal</span> <span class="op">=</span> <span class="op">-</span><span class="nm">14</span> <span class="op">*</span> <span class="nm">0.38</span> <span class="op">=</span> <span class="op">-</span><span class="nm">5.32°</span>  <span class="cm">← ذروة الانحراف</span>
+
+<span class="cm">// عند السحب يدوياً:</span>
+<span class="vr">activeTilt</span> <span class="op">=</span> <span class="op">-</span><span class="vr">dragDelta</span> <span class="op">*</span> <span class="nm">0.45</span>
+<span class="vr">skewVal</span>    <span class="op">=</span> <span class="op">(-</span><span class="vr">dragDelta</span> <span class="op">*</span> <span class="nm">0.45</span><span class="op">)</span> <span class="op">*</span> <span class="nm">0.38</span>
+<span class="vr">skewVal</span>    <span class="op">=</span> <span class="op">-</span><span class="vr">dragDelta</span> <span class="op">*</span> <span class="nm">0.171</span>  <span class="cm">← معامل السحب</span>
+      </div>
+
+      <table class="val-table">
+        <tr><th>الحالة</th><th>activeTilt</th><th>skewVal</th></tr>
+        <tr><td class="val-desc">راحة (لا حركة)</td>     <td><span class="val-value">0°</span></td>    <td><span class="val-value">0°</span></td></tr>
+        <tr><td class="val-desc">ذروة Next</td>           <td><span class="val-value">-14°</span></td>  <td><span class="val-value">-5.32°</span></td></tr>
+        <tr><td class="val-desc">ذروة Prev</td>           <td><span class="val-value">+14°</span></td>  <td><span class="val-value">+5.32°</span></td></tr>
+        <tr><td class="val-desc">سحب 50px يساراً</td>    <td><span class="val-value">-2.25°</span></td><td><span class="val-value">-0.86°</span></td></tr>
+        <tr><td class="val-desc">سحب 200px يساراً</td>   <td><span class="val-value">-9°</span></td>   <td><span class="val-value">-3.42°</span></td></tr>
+      </table>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- ══ S6: FULL TRANSFORM ══ -->
+  <div class="section" id="s6">
+    <div class="section-tag"><span class="section-num">06</span>مكدس التحويلات</div>
+    <h2>التحويل الكامل — ترتيب العمليات</h2>
+    <p class="section-intro">الترتيب في CSS transform مهم جداً — كل تحويل يؤثر على إحداثيات التحويل التالي. هذا هو الترتيب المُطبَّق على كل كارت:</p>
+
+    <div class="transform-stack">
+      <div class="tf-row">
+        <div class="tf-order">1</div>
+        <div class="tf-name">translateX(x)</div>
+        <div class="tf-val">sin(relAngle) × r</div>
+        <div class="tf-why">ينقل الكارت أفقياً على محور X</div>
+      </div>
+      <div class="tf-row">
+        <div class="tf-order">2</div>
+        <div class="tf-name">translateZ(z)</div>
+        <div class="tf-val">cos(relAngle) × r</div>
+        <div class="tf-why">ينقله للأمام/خلف — يعطي العمق البصري</div>
+      </div>
+      <div class="tf-row">
+        <div class="tf-order">3</div>
+        <div class="tf-name">rotateY(rotY)</div>
+        <div class="tf-val">-normAngle</div>
+        <div class="tf-why">يوجه واجهة الكارت نحو المشاهد دائماً</div>
+      </div>
+      <div class="tf-row">
+        <div class="tf-order">4</div>
+        <div class="tf-name">rotateZ(cardTilt)</div>
+        <div class="tf-val">activeTilt × (0.5 + scale×0.5)</div>
+        <div class="tf-why">يميل الكارت بزاوية الحركة (tilt effect)</div>
+      </div>
+      <div class="tf-row">
+        <div class="tf-order">5</div>
+        <div class="tf-name">skewX(skewVal)</div>
+        <div class="tf-val">activeTilt × 0.38</div>
+        <div class="tf-why">ينحرف الكارت — يُعبّر عن السرعة</div>
+      </div>
+    </div>
+
+    <div class="formula" style="margin-top:20px">
+<span class="cm">// السطر الكامل في JS</span>
+<span class="vr">card</span><span class="op">.</span><span class="vr">style</span><span class="op">.</span><span class="vr">transform</span> <span class="op">=</span> <span class="op">`</span>
+  <span class="fn">translateX</span><span class="op">(</span><span class="vr">${x}</span><span class="op">px)</span>
+  <span class="fn">translateZ</span><span class="op">(</span><span class="vr">${z}</span><span class="op">px)</span>
+  <span class="fn">rotateY</span><span class="op">(</span><span class="vr">${rotY}</span><span class="op">deg)</span>
+  <span class="fn">rotateZ</span><span class="op">(</span><span class="vr">${cardTilt}</span><span class="op">deg)</span>
+  <span class="fn">skewX</span><span class="op">(</span><span class="vr">${skewVal}</span><span class="op">deg)</span>
+<span class="op">`</span>
+    </div>
+
+    <div class="highlight hl-yellow">
+      <span class="hl-icon">⚠️</span>
+      <div class="hl-text"><strong>ملاحظة ترتيب العمليات:</strong> translateX/Z أولاً لأنهما يضعان الكارت في موقعه على الحلقة. ثم rotateY ليوجهه. ثم rotateZ وskewX اللذان يُطبَّقان على الكارت المُوجَّه — لو أُخِّر rotateY لتغير محور الإمالة وانكسر التأثير.</div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- ══ S7: CSS TRANSITION ══ -->
+  <div class="section" id="s7">
+    <div class="section-tag"><span class="section-num">07</span>توقيت الانتقالات</div>
+    <h2>CSS Transition — الانسيابية</h2>
+    <p class="section-intro">الانسيابية مُدارة بـ CSS transition على كل كارت، وبـ requestAnimationFrame لنظام الإمالة. البُعدان مستقلان لتحقيق انسيابية مزدوجة.</div>
+
+    <div class="grid2">
+      <div class="card">
+        <div class="card-header">
+          <div class="card-icon ci-purple">🎞</div>
+          <div><div class="card-label">CSS Transition</div><div class="card-sub">.service-card</div></div>
+        </div>
+        <div class="formula" style="font-size:12px;line-height:2">
+<span class="vr">transition</span><span class="op">:</span>
+  <span class="fn">transform</span>  <span class="nm">0.85s</span>
+  <span class="fn">cubic-bezier</span><span class="op">(</span><span class="nm">0.25</span><span class="op">,</span><span class="nm">0.46</span><span class="op">,</span><span class="nm">0.45</span><span class="op">,</span><span class="nm">0.94</span><span class="op">)</span><span class="op">,</span>
+  <span class="fn">opacity</span>    <span class="nm">0.40s</span> <span class="fn">ease</span><span class="op">,</span>
+  <span class="fn">filter</span>     <span class="nm">0.40s</span> <span class="fn">ease</span>
+        </div>
+        <table class="val-table">
+          <tr><th>الخاصية</th><th>المدة</th><th>التوقيت</th></tr>
+          <tr><td><span class="val-name">transform</span></td><td><span class="val-value">850ms</span></td><td class="val-desc">cubic-bezier ناعم</td></tr>
+          <tr><td><span class="val-name">opacity</span></td>  <td><span class="val-value">400ms</span></td><td class="val-desc">ease</td></tr>
+          <tr><td><span class="val-name">filter</span></td>   <td><span class="val-value">400ms</span></td><td class="val-desc">ease (blur)</td></tr>
+        </table>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <div class="card-icon ci-teal">🔄</div>
+          <div><div class="card-label">cubic-bezier المُستخدَمة</div><div class="card-sub">Ease-Out Quint feel</div></div>
+        </div>
+        <div style="color:var(--muted);font-size:13px;line-height:1.7">
+          <p><code>cubic-bezier(0.25, 0.46, 0.45, 0.94)</code></p>
+          <br>
+          <p>هذه المنحنى يُعطي:</p>
+          <p>• انطلاق سريع في البداية (P1=0.25)</p>
+          <p>• تباطؤ ناعم جداً في النهاية (P4=0.94)</p>
+          <p>• يُعطي إحساس الزخم الطبيعي</p>
+          <br>
+          <p>مقارنة: <code>ease</code> = (0.25,0.1,0.25,1.0)</p>
+          <p>منحنانا أسرع بداية وأنعم نهاية</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="timeline">
+      <div class="tl-item">
+        <div class="tl-time">t = 0ms</div>
+        <div class="tl-title">لحظة الضغط / الانتقال</div>
+        <div class="tl-desc">JS يُحدِّث currentIndex → يُعيد حساب كل transform → CSS transition يبدأ</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-time">t = 0 → 180ms</div>
+        <div class="tl-title">ذروة الإمالة</div>
+        <div class="tl-desc">tiltAngle يتصاعد نحو ±14° بـ rAF (10% easing/frame @ 60fps)</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-time">t = 180ms</div>
+        <div class="tl-title">بدء العودة للإمالة</div>
+        <div class="tl-desc">setTimeout → tiltTarget = 0 → tiltAngle يبدأ بالعودة نحو 0°</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-time">t = 400ms</div>
+        <div class="tl-title">نصف مسار حركة الكارت</div>
+        <div class="tl-desc">cubic-bezier عند t=0.47 → حوالي 85% من المسار مكتمل (البداية السريعة)</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-time">t = 600ms</div>
+        <div class="tl-title">الإمالة تعود للصفر</div>
+        <div class="tl-desc">rAF يتوقف لأن |tiltAngle - 0| &lt; 0.05°</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-time">t = 850ms</div>
+        <div class="tl-title">اكتمال الحركة</div>
+        <div class="tl-desc">CSS transition منتهٍ — الكارتات في مواضعها النهائية</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- ══ S8: DRAG ══ -->
+  <div class="section" id="s8">
+    <div class="section-tag"><span class="section-num">08</span>تفاعل السحب</div>
+    <h2>Drag & Swipe — التفاعل اليدوي</h2>
+    <p class="section-intro">يدعم النظام السحب بالماوس، اللمس، ولوحة المفاتيح. المعامل الرئيسي يُحوِّل الـ pixels لدرجات دوران.</p>
+
+    <div class="card">
+      <div class="formula">
+<span class="cm">// تحويل المسافة إلى دوران (أثناء السحب)</span>
+<span class="vr">dragDelta</span> <span class="op">=</span> <span class="op">(</span><span class="vr">clientX</span> <span class="op">-</span> <span class="vr">dragStartX</span><span class="op">)</span> <span class="op">*</span> <span class="nm">0.10</span>
+
+<span class="cm">// مثال: سحب 100px يميناً</span>
+<span class="vr">dragDelta</span> <span class="op">=</span> <span class="nm">100</span> <span class="op">*</span> <span class="nm">0.10</span> <span class="op">=</span> <span class="nm">10°</span>  <span class="cm">← دوران 10 درجات</span>
+
+<span class="cm">// عتبة القرار (commit to next/prev)</span>
+<span class="kw">if</span> <span class="op">(</span><span class="fn">Math.abs</span><span class="op">(</span><span class="vr">moved</span><span class="op">)</span> <span class="op">&gt;</span> <span class="nm">60px</span><span class="op">)</span>  <span class="cm">← يُنفِّذ الانتقال</span>
+<span class="kw">else</span>                            <span class="cm">← يعود للموضع الأصلي</span>
+
+<span class="cm">// الإمالة أثناء السحب (لا rAF — مباشر)</span>
+<span class="vr">activeTilt</span> <span class="op">=</span> <span class="op">-</span><span class="vr">dragDelta</span> <span class="op">*</span> <span class="nm">0.45</span>
+      </div>
+
+      <table class="val-table">
+        <tr><th>الحدث</th><th>المعامل</th><th>القيمة</th><th>التأثير</th></tr>
+        <tr>
+          <td class="val-desc">mousemove / touchmove</td>
+          <td><span class="val-name">dragSensitivity</span></td>
+          <td><span class="val-value">0.10</span></td>
+          <td class="val-desc">10px = 1° دوران</td>
+        </tr>
+        <tr>
+          <td class="val-desc">تأثير الإمالة أثناء السحب</td>
+          <td><span class="val-name">tiltFromDrag</span></td>
+          <td><span class="val-value">0.45</span></td>
+          <td class="val-desc">dragDelta × -0.45 → tilt</td>
+        </tr>
+        <tr>
+          <td class="val-desc">عتبة تأكيد الانتقال</td>
+          <td><span class="val-name">threshold</span></td>
+          <td><span class="val-value">60px</span></td>
+          <td class="val-desc">أقل من 60px → رجوع للأصل</td>
+        </tr>
+        <tr>
+          <td class="val-desc">لوحة المفاتيح ←</td>
+          <td><span class="val-name">ArrowLeft</span></td>
+          <td><span class="val-value">prev()</span></td>
+          <td class="val-desc">يُطلق تأثير الإمالة الكامل</td>
+        </tr>
+        <tr>
+          <td class="val-desc">لوحة المفاتيح →</td>
+          <td><span class="val-name">ArrowRight</span></td>
+          <td><span class="val-value">next()</span></td>
+          <td class="val-desc">يُطلق تأثير الإمالة الكامل</td>
+        </tr>
+      </table>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- ══ S9: AUTOPLAY ══ -->
+  <div class="section" id="s9">
+    <div class="section-tag"><span class="section-num">09</span>التشغيل التلقائي</div>
+    <h2>Auto-Play — الدوران التلقائي</h2>
+
+    <div class="card">
+      <div class="formula">
+<span class="cm">// الفترة بين كل انتقال</span>
+<span class="vr">autoTimer</span> <span class="op">=</span> <span class="fn">setInterval</span><span class="op">(</span><span class="vr">next</span><span class="op">,</span> <span class="nm">2800</span><span class="op">)</span>   <span class="cm">← 2.8 ثانية</span>
+
+<span class="cm">// يتوقف تلقائياً عند:</span>
+<span class="cm">// • mousedown / touchstart (سحب يدوي)</span>
+<span class="cm">// • زر Play/Pause</span>
+
+<span class="cm">// يستأنف عند:</span>
+<span class="cm">// • mouseup / touchend (انتهاء السحب) إذا isPlaying = true</span>
+<span class="cm">// • زر Play/Pause (تشغيل)</span>
+      </div>
+
+      <table class="val-table">
+        <tr><th>القيمة</th><th>الرقم</th><th>السبب</th></tr>
+        <tr>
+          <td><span class="val-name">الفاصل الزمني</span></td>
+          <td><span class="val-value">2800ms</span></td>
+          <td class="val-desc">يمنح وقتاً كافياً لقراءة الكارت (2.8s) مع إتمام كل انتقال (850ms)</td>
+        </tr>
+        <tr>
+          <td><span class="val-name">الاتجاه</span></td>
+          <td><span class="val-value">next() دائماً</span></td>
+          <td class="val-desc">اتجاه واحد — يُعطي تدفقاً خطياً</td>
+        </tr>
+      </table>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- ══ S10: RESPONSIVE ══ -->
+  <div class="section" id="s10">
+    <div class="section-tag"><span class="section-num">10</span>الاستجابة</div>
+    <h2>Responsive — قيم الشاشات المختلفة</h2>
+
+    <table class="resp-table">
+      <tr>
+        <th>المتغير</th>
+        <th>Desktop (&gt;768px)</th>
+        <th>Mobile (≤768px)</th>
+        <th>التغيير النسبي</th>
+      </tr>
+      <tr>
+        <td><code>--radius (r)</code></td>
+        <td><span class="val-value" style="font-family:var(--mono);color:#ffd166">420px</span></td>
+        <td><span class="val-value" style="font-family:var(--mono);color:#ffd166">260px</span></td>
+        <td>-38%</td>
+      </tr>
+      <tr>
+        <td><code>--card-w</code></td>
+        <td>280px</td>
+        <td>230px</td>
+        <td>-18%</td>
+      </tr>
+      <tr>
+        <td><code>--card-h</code></td>
+        <td>340px</td>
+        <td>290px</td>
+        <td>-15%</td>
+      </tr>
+      <tr>
+        <td><code>.carousel-stage height</code></td>
+        <td>520px</td>
+        <td>420px</td>
+        <td>-19%</td>
+      </tr>
+      <tr>
+        <td><code>angleStep</code></td>
+        <td>51.43°</td>
+        <td>51.43°</td>
+        <td>لا تغيير (N=7 ثابت)</td>
+      </tr>
+      <tr>
+        <td><code>TILT_MAX</code></td>
+        <td>14°</td>
+        <td>14°</td>
+        <td>لا تغيير</td>
+      </tr>
+      <tr>
+        <td><code>drag threshold</code></td>
+        <td>60px</td>
+        <td>60px</td>
+        <td>لا تغيير</td>
+      </tr>
+      <tr>
+        <td><code>autoplay interval</code></td>
+        <td>2800ms</td>
+        <td>2800ms</td>
+        <td>لا تغيير</td>
+      </tr>
+    </table>
+
+    <div class="highlight hl-teal" style="margin-top:20px">
+      <span class="hl-icon">📱</span>
+      <div class="hl-text"><strong>ملاحظة:</strong> تغيير <code>r</code> فقط يُعيد ضبط كل المنظور تلقائياً — لأن scale وopacity وblur كلها محسوبة نسبياً من <code>r</code>. لا يلزم تغيير أي معادلة أخرى.</div>
+    </div>
+  </div>
+
+  <!-- ══ FOOTER ══ -->
+  <div class="footer">
+    توثيق شامل لـ <strong>3D Circular Carousel</strong> — كل القيم قابلة للتعديل عبر المتغيرات المذكورة أعلاه
+  </div>
+
+</div>
+</body>
+</html>

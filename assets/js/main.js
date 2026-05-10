@@ -242,16 +242,15 @@
   /**
    * Dark Mode Toggle
    */
+  const body = document.body;
+  const currentTheme = localStorage.getItem('theme');
+  if (currentTheme) {
+    body.classList.toggle('dark-mode', currentTheme === 'dark');
+  }
+
   const darkModeToggle = document.getElementById('darkModeToggle');
   if (darkModeToggle) {
-    const body = document.body;
     const moonIcon = darkModeToggle.querySelector('i');
-
-    // Check for saved dark mode preference or default to light mode
-    const currentTheme = localStorage.getItem('theme');
-    if (currentTheme) {
-      body.classList.toggle('dark-mode', currentTheme === 'dark');
-    }
 
     // Update icon based on current theme
     function updateIcon() {
@@ -289,12 +288,17 @@
   /**
    * Language Toggle
    */
+  const currentLang = localStorage.getItem('portfolio_language') || 'en';
+  document.documentElement.lang = currentLang;
+  if (currentLang === 'ar') {
+    body.classList.add('rtl');
+  } else {
+    body.classList.remove('rtl');
+  }
+
   const languageToggle = document.getElementById('languageToggle');
   if (languageToggle) {
-    const body = document.body;
     const langIcon = languageToggle.querySelector('i');
-
-    const currentLang = localStorage.getItem('portfolio_language') || 'en';
 
     function updateLangIcon() {
       const lang = localStorage.getItem('portfolio_language') || 'en';

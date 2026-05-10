@@ -206,10 +206,7 @@ body.dark-mode .cv-carousel-card .card-back {
 .stretched-link-arrow {
   position: absolute;
   inset: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: inherit;
+  z-index: 10;
   text-decoration: none;
 }
 

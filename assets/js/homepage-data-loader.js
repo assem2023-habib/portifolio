@@ -286,7 +286,10 @@ function populateServiceItems() {
     // Add Link to Arrow
     const arrowWrap = cardClone.querySelector('.card-arrow');
     if (arrowWrap) {
-      arrowWrap.innerHTML = `<a href="service-details.html?service=${service.id}" class="stretched-link-arrow"><i class="bi bi-arrow-right"></i></a>`;
+      arrowWrap.innerHTML = `
+        <i class="bi bi-arrow-right"></i>
+        <a href="service-details.html?service=${service.id}" class="stretched-link-arrow"></a>
+      `;
     }
     
     // Back side

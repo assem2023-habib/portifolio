@@ -168,10 +168,14 @@ function populatePortfolioItems() {
     projectClone.style.display = 'block';
     projectClone.setAttribute('data-aos-delay', 100 + index * 100);
     
-    // الصورة
+    // الصورة (مع دعم الوضع الليلي)
     const imgElement = projectClone.querySelector('img');
     if (imgElement) {
-      imgElement.src = project.thumbnail || project.image;
+      const isDarkMode = document.body.classList.contains('dark-mode');
+      const lightImg = project.thumbnail || project.image;
+      const darkImg = project.thumbnail_dark || project.image_dark || lightImg;
+      
+      imgElement.src = isDarkMode ? darkImg : lightImg;
       imgElement.alt = `${getLocalizedTitle(project)} - ${getLocalizedDescription(project)}`;
     }
     

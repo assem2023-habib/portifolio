@@ -378,6 +378,14 @@ function loadSavedCVLanguage() {
 }
 
 /**
+ * تتبع عمليات تحميل الـ CV
+ */
+function trackCVDownload(cvId, format) {
+  console.log(`📥 CV Download Tracked: [ID: ${cvId}] [Format: ${format}]`);
+  // يمكن إضافة كود Google Analytics أو Firebase هنا لاحقاً
+}
+
+/**
  * تهيئة نظام الـ CVs
  */
 async function initCVLoader() {

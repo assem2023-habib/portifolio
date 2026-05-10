@@ -55,10 +55,14 @@ function updateProjectDetails() {
             element.textContent = project.title;
         });
 
-        // Update project image with lazy loading
+        // Update project image with lazy loading (Theme-aware)
         const projectImage = document.querySelector('.project-image');
         if (projectImage) {
-            projectImage.src = project.image || 'assets/img/portfolio-placeholder.jpg';
+            const isDarkMode = document.body.classList.contains('dark-mode');
+            const lightImg = project.image || 'assets/img/portfolio-placeholder.jpg';
+            const darkImg = project.imageDark || lightImg;
+            
+            projectImage.src = isDarkMode ? darkImg : lightImg;
             projectImage.alt = project.title;
             projectImage.loading = 'lazy';
         }

@@ -276,7 +276,8 @@ const portfolioData = {
   shiftpay: {
     title: "Shift Pay",
     category: "mobile",
-    image: "assets/img/Projects_Images/ShiftPay/main_page.png",
+    image: "assets/img/Projects_Images/ShiftPay/main_image/Shidt_pay_Main_card_LightMode.png",
+    imageDark: "assets/img/Projects_Images/ShiftPay/main_image/Shift_pay_Main_card_DarkMode.png",
     description: "Smart employee and finance management system with an advanced voice assistant supporting Egyptian dialect, built for offline efficiency",
     detailsUrl: "project.html",
     gallery: "portfolio-gallery-mobile",

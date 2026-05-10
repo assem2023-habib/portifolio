@@ -27,7 +27,7 @@ const portfolioData = {
   stitchhub: {
     title: "Sewing Store",
     category: "web",
-    image: "assets/img/masonry-portfolio/masonry-portfolio-2.jpg",
+    image: "assets/img/Projects_Images/Sweing/main_page.png",
     description: "Comprehensive e-commerce platform for sewing and tailoring supplies with multi-language support, advanced admin dashboard, and hierarchical micro-inventory management",
     detailsUrl: "project.html",
     gallery: "portfolio-gallery-web",
@@ -46,9 +46,11 @@ const portfolioData = {
       "Promotional offers management system"
     ],
     galleryImages: [
-      "assets/img/masonry-portfolio/masonry-portfolio-2.jpg",
-      "assets/img/portfolio/app-2.jpg",
-      "assets/img/portfolio/branding-1.jpg"
+      "assets/img/Projects_Images/Sweing/main_page.png",
+      "assets/img/Projects_Images/Sweing/127.0.0.1_8000_login.png",
+      "assets/img/Projects_Images/Sweing/127.0.0.1_8000_en_categories.png",
+      "assets/img/Projects_Images/Sweing/127.0.0.1_8000_en_cart.png",
+      "assets/img/Projects_Images/Sweing/127.0.0.1_8000_en_admin_dashboard.png"
     ]
   },
   cutoptimizer: {

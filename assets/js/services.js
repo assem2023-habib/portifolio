@@ -53,10 +53,10 @@ async function updateServiceDetails() {
 
         // Update main content
         const serviceImage = document.querySelector('.services-img');
-        const serviceTitle = document.querySelector('#service-details h3');
-        const serviceDescription = document.querySelector('#service-details .col-lg-8 p');
-        const featuresList = document.querySelector('#service-details ul');
-        const detailsParagraph = document.querySelector('#service-details .col-lg-8 p:nth-of-type(2)');
+        const serviceTitle = document.querySelector('#service-details h2');
+        const serviceDescription = document.querySelector('#service-details .lead');
+        const featuresList = document.querySelector('#service-details .service-box ul');
+        const detailsParagraph = document.querySelector('#service-details .details-text');
 
         if (serviceImage) serviceImage.src = serviceData.image || 'assets/img/services.jpg';
         if (serviceTitle) serviceTitle.textContent = title;

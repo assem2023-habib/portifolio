@@ -27,48 +27,47 @@
   <!-- Main CSS File -->
   <link href="assets/css/main.css" rel="stylesheet">
 </head>
+  <style>
+    .service-details-page #header { display: none; }
+    .glass-card {
+      background: rgba(255, 255, 255, 0.6);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+    }
+    body.dark-mode .glass-card {
+      background: rgba(26, 26, 46, 0.6);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    .main { margin-left: 0 !important; }
+    @media (max-width: 1199px) {
+      .main { margin-left: 0 !important; }
+    }
+  </style>
+
+</head>
 
 <body class="service-details-page">
-
-  <header id="header" class="header d-flex flex-column justify-content-center">
-
-    <i class="header-toggle d-xl-none bi bi-list"></i>
-
-    <!-- Language Toggle Button -->
-    <button id="languageToggle" class="language-toggle" title="تبديل اللغة / Change Language" style="display: none;">
-      <i class="bi bi-translate"></i>
-    </button>
-
-    <!-- Dark Mode Toggle Button -->
-    <button id="darkModeToggle" class="dark-mode-toggle d-xl-none" title="تبديل الوضع المظلم">
-      <i class="bi bi-moon-fill"></i>
-    </button>
-
-    <nav id="navmenu" class="navmenu">
-      <ul>
-        <li><a href="#hero"><i class="bi bi-house navicon"></i><span>Home</span></a></li>
-        <li><a href="#about"><i class="bi bi-person navicon"></i><span>About</span></a></li>
-        <li><a href="#resume"><i class="bi bi-file-earmark-text navicon"></i><span>Resume</span></a></li>
-        <li><a href="#portfolio"><i class="bi bi-images navicon"></i><span>Portfolio</span></a></li>
-        <li><a href="#services"><i class="bi bi-hdd-stack navicon"></i><span>Services</span></a></li>
-        <li><a href="#contact"><i class="bi bi-envelope navicon"></i><span>Contact</span></a></li>
-      </ul>
-    </nav>
-
-  </header>
 
   <main class="main">
 
     <!-- Page Title -->
     <div class="page-title" data-aos="fade">
-      <div class="container">
-        <nav class="breadcrumbs">
-          <ol>
-            <li><a href="index.html">Home</a></li>
-            <li class="current">Service Details</li>
-          </ol>
-        </nav>
-        <h1>Services Details</h1>
+      <div class="container d-flex justify-content-between align-items-center">
+        <div>
+          <nav class="breadcrumbs">
+            <ol>
+              <li><a href="index.html">Home</a></li>
+              <li class="current">Service Details</li>
+            </ol>
+          </nav>
+          <h1 class="mb-0">Services Details</h1>
+        </div>
+        <a href="index.html#services" class="btn btn-outline-primary rounded-pill px-4">
+          <i class="bi bi-arrow-left me-2"></i>
+          <span class="lang-en">Back to Services</span>
+          <span class="lang-ar" style="display:none;">العودة للخدمات</span>
+        </a>
       </div>
     </div><!-- End Page Title -->
 
@@ -77,52 +76,43 @@
 
       <div class="container">
 
-        <div class="row gy-5">
+        <div class="row justify-content-center">
 
-          <div class="col-lg-4" data-aos="fade-up" data-aos-delay="100">
+          <div class="col-lg-10">
+            <div class="glass-card p-4 p-md-5 rounded-4 shadow-sm">
+              <div class="row gy-4">
+                <div class="col-lg-12" data-aos="fade-up" data-aos-delay="100">
+                  <div class="position-relative overflow-hidden rounded-4 mb-4" style="max-height: 400px;">
+                    <img src="assets/img/services.jpg" alt="" class="img-fluid services-img w-100 object-fit-cover">
+                  </div>
+                </div>
 
-            <div class="service-box">
-              <h4>Serices List</h4>
-              <div class="services-list">
-                <a href="#" class="active"><i class="bi bi-arrow-right-circle"></i><span>Web Design</span></a>
-                <a href="#"><i class="bi bi-arrow-right-circle"></i><span>Web Design</span></a>
-                <a href="#"><i class="bi bi-arrow-right-circle"></i><span>Product Management</span></a>
-                <a href="#"><i class="bi bi-arrow-right-circle"></i><span>Graphic Design</span></a>
-                <a href="#"><i class="bi bi-arrow-right-circle"></i><span>Marketing</span></a>
+                <div class="col-lg-8" data-aos="fade-up" data-aos-delay="200">
+                  <h2 class="fw-bold mb-3"></h2>
+                  <p class="lead opacity-75 mb-4">
+                  </p>
+                  
+                  <div class="details-text mb-4">
+                  </div>
+                </div>
+
+                <div class="col-lg-4" data-aos="fade-up" data-aos-delay="300">
+                  <div class="service-box p-4 rounded-4 mb-4 border bg-light bg-opacity-10">
+                    <h4 class="fw-bold mb-3">Key Features</h4>
+                    <ul class="list-unstyled mb-0">
+                      <!-- Features will be loaded here -->
+                    </ul>
+                  </div>
+
+                  <div class="help-box d-flex flex-column justify-content-center align-items-center p-4 rounded-4 bg-primary bg-opacity-10 border border-primary border-opacity-25">
+                    <i class="bi bi-headset help-icon fs-1 mb-3 text-primary"></i>
+                    <h4 class="fw-bold">Have a Question?</h4>
+                    <p class="d-flex align-items-center mt-2 mb-0"><i class="bi bi-telephone me-2"></i> <span>+963 994 636 381</span></p>
+                    <p class="d-flex align-items-center mt-1 mb-0"><i class="bi bi-envelope me-2"></i> <a href="mailto:099assemhb@gmail.com">099assemhb@gmail.com</a></p>
+                  </div>
+                </div>
               </div>
-            </div><!-- End Services List -->
-
-            <div class="service-box">
-              <h4>Download Catalog</h4>
-              <div class="download-catalog">
-                <a href="#"><i class="bi bi-filetype-pdf"></i><span>Catalog PDF</span></a>
-                <a href="#"><i class="bi bi-file-earmark-word"></i><span>Catalog DOC</span></a>
-              </div>
-            </div><!-- End Services List -->
-
-            <div class="help-box d-flex flex-column justify-content-center align-items-center">
-              <i class="bi bi-headset help-icon"></i>
-              <h4>Have a Question?</h4>
-              <p class="d-flex align-items-center mt-2 mb-0"><i class="bi bi-telephone me-2"></i> <span>+963 994 636 381</span></p>
-              <p class="d-flex align-items-center mt-1 mb-0"><i class="bi bi-envelope me-2"></i> <a href="mailto:contact@example.com">099assemhb@gmail.com</a></p>
             </div>
-
-          </div>
-
-          <div class="col-lg-8 ps-lg-5" data-aos="fade-up" data-aos-delay="200">
-            <img src="assets/img/services.jpg" alt="" class="img-fluid services-img">
-            <h3></h3>
-            <p>
-            </p>
-            <ul>
-              <li><i class="bi bi-check-circle"></i> <span></span></li>
-              <li><i class="bi bi-check-circle"></i> <span></span></li>
-              <li><i class="bi bi-check-circle"></i> <span></span></li>
-            </ul>
-            <p>
-            </p>
-            <p>
-            </p>
           </div>
 
         </div>

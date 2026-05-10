@@ -46,7 +46,8 @@
   transition: transform 0.9s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
-.service-carousel-card {
+.service-carousel-card,
+.cv-carousel-card {
   position: absolute;
   width: var(--carousel-card-w);
   height: var(--carousel-card-h);
@@ -57,7 +58,8 @@
   transition: transform 0.85s cubic-bezier(0.25, 0.46, 0.45, 0.94), opacity 0.4s ease, filter 0.4s ease;
 }
 
-.service-carousel-card .card-inner {
+.service-carousel-card .card-inner,
+.cv-carousel-card .card-inner {
   position: absolute;
   inset: 0;
   padding: 32px 28px;
@@ -74,7 +76,8 @@
   -webkit-backface-visibility: hidden;
 }
 
-.service-carousel-card .card-back {
+.service-carousel-card .card-back,
+.cv-carousel-card .card-back {
   position: absolute;
   inset: 0;
   border-radius: 20px;
@@ -93,11 +96,13 @@
   padding: 28px;
 }
 
-body.dark-mode .service-carousel-card .card-back {
+body.dark-mode .service-carousel-card .card-back,
+body.dark-mode .cv-carousel-card .card-back {
   background: color-mix(in srgb, var(--background-color), white 5%);
 }
 
-.service-carousel-card.active .card-inner {
+.service-carousel-card.active .card-inner,
+.cv-carousel-card.active .card-inner {
   border-color: var(--accent-color);
   box-shadow: 0 0 30px color-mix(in srgb, var(--accent-color), transparent 70%);
 }
@@ -113,7 +118,8 @@ body.dark-mode .service-carousel-card .card-back {
   opacity: 0;
 }
 
-.service-carousel-card.active .card-glow { opacity: 1; }
+.service-carousel-card.active .card-glow,
+.cv-carousel-card.active .card-glow { opacity: 1; }
 
 .card-header-wrap {
   display: flex;
@@ -140,7 +146,8 @@ body.dark-mode .service-carousel-card .card-back {
   transition: all .4s;
 }
 
-.service-carousel-card.active .card-icon-wrap {
+.service-carousel-card.active .card-icon-wrap,
+.cv-carousel-card.active .card-icon-wrap {
   background: color-mix(in srgb, var(--accent-color), transparent 90%);
   border-color: var(--accent-color);
 }
@@ -189,7 +196,8 @@ body.dark-mode .service-carousel-card .card-back {
   transition: all 0.3s;
 }
 
-.service-carousel-card.active .card-arrow {
+.service-carousel-card.active .card-arrow,
+.cv-carousel-card.active .card-arrow {
   background: var(--accent-color);
   border-color: var(--accent-color);
   color: var(--contrast-color);

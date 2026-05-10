@@ -58,8 +58,261 @@ function getCVLocalizedText(cv, lang = null) {
   };
 }
 
+// ── CV Carousel State ──
+let cvCarouselState = {
+  currentIndex: 0,
+  isPlaying: true,
+  autoTimer: null,
+  isDragging: false,
+  dragStartX: 0,
+  dragDelta: 0,
+  tiltAngle: 0,
+  tiltTarget: 0,
+  tiltRaf: null,
+  TILT_MAX: 14,
+  TILT_EASE: 0.10
+};
+
 /**
- * إنشاء عنصر CV DOM
+ * إنشاء عنصر CV DOM للـ Carousel
+ */
+function createCVCarouselElement(cv, i) {
+  const text = getCVLocalizedText(cv, currentCVLang);
+  const template = document.getElementById('cv-card-template');
+  if (!template) return '';
+  
+  const cardClone = template.querySelector('.cv-carousel-card').cloneNode(true);
+  const hasPDF = cv.files && cv.files.pdf;
+  const hasDOCX = cv.files && cv.files.docx;
+
+  // Populate Card
+  cardClone.querySelector('.card-number').textContent = (i + 1).toString().padStart(2, '0');
+  cardClone.querySelector('.cv-title').textContent = text.title;
+  cardClone.querySelector('.cv-specialization').textContent = text.specialization;
+  cardClone.querySelector('.cv-description').textContent = text.description;
+  
+  const btnsContainer = cardClone.querySelector('#cv-download-btns');
+  if (btnsContainer) {
+    btnsContainer.innerHTML = '';
+    if (hasPDF) {
+      btnsContainer.innerHTML += `
+        <a href="${cv.files.pdf}" download class="btn btn-outline-primary btn-sm flex-grow-1" onclick="CVLoader.trackCVDownload('${cv.id}', 'pdf')">
+          <i class="bi bi-file-earmark-pdf me-1"></i>PDF
+        </a>
+      `;
+    }
+    if (hasDOCX) {
+      btnsContainer.innerHTML += `
+        <a href="${cv.files.docx}" download class="btn btn-outline-primary btn-sm flex-grow-1" onclick="CVLoader.trackCVDownload('${cv.id}', 'docx')">
+          <i class="bi bi-file-earmark-word me-1"></i>Word
+        </a>
+      `;
+    }
+  }
+
+  // Back side
+  cardClone.querySelector('.back-title').textContent = text.title;
+  cardClone.querySelector('.back-num').textContent = (i + 1).toString().padStart(2, '0');
+
+  cardClone.addEventListener('click', () => {
+    if (Math.abs(cvCarouselState.dragDelta) < 1) {
+      goToCV(i);
+    }
+  });
+
+  return cardClone;
+}
+
+/**
+ * عرض الـ CVs في عنصر DOM (Carousel)
+ */
+function renderCVsCarousel(container) {
+  if (!container) return;
+
+  const cvs = getAllCVs();
+  container.innerHTML = '';
+
+  cvs.forEach((cv, i) => {
+    const el = createCVCarouselElement(cv, i);
+    if (el) container.appendChild(el);
+  });
+
+  setupCVCarouselControls();
+  positionCVCards();
+  if (cvCarouselState.isPlaying) startCVAuto();
+}
+
+function getCVCarouselRadius() {
+  return window.innerWidth <= 768 ? 260 : 420;
+}
+
+function positionCVCards() {
+  const ring = document.getElementById('cv-ring');
+  const dotsEl = document.getElementById('cv-dots');
+  if (!ring) return;
+
+  const cards = ring.querySelectorAll('.cv-carousel-card');
+  const N = cards.length;
+  if (N === 0) return;
+  
+  const angleStep = 360 / N;
+  const r = getCVCarouselRadius();
+
+  const activeTilt = cvCarouselState.isDragging
+    ? -cvCarouselState.dragDelta * 0.45
+    : cvCarouselState.tiltAngle;
+
+  cards.forEach((card, i) => {
+    const relAngle = ((i - cvCarouselState.currentIndex) * angleStep + cvCarouselState.dragDelta) % 360;
+    const rad      = relAngle * Math.PI / 180;
+    const x        = Math.sin(rad) * r;
+    const z        = Math.cos(rad) * r;
+    const scale    = (z + r) / (r * 2);
+    const opacity  = 0.3 + scale * 0.7;
+    const isActive = i === cvCarouselState.currentIndex && cvCarouselState.dragDelta === 0;
+
+    const cardTilt = activeTilt * (0.5 + scale * 0.5);
+
+    let normAngle = relAngle % 360;
+    if (normAngle > 180)  normAngle -= 360;
+    if (normAngle < -180) normAngle += 360;
+    const rotY  = -normAngle;
+
+    const skewVal = activeTilt * 0.38;
+
+    card.style.transform = `translateX(${x}px) translateZ(${z}px) rotateY(${rotY}deg) rotateZ(${cardTilt}deg) skewX(${skewVal}deg)`;
+    card.style.zIndex     = Math.round(scale * 100);
+    card.style.opacity    = opacity;
+    card.style.filter     = isActive ? 'none' : `blur(${(1 - scale) * 2}px)`;
+    card.classList.toggle('active', isActive);
+  });
+
+  if (dotsEl) {
+    dotsEl.innerHTML = '';
+    for(let i=0; i<N; i++) {
+      const dot = document.createElement('div');
+      dot.className = `dot ${i === cvCarouselState.currentIndex ? 'active' : ''}`;
+      dot.onclick = () => goToCV(i);
+      dotsEl.appendChild(dot);
+    }
+  }
+}
+
+function animateCVTilt() {
+  cvCarouselState.tiltAngle += (cvCarouselState.tiltTarget - cvCarouselState.tiltAngle) * cvCarouselState.TILT_EASE;
+  positionCVCards();
+  
+  if (Math.abs(cvCarouselState.tiltAngle - cvCarouselState.tiltTarget) > 0.05) {
+    cvCarouselState.tiltRaf = requestAnimationFrame(animateCVTilt);
+  } else {
+    cvCarouselState.tiltAngle = cvCarouselState.tiltTarget;
+    positionCVCards();
+    cvCarouselState.tiltRaf = null;
+  }
+}
+
+function triggerCVTilt(dir) {
+  cvCarouselState.tiltTarget = dir * cvCarouselState.TILT_MAX;
+  if (cvCarouselState.tiltRaf) cancelAnimationFrame(cvCarouselState.tiltRaf);
+  cvCarouselState.tiltRaf = requestAnimationFrame(animateCVTilt);
+  setTimeout(() => { cvCarouselState.tiltTarget = 0; }, 180);
+}
+
+function goToCV(index, dir) {
+  const cards = document.querySelectorAll('.cv-carousel-card');
+  const N = cards.length;
+  if (N === 0) return;
+  
+  cvCarouselState.currentIndex = ((index % N) + N) % N;
+  cvCarouselState.dragDelta = 0;
+  if (dir !== undefined) triggerCVTilt(dir);
+  positionCVCards();
+}
+
+function nextCV() { goToCV(cvCarouselState.currentIndex + 1, -1); }
+function prevCV() { goToCV(cvCarouselState.currentIndex - 1, +1); }
+
+function startCVAuto() {
+  stopCVAuto();
+  cvCarouselState.autoTimer = setInterval(nextCV, 3000);
+}
+
+function stopCVAuto() {
+  if (cvCarouselState.autoTimer) clearInterval(cvCarouselState.autoTimer);
+}
+
+function setupCVCarouselControls() {
+  const nextBtn = document.getElementById('nextCVBtn');
+  const prevBtn = document.getElementById('prevCVBtn');
+  const playBtn = document.getElementById('playCVBtn');
+  const ring = document.getElementById('cv-ring');
+
+  if (nextBtn) nextBtn.onclick = nextCV;
+  if (prevBtn) prevBtn.onclick = prevCV;
+  
+  if (playBtn) {
+    playBtn.onclick = () => {
+      cvCarouselState.isPlaying = !cvCarouselState.isPlaying;
+      const icon = playBtn.querySelector('i');
+      if (cvCarouselState.isPlaying) {
+        if (icon) icon.className = 'bi bi-pause-fill';
+        startCVAuto();
+      } else {
+        if (icon) icon.className = 'bi bi-play-fill';
+        stopCVAuto();
+      }
+    };
+  }
+
+  if (ring) {
+    ring.onmousedown = e => {
+      cvCarouselState.isDragging = true;
+      cvCarouselState.dragStartX = e.clientX;
+      cvCarouselState.tiltAngle = 0;
+      cvCarouselState.tiltTarget = 0;
+      if (cvCarouselState.tiltRaf) cancelAnimationFrame(cvCarouselState.tiltRaf);
+      stopCVAuto();
+    };
+
+    window.onmousemove = e => {
+      if (!cvCarouselState.isDragging) return;
+      cvCarouselState.dragDelta = (e.clientX - cvCarouselState.dragStartX) * 0.1;
+      positionCVCards();
+    };
+
+    window.onmouseup = e => {
+      if (!cvCarouselState.isDragging) return;
+      cvCarouselState.isDragging = false;
+      const moved = e.clientX - cvCarouselState.dragStartX;
+      if (Math.abs(moved) > 60) {
+        moved < 0 ? nextCV() : prevCV();
+      } else {
+        cvCarouselState.dragDelta = 0;
+        positionCVCards();
+      }
+      if (cvCarouselState.isPlaying) startCVAuto();
+    };
+  }
+}
+
+/**
+ * عرض الـ CVs في عنصر DOM (الوضع التقليدي)
+ */
+function renderCVs(container) {
+  if (!container) return;
+
+  const cvs = getAllCVs();
+  container.innerHTML = '';
+
+  cvs.forEach((cv, index) => {
+    container.innerHTML += createCVElement(cv);
+  });
+
+  console.log(`✅ Displayed ${cvs.length} CVs in ${container.id}`);
+}
+
+/**
+ * إنشاء عنصر CV DOM التقليدي
  */
 function createCVElement(cv) {
   const text = getCVLocalizedText(cv, currentCVLang);
@@ -106,36 +359,6 @@ function createCVElement(cv) {
 }
 
 /**
- * عرض الـ CVs في عنصر DOM
- */
-function renderCVs(container) {
-  if (!container) return;
-
-  const cvs = getAllCVs();
-  container.innerHTML = '';
-
-  cvs.forEach((cv, index) => {
-    container.innerHTML += createCVElement(cv);
-  });
-
-  console.log(`✅ Displayed ${cvs.length} CVs in ${container.id}`);
-}
-
-/**
- * إنشاء وعرض Modal لتحميل الـ CV
- */
-function showCVDownloadModal(cvId) {
-  // ... existing code ...
-}
-
-/**
- * تتبع تحميل الـ CV (إحصائيات)
- */
-function trackCVDownload(cvId, format) {
-  console.log(`📥 CV Downloaded: ${cvId}, Format: ${format}`);
-}
-
-/**
  * حفظ اللغة
  */
 function setCVLanguage(lang) {
@@ -164,10 +387,10 @@ async function initCVLoader() {
   
   const cvs = getAllCVs();
   
-  // Render in Homepage Direct Container
-  const directContainer = document.getElementById('cv-direct-container');
+  // Render in Homepage Direct Container (Carousel Mode)
+  const directContainer = document.getElementById('cv-ring');
   if (directContainer) {
-    renderCVs(directContainer);
+    renderCVsCarousel(directContainer);
   }
 
   // Render in Modal Container (if still used somewhere)
@@ -187,7 +410,7 @@ window.CVLoader = {
   getCVLocalizedText,
   createCVElement,
   renderCVs,
-  showCVDownloadModal,
+  renderCVsCarousel,
   trackCVDownload,
   setCVLanguage,
   loadSavedCVLanguage,

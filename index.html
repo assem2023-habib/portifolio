@@ -275,8 +275,60 @@ Software engineer specializing in building modern applications and
         <!-- End Section Title -->
 
         <div class="container">
-          <div class="row justify-content-center g-4" id="cv-direct-container">
-            <!-- CVs will be loaded directly here -->
+          <!-- 3D Carousel Stage for CVs -->
+          <div class="carousel-stage">
+            <div class="carousel-scene">
+              <div class="carousel-ring" id="cv-ring"></div>
+            </div>
+            <div class="ground-line"></div>
+          </div>
+
+          <!-- Carousel Controls for CVs -->
+          <div class="carousel-controls">
+            <button class="ctrl-btn" id="prevCVBtn" aria-label="Previous">
+              <i class="bi bi-chevron-left"></i>
+            </button>
+            <button class="ctrl-btn ctrl-play" id="playCVBtn" aria-label="Play/Pause">
+              <i class="bi bi-pause-fill" id="playCVIcon"></i>
+            </button>
+            <button class="ctrl-btn" id="nextCVBtn" aria-label="Next">
+              <i class="bi bi-chevron-right"></i>
+            </button>
+          </div>
+
+          <!-- Carousel Dots for CVs -->
+          <div class="carousel-dots" id="cv-dots"></div>
+
+          <!-- Template for CV carousel card (hidden) -->
+          <div id="cv-card-template" style="display: none;">
+            <div class="cv-carousel-card">
+              <div class="card-inner">
+                <div class="card-glow"></div>
+                <div class="card-header-wrap">
+                  <div class="card-number">01</div>
+                  <div class="card-icon-wrap">
+                    <i class="bi bi-file-earmark-text"></i>
+                  </div>
+                </div>
+                <div class="card-content text-center">
+                  <h5 class="cv-title fw-bold mb-1">Title</h5>
+                  <span class="cv-specialization text-muted small d-block mb-3">Spec</span>
+                  <p class="cv-description small mb-4">Desc</p>
+                </div>
+                <div class="cv-actions mt-auto">
+                  <div class="d-flex gap-2" id="cv-download-btns">
+                    <!-- Buttons populated by JS -->
+                  </div>
+                </div>
+              </div>
+              <div class="card-back">
+                <div class="back-logo"><i class="bi bi-file-earmark-pdf"></i></div>
+                <h3 class="back-title">Title</h3>
+                <div class="back-divider"></div>
+                <span class="back-tag">Professional Resume</span>
+                <div class="back-num">01</div>
+              </div>
+            </div>
           </div>
         </div>
       </section>

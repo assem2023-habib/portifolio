@@ -349,46 +349,72 @@
     },
     {
       "id": "stitchhub",
-      "title": "StitchHub Mobile",
-      "titleAr": "ستيتش هب - موبايل",
-      "category": "mobile",
-      "image": "assets/img/masonry-portfolio/masonry-portfolio-2.jpg",
-      "thumbnail": "assets/img/masonry-portfolio/masonry-portfolio-2.jpg",
-      "description": "Comprehensive e-commerce platform for tailoring services with multi-language support and advanced order management",
-      "descriptionAr": "منصة تجارة إلكترونية شاملة لخدمات الخياطة مع دعم متعدد اللغات وإدارة طلبات متقدمة",
+      "priority": 6,
+      "title": "Sewing Store",
+      "titleAr": "متجر الخياطة",
+      "category": "web",
+      "image": "assets/img/Projects_Images/Sweing/127.0.0.1_8000_en.png",
+      "thumbnail": "assets/img/Projects_Images/Sweing/127.0.0.1_8000_en.png",
+      "description": "Comprehensive e-commerce platform for sewing and tailoring supplies with multi-language support, hierarchical micro-inventory management, and advanced admin dashboard",
+      "descriptionAr": "منصة تجارة إلكترونية شاملة لمستلزمات الخياطة مع دعم متعدد اللغات، إدارة مخزون هرمي دقيق، ولوحة تحكم متقدمة",
       "status": "completed",
-      "year": 2023,
-      "duration": "5 أشهر",
+      "year": 2024,
+      "duration": "8 أشهر",
       "technologies": [
-        "React Native",
-        "Node.js",
-        "MongoDB",
-        "Express.js",
-        "Redux"
+        "Laravel 10.x",
+        "PHP 8.1+",
+        "MySQL",
+        "Spatie Translatable",
+        "MVC Architecture",
+        "Form Requests",
+        "Admin Middleware"
       ],
       "role": "Full Stack Developer",
-      "client": "منصة ستيتش هب",
+      "client": "متجر خياطة إلكتروني",
       "liveUrl": null,
       "repoUrl": null,
       "features": [
-        "Multi-language support (Arabic/English)",
-        "Real-time order tracking",
-        "Secure payment gateway integration",
-        "Customer reviews and ratings system",
-        "Push notifications",
-        "Offline mode support"
+        "Multi-language support with deep i18n and RTL/LTR routing",
+        "Hierarchical product and category management (Micro-Inventory)",
+        "Advanced admin dashboard with real-time statistics",
+        "Role-based access control with Admin Middleware guards",
+        "Multilingual SEO with translated meta data",
+        "Automatic image cleanup on update or delete",
+        "Shopping cart engine with secure quantity management",
+        "Admin authority: ban, freeze, and role upgrade",
+        "Promotional offers management system",
+        "Smart CRUD interfaces with Laravel localization"
       ],
       "featuresAr": [
-        "دعم اللغتين العربية والإنجليزية",
-        "تتبع الطلبات لحظياً",
-        "بوابة دفع آمنة",
-        "نظام تقييم ومراجعات العملاء",
-        "إشعارات فورية",
-        "دعم العمل بدون إنترنت"
+        "دعم متعدد اللغات مع ترجمة عميقة ومسارات RTL/LTR",
+        "إدارة هرمية للمنتجات والتصنيفات (المخزون الدقيق)",
+        "لوحة تحكم متقدمة مع إحصائيات لحظية",
+        "التحكم بالوصول مع حراس Admin Middleware",
+        "تحسين محركات بحث متعدد اللغات مع ميتا داتا مترجمة",
+        "تنظيف تلقائي للصور عند التحديث أو الحذف",
+        "محرك سلة تسوق مع إدارة آمنة للكميات",
+        "صلاحيات المدير: حظر، تجميد، ترقية الأدوار",
+        "نظام إدارة العروض الترويجية",
+        "واجهات CRUD ذكية مع Laravel Localization"
       ],
-      "challenges": "تنفيذ دعم RTL الكامل مع واجهة مستخدم سلسة للتجارة الإلكترونية",
-      "challengesAr": "كان التحدي الأكبر هو تصميم واجهة تدعم اللغة العربية بشكل كامل مع الحفاظ على تجربة مستخدم متميزة",
-      "screenshots": []
+      "challenges": "بناء نظام متكامل لإدارة آلاف الأصناف الصغيرة في قطاع الخياطة مع تصنيف هرمي دقيق وترجمة متعددة اللغات",
+      "challengesAr": "كان التحدي تصميم نظام تصنيف هرمي ينهي فوضى البحث اليدوي ويدير آلاف القطع الصغيرة (إبر، خيوط، أزرار) بكفاءة",
+      "screenshots": [
+        "assets/img/Projects_Images/Sweing/127.0.0.1_8000_en.png",
+        "assets/img/Projects_Images/Sweing/127.0.0.1_8000_login.png",
+        "assets/img/Projects_Images/Sweing/127.0.0.1_8000_en_categories.png",
+        "assets/img/Projects_Images/Sweing/127.0.0.1_8000_en_cart.png",
+        "assets/img/Projects_Images/Sweing/127.0.0.1_8000_en_checkout.png",
+        "assets/img/Projects_Images/Sweing/127.0.0.1_8000_en_admin_dashboard.png",
+        "assets/img/Projects_Images/Sweing/127.0.0.1_8000_en_admin_categories.png",
+        "assets/img/Projects_Images/Sweing/127.0.0.1_8000_en_admin_products.png",
+        "assets/img/Projects_Images/Sweing/127.0.0.1_8000_en_admin_users.png",
+        "assets/img/Projects_Images/Sweing/127.0.0.1_8000_en_admin_userManagement.png"
+      ],
+      "docs": {
+        "readme": "assets/Docs_Project/README_SEWING_STORE.md",
+        "type": "comprehensive"
+      }
     },
     {
       "id": "cutoptimizer",
@@ -450,14 +476,14 @@
       "name": "Web App",
       "nameAr": "تطبيق ويب",
       "icon": "bi-globe",
-      "count": 2
+      "count": 3
     },
     {
       "id": "mobile",
       "name": "Mobile Application",
       "nameAr": "تطبيق جوال",
       "icon": "bi-phone",
-      "count": 3
+      "count": 2
     },
     {
       "id": "desktop",

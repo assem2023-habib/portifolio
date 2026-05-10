@@ -25,6 +25,19 @@
       },
       "description": "Backend Developer with expertise in Laravel, PHP, MySQL, and databases. Experienced in building robust web applications and RESTful APIs.",
       "descriptionAr": "مطور Backend بخبرة في Laravel و PHP و MySQL وقواعد البيانات. خبير في بناء تطبيقات الويب القوية و RESTful APIs."
+    },
+    {
+      "id": "flutter",
+      "title": "Flutter Developer CV",
+      "titleAr": "سيرة ذاتية - مطور Flutter",
+      "specialization": "Mobile Development",
+      "specializationAr": "تطوير تطبيقات الهاتف",
+      "files": {
+        "pdf": "assets/cvs/Front-End Flutter/Assem_habib_CV_Flutter.pdf",
+        "docx": "assets/cvs/Front-End Flutter/Assem_habib_CV_Flutter.docx"
+      },
+      "description": "Mobile Developer with expertise in Flutter, Dart, Bloc, Clean Architecture, and cross-platform development. Experienced in building offline-first mobile applications with modern UI.",
+      "descriptionAr": "مطور تطبيقات هواتف بخبرة في Flutter و Dart و Bloc و Clean Architecture. خبير في بناء تطبيقات موبايل تعمل بدون إنترنت بواجهات حديثة."
     }
   ],
   "metadata": {
@@ -32,6 +45,6 @@
     "createdAt": "2026-04-23",
     "author": "Assem Adel Habib",
     "contact": "099assemhb@gmail.com",
-    "totalCVs": 2
+    "totalCVs": 3
   }
 }

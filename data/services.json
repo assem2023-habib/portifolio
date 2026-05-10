@@ -5,6 +5,7 @@
       "title": "Full Stack Web Development",
       "titleAr": "تطوير الويب الكامل",
       "icon": "bi-code-square",
+      "image": "assets/img/Services/FullStack_Developer.jpg",
       "description": "Building modern, responsive web applications using the latest technologies and frameworks like Laravel and React.",
       "descriptionAr": "بناء تطبيقات ويب حديثة ومتجاوبة باستخدام أحدث التقنيات والأطر مثل Laravel و React",
       "features": [
@@ -25,6 +26,7 @@
       "title": "RESTful API Design & Implementation",
       "titleAr": "تصميم وتنفيذ APIs",
       "icon": "bi-plug",
+      "image": "assets/img/Services/RESTFull_Service.jpg",
       "description": "Developing secure, scalable APIs with comprehensive documentation and thorough testing.",
       "descriptionAr": "تطوير APIs آمنة وقابلة للتوسع مع توثيق شامل واختبارات دقيقة",
       "features": [
@@ -45,6 +47,7 @@
       "title": "CMS & Dashboard Development",
       "titleAr": "تطوير CMS ولوحات التحكم",
       "icon": "bi-layout-text-window-reverse",
+      "image": "assets/img/Services/CMS_Service.jpg",
       "description": "Building interactive dashboards and custom content management systems using Laravel and modern JavaScript frameworks.",
       "descriptionAr": "بناء لوحات تحكم تفاعلية وأنظمة إدارة محتوى مخصصة باستخدام Laravel",
       "features": [
@@ -65,6 +68,7 @@
       "title": "Performance Optimization & Database",
       "titleAr": "تحسين الأداء وقواعد البيانات",
       "icon": "bi-speedometer",
+      "image": "assets/img/Services/Data_Service.jpg",
       "description": "Optimizing application performance and databases, applying best practices for security and high efficiency.",
       "descriptionAr": "تحسين أداء التطبيقات وقواعد البيانات، مع تطبيق أفضل ممارسات الأمان والكفاءة",
       "features": [
@@ -85,6 +89,7 @@
       "title": "Interactive Web Applications",
       "titleAr": "تطبيقات ويب تفاعلية",
       "icon": "bi-person-rolodex",
+      "image": "assets/img/Services/RealTime_Service.svg",
       "description": "Building modern interactive web applications using Laravel and JavaScript frameworks like Vue.js and React.",
       "descriptionAr": "بناء تطبيقات ويب تفاعلية حديثة باستخدام Laravel وإطارات JavaScript الحديثة",
       "features": [
@@ -105,6 +110,7 @@
       "title": "Project Maintenance & Updates",
       "titleAr": "صيانة وتحديث المشاريع",
       "icon": "bi-tools",
+      "image": "assets/img/Services/BugFixes_Service.jpg",
       "description": "Maintaining and updating software projects, fixing bugs and adding new features according to client requirements.",
       "descriptionAr": "صيانة وتحديث المشاريع، وإصلاح الأخطاء وإضافة ميزات جديدة حسب متطلبات العميل",
       "features": [
@@ -125,6 +131,7 @@
       "title": "Mobile App Development",
       "titleAr": "تطوير تطبيقات الهاتف",
       "icon": "bi-phone",
+      "image": "assets/img/Services/MobileApp_Service.jpg",
       "description": "Building native and cross-platform mobile applications using Flutter and React Native with clean architecture and offline-first approach.",
       "descriptionAr": "بناء تطبيقات هواتف أصلية ومتعددة المنصات باستخدام Flutter و React Native مع معمارية نظيفة",
       "features": [

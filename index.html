@@ -37,6 +37,7 @@
 
     <!-- Main CSS File -->
     <link href="assets/css/main.css" rel="stylesheet" />
+    <link href="assets/css/services-carousel.css" rel="stylesheet" />
   </head>
 
   <body class="index-page">
@@ -369,22 +370,58 @@ Software engineer specializing in building modern applications and
         <!-- End Section Title -->
 
         <div class="container">
-          <div class="row gy-4">
-            <!-- Single service template - will be cloned for each service -->
-            <div class="col-lg-4 col-md-6 service-item-template" data-aos="fade-up" data-aos-delay="100" style="display: none;">
-              <div class="service-item item-cyan position-relative">
-                <div class="icon">
-                  <svg width="100" height="100" viewBox="0 0 600 600" xmlns="http://www.w3.org/2000/svg">
-                    <path stroke="none" stroke-width="0" fill="#f5f5f5" d="M300,521.0016835830174C376.1290562159157,517.8887921683347,466.0731472004068,529.7835943286574,510.70327084640275,468.03025145048787C554.3714126377745,407.6079735673963,508.03601936045806,328.9844924480964,491.2728898941984,256.3432110539036C474.5976632858925,184.082847569629,479.9380746630129,96.60480741107993,416.23090153303,58.64404602377083C348.86323505073057,18.502131276798302,261.93793281208167,40.57373210992963,193.5410806939664,78.93577620505333C130.42746243093433,114.334589627462,98.30271207620316,179.96522072025542,76.75703585869454,249.04625023123273C51.97151888228291,328.5150500222984,13.704378332031375,421.85034740162234,66.52175969318436,486.19268352777647C119.04800174914682,550.1803526380478,217.28368757567262,524.383925680826,300,521.0016835830174"></path>
-                  </svg>
-                  <i class="bi service-icon"></i>
+          <!-- 3D Carousel Stage -->
+          <div class="carousel-stage">
+            <div class="carousel-scene">
+              <div class="carousel-ring" id="services-ring"></div>
+            </div>
+            <div class="ground-line"></div>
+          </div>
+
+          <!-- Carousel Controls -->
+          <div class="carousel-controls">
+            <button class="ctrl-btn" id="prevServiceBtn" aria-label="Previous">
+              <i class="bi bi-chevron-left"></i>
+            </button>
+            <button class="ctrl-btn ctrl-play" id="playServiceBtn" aria-label="Play/Pause">
+              <i class="bi bi-pause-fill" id="playServiceIcon"></i>
+            </button>
+            <button class="ctrl-btn" id="nextServiceBtn" aria-label="Next">
+              <i class="bi bi-chevron-right"></i>
+            </button>
+          </div>
+
+          <!-- Carousel Dots -->
+          <div class="carousel-dots" id="service-dots"></div>
+
+          <!-- Template for carousel card (hidden) -->
+          <div id="service-card-template" style="display: none;">
+            <div class="service-carousel-card">
+              <div class="card-inner">
+                <div class="card-glow"></div>
+                <div class="card-header-wrap">
+                  <div class="card-number">01</div>
+                  <div class="card-icon-wrap">
+                    <i class="bi"></i>
+                  </div>
                 </div>
-                <a href="#" class="stretched-link service-link">
-                  <h3 class="service-title">Service Title</h3>
-                </a>
-                <p class="service-description">Service description will be populated here</p>
+                <div class="card-content">
+                  <h3 class="card-title">Service Title</h3>
+                  <p class="card-desc">Description</p>
+                </div>
+                <div class="card-footer-row">
+                  <span class="card-tag">Tag</span>
+                  <div class="card-arrow"><i class="bi bi-arrow-right"></i></div>
+                </div>
               </div>
-            </div><!-- End Service Item Template -->
+              <div class="card-back">
+                <div class="back-logo"><i class="bi"></i></div>
+                <h3 class="back-title">Title</h3>
+                <div class="back-divider"></div>
+                <span class="back-tag">Tag</span>
+                <div class="back-num">01</div>
+              </div>
+            </div>
           </div>
         </div>
 

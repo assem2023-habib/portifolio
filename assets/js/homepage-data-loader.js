@@ -230,61 +230,260 @@ function populatePortfolioItems() {
 /**
  * عرض الخدمات في الصفحة الرئيسية
  */
+// ── Carousel State ──
+let serviceCarouselState = {
+  currentIndex: 0,
+  isPlaying: true,
+  autoTimer: null,
+  isDragging: false,
+  dragStartX: 0,
+  dragDelta: 0,
+  tiltAngle: 0,
+  tiltTarget: 0,
+  tiltRaf: null,
+  TILT_MAX: 14,
+  TILT_EASE: 0.10
+};
+
+/**
+ * عرض الخدمات في الصفحة الرئيسية باستخدام Carousel 3D
+ */
 function populateServiceItems() {
-  const servicesContainer = document.querySelector('#services .container .row');
-  const serviceTemplate = document.querySelector('#services .service-item-template');
+  const ring = document.getElementById('services-ring');
+  const dotsEl = document.getElementById('service-dots');
+  const template = document.getElementById('service-card-template');
   
-  if (!servicesContainer || !serviceTemplate || !loadedData || !loadedData.services) {
-    console.warn('Services container or data not found');
+  if (!ring || !template || !loadedData || !loadedData.services) {
+    console.warn('Carousel elements or data not found');
     return;
   }
   
   const services = Array.isArray(loadedData.services) ? loadedData.services : Object.values(loadedData.services);
+  const N = services.length;
   
   // مسح المحتوى
-  servicesContainer.innerHTML = '';
+  ring.innerHTML = '';
+  if (dotsEl) dotsEl.innerHTML = '';
   
-  const colors = ['item-cyan', 'item-orange', 'item-teal', 'item-red', 'item-indigo', 'item-pink'];
-  
-  services.slice(0, HOMEPAGE_SERVICES_LIMIT).forEach((service, index) => {
-    const serviceClone = serviceTemplate.cloneNode(true);
+  services.forEach((service, i) => {
+    const cardClone = template.querySelector('.service-carousel-card').cloneNode(true);
+    const serviceTitle = currentLang === 'ar' ? (service.titleAr || service.title) : service.title;
+    const serviceDesc = currentLang === 'ar' ? (service.descriptionAr || service.description) : service.description;
+    const serviceTag = currentLang === 'ar' ? 'خدمة متميزة' : 'Professional Service';
+    const serviceIcon = service.icon || 'bi-activity';
+
+    // Populate Card
+    cardClone.querySelector('.card-number').textContent = (i + 1).toString().padStart(2, '0');
+    cardClone.querySelector('.card-icon-wrap i').className = `bi ${serviceIcon}`;
+    cardClone.querySelector('.card-title').textContent = serviceTitle;
+    cardClone.querySelector('.card-desc').textContent = serviceDesc;
+    cardClone.querySelector('.card-tag').textContent = serviceTag;
     
-    serviceClone.classList.remove('service-item-template');
-    serviceClone.style.display = 'block';
-    serviceClone.setAttribute('data-aos-delay', 100 + index * 100);
-    
-    const color = colors[index % colors.length];
-    const icon = service.icon || 'bi-activity'; // استخدام الأيقونة من JSON
-    
-    const serviceItem = serviceClone.querySelector('.service-item');
-    if (serviceItem) {
-      serviceItem.className = `service-item ${color} position-relative`;
+    // Back side
+    cardClone.querySelector('.back-logo i').className = `bi ${serviceIcon}`;
+    cardClone.querySelector('.back-title').textContent = serviceTitle;
+    cardClone.querySelector('.back-tag').textContent = serviceTag;
+    cardClone.querySelector('.back-num').textContent = (i + 1).toString().padStart(2, '0');
+
+    cardClone.addEventListener('click', () => {
+      if (Math.abs(serviceCarouselState.dragDelta) < 1) {
+        goToService(i);
+      }
+    });
+
+    ring.appendChild(cardClone);
+
+    // Dots
+    if (dotsEl) {
+      const dot = document.createElement('div');
+      dot.className = 'dot';
+      dot.addEventListener('click', () => goToService(i));
+      dotsEl.appendChild(dot);
     }
-    
-    const iconElement = serviceClone.querySelector('.service-icon');
-    if (iconElement) {
-      iconElement.className = `bi ${icon}`;
-    }
-    
-    const linkElement = serviceClone.querySelector('.service-link');
-    if (linkElement) {
-      linkElement.href = `service-details.html?service=${service.id || index}`;
-    }
-    
-    const titleElement = serviceClone.querySelector('.service-title');
-    if (titleElement) {
-      titleElement.textContent = currentLang === 'ar' ? (service.titleAr || service.title) : service.title;
-    }
-    
-    const descElement = serviceClone.querySelector('.service-description');
-    if (descElement) {
-      descElement.textContent = currentLang === 'ar' ? (service.descriptionAr || service.description) : service.description;
-    }
-    
-    servicesContainer.appendChild(serviceClone);
   });
+
+  // Setup Controls
+  setupCarouselControls();
   
-  console.log(`✅ Displayed ${Math.min(services.length, HOMEPAGE_SERVICES_LIMIT)} services on homepage`);
+  // Initial position
+  positionServiceCards();
+  
+  // Start Auto Play
+  if (serviceCarouselState.isPlaying) startServiceAuto();
+}
+
+function getCarouselRadius() {
+  return window.innerWidth <= 768 ? 260 : 420;
+}
+
+function positionServiceCards() {
+  const ring = document.getElementById('services-ring');
+  const dotsEl = document.getElementById('service-dots');
+  if (!ring) return;
+
+  const cards = ring.querySelectorAll('.service-carousel-card');
+  const N = cards.length;
+  const angleStep = 360 / N;
+  const r = getCarouselRadius();
+
+  const activeTilt = serviceCarouselState.isDragging
+    ? -serviceCarouselState.dragDelta * 0.45
+    : serviceCarouselState.tiltAngle;
+
+  cards.forEach((card, i) => {
+    const relAngle = ((i - serviceCarouselState.currentIndex) * angleStep + serviceCarouselState.dragDelta) % 360;
+    const rad      = relAngle * Math.PI / 180;
+    const x        = Math.sin(rad) * r;
+    const z        = Math.cos(rad) * r;
+    const scale    = (z + r) / (r * 2);
+    const opacity  = 0.3 + scale * 0.7;
+    const isActive = i === serviceCarouselState.currentIndex && serviceCarouselState.dragDelta === 0;
+
+    const cardTilt = activeTilt * (0.5 + scale * 0.5);
+
+    let normAngle = relAngle % 360;
+    if (normAngle > 180)  normAngle -= 360;
+    if (normAngle < -180) normAngle += 360;
+    const rotY  = -normAngle;
+
+    const skewVal = activeTilt * 0.38;
+
+    card.style.transform = `translateX(${x}px) translateZ(${z}px) rotateY(${rotY}deg) rotateZ(${cardTilt}deg) skewX(${skewVal}deg)`;
+    card.style.zIndex     = Math.round(scale * 100);
+    card.style.opacity    = opacity;
+    card.style.filter     = isActive ? 'none' : `blur(${(1 - scale) * 2}px)`;
+    card.classList.toggle('active', isActive);
+  });
+
+  if (dotsEl) {
+    dotsEl.querySelectorAll('.dot').forEach((d, i) => {
+      d.classList.toggle('active', i === serviceCarouselState.currentIndex);
+    });
+  }
+}
+
+function animateServiceTilt() {
+  serviceCarouselState.tiltAngle += (serviceCarouselState.tiltTarget - serviceCarouselState.tiltAngle) * serviceCarouselState.TILT_EASE;
+  positionServiceCards();
+  
+  if (Math.abs(serviceCarouselState.tiltAngle - serviceCarouselState.tiltTarget) > 0.05) {
+    serviceCarouselState.tiltRaf = requestAnimationFrame(animateServiceTilt);
+  } else {
+    serviceCarouselState.tiltAngle = serviceCarouselState.tiltTarget;
+    positionServiceCards();
+    serviceCarouselState.tiltRaf = null;
+  }
+}
+
+function triggerServiceTilt(dir) {
+  serviceCarouselState.tiltTarget = dir * serviceCarouselState.TILT_MAX;
+  if (serviceCarouselState.tiltRaf) cancelAnimationFrame(serviceCarouselState.tiltRaf);
+  serviceCarouselState.tiltRaf = requestAnimationFrame(animateServiceTilt);
+  setTimeout(() => { serviceCarouselState.tiltTarget = 0; }, 180);
+}
+
+function goToService(index, dir) {
+  const cards = document.querySelectorAll('.service-carousel-card');
+  const N = cards.length;
+  if (N === 0) return;
+  
+  serviceCarouselState.currentIndex = ((index % N) + N) % N;
+  serviceCarouselState.dragDelta = 0;
+  if (dir !== undefined) triggerServiceTilt(dir);
+  positionServiceCards();
+}
+
+function nextService() { goToService(serviceCarouselState.currentIndex + 1, -1); }
+function prevService() { goToService(serviceCarouselState.currentIndex - 1, +1); }
+
+function startServiceAuto() {
+  stopServiceAuto();
+  serviceCarouselState.autoTimer = setInterval(nextService, 2800);
+}
+
+function stopServiceAuto() {
+  if (serviceCarouselState.autoTimer) clearInterval(serviceCarouselState.autoTimer);
+}
+
+function setupCarouselControls() {
+  const nextBtn = document.getElementById('nextServiceBtn');
+  const prevBtn = document.getElementById('prevServiceBtn');
+  const playBtn = document.getElementById('playServiceBtn');
+  const ring = document.getElementById('services-ring');
+
+  if (nextBtn) nextBtn.onclick = nextService;
+  if (prevBtn) prevBtn.onclick = prevService;
+  
+  if (playBtn) {
+    playBtn.onclick = () => {
+      serviceCarouselState.isPlaying = !serviceCarouselState.isPlaying;
+      const icon = playBtn.querySelector('i');
+      if (serviceCarouselState.isPlaying) {
+        if (icon) icon.className = 'bi bi-pause-fill';
+        startServiceAuto();
+      } else {
+        if (icon) icon.className = 'bi bi-play-fill';
+        stopServiceAuto();
+      }
+    };
+  }
+
+  if (ring) {
+    // Mouse Drag
+    ring.onmousedown = e => {
+      serviceCarouselState.isDragging = true;
+      serviceCarouselState.dragStartX = e.clientX;
+      serviceCarouselState.tiltAngle = 0;
+      serviceCarouselState.tiltTarget = 0;
+      if (serviceCarouselState.tiltRaf) cancelAnimationFrame(serviceCarouselState.tiltRaf);
+      stopServiceAuto();
+    };
+
+    window.onmousemove = e => {
+      if (!serviceCarouselState.isDragging) return;
+      serviceCarouselState.dragDelta = (e.clientX - serviceCarouselState.dragStartX) * 0.1;
+      positionServiceCards();
+    };
+
+    window.onmouseup = e => {
+      if (!serviceCarouselState.isDragging) return;
+      serviceCarouselState.isDragging = false;
+      const moved = e.clientX - serviceCarouselState.dragStartX;
+      if (Math.abs(moved) > 60) {
+        moved < 0 ? nextService() : prevService();
+      } else {
+        serviceCarouselState.dragDelta = 0;
+        positionServiceCards();
+      }
+      if (serviceCarouselState.isPlaying) startServiceAuto();
+    };
+
+    // Touch
+    ring.ontouchstart = e => {
+      serviceCarouselState.dragStartX = e.touches[0].clientX;
+      serviceCarouselState.isDragging = true;
+      stopServiceAuto();
+    };
+
+    ring.ontouchmove = e => {
+      if (!serviceCarouselState.isDragging) return;
+      serviceCarouselState.dragDelta = (e.touches[0].clientX - serviceCarouselState.dragStartX) * 0.1;
+      positionServiceCards();
+    };
+
+    ring.ontouchend = e => {
+      if (!serviceCarouselState.isDragging) return;
+      serviceCarouselState.isDragging = false;
+      const moved = e.changedTouches[0].clientX - serviceCarouselState.dragStartX;
+      if (Math.abs(moved) > 60) {
+        moved < 0 ? nextService() : prevService();
+      } else {
+        serviceCarouselState.dragDelta = 0;
+        positionServiceCards();
+      }
+      if (serviceCarouselState.isPlaying) startServiceAuto();
+    };
+  }
 }
 
 /**

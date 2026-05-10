@@ -36,8 +36,15 @@
       border: 1px solid rgba(255, 255, 255, 0.3);
     }
     body.dark-mode .glass-card {
-      background: rgba(26, 26, 46, 0.6);
+      background: rgba(37, 37, 37, 0.6);
       border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    .help-box {
+      background: color-mix(in srgb, var(--accent-color), transparent 90%);
+      border: 1px solid color-mix(in srgb, var(--accent-color), transparent 80%);
+    }
+    .help-box i, .help-box h4 {
+      color: var(--accent-color);
     }
     .main { margin-left: 0 !important; }
     @media (max-width: 1199px) {
@@ -97,11 +104,11 @@
                     </ul>
                   </div>
 
-                  <div class="help-box d-flex flex-column justify-content-center align-items-center p-4 rounded-4 bg-primary bg-opacity-10 border border-primary border-opacity-25">
-                    <i class="bi bi-headset help-icon fs-1 mb-3 text-primary"></i>
+                  <div class="help-box d-flex flex-column justify-content-center align-items-center p-4 rounded-4">
+                    <i class="bi bi-headset help-icon fs-1 mb-3"></i>
                     <h4 class="fw-bold">Have a Question?</h4>
                     <p class="d-flex align-items-center mt-2 mb-0"><i class="bi bi-telephone me-2"></i> <span>+963 994 636 381</span></p>
-                    <p class="d-flex align-items-center mt-1 mb-0"><i class="bi bi-envelope me-2"></i> <a href="mailto:099assemhb@gmail.com">099assemhb@gmail.com</a></p>
+                    <p class="d-flex align-items-center mt-1 mb-0"><i class="bi bi-envelope me-2"></i> <a href="mailto:099assemhb@gmail.com" class="text-inherit">099assemhb@gmail.com</a></p>
                   </div>
                 </div>
               </div>

@@ -136,8 +136,8 @@
       "title": "Shift Pay",
       "titleAr": "شيفت باي",
       "category": "mobile",
-      "image": "assets/img/masonry-portfolio/masonry-portfolio-2.jpg",
-      "thumbnail": "assets/img/masonry-portfolio/masonry-portfolio-2.jpg",
+      "image": "assets/img/Projects_Images/ShiftPay/main_page.png",
+      "thumbnail": "assets/img/Projects_Images/ShiftPay/main_page.png",
       "description": "Smart employee and finance management system with an advanced voice assistant supporting Egyptian dialect, built for offline efficiency and premium user experience.",
       "descriptionAr": "نظام ذكي لإدارة الموظفين والمالية مع مساعد صوتي متطور يدعم اللهجة المصرية، مبني للعمل بكفاءة بدون إنترنت مع تجربة مستخدم متميزة.",
       "status": "completed",
@@ -190,7 +190,18 @@
       ],
       "challenges": "Building a voice assistant that understands natural Egyptian dialect and developing a high-precision financial engine within an offline-first environment.",
       "challengesAr": "بناء مساعد صوتي يفهم اللهجة المصرية الطبيعية وتطوير محرك مالي عالي الدقة ضمن بيئة تعمل بدون اتصال بالإنترنت.",
-      "screenshots": [],
+      "screenshots": [
+        "assets/img/Projects_Images/ShiftPay/main_page.png",
+        "assets/img/Projects_Images/ShiftPay/ShiftPay_Statistics.png",
+        "assets/img/Projects_Images/ShiftPay/ShiftPay_Attendance.png",
+        "assets/img/Projects_Images/ShiftPay/ShiftPay_BracnchPage.png",
+        "assets/img/Projects_Images/ShiftPay/ShiftPay_Employees.png",
+        "assets/img/Projects_Images/ShiftPay/ShiftPay_Salaries.png",
+        "assets/img/Projects_Images/ShiftPay/ShiftPay_Shifts.png",
+        "assets/img/Projects_Images/ShiftPay/ShiftPay_logIn.png",
+        "assets/img/Projects_Images/ShiftPay/ShiftPay_HomePage_2.png",
+        "assets/img/Projects_Images/ShiftPay/main_page_dark_mode.png"
+      ],
       "docs": {
         "readme": "assets/Docs_Project/README_SHIFTPAY.md",
         "type": "comprehensive"
@@ -208,8 +219,8 @@
       "title": "Mizaneyati Pro",
       "titleAr": "ميزانيتي",
       "category": "mobile",
-      "image": "assets/img/masonry-portfolio/masonry-portfolio-4.jpg",
-      "thumbnail": "assets/img/masonry-portfolio/masonry-portfolio-4.jpg",
+      "image": "assets/img/Projects_Images/mezanyti/main_page.png",
+      "thumbnail": "assets/img/Projects_Images/mezanyti/main_page.png",
       "description": "Comprehensive personal financial management system built with Clean Architecture standards, featuring advanced tracking, visual documentation, and interactive intelligence.",
       "descriptionAr": "نظام متكامل للإدارة المالية الشخصية المبني بمعايير Clean Architecture، يتميز بتتبع متقدم، توثيق بصري، وذكاء مالي تفاعلي.",
       "status": "completed",
@@ -249,7 +260,18 @@
       ],
       "challenges": "Implementing a high-precision financial engine with 100% accuracy while adhering to strict Clean Architecture principles and ensuring local data integrity.",
       "challengesAr": "تحقيق دقة محاسبية بنسبة 100% مع تطبيق معايير Clean Architecture الصارمة وضمان سلامة البيانات المحلية.",
-      "screenshots": [],
+      "screenshots": [
+        "assets/img/Projects_Images/mezanyti/main_page.png",
+        "assets/img/Projects_Images/mezanyti/Screenshot_٢٠٢٦٠٥٠٨-٠٨١١٠٧.png",
+        "assets/img/Projects_Images/mezanyti/Screenshot_٢٠٢٦٠٥٠٨-٠٨١١١٥.png",
+        "assets/img/Projects_Images/mezanyti/Screenshot_٢٠٢٦٠٥٠٨-٠٨١١١٧.png",
+        "assets/img/Projects_Images/mezanyti/Screenshot_٢٠٢٦٠٥٠٨-٠٨١١٤٠.png",
+        "assets/img/Projects_Images/mezanyti/Screenshot_٢٠٢٦٠٥٠٨-٠٨١٣٤٠.png",
+        "assets/img/Projects_Images/mezanyti/Screenshot_٢٠٢٦٠٥٠٨-٠٨١٣٤٢.png",
+        "assets/img/Projects_Images/mezanyti/Screenshot_٢٠٢٦٠٥٠٨-٠٨١٣٥١.png",
+        "assets/img/Projects_Images/mezanyti/Screenshot_٢٠٢٦٠٥٠٨-٠٨١٤١٥.png",
+        "assets/img/Projects_Images/mezanyti/Screenshot_٢٠٢٦٠٥٠٨-٠٨١٤٢٠.png"
+      ],
       "docs": {
         "readme": "assets/Docs_Project/README_MIZANEYATI.md",
         "type": "comprehensive"

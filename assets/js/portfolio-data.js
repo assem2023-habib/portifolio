@@ -246,10 +246,37 @@ const portfolioData = {
       "assets/img/portfolio/product-1.jpg"
     ]
   },
+  mizaneyati: {
+    title: "Mizaneyati Pro",
+    category: "mobile",
+    image: "assets/img/Projects_Images/mezanyti/main_page.png",
+    description: "Comprehensive personal financial management system built with Clean Architecture standards, featuring advanced tracking, visual documentation, and interactive intelligence.",
+    detailsUrl: "project.html",
+    gallery: "portfolio-gallery-mobile",
+    technologies: "Flutter, Riverpod, Drift (SQLite), Clean Architecture",
+    status: "Completed",
+    url: "#",
+    features: [
+      "Integrated transactions and internal transfers system",
+      "Advanced visual documentation (Receipt scanning)",
+      "Interactive financial intelligence with fl_chart",
+      "Clean Architecture with Feature-First structure",
+      "Offline-first database with Drift (Type-safe)",
+      "Robust validation logic and automated testing"
+    ],
+    galleryImages: [
+      "assets/img/Projects_Images/mezanyti/main_page.png",
+      "assets/img/Projects_Images/mezanyti/Screenshot_٢٠٢٦٠٥٠٨-٠٨١١٠٧.png",
+      "assets/img/Projects_Images/mezanyti/Screenshot_٢٠٢٦٠٥٠٨-٠٨١١١٥.png",
+      "assets/img/Projects_Images/mezanyti/Screenshot_٢٠٢٦٠٥٠٨-٠٨١١١٧.png",
+      "assets/img/Projects_Images/mezanyti/Screenshot_٢٠٢٦٠٥٠٨-٠٨١١٤٠.png",
+      "assets/img/Projects_Images/mezanyti/Screenshot_٢٠٢٦٠٥٠٨-٠٨١٣٤٠.png"
+    ]
+  },
   shiftpay: {
     title: "Shift Pay",
     category: "mobile",
-    image: "assets/img/masonry-portfolio/masonry-portfolio-2.jpg",
+    image: "assets/img/Projects_Images/ShiftPay/main_page.png",
     description: "Smart employee and finance management system with an advanced voice assistant supporting Egyptian dialect, built for offline efficiency",
     detailsUrl: "project.html",
     gallery: "portfolio-gallery-mobile",
@@ -265,9 +292,12 @@ const portfolioData = {
       "Smart Attendance and Shift tracking"
     ],
     galleryImages: [
-      "assets/img/masonry-portfolio/masonry-portfolio-2.jpg",
-      "assets/img/portfolio/app-2.jpg",
-      "assets/img/portfolio/product-2.jpg"
+      "assets/img/Projects_Images/ShiftPay/main_page.png",
+      "assets/img/Projects_Images/ShiftPay/ShiftPay_Statistics.png",
+      "assets/img/Projects_Images/ShiftPay/ShiftPay_Attendance.png",
+      "assets/img/Projects_Images/ShiftPay/ShiftPay_BracnchPage.png",
+      "assets/img/Projects_Images/ShiftPay/ShiftPay_Employees.png",
+      "assets/img/Projects_Images/ShiftPay/ShiftPay_Salaries.png"
     ]
   },
   rma: {

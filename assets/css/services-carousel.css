@@ -93,11 +93,16 @@ body.rtl .card-inner {
 }
 
 .cv-carousel-card .card-inner {
-  background: rgba(255, 255, 255, 0.04);
+  background: rgba(255, 255, 255, 0.6);
   backdrop-filter: blur(20px);
-  border: 1px solid rgba(255, 255, 255, 0.07);
+  border: 1px solid rgba(0, 0, 0, 0.05);
   padding: 28px 24px;
   border-radius: 18px;
+}
+
+body.dark-mode .cv-carousel-card .card-inner {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.07);
 }
 
 .cv-carousel-card .card-inner::before {
@@ -145,8 +150,12 @@ body.rtl .card-inner {
 .cv-carousel-card .cv-title {
   font-size: 16px;
   font-weight: 700;
-  color: var(--card-text-main, #e8e8f0);
+  color: var(--default-color, #212529);
   margin-bottom: 6px !important;
+}
+
+body.dark-mode .cv-carousel-card .cv-title {
+  color: #e8e8f0;
 }
 
 .cv-carousel-card .cv-specialization {
@@ -161,8 +170,12 @@ body.rtl .card-inner {
 .cv-carousel-card .cv-description {
   font-size: 13px;
   line-height: 1.6;
-  color: rgba(232, 232, 240, 0.5) !important;
+  color: color-mix(in srgb, var(--default-color), transparent 30%) !important;
   font-weight: 300;
+}
+
+body.dark-mode .cv-carousel-card .cv-description {
+  color: rgba(232, 232, 240, 0.5) !important;
 }
 
 .cv-carousel-card .cv-actions {

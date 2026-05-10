@@ -92,6 +92,25 @@ body.rtl .card-inner {
   margin-bottom: 20px;
 }
 
+.service-carousel-card .card-back {
+  position: absolute;
+  inset: 0;
+  border-radius: 20px;
+  border: 1px solid color-mix(in srgb, var(--accent-color), transparent 75%);
+  background: color-mix(in srgb, var(--background-color), black 10%);
+  backdrop-filter: blur(20px);
+  overflow: hidden;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  transform: rotateY(180deg);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  padding: 28px;
+}
+
 .cv-carousel-card .card-inner {
   background: rgba(255, 255, 255, 0.6);
   backdrop-filter: blur(20px);
@@ -227,7 +246,8 @@ body.dark-mode .cv-carousel-card .cv-description {
   overflow: hidden;
 }
 
-.cv-carousel-card .card-back::before {
+.cv-carousel-card .card-back::before,
+.service-carousel-card .card-back::before {
   content: '';
   position: absolute;
   inset: 0;
@@ -238,7 +258,8 @@ body.dark-mode .cv-carousel-card .cv-description {
   pointer-events: none;
 }
 
-.cv-carousel-card .back-logo {
+.cv-carousel-card .back-logo,
+.service-carousel-card .back-logo {
   width: 72px;
   height: 72px;
   border-radius: 16px;
@@ -254,14 +275,23 @@ body.dark-mode .cv-carousel-card .cv-description {
   z-index: 2;
 }
 
-.cv-carousel-card .back-title {
+.service-carousel-card .back-logo {
+  border-color: color-mix(in srgb, var(--item-color, var(--accent-color)), transparent 50%);
+  background: color-mix(in srgb, var(--item-color, var(--accent-color)), transparent 85%);
+  color: var(--item-color, var(--accent-color));
+  box-shadow: 0 0 32px color-mix(in srgb, var(--item-color, var(--accent-color)), transparent 65%);
+}
+
+.cv-carousel-card .back-title,
+.service-carousel-card .back-title {
   font-size: 16px;
   color: #ffffff;
   position: relative;
   z-index: 2;
 }
 
-.cv-carousel-card .back-divider {
+.cv-carousel-card .back-divider,
+.service-carousel-card .back-divider {
   width: 50px;
   height: 2px;
   background: linear-gradient(90deg, transparent, rgba(108, 99, 255, 0.7), transparent);
@@ -269,7 +299,12 @@ body.dark-mode .cv-carousel-card .cv-description {
   z-index: 2;
 }
 
-.cv-carousel-card .back-tag {
+.service-carousel-card .back-divider {
+  background: linear-gradient(90deg, transparent, var(--item-color, var(--accent-color)), transparent);
+}
+
+.cv-carousel-card .back-tag,
+.service-carousel-card .back-tag {
   background: rgba(108, 99, 255, 0.18);
   color: rgba(108, 99, 255, 0.95);
   border: 1px solid rgba(108, 99, 255, 0.35);
@@ -277,12 +312,23 @@ body.dark-mode .cv-carousel-card .cv-description {
   z-index: 2;
 }
 
-.cv-carousel-card .back-num {
+.service-carousel-card .back-tag {
+  background: color-mix(in srgb, var(--item-color, var(--accent-color)), transparent 82%);
+  color: var(--item-color, var(--accent-color));
+  border-color: color-mix(in srgb, var(--item-color, var(--accent-color)), transparent 65%);
+}
+
+.cv-carousel-card .back-num,
+.service-carousel-card .back-num {
   color: rgba(108, 99, 255, 0.08);
   font-family: 'JetBrains Mono', monospace;
   position: absolute;
   bottom: 18px;
   right: 22px;
+}
+
+.service-carousel-card .back-num {
+  color: color-mix(in srgb, var(--item-color, var(--accent-color)), transparent 92%);
 }
 
 body.dark-mode .service-carousel-card .card-back,

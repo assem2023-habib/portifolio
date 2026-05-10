@@ -2,9 +2,14 @@
 # 3D Circular Carousel (Services)
 --------------------------------------------------------------*/
 :root {
+  --carousel-radius: 420px;
   --carousel-card-w: 280px;
   --carousel-card-h: 340px;
-  --carousel-radius: 420px;
+
+  /* CV Card Specific Variables */
+  --cv-accent: #6c63ff;
+  --cv-accent-light: rgba(108, 99, 255, 0.12);
+  --cv-accent-border: rgba(108, 99, 255, 0.25);
 }
 
 @media (max-width: 768px) {
@@ -87,24 +92,184 @@ body.rtl .card-inner {
   margin-bottom: 20px;
 }
 
-.service-carousel-card .card-back,
+.cv-carousel-card .card-inner {
+  background: rgba(255, 255, 255, 0.04);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  padding: 28px 24px;
+  border-radius: 18px;
+}
+
+.cv-carousel-card .card-inner::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(108, 99, 255, 0.06) 0%, transparent 60%, rgba(255, 101, 132, 0.04) 100%);
+  border-radius: inherit;
+  pointer-events: none;
+}
+
+.cv-carousel-card .card-glow {
+  background: radial-gradient(circle, rgba(108, 99, 255, 0.35), transparent 70%);
+}
+
+.cv-carousel-card.active .card-inner {
+  background: rgba(108, 99, 255, 0.16);
+  border-color: rgba(108, 99, 255, 0.5);
+  box-shadow: 0 0 60px rgba(108, 99, 255, 0.3), 0 0 120px rgba(108, 99, 255, 0.15);
+}
+
+.cv-carousel-card .card-number {
+  font-family: 'JetBrains Mono', monospace;
+  color: rgba(108, 99, 255, 0.6);
+  font-size: 24px;
+}
+
+.cv-carousel-card .card-icon-wrap {
+  background: var(--cv-accent-light);
+  border: 1px solid var(--cv-accent-border);
+  color: var(--cv-accent);
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.cv-carousel-card.active .card-icon-wrap {
+  background: rgba(108, 99, 255, 0.25);
+  border-color: rgba(108, 99, 255, 0.5);
+  box-shadow: 0 8px 28px rgba(108, 99, 255, 0.35);
+  transform: scale(1.08);
+}
+
+.cv-carousel-card .cv-title {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--card-text-main, #e8e8f0);
+  margin-bottom: 6px !important;
+}
+
+.cv-carousel-card .cv-specialization {
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--cv-accent) !important;
+  margin-bottom: 12px !important;
+}
+
+.cv-carousel-card .cv-description {
+  font-size: 13px;
+  line-height: 1.6;
+  color: rgba(232, 232, 240, 0.5) !important;
+  font-weight: 300;
+}
+
+.cv-carousel-card .cv-actions {
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+  padding-top: 16px;
+  margin-top: 18px;
+}
+
+.cv-carousel-card .cv-download-btn {
+  flex: 1;
+  padding: 8px 12px;
+  font-size: 12px;
+  font-weight: 600;
+  border-radius: 10px;
+  border: 1.5px solid var(--cv-accent-border);
+  background: var(--cv-accent-light);
+  color: rgba(108, 99, 255, 0.95) !important;
+  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+}
+
+.cv-carousel-card .cv-download-btn:hover {
+  background: rgba(108, 99, 255, 0.18);
+  border-color: rgba(108, 99, 255, 0.6);
+  color: #ffffff !important;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(108, 99, 255, 0.25);
+}
+
+/* ── Back Side Improved ── */
 .cv-carousel-card .card-back {
   position: absolute;
   inset: 0;
-  border-radius: 20px;
-  border: 1px solid color-mix(in srgb, var(--accent-color), transparent 75%);
-  background: color-mix(in srgb, var(--background-color), black 10%);
-  backdrop-filter: blur(20px);
-  overflow: hidden;
-  backface-visibility: hidden;
-  -webkit-backface-visibility: hidden;
-  transform: rotateY(180deg);
+  background: rgba(12, 10, 40, 0.95);
+  border-color: var(--cv-accent-border);
+  border-radius: 18px;
+  padding: 28px;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 16px;
-  padding: 28px;
+  gap: 12px;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  transform: rotateY(180deg);
+  overflow: hidden;
+}
+
+.cv-carousel-card .card-back::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse at 30% 30%, rgba(108, 99, 255, 0.25) 0%, transparent 60%),
+    radial-gradient(ellipse at 70% 70%, rgba(255, 101, 132, 0.15) 0%, transparent 60%);
+  border-radius: inherit;
+  pointer-events: none;
+}
+
+.cv-carousel-card .back-logo {
+  width: 72px;
+  height: 72px;
+  border-radius: 16px;
+  border: 2px solid rgba(108, 99, 255, 0.5);
+  background: rgba(108, 99, 255, 0.15);
+  font-size: 32px;
+  color: var(--cv-accent);
+  box-shadow: 0 0 32px rgba(108, 99, 255, 0.35);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  z-index: 2;
+}
+
+.cv-carousel-card .back-title {
+  font-size: 16px;
+  color: #ffffff;
+  position: relative;
+  z-index: 2;
+}
+
+.cv-carousel-card .back-divider {
+  width: 50px;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, rgba(108, 99, 255, 0.7), transparent);
+  position: relative;
+  z-index: 2;
+}
+
+.cv-carousel-card .back-tag {
+  background: rgba(108, 99, 255, 0.18);
+  color: rgba(108, 99, 255, 0.95);
+  border: 1px solid rgba(108, 99, 255, 0.35);
+  position: relative;
+  z-index: 2;
+}
+
+.cv-carousel-card .back-num {
+  color: rgba(108, 99, 255, 0.08);
+  font-family: 'JetBrains Mono', monospace;
+  position: absolute;
+  bottom: 18px;
+  right: 22px;
 }
 
 body.dark-mode .service-carousel-card .card-back,

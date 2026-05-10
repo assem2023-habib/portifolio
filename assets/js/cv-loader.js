@@ -91,24 +91,24 @@ function createCVCarouselElement(cv, i) {
   cardClone.querySelector('.cv-specialization').textContent = text.specialization;
   cardClone.querySelector('.cv-description').textContent = text.description;
   
-  const btnsContainer = cardClone.querySelector('#cv-download-btns');
-  if (btnsContainer) {
-    btnsContainer.innerHTML = '';
-    if (hasPDF) {
-      btnsContainer.innerHTML += `
-        <a href="${cv.files.pdf}" download class="btn btn-outline-primary btn-sm flex-grow-1" onclick="CVLoader.trackCVDownload('${cv.id}', 'pdf')">
-          <i class="bi bi-file-earmark-pdf me-1"></i>PDF
-        </a>
-      `;
+    const btnsContainer = cardClone.querySelector('#cv-download-btns');
+    if (btnsContainer) {
+      btnsContainer.innerHTML = '';
+      if (hasPDF) {
+        btnsContainer.innerHTML += `
+          <a href="${cv.files.pdf}" download class="cv-download-btn" onclick="CVLoader.trackCVDownload('${cv.id}', 'pdf')">
+            <i class="bi bi-file-earmark-pdf"></i>PDF
+          </a>
+        `;
+      }
+      if (hasDOCX) {
+        btnsContainer.innerHTML += `
+          <a href="${cv.files.docx}" download class="cv-download-btn" onclick="CVLoader.trackCVDownload('${cv.id}', 'docx')">
+            <i class="bi bi-file-earmark-word"></i>Word
+          </a>
+        `;
+      }
     }
-    if (hasDOCX) {
-      btnsContainer.innerHTML += `
-        <a href="${cv.files.docx}" download class="btn btn-outline-primary btn-sm flex-grow-1" onclick="CVLoader.trackCVDownload('${cv.id}', 'docx')">
-          <i class="bi bi-file-earmark-word me-1"></i>Word
-        </a>
-      `;
-    }
-  }
 
   // Back side
   cardClone.querySelector('.back-title').textContent = text.title;
@@ -322,15 +322,15 @@ function createCVElement(cv) {
   let downloadButtons = '';
   if (hasPDF) {
     downloadButtons += `
-      <a href="${cv.files.pdf}" download class="btn btn-outline-primary btn-sm flex-grow-1" onclick="trackCVDownload('${cv.id}', 'pdf')">
-        <i class="bi bi-file-earmark-pdf me-1"></i>PDF
+      <a href="${cv.files.pdf}" download class="cv-download-btn" onclick="trackCVDownload('${cv.id}', 'pdf')">
+        <i class="bi bi-file-earmark-pdf"></i>PDF
       </a>
     `;
   }
   if (hasDOCX) {
     downloadButtons += `
-      <a href="${cv.files.docx}" download class="btn btn-outline-primary btn-sm flex-grow-1" onclick="trackCVDownload('${cv.id}', 'docx')">
-        <i class="bi bi-file-earmark-word me-1"></i>Word
+      <a href="${cv.files.docx}" download class="cv-download-btn" onclick="trackCVDownload('${cv.id}', 'docx')">
+        <i class="bi bi-file-earmark-word"></i>Word
       </a>
     `;
   }

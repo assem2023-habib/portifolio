@@ -147,17 +147,18 @@ function updateProjectDetails() {
 
             project.features.forEach((feature) => {
                 const featureDiv = document.createElement('div');
-                featureDiv.className = 'd-flex gap-3 align-items-start p-3 glass-card rounded-3 shadow-sm mb-3';
+                featureDiv.className = 'col-md-6 col-lg-4';
 
                 const iconName = featureIcons[feature.icon] || featureIcons.default;
 
                 featureDiv.innerHTML = `
-                    <div class="feature-icon-box bg-primary bg-opacity-10">
-                        <i class="bi ${iconName} text-primary"></i>
-                    </div>
-                    <div>
-                        <h6 class="fw-semibold mb-1">${feature.title || 'Feature'}</h6>
-                        <small class="text-muted d-block">${feature.description || feature}</small>
+                    <div class="d-flex gap-3 align-items-start p-3 glass-card rounded-3 shadow-sm h-100">
+                        <div class="feature-icon-box bg-primary bg-opacity-10">
+                            <i class="bi ${iconName} text-primary"></i>
+                        </div>
+                        <div>
+                            <small class="text-muted d-block lh-base">${feature.description || feature}</small>
+                        </div>
                     </div>
                 `;
                 featuresContainer.appendChild(featureDiv);

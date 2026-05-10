@@ -81,28 +81,7 @@
 
 <body class="project-details-page">
 
-  <header id="header" class="header d-flex flex-column justify-content-center">
-    <i class="header-toggle d-xl-none bi bi-list"></i>
 
-    <button id="languageToggle" class="language-toggle" title="Change Language" style="display: none;">
-      <i class="bi bi-translate"></i>
-    </button>
-
-    <button id="darkModeToggle" class="dark-mode-toggle" title="Toggle Dark Mode">
-      <i class="bi bi-moon-fill"></i>
-    </button>
-
-    <nav id="navmenu" class="navmenu">
-      <ul>
-        <li><a href="index.html#hero"><i class="bi bi-house navicon"></i><span>Home</span></a></li>
-        <li><a href="index.html#about"><i class="bi bi-person navicon"></i><span>About</span></a></li>
-        <li><a href="index.html#skills"><i class="bi bi-gear navicon"></i><span>Skills</span></a></li>
-        <li><a href="index.html#resume"><i class="bi bi-file-earmark-text navicon"></i><span>Resume</span></a></li>
-        <li><a href="index.html#portfolio"><i class="bi bi-images navicon"></i><span>Project</span></a></li>
-        <li><a href="index.html#services"><i class="bi bi-hdd-stack navicon"></i><span>Services</span></a></li>
-      </ul>
-    </nav>
-  </header>
 
   <main class="main">
 
@@ -135,43 +114,88 @@
           </div>
         </div>
 
-        <!-- Two Column Layout -->
         <div class="row g-4">
+          <div class="col-12">
+            
+            <div class="row g-4">
+              <!-- Left: Project Information (Merged) -->
+              <div class="col-lg-4" data-aos="fade-up">
+                <div class="glass-card rounded-3 p-4 shadow-sm h-100">
+                  <h4 class="text-primary text-center mb-4 fw-semibold">Project Information</h4>
 
-          <!-- Left Column (Main Content) -->
-          <div class="col-lg-8">
+                  <div class="d-flex align-items-center gap-3 p-2 rounded-2 mb-2" style="transition: background 0.2s;">
+                    <span class="text-primary icon-container flex-shrink-0"><i class="bi bi-grid"></i></span>
+                    <div>
+                      <small class="text-muted d-block">Category</small>
+                      <strong class="project-category">Web Development</strong>
+                    </div>
+                  </div>
 
-            <!-- Overview -->
-            <section data-aos="fade-up">
-              <h2 class="mb-3 fw-semibold">Overview</h2>
-              <div class="glass-card rounded-3 p-4 shadow-sm">
-                <p class="text-muted mb-0 project-description lh-lg">
-                  Project description will be loaded here...
-                </p>
+                  <div class="d-flex align-items-center gap-3 p-2 rounded-2 mb-2" style="transition: background 0.2s;">
+                    <span class="text-primary icon-container flex-shrink-0"><i class="bi bi-code-slash"></i></span>
+                    <div>
+                      <small class="text-muted d-block">Technologies</small>
+                      <strong class="project-technologies">Loading...</strong>
+                    </div>
+                  </div>
+
+                  <div class="d-flex align-items-center gap-3 p-2 rounded-2 mb-4" style="transition: background 0.2s;">
+                    <span class="text-primary icon-container flex-shrink-0"><i class="bi bi-check-circle"></i></span>
+                    <div>
+                      <small class="text-muted d-block">Status</small>
+                      <strong class="project-status">Completed</strong>
+                    </div>
+                  </div>
+
+                  <div class="d-flex flex-column gap-2 mt-auto">
+                    <a href="#" class="project-url btn btn-primary d-flex align-items-center justify-content-center gap-2" target="_blank">
+                      <i class="bi bi-box-arrow-up-right"></i>
+                      <span>Visit Project</span>
+                    </a>
+                    <a href="#" class="project-mobile-url btn btn-secondary d-flex align-items-center justify-content-center gap-2" target="_blank" style="display:none;">
+                      <i class="bi bi-download"></i>
+                      <span>Download Mobile</span>
+                    </a>
+                    <a href="#" class="project-desktop-url btn btn-outline-primary d-flex align-items-center justify-content-center gap-2" target="_blank" style="display:none;">
+                      <i class="bi bi-pc-display"></i>
+                      <span>Download Desktop</span>
+                    </a>
+                  </div>
+                </div>
               </div>
-            </section>
 
-            <!-- Key Features -->
-            <section class="mt-4" data-aos="fade-up">
+              <!-- Right: Overview -->
+              <div class="col-lg-8" data-aos="fade-up">
+                <div class="glass-card rounded-3 p-4 shadow-sm h-100">
+                  <h2 class="mb-3 fw-semibold">Overview</h2>
+                  <p class="text-muted mb-0 project-description lh-lg">
+                    Project description will be loaded here...
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Key Features (Full Width) -->
+            <section class="mt-5" data-aos="fade-up">
               <h2 class="mb-3 fw-semibold">Key Features</h2>
-              <div id="project-features">
-                <!-- Features will be loaded dynamically -->
+              <div id="project-features" class="row g-3">
+                <!-- Features will be loaded dynamically into grid -->
               </div>
             </section>
 
-            <!-- Gallery -->
-            <section class="mt-4" data-aos="fade-up">
+            <!-- Gallery (Full Width) -->
+            <section class="mt-5" data-aos="fade-up">
               <div class="d-flex justify-content-between align-items-center mb-3">
                 <h2 class="fw-semibold mb-0">Gallery</h2>
                 <small class="text-primary fw-medium">Scroll for more</small>
               </div>
-              <div class="d-flex overflow-x-auto gap-3 pb-3 custom-scrollbar" id="project-gallery">
+              <div class="d-flex overflow-x-auto gap-3 pb-3 custom-scrollbar" id="project-gallery" style="width: 100%;">
                 <!-- Gallery images will be loaded dynamically -->
               </div>
             </section>
 
-            <!-- Project Details -->
-            <section class="mt-4" data-aos="fade-up">
+            <!-- Project Details (Full Width) -->
+            <section class="mt-5" data-aos="fade-up">
               <h2 class="mb-3 fw-semibold">Project Details</h2>
               <div class="glass-card rounded-3 p-4 shadow-sm border-start border-4 border-primary">
                 <p class="text-muted mb-0 lh-lg">
@@ -179,63 +203,6 @@
                 </p>
               </div>
             </section>
-
-          </div>
-
-          <!-- Right Column (Project Info) -->
-          <div class="col-lg-4">
-
-            <!-- Project Info Card -->
-            <div class="glass-card rounded-3 p-4 shadow-sm" data-aos="fade-up">
-              <h4 class="text-primary text-center mb-4 fw-semibold">Project Information</h4>
-
-              <div class="d-flex align-items-center gap-3 p-2 rounded-2 mb-2" style="transition: background 0.2s;">
-                <span class="text-primary icon-container flex-shrink-0"><i class="bi bi-grid"></i></span>
-                <div>
-                  <small class="text-muted d-block">Category</small>
-                  <strong class="project-category">Web Development</strong>
-                </div>
-              </div>
-
-              <div class="d-flex align-items-center gap-3 p-2 rounded-2 mb-2" style="transition: background 0.2s;">
-                <span class="text-primary icon-container flex-shrink-0"><i class="bi bi-code-slash"></i></span>
-                <div>
-                  <small class="text-muted d-block">Technologies</small>
-                  <strong class="project-technologies">Laravel, PHP, MySQL</strong>
-                </div>
-              </div>
-
-              <div class="d-flex align-items-center gap-3 p-2 rounded-2" style="transition: background 0.2s;">
-                <span class="text-primary icon-container flex-shrink-0"><i class="bi bi-check-circle"></i></span>
-                <div>
-                  <small class="text-muted d-block">Status</small>
-                  <strong class="project-status">Completed</strong>
-                </div>
-              </div>
-
-              <div class="d-flex flex-column gap-2 mt-4">
-                <a href="#" class="project-url btn btn-primary d-flex align-items-center justify-content-center gap-2" target="_blank">
-                  <i class="bi bi-box-arrow-up-right"></i>
-                  <span>Visit Project</span>
-                </a>
-                <a href="#" class="project-mobile-url btn btn-secondary d-flex align-items-center justify-content-center gap-2" target="_blank" style="display:none;">
-                  <i class="bi bi-download"></i>
-                  <span>Download Mobile</span>
-                </a>
-                <a href="#" class="project-desktop-url btn btn-outline-primary d-flex align-items-center justify-content-center gap-2" target="_blank" style="display:none;">
-                  <i class="bi bi-pc-display"></i>
-                  <span>Download Desktop</span>
-                </a>
-              </div>
-            </div>
-
-            <!-- Other Projects -->
-            <div class="glass-card rounded-3 p-4 shadow-sm mt-4" data-aos="fade-up">
-              <h4 class="text-primary text-center mb-3 fw-semibold">Other Projects</h4>
-              <ul class="list-unstyled mb-0" id="other-projects-list">
-                <!-- Other projects will be populated here -->
-              </ul>
-            </div>
 
           </div>
         </div>

@@ -279,6 +279,12 @@ function populateServiceItems() {
     cardClone.querySelector('.card-desc').textContent = serviceDesc;
     cardClone.querySelector('.card-tag').textContent = serviceTag;
     
+    // Add Link to Arrow
+    const arrowWrap = cardClone.querySelector('.card-arrow');
+    if (arrowWrap) {
+      arrowWrap.innerHTML = `<a href="service-details.html?service=${service.id}" class="stretched-link-arrow"><i class="bi bi-arrow-right"></i></a>`;
+    }
+    
     // Back side
     cardClone.querySelector('.back-logo i').className = `bi ${serviceIcon}`;
     cardClone.querySelector('.back-title').textContent = serviceTitle;

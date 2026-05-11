@@ -51,6 +51,12 @@ async function updateServiceDetails() {
             breadcrumbCurrent.textContent = title;
         }
 
+        // Update page title header
+        const pageTitle = document.querySelector('.service-details-title');
+        if (pageTitle) {
+            pageTitle.textContent = title;
+        }
+
         // Update main content
         const serviceImage = document.querySelector('.services-img');
         const serviceTitle = document.querySelector('#service-details h2');

@@ -69,8 +69,10 @@
       "title": "Shehrezad Backend",
       "titleAr": "باك إند شهرزاد",
       "category": "web",
-      "image": "assets/img/Projects_Images/shahrazad/shahrazad_customer/main_page.png",
-      "thumbnail": "assets/img/Projects_Images/shahrazad/shahrazad_customer/main_page.png",
+      "image": "assets/img/Projects_Images/shahrazad/shahrazad_customer/main/shahrazad_light_mod.jpeg",
+      "thumbnail": "assets/img/Projects_Images/shahrazad/shahrazad_customer/main/shahrazad_light_mod.jpeg",
+      "image_dark": "assets/img/Projects_Images/shahrazad/shahrazad_customer/main/shahrazad_dark_mod.jpeg",
+      "thumbnail_dark": "assets/img/Projects_Images/shahrazad/shahrazad_customer/main/shahrazad_dark_mod.jpeg",
       "description": "Integrated e-commerce and CRM backend system with advanced APIs for product, order, and debt management with multi-currency support",
       "descriptionAr": "باك إند متكامل للتجارة الإلكترونية وإدارة علاقات العملاء مع APIs متقدمة لإدارة المنتجات والطلبات والديون",
       "status": "completed",
@@ -119,11 +121,13 @@
       "challenges": "بناء نظام مالي معقد يدعم تعدد العملات والديون مع الحفاظ على أمان عالي",
       "challengesAr": "كان أكبر تحدٍ بناء نظام محاسبة يربط بين العملات المختلفة ويتعامل مع الديون بشكل عادل ودقيق",
       "screenshots": [
-        "assets/img/Projects_Images/shahrazad/shahrazad_customer/main_page.png",
+        "assets/img/Projects_Images/shahrazad/shahrazad_customer/main/shahrazad_light_mod.jpeg",
+        "assets/img/Projects_Images/shahrazad/shahrazad_customer/main/shahrazad_dark_mod.jpeg",
         "assets/img/Projects_Images/shahrazad/shahrazad_customer/Screenshot_٢٠٢٦٠٥٠٨-٠٨١٨١٨.png",
         "assets/img/Projects_Images/shahrazad/shahrazad_customer/Screenshot_٢٠٢٦٠٥٠٨-٠٨١٨٢١.png",
         "assets/img/Projects_Images/shahrazad/shahrazad_customer/Screenshot_٢٠٢٦٠٥٠٨-٠٨١٨٢٦.png",
-        "assets/img/Projects_Images/shahrazad/shahrazad_dashboard/main_page.png",
+        "assets/img/Projects_Images/shahrazad/shahrazad_dashboard/main/Shaharazad_Main_Light_mode.jpeg",
+        "assets/img/Projects_Images/shahrazad/shahrazad_dashboard/main/Shaharazad_Main_Dark_mode.jpeg",
         "assets/img/Projects_Images/shahrazad/shahrazad_dashboard/Screenshot_٢٠٢٦٠٥٠٨-٠٨٢١١٦.png"
       ],
       "docs": {

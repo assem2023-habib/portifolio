@@ -1,0 +1,807 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Skills Section — محسّنة مع أيقونات وحركات</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+:root {
+  --bg-primary: #0a0a1a;
+  --bg-secondary: #13131f;
+  --text-main: #e8e8f0;
+  --text-muted: rgba(232,232,240,.5);
+  --border: rgba(255,255,255,.08);
+  --accent: #6c63ff;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  background: var(--bg-primary);
+  color: var(--text-main);
+  font-family: 'Inter', 'Tajawal', sans-serif;
+  padding: 60px 20px;
+}
+
+/* ════ SECTION HEADER ════ */
+.section {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.section-title {
+  text-align: center;
+  margin-bottom: 60px;
+  animation: fadeInUp 0.8s ease-out;
+}
+
+.section-title h2 {
+  font-size: 2.5rem;
+  font-weight: 800;
+  letter-spacing: -1px;
+  margin-bottom: 10px;
+}
+
+.section-title p {
+  color: var(--text-muted);
+  font-size: 15px;
+  font-weight: 300;
+}
+
+/* ════ SKILLS CONTAINER ════ */
+.skills-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 20px;
+  animation: fadeIn 0.6s ease-out;
+}
+
+/* ════ SKILL CARD ════ */
+.skill-card {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 120px;
+  transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  
+  /* ── Staggered Animation عند التحميل ── */
+  opacity: 0;
+  transform: translateY(30px);
+  animation: skillCardAppear 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+/* كل بطاقة بتأخير مختلف */
+.skill-card:nth-child(1) { animation-delay: 0.05s; }
+.skill-card:nth-child(2) { animation-delay: 0.1s; }
+.skill-card:nth-child(3) { animation-delay: 0.15s; }
+.skill-card:nth-child(4) { animation-delay: 0.2s; }
+.skill-card:nth-child(5) { animation-delay: 0.25s; }
+.skill-card:nth-child(6) { animation-delay: 0.3s; }
+.skill-card:nth-child(7) { animation-delay: 0.35s; }
+.skill-card:nth-child(8) { animation-delay: 0.4s; }
+.skill-card:nth-child(9) { animation-delay: 0.45s; }
+.skill-card:nth-child(10) { animation-delay: 0.5s; }
+.skill-card:nth-child(11) { animation-delay: 0.55s; }
+.skill-card:nth-child(12) { animation-delay: 0.6s; }
+.skill-card:nth-child(13) { animation-delay: 0.65s; }
+.skill-card:nth-child(14) { animation-delay: 0.7s; }
+.skill-card:nth-child(15) { animation-delay: 0.75s; }
+.skill-card:nth-child(16) { animation-delay: 0.8s; }
+.skill-card:nth-child(17) { animation-delay: 0.85s; }
+.skill-card:nth-child(18) { animation-delay: 0.9s; }
+.skill-card:nth-child(19) { animation-delay: 0.95s; }
+.skill-card:nth-child(20) { animation-delay: 1.0s; }
+.skill-card:nth-child(21) { animation-delay: 1.05s; }
+
+/* ── Hover Effect ── */
+.skill-card:hover {
+  transform: translateY(-8px);
+  border-color: rgba(108,99,255,.4);
+  background: linear-gradient(135deg, rgba(108,99,255,.1), rgba(255,101,132,.05));
+  box-shadow: 0 12px 40px rgba(108,99,255,.2);
+}
+
+/* ── Background Gradient ── */
+.skill-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(108,99,255,.05) 0%, transparent 100%);
+  opacity: 0;
+  transition: opacity 0.35s;
+  pointer-events: none;
+}
+
+.skill-card:hover::before {
+  opacity: 1;
+}
+
+/* ── Skill Header (Icon + Name) ── */
+.skill-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 16px;
+  position: relative;
+  z-index: 2;
+}
+
+.skill-icon-box {
+  width: 48px;
+  height: 48px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  transition: all 0.35s;
+  flex-shrink: 0;
+  /* سيتم تحديد الخلفية والأيقونة ديناميكياً */
+}
+
+.skill-card:hover .skill-icon-box {
+  transform: scale(1.12) rotate(5deg);
+}
+
+.skill-name {
+  flex: 1;
+}
+
+.skill-name h6 {
+  font-size: 14px;
+  font-weight: 700;
+  margin-bottom: 2px !important;
+  letter-spacing: -0.3px;
+}
+
+.skill-category {
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  opacity: 0.7;
+}
+
+/* ── Skill Level ── */
+.skill-level {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  position: relative;
+  z-index: 2;
+}
+
+.level-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  display: block;
+  animation: dotPulse 2s ease-in-out infinite;
+}
+
+@keyframes dotPulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.6; }
+}
+
+.level-text {
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}
+
+/* ════ ANIMATIONS ════ */
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes skillCardAppear {
+  from {
+    opacity: 0;
+    transform: translateY(30px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* ════ RESPONSIVE ════ */
+@media (max-width: 768px) {
+  .skills-container {
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 16px;
+  }
+
+  .section-title h2 {
+    font-size: 2rem;
+  }
+
+  .skill-icon-box {
+    width: 42px;
+    height: 42px;
+    font-size: 20px;
+  }
+}
+
+/* ════ SKILL COLORS BY TECH ════ */
+
+/* PHP */
+.skill-php .skill-icon-box {
+  background: rgba(119, 123, 180, .2);
+  color: #777cb4;
+}
+
+/* Laravel */
+.skill-laravel .skill-icon-box {
+  background: rgba(255, 61, 0, .15);
+  color: #ff3d00;
+}
+
+/* NestJS */
+.skill-nestjs .skill-icon-box {
+  background: rgba(230, 0, 35, .15);
+  color: #e60023;
+}
+
+/* MySQL */
+.skill-mysql .skill-icon-box {
+  background: rgba(0, 150, 136, .15);
+  color: #009688;
+}
+
+/* JavaScript */
+.skill-javascript .skill-icon-box {
+  background: rgba(240, 219, 79, .2);
+  color: #f0db4f;
+}
+
+/* HTML & CSS */
+.skill-htmlcss .skill-icon-box {
+  background: rgba(255, 102, 51, .15);
+  color: #ff6633;
+}
+
+/* PostgreSQL */
+.skill-postgresql .skill-icon-box {
+  background: rgba(49, 103, 209, .15);
+  color: #3167d1;
+}
+
+/* Redis */
+.skill-redis .skill-icon-box {
+  background: rgba(220, 29, 29, .15);
+  color: #dc1d1d;
+}
+
+/* Node.js */
+.skill-nodejs .skill-icon-box {
+  background: rgba(104, 199, 73, .15);
+  color: #68c749;
+}
+
+/* Flutter */
+.skill-flutter .skill-icon-box {
+  background: rgba(2, 182, 216, .15);
+  color: #02b6d8;
+}
+
+/* React Native */
+.skill-reactnative .skill-icon-box {
+  background: rgba(97, 218, 251, .15);
+  color: #61dafb;
+}
+
+/* Firebase */
+.skill-firebase .skill-icon-box {
+  background: rgba(255, 193, 7, .15);
+  color: #ffc107;
+}
+
+/* Docker */
+.skill-docker .skill-icon-box {
+  background: rgba(0, 173, 239, .15);
+  color: #00adef;
+}
+
+/* Git */
+.skill-git .skill-icon-box {
+  background: rgba(245, 80, 46, .15);
+  color: #f5502e;
+}
+
+/* Python */
+.skill-python .skill-icon-box {
+  background: rgba(53, 114, 165, .15);
+  color: #3572a5;
+}
+
+/* Tailwind CSS */
+.skill-tailwind .skill-icon-box {
+  background: rgba(6, 182, 212, .15);
+  color: #06b6d4;
+}
+
+/* Bootstrap */
+.skill-bootstrap .skill-icon-box {
+  background: rgba(126, 39, 141, .15);
+  color: #7e278d;
+}
+
+/* TypeScript */
+.skill-typescript .skill-icon-box {
+  background: rgba(43, 116, 137, .15);
+  color: #2b7489;
+}
+
+/* Socket.io */
+.skill-socketio .skill-icon-box {
+  background: rgba(96, 33, 28, .15);
+  color: #602120;
+}
+
+/* MongoDB */
+.skill-mongodb .skill-icon-box {
+  background: rgba(19, 170, 82, .15);
+  color: #13aa52;
+}
+</style>
+
+</head>
+<body>
+
+<section class="skills section">
+
+  <div class="container section-title">
+    <h2>Technical Skills</h2>
+    <p>
+      <span class="lang-en">All my technical skills and proficiency levels with staggered animations</span>
+      <span class="lang-ar" style="display: none">كل مهاراتي التقنية مع حركات انسيابية متدرجة</span>
+    </p>
+  </div>
+
+  <div class="container">
+    <div class="skills-container" id="skills-container">
+      
+      <!-- PHP -->
+      <div class="skill-card skill-php">
+        <div class="skill-header">
+          <div class="skill-icon-box">
+            <i class="fab fa-php"></i>
+          </div>
+          <div class="skill-name">
+            <h6>PHP</h6>
+            <span class="skill-category">Backend</span>
+          </div>
+        </div>
+        <div class="skill-level">
+          <span class="level-dot" style="background-color: #28a745"></span>
+          <small class="level-text" style="color: #28a745;">
+            <span class="lang-en">Excellent</span>
+            <span class="lang-ar" style="display: none">ممتاز</span>
+          </small>
+        </div>
+      </div>
+
+      <!-- Laravel -->
+      <div class="skill-card skill-laravel">
+        <div class="skill-header">
+          <div class="skill-icon-box">
+            <i class="fab fa-laravel"></i>
+          </div>
+          <div class="skill-name">
+            <h6>Laravel</h6>
+            <span class="skill-category">Framework</span>
+          </div>
+        </div>
+        <div class="skill-level">
+          <span class="level-dot" style="background-color: #28a745"></span>
+          <small class="level-text" style="color: #28a745;">
+            <span class="lang-en">Excellent</span>
+            <span class="lang-ar" style="display: none">ممتاز</span>
+          </small>
+        </div>
+      </div>
+
+      <!-- NestJS -->
+      <div class="skill-card skill-nestjs">
+        <div class="skill-header">
+          <div class="skill-icon-box">
+            <i class="fab fa-node-js" style="color: #e60023;"></i>
+          </div>
+          <div class="skill-name">
+            <h6>NestJS</h6>
+            <span class="skill-category">Framework</span>
+          </div>
+        </div>
+        <div class="skill-level">
+          <span class="level-dot" style="background-color: #28a745"></span>
+          <small class="level-text" style="color: #28a745;">
+            <span class="lang-en">Excellent</span>
+            <span class="lang-ar" style="display: none">ممتاز</span>
+          </small>
+        </div>
+      </div>
+
+      <!-- MySQL -->
+      <div class="skill-card skill-mysql">
+        <div class="skill-header">
+          <div class="skill-icon-box">
+            <i class="fas fa-database"></i>
+          </div>
+          <div class="skill-name">
+            <h6>MySQL</h6>
+            <span class="skill-category">Database</span>
+          </div>
+        </div>
+        <div class="skill-level">
+          <span class="level-dot" style="background-color: #007bff"></span>
+          <small class="level-text" style="color: #007bff;">
+            <span class="lang-en">Very Good</span>
+            <span class="lang-ar" style="display: none">جيد جداً</span>
+          </small>
+        </div>
+      </div>
+
+      <!-- JavaScript -->
+      <div class="skill-card skill-javascript">
+        <div class="skill-header">
+          <div class="skill-icon-box">
+            <i class="fab fa-js-square"></i>
+          </div>
+          <div class="skill-name">
+            <h6>JavaScript</h6>
+            <span class="skill-category">Language</span>
+          </div>
+        </div>
+        <div class="skill-level">
+          <span class="level-dot" style="background-color: #007bff"></span>
+          <small class="level-text" style="color: #007bff;">
+            <span class="lang-en">Very Good</span>
+            <span class="lang-ar" style="display: none">جيد جداً</span>
+          </small>
+        </div>
+      </div>
+
+      <!-- HTML & CSS -->
+      <div class="skill-card skill-htmlcss">
+        <div class="skill-header">
+          <div class="skill-icon-box">
+            <i class="fab fa-html5"></i>
+          </div>
+          <div class="skill-name">
+            <h6>HTML & CSS</h6>
+            <span class="skill-category">Frontend</span>
+          </div>
+        </div>
+        <div class="skill-level">
+          <span class="level-dot" style="background-color: #007bff"></span>
+          <small class="level-text" style="color: #007bff;">
+            <span class="lang-en">Very Good</span>
+            <span class="lang-ar" style="display: none">جيد جداً</span>
+          </small>
+        </div>
+      </div>
+
+      <!-- PostgreSQL -->
+      <div class="skill-card skill-postgresql">
+        <div class="skill-header">
+          <div class="skill-icon-box">
+            <i class="fas fa-database"></i>
+          </div>
+          <div class="skill-name">
+            <h6>PostgreSQL</h6>
+            <span class="skill-category">Database</span>
+          </div>
+        </div>
+        <div class="skill-level">
+          <span class="level-dot" style="background-color: #007bff"></span>
+          <small class="level-text" style="color: #007bff;">
+            <span class="lang-en">Very Good</span>
+            <span class="lang-ar" style="display: none">جيد جداً</span>
+          </small>
+        </div>
+      </div>
+
+      <!-- Redis -->
+      <div class="skill-card skill-redis">
+        <div class="skill-header">
+          <div class="skill-icon-box">
+            <i class="fas fa-database"></i>
+          </div>
+          <div class="skill-name">
+            <h6>Redis</h6>
+            <span class="skill-category">Cache</span>
+          </div>
+        </div>
+        <div class="skill-level">
+          <span class="level-dot" style="background-color: #fd7e14"></span>
+          <small class="level-text" style="color: #fd7e14;">
+            <span class="lang-en">Good</span>
+            <span class="lang-ar" style="display: none">جيد</span>
+          </small>
+        </div>
+      </div>
+
+      <!-- Node.js -->
+      <div class="skill-card skill-nodejs">
+        <div class="skill-header">
+          <div class="skill-icon-box">
+            <i class="fab fa-node-js"></i>
+          </div>
+          <div class="skill-name">
+            <h6>Node.js</h6>
+            <span class="skill-category">Runtime</span>
+          </div>
+        </div>
+        <div class="skill-level">
+          <span class="level-dot" style="background-color: #fd7e14"></span>
+          <small class="level-text" style="color: #fd7e14;">
+            <span class="lang-en">Good</span>
+            <span class="lang-ar" style="display: none">جيد</span>
+          </small>
+        </div>
+      </div>
+
+      <!-- Flutter -->
+      <div class="skill-card skill-flutter">
+        <div class="skill-header">
+          <div class="skill-icon-box">
+            <i class="fab fa-google"></i>
+          </div>
+          <div class="skill-name">
+            <h6>Flutter</h6>
+            <span class="skill-category">Mobile</span>
+          </div>
+        </div>
+        <div class="skill-level">
+          <span class="level-dot" style="background-color: #fd7e14"></span>
+          <small class="level-text" style="color: #fd7e14;">
+            <span class="lang-en">Good</span>
+            <span class="lang-ar" style="display: none">جيد</span>
+          </small>
+        </div>
+      </div>
+
+      <!-- React Native -->
+      <div class="skill-card skill-reactnative">
+        <div class="skill-header">
+          <div class="skill-icon-box">
+            <i class="fab fa-react"></i>
+          </div>
+          <div class="skill-name">
+            <h6>React Native</h6>
+            <span class="skill-category">Mobile</span>
+          </div>
+        </div>
+        <div class="skill-level">
+          <span class="level-dot" style="background-color: #fd7e14"></span>
+          <small class="level-text" style="color: #fd7e14;">
+            <span class="lang-en">Good</span>
+            <span class="lang-ar" style="display: none">جيد</span>
+          </small>
+        </div>
+      </div>
+
+      <!-- Firebase -->
+      <div class="skill-card skill-firebase">
+        <div class="skill-header">
+          <div class="skill-icon-box">
+            <i class="fas fa-fire"></i>
+          </div>
+          <div class="skill-name">
+            <h6>Firebase</h6>
+            <span class="skill-category">Backend</span>
+          </div>
+        </div>
+        <div class="skill-level">
+          <span class="level-dot" style="background-color: #007bff"></span>
+          <small class="level-text" style="color: #007bff;">
+            <span class="lang-en">Very Good</span>
+            <span class="lang-ar" style="display: none">جيد جداً</span>
+          </small>
+        </div>
+      </div>
+
+      <!-- Docker -->
+      <div class="skill-card skill-docker">
+        <div class="skill-header">
+          <div class="skill-icon-box">
+            <i class="fab fa-docker"></i>
+          </div>
+          <div class="skill-name">
+            <h6>Docker</h6>
+            <span class="skill-category">DevOps</span>
+          </div>
+        </div>
+        <div class="skill-level">
+          <span class="level-dot" style="background-color: #fd7e14"></span>
+          <small class="level-text" style="color: #fd7e14;">
+            <span class="lang-en">Good</span>
+            <span class="lang-ar" style="display: none">جيد</span>
+          </small>
+        </div>
+      </div>
+
+      <!-- Git -->
+      <div class="skill-card skill-git">
+        <div class="skill-header">
+          <div class="skill-icon-box">
+            <i class="fab fa-git-alt"></i>
+          </div>
+          <div class="skill-name">
+            <h6>Git</h6>
+            <span class="skill-category">VCS</span>
+          </div>
+        </div>
+        <div class="skill-level">
+          <span class="level-dot" style="background-color: #28a745"></span>
+          <small class="level-text" style="color: #28a745;">
+            <span class="lang-en">Excellent</span>
+            <span class="lang-ar" style="display: none">ممتاز</span>
+          </small>
+        </div>
+      </div>
+
+      <!-- Python -->
+      <div class="skill-card skill-python">
+        <div class="skill-header">
+          <div class="skill-icon-box">
+            <i class="fab fa-python"></i>
+          </div>
+          <div class="skill-name">
+            <h6>Python</h6>
+            <span class="skill-category">Language</span>
+          </div>
+        </div>
+        <div class="skill-level">
+          <span class="level-dot" style="background-color: #fd7e14"></span>
+          <small class="level-text" style="color: #fd7e14;">
+            <span class="lang-en">Good</span>
+            <span class="lang-ar" style="display: none">جيد</span>
+          </small>
+        </div>
+      </div>
+
+      <!-- Tailwind CSS -->
+      <div class="skill-card skill-tailwind">
+        <div class="skill-header">
+          <div class="skill-icon-box">
+            <i class="fas fa-wind"></i>
+          </div>
+          <div class="skill-name">
+            <h6>Tailwind CSS</h6>
+            <span class="skill-category">Framework</span>
+          </div>
+        </div>
+        <div class="skill-level">
+          <span class="level-dot" style="background-color: #007bff"></span>
+          <small class="level-text" style="color: #007bff;">
+            <span class="lang-en">Very Good</span>
+            <span class="lang-ar" style="display: none">جيد جداً</span>
+          </small>
+        </div>
+      </div>
+
+      <!-- Bootstrap -->
+      <div class="skill-card skill-bootstrap">
+        <div class="skill-header">
+          <div class="skill-icon-box">
+            <i class="fab fa-bootstrap"></i>
+          </div>
+          <div class="skill-name">
+            <h6>Bootstrap</h6>
+            <span class="skill-category">Framework</span>
+          </div>
+        </div>
+        <div class="skill-level">
+          <span class="level-dot" style="background-color: #28a745"></span>
+          <small class="level-text" style="color: #28a745;">
+            <span class="lang-en">Excellent</span>
+            <span class="lang-ar" style="display: none">ممتاز</span>
+          </small>
+        </div>
+      </div>
+
+      <!-- TypeScript -->
+      <div class="skill-card skill-typescript">
+        <div class="skill-header">
+          <div class="skill-icon-box">
+            <i class="fab fa-js-square"></i>
+          </div>
+          <div class="skill-name">
+            <h6>TypeScript</h6>
+            <span class="skill-category">Language</span>
+          </div>
+        </div>
+        <div class="skill-level">
+          <span class="level-dot" style="background-color: #fd7e14"></span>
+          <small class="level-text" style="color: #fd7e14;">
+            <span class="lang-en">Good</span>
+            <span class="lang-ar" style="display: none">جيد</span>
+          </small>
+        </div>
+      </div>
+
+      <!-- Socket.io -->
+      <div class="skill-card skill-socketio">
+        <div class="skill-header">
+          <div class="skill-icon-box">
+            <i class="fas fa-plug"></i>
+          </div>
+          <div class="skill-name">
+            <h6>Socket.io</h6>
+            <span class="skill-category">Library</span>
+          </div>
+        </div>
+        <div class="skill-level">
+          <span class="level-dot" style="background-color: #007bff"></span>
+          <small class="level-text" style="color: #007bff;">
+            <span class="lang-en">Very Good</span>
+            <span class="lang-ar" style="display: none">جيد جداً</span>
+          </small>
+        </div>
+      </div>
+
+      <!-- MongoDB -->
+      <div class="skill-card skill-mongodb">
+        <div class="skill-header">
+          <div class="skill-icon-box">
+            <i class="fas fa-leaf"></i>
+          </div>
+          <div class="skill-name">
+            <h6>MongoDB</h6>
+            <span class="skill-category">Database</span>
+          </div>
+        </div>
+        <div class="skill-level">
+          <span class="level-dot" style="background-color: #fd7e14"></span>
+          <small class="level-text" style="color: #fd7e14;">
+            <span class="lang-en">Good</span>
+            <span class="lang-ar" style="display: none">جيد</span>
+          </small>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</section>
+
+<script>
+// تفعيل الرسوم المتحركة عند التحميل
+document.addEventListener('DOMContentLoaded', () => {
+  const skillCards = document.querySelectorAll('.skill-card');
+  skillCards.forEach((card, index) => {
+    // animation-delay تم تعريفها بالفعل في CSS
+    card.style.animationPlayState = 'running';
+  });
+});
+</script>
+
+</body>
+</html>

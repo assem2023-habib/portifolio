@@ -227,7 +227,8 @@ const portfolioData = {
   shehrezad: {
     title: "Shehrezad Backend",
     category: "web",
-    image: "assets/img/Projects_Images/shahrazad/shahrazad_customer/main_page.png",
+    image: "assets/img/Projects_Images/shahrazad/shahrazad_customer/main/shahrazad_light_mod.jpeg",
+    imageDark: "assets/img/Projects_Images/shahrazad/shahrazad_customer/main/shahrazad_dark_mod.jpeg",
     description: "Integrated e-commerce and CRM backend system with advanced APIs for product, order, and debt management",
     detailsUrl: "project.html",
     gallery: "portfolio-gallery-web",
@@ -244,16 +245,19 @@ const portfolioData = {
       "Cron Jobs for system maintenance"
     ],
     galleryImages: [
-      "assets/img/Projects_Images/shahrazad/shahrazad_customer/main_page.png",
+      "assets/img/Projects_Images/shahrazad/shahrazad_customer/main/shahrazad_light_mod.jpeg",
+      "assets/img/Projects_Images/shahrazad/shahrazad_customer/main/shahrazad_dark_mod.jpeg",
       "assets/img/Projects_Images/shahrazad/shahrazad_customer/Screenshot_٢٠٢٦٠٥٠٨-٠٨١٨١٨.png",
       "assets/img/Projects_Images/shahrazad/shahrazad_customer/Screenshot_٢٠٢٦٠٥٠٨-٠٨١٨٢١.png",
-      "assets/img/Projects_Images/shahrazad/shahrazad_dashboard/main_page.png"
+      "assets/img/Projects_Images/shahrazad/shahrazad_dashboard/main/Shaharazad_Main_Light_mode.jpeg",
+      "assets/img/Projects_Images/shahrazad/shahrazad_dashboard/main/Shaharazad_Main_Dark_mode.jpeg"
     ]
   },
   mizaneyati: {
     title: "Mizaneyati Pro",
     category: "mobile",
     image: "assets/img/Projects_Images/mezanyti/Main/mezaynte_light_mode.jpeg",
+    imageDark: "assets/img/Projects_Images/mezanyti/Main/mezaynte_dark_mode.jpeg",
     description: "Comprehensive personal financial management system built with Clean Architecture standards, featuring advanced tracking, visual documentation, and interactive intelligence.",
     detailsUrl: "project.html",
     gallery: "portfolio-gallery-mobile",

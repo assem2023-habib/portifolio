@@ -276,18 +276,6 @@ function populateServiceItems() {
     const serviceTag = currentLang === 'ar' ? 'خدمة متميزة' : 'Professional Service';
     const serviceIcon = service.icon || 'bi-activity';
 
-    const title = currentLang === 'ar' ? (service.titleAr || service.title) : service.title;
-    const desc = currentLang === 'ar' ? (service.descriptionAr || service.description) : service.description;
-    const features = currentLang === 'ar' ? (service.featuresAr || []) : (service.features || []);
-    
-    // Build Features HTML
-    const featuresHtml = features.map(f => `
-      <li class="mb-2">
-        <i class="bi bi-check-circle-fill text-success me-2"></i>
-        <span>${f}</span>
-      </li>
-    `).join('');
-
     const colorClasses = ['item-orange', 'item-cyan', 'item-red', 'item-green', 'item-purple', 'item-blue'];
     const colorClass = colorClasses[i % colorClasses.length];
 
@@ -304,9 +292,9 @@ function populateServiceItems() {
 
     if (cardNumber) cardNumber.textContent = (i + 1).toString().padStart(2, '0');
     if (cardIcon) cardIcon.className = `bi ${service.icon}`;
-    if (cardTitle) cardTitle.textContent = title;
+    if (cardTitle) cardTitle.textContent = serviceTitle;
     if (cardSpec) cardSpec.textContent = currentLang === 'ar' ? 'خدمة متميزة' : 'Professional Service';
-    if (cardDesc) cardDesc.textContent = desc;
+    if (cardDesc) cardDesc.textContent = serviceDesc;
     if (cardTag) cardTag.textContent = service.id.toUpperCase();
 
     // Add stretched link
@@ -320,7 +308,7 @@ function populateServiceItems() {
     if (backLogo) backLogo.className = `bi ${service.icon || 'bi-activity'}`;
     
     const backTitle = cardClone.querySelector('.back-title');
-    if (backTitle) backTitle.textContent = title;
+    if (backTitle) backTitle.textContent = serviceTitle;
     
     const backTag = cardClone.querySelector('.back-tag');
     if (backTag) backTag.textContent = service.id.toUpperCase();

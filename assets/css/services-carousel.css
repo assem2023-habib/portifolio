@@ -454,6 +454,20 @@ body.dark-mode .service-carousel-card:not(.active) .card-service-img {
   transform: scale(1.08);
 }
 
+/* Service card content smaller text */
+.service-carousel-card .cv-title {
+  font-size: 0.9rem;
+}
+
+.service-carousel-card .cv-specialization {
+  font-size: 0.65rem;
+}
+
+.service-carousel-card .cv-description {
+  font-size: 0.78rem;
+  line-height: 1.5;
+}
+
 /* Item Color Variations */
 .item-orange { --item-color: #f57813; --item-color-light: #fff4e8; }
 .item-cyan { --item-color: #08d1ec; --item-color-light: #e6faff; }

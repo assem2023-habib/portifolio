@@ -1742,6 +1742,36 @@ body.dark-mode .testimonials .swiper-pagination .swiper-pagination-bullet-active
   margin-top: 40px;
 }
 
+.contact .info-item {
+  position: relative;
+}
+
+.contact .info-item::after {
+  content: attr(title);
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%) translateY(-8px);
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--accent-color);
+  background: color-mix(in srgb, var(--accent-color), transparent 88%);
+  padding: 4px 12px;
+  border-radius: 6px;
+  white-space: nowrap;
+  opacity: 0;
+  transition: opacity 0.25s ease, transform 0.25s ease;
+  pointer-events: none;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid color-mix(in srgb, var(--accent-color), transparent 80%);
+}
+
+.contact .info-item:hover::after {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+
 .contact .info-item i {
   color: var(--accent-color);
   background: color-mix(in srgb, var(--accent-color), transparent 92%);

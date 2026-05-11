@@ -1767,7 +1767,8 @@ body.dark-mode .testimonials .swiper-pagination .swiper-pagination-bullet-active
   border: 1px solid color-mix(in srgb, var(--accent-color), transparent 80%);
 }
 
-.contact .info-item:hover::after {
+.contact .info-item:hover::after,
+.contact .info-item.show-tooltip::after {
   opacity: 1;
   transform: translateX(-50%) translateY(0);
 }

@@ -391,4 +391,23 @@
   
   console.log(`✅ Added hover listeners to ${portfolioItems.length} portfolio items`);
 
+  /**
+   * Auto-show "click to copy" tooltips when contact section scrolls into view
+   */
+  const contactSection = document.getElementById('contact');
+  if (contactSection && 'IntersectionObserver' in window) {
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const infoItems = contactSection.querySelectorAll('.info-item');
+          infoItems.forEach(item => item.classList.add('show-tooltip'));
+          setTimeout(() => {
+            infoItems.forEach(item => item.classList.remove('show-tooltip'));
+          }, 3000);
+        }
+      });
+    }, { threshold: 0.3 });
+    observer.observe(contactSection);
+  }
+
 })();

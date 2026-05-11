@@ -253,7 +253,7 @@ const portfolioData = {
   mizaneyati: {
     title: "Mizaneyati Pro",
     category: "mobile",
-    image: "assets/img/Projects_Images/mezanyti/main_page.png",
+    image: "assets/img/Projects_Images/mezanyti/Main/mezaynte_light_mode.jpeg",
     description: "Comprehensive personal financial management system built with Clean Architecture standards, featuring advanced tracking, visual documentation, and interactive intelligence.",
     detailsUrl: "project.html",
     gallery: "portfolio-gallery-mobile",

@@ -67,10 +67,12 @@
 .cv-carousel-card .card-inner {
   position: relative;
   width: 100%; height: 100%;
-  padding: 25px;
-  border-radius: 20px;
-  background: var(--surface-color);
-  border: 1px solid color-mix(in srgb, var(--default-color), transparent 92%);
+  padding: 28px 24px;
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.6);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(0, 0, 0, 0.05);
   display: flex;
   flex-direction: column;
   box-shadow: 0 10px 30px rgba(0,0,0,0.03);
@@ -119,12 +121,14 @@ body.rtl .card-inner {
   border-radius: 18px;
 }
 
-body.dark-mode .cv-carousel-card .card-inner {
+body.dark-mode .cv-carousel-card .card-inner,
+body.dark-mode .service-carousel-card .card-inner {
   background: rgba(255, 255, 255, 0.04);
   border: 1px solid rgba(255, 255, 255, 0.07);
 }
 
-.cv-carousel-card .card-inner::before {
+.cv-carousel-card .card-inner::before,
+.service-carousel-card .card-inner::before {
   content: '';
   position: absolute;
   inset: 0;
@@ -336,10 +340,14 @@ body.dark-mode .cv-carousel-card .card-back {
   background: color-mix(in srgb, var(--background-color), white 5%);
 }
 
-.service-carousel-card.active .card-inner,
-.cv-carousel-card.active .card-inner {
+.service-carousel-card.active .card-inner {
   border-color: var(--accent-color);
-  box-shadow: 0 0 30px color-mix(in srgb, var(--accent-color), transparent 70%);
+  box-shadow: 0 0 60px color-mix(in srgb, var(--accent-color), transparent 60%), 0 0 120px color-mix(in srgb, var(--accent-color), transparent 80%);
+}
+
+.cv-carousel-card.active .card-inner {
+  border-color: rgba(108, 99, 255, 0.5);
+  box-shadow: 0 0 60px rgba(108, 99, 255, 0.3), 0 0 120px rgba(108, 99, 255, 0.15);
 }
 
 .card-glow {
@@ -353,7 +361,11 @@ body.dark-mode .cv-carousel-card .card-back {
   opacity: 0;
 }
 
-.service-carousel-card.active .card-glow,
+.service-carousel-card.active .card-glow {
+  opacity: 1;
+  background: radial-gradient(circle, color-mix(in srgb, var(--item-color, var(--accent-color)), transparent 65%), transparent 70%);
+}
+
 .cv-carousel-card.active .card-glow { opacity: 1; }
 
 .card-header-wrap {
@@ -398,12 +410,11 @@ body.dark-mode .cv-carousel-card .card-back {
   transition: color 0.4s;
 }
 
-.service-carousel-card.active .card-icon-blob svg path {
-  fill: var(--item-color, var(--accent-color));
-}
-
-.service-carousel-card.active .card-icon-blob i {
-  color: var(--contrast-color);
+.service-carousel-card.active .card-icon-wrap {
+  background: color-mix(in srgb, var(--item-color, var(--accent-color)), transparent 75%);
+  border-color: color-mix(in srgb, var(--item-color, var(--accent-color)), transparent 50%);
+  box-shadow: 0 8px 28px color-mix(in srgb, var(--item-color, var(--accent-color)), transparent 65%);
+  transform: scale(1.08);
 }
 
 body.dark-mode .card-icon-blob svg path {

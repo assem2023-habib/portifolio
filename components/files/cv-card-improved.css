@@ -1,0 +1,326 @@
+/* ════════════════════════════════════════════════════════════════════════════
+   CV CAROUSEL CARD — IMPROVED STYLING
+   استخدم هذا الـ CSS مباشرة في مشروعك
+   ════════════════════════════════════════════════════════════════════════════ */
+
+:root {
+  --card-accent: #6c63ff;
+  --card-accent-light: rgba(108,99,255,.12);
+  --card-accent-border: rgba(108,99,255,.25);
+  --card-text-main: #e8e8f0;
+  --card-text-muted: rgba(232,232,240,.5);
+  --card-text-light: rgba(232,232,240,.3);
+  --card-bg: rgba(255,255,255,.04);
+  --card-border: rgba(255,255,255,.07);
+}
+
+/* ── Main Card Container ── */
+.cv-carousel-card {
+  position: relative;
+  width: 280px;
+  height: 340px;
+  transform-style: preserve-3d;
+  transition: transform 0.85s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+              opacity 0.4s ease,
+              filter 0.4s ease;
+  cursor: pointer;
+}
+
+/* ── Front Face ── */
+.card-inner {
+  position: absolute;
+  inset: 0;
+  /* تحسين 1: padding محسّن */
+  padding: 28px 24px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  border-radius: 18px; /* تحسين 5: تقليل من 20px → 18px */
+  border: 1px solid var(--card-border);
+  background: var(--card-bg);
+  backdrop-filter: blur(20px);
+  overflow: hidden;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  transition: all 0.4s ease;
+}
+
+.card-inner::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(108,99,255,.06) 0%, transparent 60%, rgba(255,101,132,.04) 100%);
+  border-radius: inherit;
+  pointer-events: none;
+}
+
+/* ── Glow Effect ── */
+.card-glow {
+  position: absolute;
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(108,99,255,.35), transparent 70%);
+  top: -50px;
+  right: -50px;
+  opacity: 0;
+  pointer-events: none;
+  /* تحسين 6: إضافة transition سلسة */
+  transition: opacity 0.4s;
+}
+
+/* ── Header Section ── */
+.card-header-wrap {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: 16px;
+  position: relative;
+  z-index: 2;
+}
+
+.card-number {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 24px;
+  font-weight: 800;
+  color: rgba(108,99,255,.6);
+  line-height: 1;
+  letter-spacing: -1px;
+}
+
+/* تحسين 2: حجم الأيقونة محسّن مع hover animation */
+.card-icon-wrap {
+  width: 48px; /* من 70px → 48px */
+  height: 48px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  background: var(--card-accent-light);
+  border: 1px solid var(--card-accent-border);
+  transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+  color: var(--card-accent);
+  flex-shrink: 0;
+}
+
+/* ── Content Section ── */
+.card-content {
+  flex: 1;
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+/* تحسين 4: تحسين Visual Hierarchy للعناوين */
+.cv-title {
+  font-size: 16px; /* من 18px → 16px */
+  font-weight: 700;
+  color: var(--card-text-main);
+  line-height: 1.35;
+  margin-bottom: 6px !important;
+  letter-spacing: -0.3px;
+}
+
+.cv-specialization {
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--card-accent) !important;
+  margin-bottom: 12px !important;
+  opacity: 0.8;
+}
+
+.cv-description {
+  font-size: 13px;
+  line-height: 1.6;
+  color: var(--card-text-muted) !important;
+  font-weight: 300;
+  margin-bottom: 0 !important;
+}
+
+/* ── Actions Section ── */
+.cv-actions {
+  position: relative;
+  z-index: 2;
+  margin-top: 18px;
+  padding-top: 16px;
+  border-top: 1px solid rgba(255,255,255,.05);
+}
+
+/* تحسين 3: تحسين أزرار التحميل */
+.cv-download-btn {
+  flex: 1;
+  padding: 8px 12px;
+  font-size: 12px;
+  font-weight: 600;
+  border-radius: 10px;
+  border: 1.5px solid var(--card-accent-border);
+  background: var(--card-accent-light);
+  color: rgba(108,99,255,.95) !important;
+  text-decoration: none;
+  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  cursor: pointer;
+  letter-spacing: 0.3px;
+  line-height: 1.4;
+}
+
+.cv-download-btn:hover {
+  background: rgba(108,99,255,.18);
+  border-color: rgba(108,99,255,.6);
+  color: var(--card-text-main) !important;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(108,99,255,.25);
+}
+
+.cv-download-btn:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 8px rgba(108,99,255,.2);
+}
+
+.cv-download-btn i {
+  font-size: 13px;
+}
+
+/* ── Back Face ── */
+.card-back {
+  position: absolute;
+  inset: 0;
+  border-radius: 18px;
+  border: 1px solid var(--card-accent-border);
+  background: rgba(12,10,40,.95);
+  backdrop-filter: blur(20px);
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  transform: rotateY(180deg);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 28px;
+  overflow: hidden;
+}
+
+.card-back::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse at 30% 30%, rgba(108,99,255,.25) 0%, transparent 60%),
+    radial-gradient(ellipse at 70% 70%, rgba(255,101,132,.15) 0%, transparent 60%);
+  border-radius: inherit;
+  pointer-events: none;
+}
+
+/* تحسين 7: تحسين الواجهة الخلفية */
+.back-logo {
+  width: 72px; /* محسّن من حجم أصغر */
+  height: 72px;
+  border-radius: 16px;
+  border: 2px solid rgba(108,99,255,.5);
+  background: rgba(108,99,255,.15);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 32px;
+  color: var(--card-accent);
+  position: relative;
+  z-index: 2;
+  box-shadow: 0 0 32px rgba(108,99,255,.35);
+}
+
+.back-title {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--card-text-main);
+  text-align: center;
+  position: relative;
+  z-index: 2;
+  letter-spacing: -0.3px;
+  line-height: 1.35;
+}
+
+.back-divider {
+  width: 50px;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, rgba(108,99,255,.7), transparent);
+  border-radius: 1px;
+  position: relative;
+  z-index: 2;
+}
+
+.back-tag {
+  font-size: 11px;
+  padding: 6px 14px;
+  border-radius: 20px;
+  background: rgba(108,99,255,.18);
+  color: rgba(108,99,255,.95);
+  border: 1px solid rgba(108,99,255,.35);
+  font-weight: 600;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  position: relative;
+  z-index: 2;
+}
+
+.back-num {
+  position: absolute;
+  bottom: 18px;
+  right: 22px;
+  font-size: 64px;
+  font-weight: 900;
+  color: rgba(108,99,255,.08);
+  line-height: 1;
+  letter-spacing: -3px;
+  pointer-events: none;
+  font-family: 'JetBrains Mono', monospace;
+}
+
+/* ════ ACTIVE STATE ════ */
+.cv-carousel-card.active .card-inner {
+  background: rgba(108,99,255,.16);
+  border-color: rgba(108,99,255,.5);
+  box-shadow: 0 0 60px rgba(108,99,255,.3), 0 0 120px rgba(108,99,255,.15);
+}
+
+.cv-carousel-card.active .card-glow {
+  opacity: 1;
+}
+
+/* تحسين 8: Interactive state للأيقونة */
+.cv-carousel-card.active .card-icon-wrap {
+  background: rgba(108,99,255,.25);
+  border-color: rgba(108,99,255,.5);
+  box-shadow: 0 8px 28px rgba(108,99,255,.35);
+  transform: scale(1.08);
+}
+
+/* ════ RESPONSIVE ════ */
+@media (max-width: 768px) {
+  .cv-carousel-card {
+    width: 230px;
+    height: 290px;
+  }
+
+  .card-icon-wrap {
+    width: 42px;
+    height: 42px;
+    font-size: 20px;
+  }
+
+  .cv-title {
+    font-size: 15px;
+  }
+
+  .cv-description {
+    font-size: 12px;
+  }
+}

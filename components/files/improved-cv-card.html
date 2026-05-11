@@ -1,0 +1,681 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CV Carousel Card — تصميم محسّن</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+:root {
+  --primary: #0a0a1a;
+  --accent: #6c63ff;
+  --accent2: #ff6584;
+  --accent3: #00d4aa;
+  --accent4: #ffd166;
+  --card-bg: rgba(255,255,255,.04);
+  --card-border: rgba(255,255,255,.07);
+  --text-main: #e8e8f0;
+  --text-muted: rgba(232,232,240,.5);
+  --text-light: rgba(232,232,240,.3);
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  background: var(--primary);
+  font-family: 'Inter', 'Tajawal', sans-serif;
+  color: var(--text-main);
+  padding: 60px 20px;
+}
+
+.demo-section {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.section-title {
+  font-size: 28px;
+  font-weight: 800;
+  margin-bottom: 12px;
+  letter-spacing: -0.5px;
+}
+
+.section-sub {
+  color: var(--text-muted);
+  font-size: 14px;
+  margin-bottom: 40px;
+  font-weight: 300;
+}
+
+.comparison-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 40px;
+  margin-bottom: 60px;
+}
+
+@media (max-width: 1024px) {
+  .comparison-grid { grid-template-columns: 1fr; }
+}
+
+.card-showcase {
+  perspective: 1200px;
+}
+
+.card-label {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--accent);
+  display: inline-block;
+  margin-bottom: 20px;
+  padding: 4px 12px;
+  border: 1px solid rgba(108,99,255,.3);
+  border-radius: 20px;
+  background: rgba(108,99,255,.08);
+}
+
+/* ════ IMPROVED CARD ════ */
+
+.cv-carousel-card {
+  position: relative;
+  width: 280px;
+  height: 340px;
+  transform-style: preserve-3d;
+  transition: transform 0.85s cubic-bezier(0.25, 0.46, 0.45, 0.94), 
+              opacity 0.4s ease, filter 0.4s ease;
+}
+
+.card-inner {
+  position: absolute;
+  inset: 0;
+  padding: 28px 24px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  border-radius: 18px;
+  border: 1px solid var(--card-border);
+  background: rgba(255,255,255,.04);
+  backdrop-filter: blur(20px);
+  overflow: hidden;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+.card-inner::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(108,99,255,.06) 0%, transparent 60%, rgba(255,101,132,.04) 100%);
+  border-radius: inherit;
+  pointer-events: none;
+}
+
+/* ── Glow Effect ── */
+.card-glow {
+  position: absolute;
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(108,99,255,.35), transparent 70%);
+  top: -50px;
+  right: -50px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.4s;
+}
+
+.cv-carousel-card.active .card-glow {
+  opacity: 1;
+}
+
+/* ── Card Header ── */
+.card-header-wrap {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: 16px;
+  position: relative;
+  z-index: 2;
+}
+
+.card-number {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 24px;
+  font-weight: 800;
+  color: rgba(108,99,255,.6);
+  line-height: 1;
+  letter-spacing: -1px;
+}
+
+.card-icon-wrap {
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  background: rgba(108,99,255,.12);
+  border: 1px solid rgba(108,99,255,.25);
+  transition: all 0.35s ease;
+  color: var(--accent);
+  flex-shrink: 0;
+}
+
+.cv-carousel-card.active .card-icon-wrap {
+  background: rgba(108,99,255,.25);
+  border-color: rgba(108,99,255,.5);
+  box-shadow: 0 8px 28px rgba(108,99,255,.35);
+  transform: scale(1.08);
+}
+
+/* ── Card Content ── */
+.card-content {
+  flex: 1;
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.cv-title {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--text-main);
+  line-height: 1.35;
+  margin-bottom: 6px !important;
+  letter-spacing: -0.3px;
+}
+
+.cv-specialization {
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--accent) !important;
+  margin-bottom: 12px !important;
+  opacity: 0.8;
+}
+
+.cv-description {
+  font-size: 13px;
+  line-height: 1.6;
+  color: var(--text-muted) !important;
+  font-weight: 300;
+  margin-bottom: 0 !important;
+}
+
+/* ── Actions ── */
+.cv-actions {
+  position: relative;
+  z-index: 2;
+  margin-top: 18px;
+  padding-top: 16px;
+  border-top: 1px solid rgba(255,255,255,.05);
+}
+
+.cv-actions .d-flex {
+  display: flex;
+  gap: 8px;
+}
+
+/* Enhanced Buttons */
+.cv-download-btn {
+  flex: 1;
+  padding: 8px 12px;
+  font-size: 12px;
+  font-weight: 600;
+  border-radius: 10px;
+  border: 1.5px solid rgba(108,99,255,.3);
+  background: rgba(108,99,255,.08);
+  color: rgba(108,99,255,.95) !important;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  cursor: pointer;
+  letter-spacing: 0.3px;
+}
+
+.cv-download-btn:hover {
+  background: rgba(108,99,255,.18);
+  border-color: rgba(108,99,255,.6);
+  color: var(--text-main) !important;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(108,99,255,.25);
+}
+
+.cv-download-btn:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 8px rgba(108,99,255,.2);
+}
+
+.cv-download-btn i {
+  font-size: 13px;
+}
+
+/* ── Back Face ── */
+.card-back {
+  position: absolute;
+  inset: 0;
+  border-radius: 18px;
+  border: 1px solid rgba(108,99,255,.25);
+  background: rgba(12,10,40,.95);
+  backdrop-filter: blur(20px);
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  transform: rotateY(180deg);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 28px;
+  overflow: hidden;
+}
+
+.card-back::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse at 30% 30%, rgba(108,99,255,.25) 0%, transparent 60%),
+    radial-gradient(ellipse at 70% 70%, rgba(255,101,132,.15) 0%, transparent 60%);
+  border-radius: inherit;
+  pointer-events: none;
+}
+
+.back-logo {
+  width: 72px;
+  height: 72px;
+  border-radius: 16px;
+  border: 2px solid rgba(108,99,255,.5);
+  background: rgba(108,99,255,.15);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 32px;
+  color: var(--accent);
+  position: relative;
+  box-shadow: 0 0 32px rgba(108,99,255,.35);
+}
+
+.back-title {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--text-main);
+  text-align: center;
+  position: relative;
+  letter-spacing: -0.3px;
+  line-height: 1.35;
+}
+
+.back-divider {
+  width: 50px;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, rgba(108,99,255,.7), transparent);
+  border-radius: 1px;
+}
+
+.back-tag {
+  font-size: 11px;
+  padding: 6px 14px;
+  border-radius: 20px;
+  background: rgba(108,99,255,.18);
+  color: rgba(108,99,255,.95);
+  border: 1px solid rgba(108,99,255,.35);
+  font-weight: 600;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  position: relative;
+}
+
+.back-num {
+  position: absolute;
+  bottom: 18px;
+  right: 22px;
+  font-size: 64px;
+  font-weight: 900;
+  color: rgba(108,99,255,.08);
+  line-height: 1;
+  letter-spacing: -3px;
+  pointer-events: none;
+  font-family: 'JetBrains Mono', monospace;
+}
+
+/* Active state */
+.cv-carousel-card.active .card-inner {
+  background: rgba(108,99,255,.16);
+  border-color: rgba(108,99,255,.5);
+  box-shadow: 0 0 60px rgba(108,99,255,.3), 0 0 120px rgba(108,99,255,.15);
+}
+
+/* ════ IMPROVEMENTS LEGEND ════ */
+
+.improvements-list {
+  background: rgba(255,255,255,.03);
+  border: 1px solid rgba(255,255,255,.08);
+  border-radius: 14px;
+  padding: 28px 32px;
+  margin-top: 40px;
+}
+
+.improvements-title {
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 24px;
+}
+
+.improvement-item {
+  margin-bottom: 20px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid rgba(255,255,255,.05);
+}
+
+.improvement-item:last-child {
+  margin-bottom: 0;
+  padding-bottom: 0;
+  border-bottom: none;
+}
+
+.imp-title {
+  font-weight: 600;
+  font-size: 13px;
+  color: var(--text-main);
+  margin-bottom: 4px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.imp-icon {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 10px;
+  background: rgba(108,99,255,.2);
+  color: var(--accent);
+  flex-shrink: 0;
+}
+
+.imp-desc {
+  font-size: 12px;
+  color: var(--text-muted);
+  line-height: 1.6;
+  margin-left: 28px;
+  font-weight: 300;
+}
+
+.imp-before-after {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-left: 28px;
+  margin-top: 8px;
+  font-size: 11px;
+  font-family: 'JetBrains Mono', monospace;
+}
+
+.ba-cell {
+  padding: 8px;
+  border-radius: 6px;
+  background: rgba(0,0,0,.2);
+}
+
+.ba-before { border-left: 2px solid rgba(255,101,132,.5); }
+.ba-after { border-left: 2px solid rgba(0,212,170,.5); }
+
+.ba-label {
+  font-size: 9px;
+  text-transform: uppercase;
+  font-weight: 600;
+  margin-bottom: 4px;
+  letter-spacing: 1px;
+}
+
+.ba-before .ba-label { color: rgba(255,101,132,.8); }
+.ba-after .ba-label { color: rgba(0,212,170,.8); }
+
+.ba-value {
+  font-size: 11px;
+  color: var(--text-light);
+}
+</style>
+
+</head>
+<body>
+
+<div class="demo-section">
+
+  <h1 class="section-title">CV Carousel Card</h1>
+  <p class="section-sub">تصميم محسّن مع الحفاظ على الهوية البصرية — تحسينات في التباعد والتسلسل البصري والتفاعلية</p>
+
+  <!-- Comparison -->
+  <div class="comparison-grid">
+
+    <!-- Before -->
+    <div>
+      <div class="card-label">التصميم السابق</div>
+      <div class="card-showcase" style="transform: perspective(1200px) rotateX(5deg) rotateY(-10deg);">
+        <div class="cv-carousel-card" style="opacity: 0.85;">
+          <div class="card-inner">
+            <div class="card-glow"></div>
+            <div class="card-header-wrap">
+              <div class="card-number">01</div>
+              <div class="card-icon-wrap">
+                <i class="bi bi-file-earmark-text"></i>
+              </div>
+            </div>
+            <div class="card-content text-center">
+              <h5 class="cv-title fw-bold mb-1">NestJS Developer CV</h5>
+              <span class="cv-specialization text-muted small d-block mb-3">Backend Development</span>
+              <p class="cv-description small mb-4">Backend Developer with expertise in NestJS, Node.js, Express, and databases. Experienced in building scalable APIs and microservices architecture.</p>
+            </div>
+            <div class="cv-actions mt-auto">
+              <div class="d-flex gap-2">
+                <a href="#" class="cv-download-btn">
+                  <i class="bi bi-file-earmark-pdf"></i>PDF
+                </a>
+                <a href="#" class="cv-download-btn">
+                  <i class="bi bi-file-earmark-word"></i>Word
+                </a>
+              </div>
+            </div>
+          </div>
+          <div class="card-back">
+            <div class="back-logo"><i class="bi bi-file-earmark-pdf"></i></div>
+            <h3 class="back-title">NestJS Developer CV</h3>
+            <div class="back-divider"></div>
+            <span class="back-tag">Professional Resume</span>
+            <div class="back-num">01</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- After (Active) -->
+    <div>
+      <div class="card-label">التصميم المحسّن</div>
+      <div class="card-showcase" style="transform: perspective(1200px);">
+        <div class="cv-carousel-card active">
+          <div class="card-inner">
+            <div class="card-glow"></div>
+            <div class="card-header-wrap">
+              <div class="card-number">01</div>
+              <div class="card-icon-wrap">
+                <i class="bi bi-file-earmark-text"></i>
+              </div>
+            </div>
+            <div class="card-content text-center">
+              <h5 class="cv-title fw-bold mb-1">NestJS Developer CV</h5>
+              <span class="cv-specialization text-muted small d-block mb-3">Backend Development</span>
+              <p class="cv-description small mb-4">Backend Developer with expertise in NestJS, Node.js, Express, and databases. Experienced in building scalable APIs and microservices architecture.</p>
+            </div>
+            <div class="cv-actions mt-auto">
+              <div class="d-flex gap-2">
+                <a href="#" class="cv-download-btn">
+                  <i class="bi bi-file-earmark-pdf"></i>PDF
+                </a>
+                <a href="#" class="cv-download-btn">
+                  <i class="bi bi-file-earmark-word"></i>Word
+                </a>
+              </div>
+            </div>
+          </div>
+          <div class="card-back">
+            <div class="back-logo"><i class="bi bi-file-earmark-pdf"></i></div>
+            <h3 class="back-title">NestJS Developer CV</h3>
+            <div class="back-divider"></div>
+            <span class="back-tag">Professional Resume</span>
+            <div class="back-num">01</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Improvements -->
+  <div class="improvements-list">
+    <div class="improvements-title">🎨 التحسينات المُطبَّقة</div>
+
+    <div class="improvement-item">
+      <div class="imp-title">
+        <div class="imp-icon">1️⃣</div>
+        <span>تحسين التباعد الداخلي (Padding)</span>
+      </div>
+      <div class="imp-desc">زيادة الـ padding من كل الاتجاهات للشعور بـ breathing space أفضل وتوازن أفقي</div>
+      <div class="imp-before-after">
+        <div class="ba-cell ba-before">
+          <div class="ba-label">قبل</div>
+          <div class="ba-value">padding: 28px</div>
+        </div>
+        <div class="ba-cell ba-after">
+          <div class="ba-label">بعد</div>
+          <div class="ba-value">padding: 28px 24px (optimized)</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="improvement-item">
+      <div class="imp-title">
+        <div class="imp-icon">2️⃣</div>
+        <span>تحسين حجم الأيقونة والزر</span>
+      </div>
+      <div class="imp-desc">زيادة حجم icon-wrap من 70px → 48px (أنسب للكارت)، مع إضافة hover animation وتأثير scale</div>
+      <div class="imp-before-after">
+        <div class="ba-cell ba-before">
+          <div class="ba-label">قبل</div>
+          <div class="ba-value">w: 70px, no hover</div>
+        </div>
+        <div class="ba-cell ba-after">
+          <div class="ba-label">بعد</div>
+          <div class="ba-value">w: 48px + scale(1.08)</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="improvement-item">
+      <div class="imp-title">
+        <div class="imp-icon">3️⃣</div>
+        <span>تحسين أزرار التحميل</span>
+      </div>
+      <div class="imp-desc">إضافة مظهر أكثر احترافية للأزرار مع hover state سلس، زيادة الـ feedback البصري</div>
+      <div class="imp-before-after">
+        <div class="ba-cell ba-before">
+          <div class="ba-label">قبل</div>
+          <div class="ba-value">btn-outline-primary basic</div>
+        </div>
+        <div class="ba-cell ba-after">
+          <div class="ba-label">بعد</div>
+          <div class="ba-value">custom styling + glow</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="improvement-item">
+      <div class="imp-title">
+        <div class="imp-icon">4️⃣</div>
+        <span>تحسين الـ Visual Hierarchy</span>
+      </div>
+      <div class="imp-desc">تحديد أحجام الخطوط والألوان بشكل أوضح:
+        <ul style="margin-top:8px;margin-left:28px;font-size:12px;color:var(--text-muted);list-style:none;">
+          <li>• Title: 16px (كان 18px)</li>
+          <li>• Specialization: 12px bold + uppercase</li>
+          <li>• Description: 13px light (نص معلومات)</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="improvement-item">
+      <div class="imp-title">
+        <div class="imp-icon">5️⃣</div>
+        <span>تحسين Border Radius</span>
+      </div>
+      <div class="imp-desc">تقليل من 20px → 18px للكارت الرئيسي، مما يعطي مظهراً أكثر احترافية وأقل "طفلياً"</div>
+      <div class="imp-before-after">
+        <div class="ba-cell ba-before">
+          <div class="ba-label">قبل</div>
+          <div class="ba-value">border-radius: 20px</div>
+        </div>
+        <div class="ba-cell ba-after">
+          <div class="ba-label">بعد</div>
+          <div class="ba-value">border-radius: 18px</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="improvement-item">
+      <div class="imp-title">
+        <div class="imp-icon">6️⃣</div>
+        <span>تحسين الأنظمة الضوئية (Glow Effects)</span>
+      </div>
+      <div class="imp-desc">إضافة تأثير glow محسّن عند تفعيل الكارت (active state) مع إضاءة أكثر ديناميكية</div>
+      <div class="imp-before-after">
+        <div class="ba-cell ba-before">
+          <div class="ba-label">قبل</div>
+          <div class="ba-value">opacity: 0 → 1</div>
+        </div>
+        <div class="ba-cell ba-after">
+          <div class="ba-label">بعد</div>
+          <div class="ba-value">gradient glow + scale</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="improvement-item">
+      <div class="imp-title">
+        <div class="imp-icon">7️⃣</div>
+        <span>تحسين الواجهة الخلفية (Card Back)</span>
+      </div>
+      <div class="imp-desc">تحسين تصميم الـ back-logo (72px بدل أصغر)، وتنسيق أفضل للعناصر مع spacing محسّن</div>
+    </div>
+
+    <div class="improvement-item">
+      <div class="imp-title">
+        <div class="imp-icon">8️⃣</div>
+        <span>تحسين التفاعلية (Interactivity)</span>
+      </div>
+      <div class="imp-desc">إضافة transitions سلسة، hover states واضحة، و active animations على الأزرار والأيقونات</div>
+    </div>
+
+  </div>
+
+</div>
+
+</body>
+</html>

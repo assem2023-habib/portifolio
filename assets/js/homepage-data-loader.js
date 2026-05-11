@@ -289,6 +289,7 @@ function populateServiceItems() {
     const cardSpec = cardClone.querySelector('.cv-specialization');
     const cardDesc = cardClone.querySelector('.cv-description');
     const cardTag = cardClone.querySelector('.card-tag');
+    const cardImg = cardClone.querySelector('.card-service-img');
 
     if (cardNumber) cardNumber.textContent = (i + 1).toString().padStart(2, '0');
     if (cardIcon) cardIcon.className = `bi ${service.icon}`;
@@ -296,6 +297,10 @@ function populateServiceItems() {
     if (cardSpec) cardSpec.textContent = currentLang === 'ar' ? 'خدمة متميزة' : 'Professional Service';
     if (cardDesc) cardDesc.textContent = serviceDesc;
     if (cardTag) cardTag.textContent = service.id.toUpperCase();
+    if (cardImg) {
+      cardImg.src = service.image || '';
+      cardImg.alt = serviceTitle;
+    }
 
     // Add stretched link
     const stretchedLink = document.createElement('a');

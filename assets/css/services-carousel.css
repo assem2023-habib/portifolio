@@ -386,6 +386,7 @@ body.dark-mode .cv-carousel-card .card-back {
 .service-carousel-card.active .card-icon-wrap {
   background: color-mix(in srgb, var(--item-color, var(--accent-color)), transparent 75%);
   border-color: color-mix(in srgb, var(--item-color, var(--accent-color)), transparent 50%);
+  color: var(--item-color, var(--accent-color));
   box-shadow: 0 8px 28px color-mix(in srgb, var(--item-color, var(--accent-color)), transparent 65%);
   transform: scale(1.08);
 }

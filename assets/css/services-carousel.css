@@ -352,18 +352,18 @@ body.dark-mode .cv-carousel-card .card-back {
 
 .card-glow {
   position: absolute;
-  width: 150px; height: 150px;
+  width: 120px; height: 120px;
   border-radius: 50%;
-  background: radial-gradient(circle, color-mix(in srgb, var(--accent-color), transparent 70%), transparent 70%);
+  background: radial-gradient(circle, color-mix(in srgb, var(--accent-color), transparent 85%), transparent 70%);
   top: -40px; right: -40px;
   pointer-events: none;
-  transition: opacity .4s;
+  transition: opacity .5s;
   opacity: 0;
 }
 
 .service-carousel-card.active .card-glow {
   opacity: 1;
-  background: radial-gradient(circle, color-mix(in srgb, var(--item-color, var(--accent-color)), transparent 65%), transparent 70%);
+  background: radial-gradient(circle, color-mix(in srgb, var(--item-color, var(--accent-color)), transparent 82%), transparent 70%);
 }
 
 .cv-carousel-card.active .card-glow { opacity: 1; }

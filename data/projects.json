@@ -171,7 +171,7 @@
       "role": "Lead Mobile Developer",
       "client": "شركات محلية متعددة",
       "liveUrl": null,
-      "repoUrl": null,
+      "repoUrl": "https://github.com/assem2023-habib/shift-pay",
       "mobileUrl": "https://github.com/assem2023-habib/portifolio/releases/download/ShiftPay_Release/ShiftPay.apk",
       "features": [
         "Advanced Voice Assistant with Egyptian Dialect support",

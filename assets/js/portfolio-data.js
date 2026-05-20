@@ -292,6 +292,8 @@ const portfolioData = {
     technologies: "Flutter, Bloc, Drift (SQLite), Speech To Text, Clean Architecture",
     status: "Completed",
     url: "#",
+    repoUrl: "https://github.com/assem2023-habib/shift-pay",
+    mobileUrl: "https://github.com/assem2023-habib/portifolio/releases/download/ShiftPay_Release/ShiftPay.apk",
     features: [
       "Advanced Voice Assistant (Egyptian Dialect support)",
       "Automated Payroll and Financial management",

@@ -905,6 +905,80 @@ body.dark-mode section.section {
   background-color: var(--accent-color);
 }
 
+/* ── Skills Marquee ── */
+.skills-marquee {
+  overflow: hidden;
+  width: 100%;
+  margin-bottom: 20px;
+  border-radius: 14px;
+}
+
+.skills-marquee-track {
+  display: flex;
+  gap: 20px;
+  width: max-content;
+  padding: 14px 10px;
+}
+
+.skills-marquee-track.ltr {
+  animation: marqueeLTR 40s linear infinite;
+}
+
+.skills-marquee-track.rtl {
+  animation: marqueeRTL 40s linear infinite;
+}
+
+.skills-marquee-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 20px;
+  background: var(--surface-color);
+  border-radius: 10px;
+  border: 1px solid color-mix(in srgb, var(--default-color), transparent 90%);
+  white-space: nowrap;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--heading-color);
+  transition: all 0.3s ease;
+  flex-shrink: 0;
+}
+
+.skills-marquee-item i {
+  font-size: 24px;
+  color: var(--accent-color);
+}
+
+@keyframes marqueeLTR {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+@keyframes marqueeRTL {
+  0% { transform: translateX(-50%); }
+  100% { transform: translateX(0); }
+}
+
+/* ── Skill Icon in Boxes ── */
+.skill-box .skill-icon {
+  font-size: 22px;
+  width: 38px;
+  height: 38px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  background: color-mix(in srgb, var(--accent-color), transparent 88%);
+  color: var(--accent-color);
+  flex-shrink: 0;
+  transition: all 0.3s ease;
+}
+
+.skill-box:hover .skill-icon {
+  transform: scale(1.12);
+  background: color-mix(in srgb, var(--accent-color), transparent 75%);
+}
+
 /* Custom Skill Boxes Styling */
 .skill-box {
   background-color: var(--surface-color);

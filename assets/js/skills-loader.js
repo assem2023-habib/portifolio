@@ -47,6 +47,7 @@ function createSkillElement(skill) {
   return `
     <div class="skill-box" data-aos="fade-up">
       <div class="skill-header">
+        <i class="skill-icon ${skill.icon || 'bi-star'}"></i>
         <span class="skill-name">${name}</span>
       </div>
       <div class="skill-level-badge" style="--badge-color: ${color}">
@@ -54,6 +55,56 @@ function createSkillElement(skill) {
       </div>
     </div>
   `;
+}
+
+/**
+ * إنشاء شريط المهارات المتحرك (marquee)
+ */
+function renderSkillsMarquee() {
+  const container = document.getElementById('skills-container');
+  if (!container || !skillsData) return;
+
+  const isArabic = currentSkillsLang === 'ar';
+
+  // Build marquee items HTML from all skills
+  let itemsHtml = '';
+  skillsData.forEach(skill => {
+    const name = isArabic ? (skill.nameAr || skill.name) : skill.name;
+    itemsHtml += `
+      <div class="skills-marquee-item">
+        <i class="${skill.icon || 'bi-star'}"></i>
+        <span>${name}</span>
+      </div>
+    `;
+  });
+
+  // Reverse order for RTL track
+  let itemsReversedHtml = '';
+  skillsData.slice().reverse().forEach(skill => {
+    const name = isArabic ? (skill.nameAr || skill.name) : skill.name;
+    itemsReversedHtml += `
+      <div class="skills-marquee-item">
+        <i class="${skill.icon || 'bi-star'}"></i>
+        <span>${name}</span>
+      </div>
+    `;
+  });
+
+  const marqueeHtml = `
+    <div class="skills-marquee">
+      <div class="skills-marquee-track ltr">
+        ${itemsHtml}
+        ${itemsHtml}
+      </div>
+      <div class="skills-marquee-track rtl">
+        ${itemsReversedHtml}
+        ${itemsReversedHtml}
+      </div>
+    </div>
+  `;
+
+  // Insert marquee at the top of the container
+  container.insertAdjacentHTML('afterbegin', marqueeHtml);
 }
 
 /**
@@ -79,6 +130,9 @@ function renderSkills() {
 
   // Clear container
   container.innerHTML = '';
+
+  // Render marquee
+  renderSkillsMarquee();
 
   // Create row structure
   let currentCol = 0;

@@ -360,8 +360,9 @@ h2.section-title {
 
 /* ── RESPONSIVE ── */
 @media (max-width: 900px) {
-  .hero-inner { grid-template-columns: 1fr; }
-  .hero-right { display: none; }
+  .hero-inner { grid-template-columns: 1fr; gap: 2rem; }
+  .hero-right { order: -1; }
+  .hero-image-wrap .project-image { height: 280px; }
   .info-grid { grid-template-columns: 1fr; }
   .features-grid { grid-template-columns: 1fr; }
   .stats-inner { grid-template-columns: repeat(2,1fr); }

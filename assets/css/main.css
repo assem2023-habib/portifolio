@@ -956,6 +956,22 @@ body.dark-mode section.section {
   color: var(--accent-color);
 }
 
+/* ── Marquee Bubble Pop ── */
+.skills-marquee-item {
+  opacity: 0;
+  transform: scale(0);
+}
+.skills-marquee-item.bubble-animate {
+  animation: bubblePop 0.45s cubic-bezier(0.36, 0.07, 0.19, 0.97) forwards;
+}
+
+@keyframes bubblePop {
+  0%   { transform: scale(0);    opacity: 0; }
+  60%  { transform: scale(1.12); opacity: 1; }
+  80%  { transform: scale(0.95); }
+  100% { transform: scale(1);    opacity: 1; }
+}
+
 @keyframes marqueeLTR {
   0% { transform: translateX(0); }
   100% { transform: translateX(-50%); }

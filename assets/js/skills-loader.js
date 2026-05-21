@@ -55,6 +55,28 @@ function renderSkillsMarquee() {
       </div>
     </div>
   `;
+
+  // Staggered bubble pop animation for marquee items
+  const interval = 120;
+  const duration = 450;
+  const totalSkills = skillsData.length; // 18
+
+  // Pause tracks while items animate in
+  const tracks = container.querySelectorAll('.skills-marquee-track');
+  tracks.forEach(t => { t.style.animationPlayState = 'paused'; });
+
+  // Pop items in sync across all 4 groups (LTR-orig, LTR-dupe, RTL-orig, RTL-dupe)
+  const items = container.querySelectorAll('.skills-marquee-item');
+  items.forEach((item, i) => {
+    const delay = (i % totalSkills) * interval;
+    setTimeout(() => item.classList.add('bubble-animate'), delay);
+  });
+
+  // Resume tracks after last item finishes animating
+  const resumeAt = (totalSkills - 1) * interval + duration + 50;
+  setTimeout(() => {
+    tracks.forEach(t => { t.style.animationPlayState = 'running'; });
+  }, resumeAt);
 }
 
 /**

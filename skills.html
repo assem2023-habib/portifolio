@@ -162,6 +162,13 @@
             `;
             container.appendChild(card);
           });
+
+          // Staggered bubble pop animation
+          const interval = 120;
+          const skillCards = document.querySelectorAll('#skills-container .skill-card');
+          skillCards.forEach((card, i) => {
+            setTimeout(() => card.classList.add('bubble-animate'), i * interval);
+          });
         })
         .catch(error => console.error('Error loading skills:', error));
     });

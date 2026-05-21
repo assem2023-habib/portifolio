@@ -1,0 +1,1294 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bubble Pop Animation — شرح تفصيلي</title>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Tajawal:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0a0a0f;
+  --surface: #12121a;
+  --surface2: #1a1a26;
+  --border: rgba(255,255,255,0.07);
+  --border2: rgba(255,255,255,0.14);
+  --text: #e8e8f0;
+  --muted: #8888aa;
+  --accent: #6c63ff;
+  --accent2: #ff6b9d;
+  --accent3: #43e8a0;
+  --accent4: #ffb547;
+  --mono: 'IBM Plex Mono', monospace;
+  --sans: 'Tajawal', sans-serif;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--sans);
+  font-size: 16px;
+  line-height: 1.7;
+  overflow-x: hidden;
+}
+
+/* ─── NOISE OVERLAY ─── */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ─── LAYOUT ─── */
+.wrapper { max-width: 900px; margin: 0 auto; padding: 0 2rem; position: relative; z-index: 1; }
+
+/* ─── HERO ─── */
+.hero {
+  padding: 6rem 0 4rem;
+  text-align: center;
+  position: relative;
+}
+
+.hero::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 50%; transform: translateX(-50%);
+  width: 600px; height: 300px;
+  background: radial-gradient(ellipse at center, rgba(108,99,255,0.15) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.hero-tag {
+  display: inline-block;
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--accent);
+  border: 1px solid rgba(108,99,255,0.3);
+  padding: 4px 14px;
+  border-radius: 99px;
+  margin-bottom: 1.5rem;
+}
+
+.hero h1 {
+  font-size: clamp(2.2rem, 5vw, 3.5rem);
+  font-weight: 900;
+  line-height: 1.2;
+  margin-bottom: 1rem;
+  background: linear-gradient(135deg, #fff 30%, var(--accent) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.hero p {
+  font-size: 1.1rem;
+  color: var(--muted);
+  max-width: 560px;
+  margin: 0 auto;
+}
+
+/* ─── SECTION ─── */
+.section {
+  padding: 4rem 0;
+  border-top: 1px solid var(--border);
+}
+
+.section-label {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: .75rem;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.section-label::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--border);
+}
+
+.section h2 {
+  font-size: 1.8rem;
+  font-weight: 700;
+  margin-bottom: .5rem;
+}
+
+.section > .wrapper > p {
+  color: var(--muted);
+  margin-bottom: 2rem;
+  max-width: 640px;
+}
+
+/* ─── DEMO BOX ─── */
+.demo-box {
+  background: var(--surface);
+  border: 1px solid var(--border2);
+  border-radius: 16px;
+  padding: 2rem;
+  margin: 2rem 0;
+}
+
+.demo-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.demo-toolbar-label { font-size: 13px; color: var(--muted); }
+
+.controls {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.ctrl-group {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.ctrl-group label {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--muted);
+  white-space: nowrap;
+}
+
+input[type=range] {
+  -webkit-appearance: none;
+  width: 90px;
+  height: 4px;
+  border-radius: 2px;
+  background: var(--surface2);
+  outline: none;
+}
+input[type=range]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 14px; height: 14px;
+  border-radius: 50%;
+  background: var(--accent);
+  cursor: pointer;
+}
+
+.ctrl-val {
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--accent);
+  min-width: 40px;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--sans);
+  font-size: 13px;
+  font-weight: 500;
+  padding: 7px 16px;
+  border-radius: 8px;
+  border: 1px solid var(--border2);
+  background: transparent;
+  color: var(--text);
+  cursor: pointer;
+  transition: background .2s, border-color .2s;
+}
+.btn:hover { background: var(--surface2); border-color: rgba(255,255,255,0.2); }
+.btn svg { width: 14px; height: 14px; stroke: currentColor; fill: none; }
+
+/* ─── CARDS GRID ─── */
+.cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  gap: 10px;
+}
+
+.skill-card {
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: .85rem;
+  opacity: 0;
+  transform: scale(0);
+  transform-origin: center center;
+}
+
+.skill-card .sc-icon {
+  font-size: 22px;
+  margin-bottom: 6px;
+}
+.skill-card .sc-name {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 4px;
+}
+.skill-card .sc-badge {
+  display: inline-block;
+  font-family: var(--mono);
+  font-size: 10px;
+  padding: 2px 7px;
+  border-radius: 4px;
+}
+.badge-exc { background: rgba(67,232,160,.12); color: var(--accent3); }
+.badge-vg  { background: rgba(108,99,255,.14); color: var(--accent); }
+.badge-gd  { background: rgba(255,181,71,.12); color: var(--accent4); }
+
+@keyframes bubblePop {
+  0%   { transform: scale(0);    opacity: 0; }
+  60%  { transform: scale(1.12); opacity: 1; }
+  80%  { transform: scale(0.95); }
+  100% { transform: scale(1);    opacity: 1; }
+}
+
+.bubble-animate {
+  animation: bubblePop var(--anim-dur, 0.45s) cubic-bezier(0.36, 0.07, 0.19, 0.97) forwards;
+}
+
+/* ─── KEYFRAME VISUALIZER ─── */
+.kf-visual {
+  background: var(--surface);
+  border: 1px solid var(--border2);
+  border-radius: 16px;
+  padding: 2rem;
+  margin: 2rem 0;
+}
+
+.kf-track {
+  position: relative;
+  height: 80px;
+  margin-bottom: 1.5rem;
+}
+
+.kf-line {
+  position: absolute;
+  top: 50%; left: 0; right: 0;
+  height: 2px;
+  background: var(--border2);
+  transform: translateY(-50%);
+}
+
+.kf-points {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+}
+
+.kf-point { display: flex; flex-direction: column; align-items: center; gap: 4px; }
+
+.kf-dot {
+  width: 12px; height: 12px;
+  border-radius: 50%;
+  border: 2px solid;
+  margin-top: 30px;
+  position: relative;
+}
+.kf-dot::before {
+  content: '';
+  position: absolute;
+  inset: -6px;
+  border-radius: 50%;
+  opacity: .2;
+}
+
+.kf-pct {
+  font-family: var(--mono);
+  font-size: 11px;
+  font-weight: 600;
+  margin-top: 8px;
+}
+.kf-val {
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--muted);
+  text-align: center;
+}
+
+.kf-p0  { --c: #888; }
+.kf-p60 { --c: var(--accent); }
+.kf-p80 { --c: var(--accent4); }
+.kf-p100{ --c: var(--accent3); }
+.kf-dot { border-color: var(--c); }
+.kf-dot::before { background: var(--c); }
+.kf-pct { color: var(--c); }
+
+.kf-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+}
+.kf-table th {
+  font-family: var(--mono);
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--muted);
+  text-align: right;
+  padding: 8px 12px;
+  border-bottom: 1px solid var(--border);
+}
+.kf-table td {
+  padding: 10px 12px;
+  border-bottom: 1px solid var(--border);
+  vertical-align: middle;
+}
+.kf-table tr:last-child td { border-bottom: none; }
+.kf-table td:first-child { font-family: var(--mono); font-size: 12px; }
+
+.tag-pct {
+  display: inline-block;
+  font-family: var(--mono);
+  font-size: 11px;
+  font-weight: 700;
+  padding: 3px 10px;
+  border-radius: 6px;
+  background: rgba(255,255,255,.06);
+}
+
+/* ─── CODE BLOCK ─── */
+.code-wrap {
+  background: var(--surface);
+  border: 1px solid var(--border2);
+  border-radius: 14px;
+  overflow: hidden;
+  margin: 1.5rem 0;
+}
+
+.code-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: .65rem 1rem;
+  border-bottom: 1px solid var(--border);
+  background: rgba(255,255,255,.03);
+}
+
+.code-lang {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--muted);
+  letter-spacing: .06em;
+}
+
+.code-dots { display: flex; gap: 6px; }
+.code-dot {
+  width: 10px; height: 10px;
+  border-radius: 50%;
+}
+.dot-r { background: #ff5f57; }
+.dot-y { background: #febc2e; }
+.dot-g { background: #28c840; }
+
+pre {
+  padding: 1.25rem 1.5rem;
+  overflow-x: auto;
+  font-family: var(--mono);
+  font-size: 13px;
+  line-height: 1.8;
+  color: var(--text);
+}
+
+.c-kw   { color: #c792ea; }
+.c-fn   { color: #82aaff; }
+.c-str  { color: #c3e88d; }
+.c-num  { color: #f78c6c; }
+.c-prop { color: #80cbc4; }
+.c-sel  { color: #ffcb6b; }
+.c-cm   { color: #546e7a; font-style: italic; }
+
+/* ─── FORMULA BOX ─── */
+.formula {
+  background: var(--surface);
+  border: 1px solid rgba(108,99,255,.3);
+  border-radius: 14px;
+  padding: 1.5rem 2rem;
+  margin: 1.5rem 0;
+  text-align: center;
+}
+
+.formula-title {
+  font-size: 11px;
+  font-family: var(--mono);
+  text-transform: uppercase;
+  letter-spacing: .1em;
+  color: var(--muted);
+  margin-bottom: 1rem;
+}
+
+.formula-eq {
+  font-family: var(--mono);
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: var(--accent);
+  margin-bottom: .5rem;
+}
+
+.formula-note {
+  font-size: 12px;
+  color: var(--muted);
+}
+
+/* ─── STEP CARDS ─── */
+.steps {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  margin: 2rem 0;
+}
+
+.step-card {
+  display: flex;
+  gap: 1.25rem;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 1.5rem;
+  transition: border-color .2s;
+}
+.step-card:hover { border-color: var(--border2); }
+
+.step-num {
+  flex-shrink: 0;
+  width: 36px; height: 36px;
+  border-radius: 10px;
+  background: rgba(108,99,255,.15);
+  border: 1px solid rgba(108,99,255,.3);
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--mono);
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--accent);
+}
+
+.step-body { flex: 1; }
+.step-body h3 { font-size: 15px; font-weight: 700; margin-bottom: .35rem; }
+.step-body p  { font-size: 13px; color: var(--muted); line-height: 1.65; }
+
+/* ─── TIMING CALCULATOR ─── */
+.calc-box {
+  background: var(--surface);
+  border: 1px solid var(--border2);
+  border-radius: 16px;
+  padding: 2rem;
+  margin: 2rem 0;
+}
+
+.calc-title {
+  font-size: 14px;
+  font-weight: 700;
+  margin-bottom: 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.calc-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+@media (max-width: 500px) { .calc-grid { grid-template-columns: 1fr; } }
+
+.calc-field label {
+  display: block;
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--muted);
+  margin-bottom: 6px;
+  letter-spacing: .05em;
+}
+
+.calc-field input[type=number] {
+  width: 100%;
+  background: var(--surface2);
+  border: 1px solid var(--border2);
+  border-radius: 8px;
+  padding: 9px 12px;
+  color: var(--text);
+  font-family: var(--mono);
+  font-size: 14px;
+  outline: none;
+  transition: border-color .2s;
+}
+.calc-field input[type=number]:focus { border-color: var(--accent); }
+
+.calc-results {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+}
+
+@media (max-width: 500px) { .calc-results { grid-template-columns: 1fr; } }
+
+.calc-result {
+  background: var(--surface2);
+  border-radius: 10px;
+  padding: 1rem;
+  text-align: center;
+}
+.calc-result-label {
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--muted);
+  margin-bottom: 4px;
+  text-transform: uppercase;
+  letter-spacing: .07em;
+}
+.calc-result-val {
+  font-family: var(--mono);
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: var(--accent3);
+}
+.calc-result-unit {
+  font-size: 11px;
+  color: var(--muted);
+}
+
+/* ─── BEZIER VISUAL ─── */
+.bezier-box {
+  background: var(--surface);
+  border: 1px solid var(--border2);
+  border-radius: 16px;
+  padding: 2rem;
+  margin: 2rem 0;
+}
+
+.bezier-wrap {
+  display: grid;
+  grid-template-columns: 200px 1fr;
+  gap: 2rem;
+  align-items: center;
+}
+
+@media (max-width: 550px) { .bezier-wrap { grid-template-columns: 1fr; } }
+
+.bezier-canvas {
+  width: 180px;
+  height: 180px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--surface2);
+}
+
+.bezier-params { }
+.bezier-params h3 { font-size: 14px; font-weight: 700; margin-bottom: 1rem; }
+
+.bp-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: .75rem;
+}
+.bp-label { font-family: var(--mono); font-size: 11px; color: var(--muted); width: 20px; }
+.bp-bar-wrap { flex: 1; height: 6px; background: var(--surface2); border-radius: 3px; overflow: hidden; }
+.bp-bar { height: 100%; border-radius: 3px; background: var(--accent); }
+.bp-num { font-family: var(--mono); font-size: 12px; color: var(--accent); width: 32px; }
+
+/* ─── COMPARISON TABLE ─── */
+.comp-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+  margin: 1.5rem 0;
+}
+.comp-table th {
+  text-align: right;
+  padding: 10px 14px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  font-family: var(--mono);
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--muted);
+  letter-spacing: .05em;
+}
+.comp-table td {
+  padding: 10px 14px;
+  border: 1px solid var(--border);
+  vertical-align: middle;
+}
+.comp-table tr:nth-child(even) td { background: rgba(255,255,255,.02); }
+.tag { display: inline-block; font-family: var(--mono); font-size: 11px; padding: 2px 8px; border-radius: 5px; }
+.tag-good  { background: rgba(67,232,160,.1);  color: var(--accent3); }
+.tag-warn  { background: rgba(255,181,71,.1);  color: var(--accent4); }
+.tag-bad   { background: rgba(255,107,157,.1); color: var(--accent2); }
+.tag-info  { background: rgba(108,99,255,.1);  color: var(--accent); }
+
+/* ─── FINAL TIP ─── */
+.tip-card {
+  background: linear-gradient(135deg, rgba(108,99,255,.08), rgba(67,232,160,.06));
+  border: 1px solid rgba(108,99,255,.25);
+  border-radius: 14px;
+  padding: 1.5rem 2rem;
+  margin: 2rem 0;
+}
+.tip-card h3 { font-size: 14px; font-weight: 700; margin-bottom: .5rem; color: var(--accent); }
+.tip-card p  { font-size: 13px; color: var(--muted); line-height: 1.65; }
+
+/* ─── FOOTER ─── */
+footer {
+  border-top: 1px solid var(--border);
+  padding: 2rem 0;
+  text-align: center;
+}
+footer p { font-size: 12px; color: var(--muted); font-family: var(--mono); }
+
+/* ─── SCROLL PROGRESS ─── */
+#progress {
+  position: fixed;
+  top: 0; left: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--accent), var(--accent2));
+  z-index: 999;
+  transition: width .1s;
+}
+
+/* ─── NAV ─── */
+nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 100;
+  padding: 1rem 2rem;
+  background: rgba(10,10,15,.85);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.nav-brand {
+  font-family: var(--mono);
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--accent);
+}
+
+.nav-links {
+  display: flex;
+  gap: 1.5rem;
+  list-style: none;
+}
+.nav-links a {
+  font-size: 13px;
+  color: var(--muted);
+  text-decoration: none;
+  transition: color .2s;
+}
+.nav-links a:hover { color: var(--text); }
+
+@media (max-width: 600px) { .nav-links { display: none; } }
+
+/* ─── CONTENT OFFSET FOR NAV ─── */
+.hero { padding-top: 8rem; }
+</style>
+</head>
+<body>
+
+<div id="progress"></div>
+
+<nav>
+  <div class="nav-brand">bubble-pop.css</div>
+  <ul class="nav-links">
+    <li><a href="#demo">المعاينة</a></li>
+    <li><a href="#keyframes">الـ Keyframes</a></li>
+    <li><a href="#js">الـ JavaScript</a></li>
+    <li><a href="#timing">الحسابات</a></li>
+    <li><a href="#bezier">الـ Bezier</a></li>
+  </ul>
+</nav>
+
+<!-- ─── HERO ─── -->
+<section class="hero">
+  <div class="wrapper">
+    <div class="hero-tag">CSS Animation + JavaScript</div>
+    <h1>Bubble Pop Animation<br>شرح تفصيلي كامل</h1>
+    <p>كيف نجعل كل skill card تظهر كفقاعة واحدة تلو الأخرى — من الصفر إلى المعادلات والأرقام الدقيقة</p>
+  </div>
+</section>
+
+<!-- ─── DEMO ─── -->
+<section class="section" id="demo">
+  <div class="wrapper">
+    <div class="section-label">01 — معاينة حية</div>
+    <h2>شاهد الحركة بنفسك</h2>
+    <p>تحكم في السرعة ومدة الأنيميشن واضغط Replay لمشاهدة الحركة من البداية</p>
+
+    <div class="demo-box">
+      <div class="demo-toolbar">
+        <span class="demo-toolbar-label">التحكم في الأنيميشن</span>
+        <div class="controls">
+          <div class="ctrl-group">
+            <label>interval</label>
+            <input type="range" id="ctrl-interval" min="50" max="350" value="120">
+            <span class="ctrl-val" id="val-interval">120ms</span>
+          </div>
+          <div class="ctrl-group">
+            <label>duration</label>
+            <input type="range" id="ctrl-dur" min="200" max="800" value="450">
+            <span class="ctrl-val" id="val-dur">450ms</span>
+          </div>
+          <button class="btn" id="btn-replay">
+            <svg viewBox="0 0 24 24" stroke-width="2"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 .49-3"/></svg>
+            Replay
+          </button>
+        </div>
+      </div>
+
+      <div class="cards-grid" id="demo-grid">
+        <div class="skill-card"><div class="sc-icon">⚡</div><div class="sc-name">PHP</div><span class="sc-badge badge-exc">Excellent</span></div>
+        <div class="skill-card"><div class="sc-icon">🚀</div><div class="sc-name">Laravel</div><span class="sc-badge badge-exc">Excellent</span></div>
+        <div class="skill-card"><div class="sc-icon">🔥</div><div class="sc-name">NestJS</div><span class="sc-badge badge-exc">Excellent</span></div>
+        <div class="skill-card"><div class="sc-icon">🗄️</div><div class="sc-name">MySQL</div><span class="sc-badge badge-vg">Very Good</span></div>
+        <div class="skill-card"><div class="sc-icon">🟨</div><div class="sc-name">JavaScript</div><span class="sc-badge badge-vg">Very Good</span></div>
+        <div class="skill-card"><div class="sc-icon">🐳</div><div class="sc-name">Docker</div><span class="sc-badge badge-gd">Good</span></div>
+        <div class="skill-card"><div class="sc-icon">🌿</div><div class="sc-name">Git</div><span class="sc-badge badge-exc">Excellent</span></div>
+        <div class="skill-card"><div class="sc-icon">🔷</div><div class="sc-name">TypeScript</div><span class="sc-badge badge-gd">Good</span></div>
+        <div class="skill-card"><div class="sc-icon">🧱</div><div class="sc-name">Bootstrap</div><span class="sc-badge badge-exc">Excellent</span></div>
+        <div class="skill-card"><div class="sc-icon">💨</div><div class="sc-name">Tailwind</div><span class="sc-badge badge-vg">Very Good</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── KEYFRAMES ─── -->
+<section class="section" id="keyframes">
+  <div class="wrapper">
+    <div class="section-label">02 — الـ CSS Keyframes</div>
+    <h2>تشريح الحركة خطوة بخطوة</h2>
+    <p>الأنيميشن مقسّم على 4 نقاط رئيسية (keyframes) — كل نقطة تحدد حجم وشفافية الـ card في تلك اللحظة</p>
+
+    <div class="kf-visual">
+      <div class="kf-track">
+        <div class="kf-line"></div>
+        <div class="kf-points">
+          <div class="kf-point kf-p0">
+            <div class="kf-dot"></div>
+            <div class="kf-pct">0%</div>
+            <div class="kf-val">scale(0)<br>غير مرئي</div>
+          </div>
+          <div class="kf-point kf-p60">
+            <div class="kf-dot"></div>
+            <div class="kf-pct">60%</div>
+            <div class="kf-val">scale(1.12)<br>أكبر من الطبيعي</div>
+          </div>
+          <div class="kf-point kf-p80">
+            <div class="kf-dot"></div>
+            <div class="kf-pct">80%</div>
+            <div class="kf-val">scale(0.95)<br>ارتداد خفيف</div>
+          </div>
+          <div class="kf-point kf-p100">
+            <div class="kf-dot"></div>
+            <div class="kf-pct">100%</div>
+            <div class="kf-val">scale(1)<br>استقرار نهائي</div>
+          </div>
+        </div>
+      </div>
+
+      <table class="kf-table">
+        <thead>
+          <tr>
+            <th>اللحظة</th>
+            <th>transform</th>
+            <th>opacity</th>
+            <th>ما يحدث</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><span class="tag-pct" style="color:#888">0%</span></td>
+            <td style="font-family:var(--mono);font-size:12px;color:var(--muted)">scale(0)</td>
+            <td style="font-family:var(--mono);font-size:12px;color:var(--muted)">0</td>
+            <td style="font-size:13px;color:var(--muted)">البداية — الـ card غير موجودة بصرياً</td>
+          </tr>
+          <tr>
+            <td><span class="tag-pct" style="color:var(--accent)">60%</span></td>
+            <td style="font-family:var(--mono);font-size:12px;color:var(--accent)">scale(1.12)</td>
+            <td style="font-family:var(--mono);font-size:12px;color:var(--accent3)">1</td>
+            <td style="font-size:13px">تكبر بسرعة وتتجاوز حجمها الطبيعي بـ 12% — هذا يعطي إحساس الفقاعة</td>
+          </tr>
+          <tr>
+            <td><span class="tag-pct" style="color:var(--accent4)">80%</span></td>
+            <td style="font-family:var(--mono);font-size:12px;color:var(--accent4)">scale(0.95)</td>
+            <td style="font-family:var(--mono);font-size:12px;color:var(--accent3)">1</td>
+            <td style="font-size:13px">ترتد قليلاً للخلف — يحاكي قانون الفيزياء (bounce)</td>
+          </tr>
+          <tr>
+            <td><span class="tag-pct" style="color:var(--accent3)">100%</span></td>
+            <td style="font-family:var(--mono);font-size:12px;color:var(--accent3)">scale(1)</td>
+            <td style="font-family:var(--mono);font-size:12px;color:var(--accent3)">1</td>
+            <td style="font-size:13px">تستقر على حجمها الطبيعي — نهاية الحركة</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="code-wrap">
+      <div class="code-header">
+        <div class="code-dots"><div class="code-dot dot-r"></div><div class="code-dot dot-y"></div><div class="code-dot dot-g"></div></div>
+        <div class="code-lang">CSS — @keyframes</div>
+      </div>
+      <pre><span class="c-cm">/* الخطوة 1: إخفاء كل الـ cards مبدئياً */</span>
+<span class="c-sel">.skill-card</span> {
+  <span class="c-prop">opacity</span>: <span class="c-num">0</span>;
+  <span class="c-prop">transform</span>: <span class="c-fn">scale</span>(<span class="c-num">0</span>);
+  <span class="c-prop">transform-origin</span>: <span class="c-str">center center</span>;
+}
+
+<span class="c-cm">/* الخطوة 2: تعريف الحركة */</span>
+<span class="c-kw">@keyframes</span> <span class="c-fn">bubblePop</span> {
+  <span class="c-num">0%</span>   { <span class="c-prop">transform</span>: <span class="c-fn">scale</span>(<span class="c-num">0</span>);    <span class="c-prop">opacity</span>: <span class="c-num">0</span>; }
+  <span class="c-num">60%</span>  { <span class="c-prop">transform</span>: <span class="c-fn">scale</span>(<span class="c-num">1.12</span>); <span class="c-prop">opacity</span>: <span class="c-num">1</span>; }
+  <span class="c-num">80%</span>  { <span class="c-prop">transform</span>: <span class="c-fn">scale</span>(<span class="c-num">0.95</span>); }
+  <span class="c-num">100%</span> { <span class="c-prop">transform</span>: <span class="c-fn">scale</span>(<span class="c-num">1</span>);    <span class="c-prop">opacity</span>: <span class="c-num">1</span>; }
+}
+
+<span class="c-cm">/* الخطوة 3: class تُشغّل الحركة عند إضافتها */</span>
+<span class="c-sel">.bubble-animate</span> {
+  <span class="c-prop">animation</span>: <span class="c-fn">bubblePop</span> <span class="c-num">0.45s</span>
+    <span class="c-fn">cubic-bezier</span>(<span class="c-num">0.36</span>, <span class="c-num">0.07</span>, <span class="c-num">0.19</span>, <span class="c-num">0.97</span>)
+    <span class="c-str">forwards</span>;
+}</pre>
+    </div>
+  </div>
+</section>
+
+<!-- ─── JS ─── -->
+<section class="section" id="js">
+  <div class="wrapper">
+    <div class="section-label">03 — الـ JavaScript</div>
+    <h2>التدرج في الظهور — card بعد card</h2>
+    <p>السحر يكمن في استخدام <code style="font-family:var(--mono);font-size:13px;color:var(--accent)">setTimeout</code> مع مضاعفة الـ index — كل card تنتظر مدة أطول من التي قبلها</p>
+
+    <div class="formula">
+      <div class="formula-title">معادلة تأخير كل card</div>
+      <div class="formula-eq">delay = index × interval</div>
+      <div class="formula-note">
+        مثال: interval = 120ms<br>
+        card[0] → 0 × 120 = <strong style="color:var(--accent3)">0ms</strong> &nbsp;|&nbsp;
+        card[1] → 1 × 120 = <strong style="color:var(--accent3)">120ms</strong> &nbsp;|&nbsp;
+        card[5] → 5 × 120 = <strong style="color:var(--accent3)">600ms</strong>
+      </div>
+    </div>
+
+    <div class="code-wrap">
+      <div class="code-header">
+        <div class="code-dots"><div class="code-dot dot-r"></div><div class="code-dot dot-y"></div><div class="code-dot dot-g"></div></div>
+        <div class="code-lang">JavaScript — الدالة الرئيسية</div>
+      </div>
+      <pre><span class="c-kw">function</span> <span class="c-fn">animateSkillCards</span>() {
+  <span class="c-kw">const</span> cards    = document.<span class="c-fn">querySelectorAll</span>(<span class="c-str">'.skill-card'</span>);
+  <span class="c-kw">const</span> interval = <span class="c-num">120</span>; <span class="c-cm">// المسافة الزمنية بين كل card (ms)</span>
+
+  cards.<span class="c-fn">forEach</span>((<span class="c-prop">card</span>, <span class="c-prop">index</span>) => {
+    <span class="c-kw">const</span> delay = <span class="c-prop">index</span> * interval; <span class="c-cm">// ← المعادلة هنا</span>
+
+    <span class="c-fn">setTimeout</span>(() => {
+      card.classList.<span class="c-fn">add</span>(<span class="c-str">'bubble-animate'</span>); <span class="c-cm">// تشغيل الحركة</span>
+    }, delay);
+  });
+}</pre>
+    </div>
+
+    <div class="code-wrap">
+      <div class="code-header">
+        <div class="code-dots"><div class="code-dot dot-r"></div><div class="code-dot dot-y"></div><div class="code-dot dot-g"></div></div>
+        <div class="code-lang">JavaScript — الاستدعاء الصحيح (مع fetch)</div>
+      </div>
+      <pre><span class="c-cm">// إذا كانت الـ cards تُبنى من JSON</span>
+<span class="c-fn">fetch</span>(<span class="c-str">'data/skills.json'</span>)
+  .<span class="c-fn">then</span>(<span class="c-prop">res</span> => res.<span class="c-fn">json</span>())
+  .<span class="c-fn">then</span>(<span class="c-prop">data</span> => {
+    <span class="c-kw">const</span> skills = data.skills || data;
+    <span class="c-kw">const</span> container = document.<span class="c-fn">getElementById</span>(<span class="c-str">'skills-container'</span>);
+    container.innerHTML = <span class="c-str">''</span>;
+
+    skills.<span class="c-fn">forEach</span>(<span class="c-prop">skill</span> => {
+      <span class="c-cm">// ... بناء الـ card وإضافتها للـ DOM ...</span>
+      container.<span class="c-fn">appendChild</span>(card);
+    });
+
+    <span class="c-fn">animateSkillCards</span>(); <span class="c-cm">// ← بعد اكتمال البناء مباشرة</span>
+  });
+
+<span class="c-cm">// إذا كانت الـ cards موجودة في HTML مباشرة</span>
+document.<span class="c-fn">addEventListener</span>(<span class="c-str">'DOMContentLoaded'</span>, () => {
+  <span class="c-fn">animateSkillCards</span>();
+});</pre>
+    </div>
+
+    <div class="steps">
+      <div class="step-card">
+        <div class="step-num">1</div>
+        <div class="step-body">
+          <h3>لماذا نضيف <code style="font-family:var(--mono);font-size:12px;color:var(--accent)">class</code> بدلاً من تحديد الـ style مباشرة?</h3>
+          <p>الـ class قابلة للإزالة وإعادة الإضافة — هذا يسمح لنا بعمل Replay. لو غيّرنا الـ style مباشرة ما قدرنا نعيد الأنيميشن بسهولة.</p>
+        </div>
+      </div>
+      <div class="step-card">
+        <div class="step-num">2</div>
+        <div class="step-body">
+          <h3>أهمية كلمة <code style="font-family:var(--mono);font-size:12px;color:var(--accent)">forwards</code></h3>
+          <p>بدونها، بعد انتهاء الأنيميشن ترجع الـ card لحالتها الأولى (opacity: 0, scale: 0) وتختفي. الـ <code style="font-family:var(--mono);font-size:11px;color:var(--accent)">forwards</code> تجعلها تحافظ على آخر حالة (scale: 1, opacity: 1).</p>
+        </div>
+      </div>
+      <div class="step-card">
+        <div class="step-num">3</div>
+        <div class="step-body">
+          <h3>لماذا <code style="font-family:var(--mono);font-size:12px;color:var(--accent)">index * interval</code> وليس قيمة ثابتة?</h3>
+          <p>لو استخدمنا قيمة ثابتة لكل card، ستظهر كلها في نفس الوقت. الضرب في الـ index يضمن أن كل card تنتظر مدة أطول من التي قبلها بمقدار ثابت (الـ interval).</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── TIMING CALC ─── -->
+<section class="section" id="timing">
+  <div class="wrapper">
+    <div class="section-label">04 — حساب التوقيت</div>
+    <h2>احسب المدة الكاملة للأنيميشن</h2>
+    <p>إجمالي وقت العرض يعتمد على عدد الـ cards وقيمة الـ interval ومدة كل card</p>
+
+    <div class="formula">
+      <div class="formula-title">معادلة المدة الإجمالية</div>
+      <div class="formula-eq">total = (cards - 1) × interval + duration</div>
+      <div class="formula-note">المدة الكاملة حتى آخر card تنتهي من حركتها</div>
+    </div>
+
+    <div class="calc-box">
+      <div class="calc-title">🧮 حاسبة التوقيت</div>
+      <div class="calc-grid">
+        <div class="calc-field">
+          <label>عدد الـ cards</label>
+          <input type="number" id="calc-cards" value="18" min="1" max="50">
+        </div>
+        <div class="calc-field">
+          <label>interval (ms)</label>
+          <input type="number" id="calc-interval" value="120" min="10" max="500">
+        </div>
+        <div class="calc-field">
+          <label>duration (ms)</label>
+          <input type="number" id="calc-duration" value="450" min="100" max="2000">
+        </div>
+        <div class="calc-field">
+          <label>تأخير البداية (ms)</label>
+          <input type="number" id="calc-start" value="0" min="0" max="2000">
+        </div>
+      </div>
+      <div class="calc-results">
+        <div class="calc-result">
+          <div class="calc-result-label">آخر card تبدأ</div>
+          <div class="calc-result-val" id="res-last">2040</div>
+          <div class="calc-result-unit">ms</div>
+        </div>
+        <div class="calc-result">
+          <div class="calc-result-label">المدة الإجمالية</div>
+          <div class="calc-result-val" id="res-total">2490</div>
+          <div class="calc-result-unit">ms</div>
+        </div>
+        <div class="calc-result">
+          <div class="calc-result-label">بالثواني</div>
+          <div class="calc-result-val" id="res-sec">2.49</div>
+          <div class="calc-result-unit">ثانية</div>
+        </div>
+      </div>
+    </div>
+
+    <table class="comp-table">
+      <thead>
+        <tr>
+          <th>الحالة</th>
+          <th>interval</th>
+          <th>10 cards</th>
+          <th>18 cards</th>
+          <th>الإحساس</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>سريع جداً</td>
+          <td><span style="font-family:var(--mono);font-size:12px">60ms</span></td>
+          <td><span style="font-family:var(--mono);font-size:12px">0.99s</span></td>
+          <td><span style="font-family:var(--mono);font-size:12px">1.47s</span></td>
+          <td><span class="tag tag-warn">نشيط لكن مشتت</span></td>
+        </tr>
+        <tr>
+          <td>مثالي</td>
+          <td><span style="font-family:var(--mono);font-size:12px">100-130ms</span></td>
+          <td><span style="font-family:var(--mono);font-size:12px">1.35-1.62s</span></td>
+          <td><span style="font-family:var(--mono);font-size:12px">2.15-2.56s</span></td>
+          <td><span class="tag tag-good">متوازن ومريح</span></td>
+        </tr>
+        <tr>
+          <td>هادئ</td>
+          <td><span style="font-family:var(--mono);font-size:12px">180ms</span></td>
+          <td><span style="font-family:var(--mono);font-size:12px">2.07s</span></td>
+          <td><span style="font-family:var(--mono);font-size:12px">3.51s</span></td>
+          <td><span class="tag tag-info">انيق لكن بطيء</span></td>
+        </tr>
+        <tr>
+          <td>بطيء جداً</td>
+          <td><span style="font-family:var(--mono);font-size:12px">300ms+</span></td>
+          <td><span style="font-family:var(--mono);font-size:12px">3.15s+</span></td>
+          <td><span style="font-family:var(--mono);font-size:12px">5.55s+</span></td>
+          <td><span class="tag tag-bad">يضجر المستخدم</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ─── BEZIER ─── -->
+<section class="section" id="bezier">
+  <div class="wrapper">
+    <div class="section-label">05 — الـ Cubic Bezier</div>
+    <h2>سر طبيعية الحركة</h2>
+    <p>الـ easing function هي ما تجعل الحركة تبدو طبيعية وليست آلية — نستخدم <code style="font-family:var(--mono);font-size:13px;color:var(--accent)">cubic-bezier(0.36, 0.07, 0.19, 0.97)</code></p>
+
+    <div class="bezier-box">
+      <div class="bezier-wrap">
+        <canvas class="bezier-canvas" id="bezier-canvas" width="180" height="180"></canvas>
+        <div class="bezier-params">
+          <h3>قيم نقاط التحكم</h3>
+          <div class="bp-row">
+            <span class="bp-label">P1x</span>
+            <div class="bp-bar-wrap"><div class="bp-bar" style="width:36%"></div></div>
+            <span class="bp-num">0.36</span>
+          </div>
+          <div class="bp-row">
+            <span class="bp-label">P1y</span>
+            <div class="bp-bar-wrap"><div class="bp-bar" style="width:7%"></div></div>
+            <span class="bp-num">0.07</span>
+          </div>
+          <div class="bp-row">
+            <span class="bp-label">P2x</span>
+            <div class="bp-bar-wrap"><div class="bp-bar" style="width:19%"></div></div>
+            <span class="bp-num">0.19</span>
+          </div>
+          <div class="bp-row">
+            <span class="bp-label">P2y</span>
+            <div class="bp-bar-wrap"><div class="bp-bar" style="width:97%"></div></div>
+            <span class="bp-num">0.97</span>
+          </div>
+          <p style="font-size:12px;color:var(--muted);margin-top:1rem;line-height:1.6">
+            هذه القيم تجعل الحركة تبدأ ببطء، تتسارع بسرعة في المنتصف، ثم تنتهي بسرعة — يشبه ضغطة زر حقيقية
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <table class="comp-table">
+      <thead>
+        <tr>
+          <th>نوع الـ easing</th>
+          <th>القيمة</th>
+          <th>الإحساس</th>
+          <th>مناسب لـ</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>مخصص (مستخدم)</td>
+          <td><span style="font-family:var(--mono);font-size:11px">cubic-bezier(0.36,0.07,0.19,0.97)</span></td>
+          <td><span class="tag tag-good">فقاعة طبيعية</span></td>
+          <td>Bubble Pop</td>
+        </tr>
+        <tr>
+          <td>ease-out</td>
+          <td><span style="font-family:var(--mono);font-size:11px">cubic-bezier(0,0,0.2,1)</span></td>
+          <td><span class="tag tag-info">يبدأ بسرعة ويهدأ</span></td>
+          <td>Slide In</td>
+        </tr>
+        <tr>
+          <td>ease-in-out</td>
+          <td><span style="font-family:var(--mono);font-size:11px">cubic-bezier(0.4,0,0.6,1)</span></td>
+          <td><span class="tag tag-info">ناعم من الطرفين</span></td>
+          <td>Fade</td>
+        </tr>
+        <tr>
+          <td>linear</td>
+          <td><span style="font-family:var(--mono);font-size:11px">linear</span></td>
+          <td><span class="tag tag-warn">ميكانيكي بدون روح</span></td>
+          <td>Progress bars</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="code-wrap">
+      <div class="code-header">
+        <div class="code-dots"><div class="code-dot dot-r"></div><div class="code-dot dot-y"></div><div class="code-dot dot-g"></div></div>
+        <div class="code-lang">CSS — الكود الكامل النهائي</div>
+      </div>
+      <pre><span class="c-cm">/* ════════════════════════════════
+   Bubble Pop Animation — النسخة الكاملة
+   ════════════════════════════════ */</span>
+
+<span class="c-sel">.skill-card</span> {
+  <span class="c-prop">opacity</span>: <span class="c-num">0</span>;
+  <span class="c-prop">transform</span>: <span class="c-fn">scale</span>(<span class="c-num">0</span>);
+  <span class="c-prop">transform-origin</span>: <span class="c-str">center center</span>;
+}
+
+<span class="c-kw">@keyframes</span> <span class="c-fn">bubblePop</span> {
+  <span class="c-num">0%</span>   { <span class="c-prop">transform</span>: <span class="c-fn">scale</span>(<span class="c-num">0</span>);    <span class="c-prop">opacity</span>: <span class="c-num">0</span>; }
+  <span class="c-num">60%</span>  { <span class="c-prop">transform</span>: <span class="c-fn">scale</span>(<span class="c-num">1.12</span>); <span class="c-prop">opacity</span>: <span class="c-num">1</span>; }
+  <span class="c-num">80%</span>  { <span class="c-prop">transform</span>: <span class="c-fn">scale</span>(<span class="c-num">0.95</span>); }
+  <span class="c-num">100%</span> { <span class="c-prop">transform</span>: <span class="c-fn">scale</span>(<span class="c-num">1</span>);    <span class="c-prop">opacity</span>: <span class="c-num">1</span>; }
+}
+
+<span class="c-sel">.bubble-animate</span> {
+  <span class="c-prop">animation</span>: <span class="c-fn">bubblePop</span> <span class="c-num">0.45s</span>
+    <span class="c-fn">cubic-bezier</span>(<span class="c-num">0.36</span>, <span class="c-num">0.07</span>, <span class="c-num">0.19</span>, <span class="c-num">0.97</span>)
+    <span class="c-str">forwards</span>;
+}</pre>
+    </div>
+
+    <div class="tip-card">
+      <h3>💡 نصيحة أداء</h3>
+      <p>استخدم دائماً <code style="font-family:var(--mono);font-size:12px">transform</code> و <code style="font-family:var(--mono);font-size:12px">opacity</code> في الأنيميشن وليس <code style="font-family:var(--mono);font-size:12px">width</code> أو <code style="font-family:var(--mono);font-size:12px">height</code> أو <code style="font-family:var(--mono);font-size:12px">margin</code>. المتصفح يعالج الـ transform والـ opacity على الـ GPU مباشرة (compositor layer) مما يجعلها سلسة جداً حتى مع 60 fps. الخصائص الأخرى تسبب reflow أو repaint وهذا يؤدي إلى تقطع ملحوظ.</p>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrapper">
+    <p>bubble-pop-animation — CSS + JavaScript — Assem Adel Habib</p>
+  </div>
+</footer>
+
+<script>
+/* ─── SCROLL PROGRESS ─── */
+window.addEventListener('scroll', () => {
+  const el = document.getElementById('progress');
+  const pct = window.scrollY / (document.body.scrollHeight - window.innerHeight) * 100;
+  el.style.width = Math.min(pct, 100) + '%';
+});
+
+/* ─── DEMO ─── */
+let timers = [];
+let intervalMs = 120;
+let durationMs = 450;
+
+function replayDemo() {
+  timers.forEach(t => clearTimeout(t));
+  timers = [];
+  const cards = document.querySelectorAll('#demo-grid .skill-card');
+  cards.forEach(c => {
+    c.classList.remove('bubble-animate');
+    c.style.opacity = '0';
+    c.style.transform = 'scale(0)';
+  });
+  document.documentElement.style.setProperty('--anim-dur', durationMs + 'ms');
+  setTimeout(() => {
+    cards.forEach((card, i) => {
+      const t = setTimeout(() => card.classList.add('bubble-animate'), i * intervalMs);
+      timers.push(t);
+    });
+  }, 60);
+}
+
+document.getElementById('ctrl-interval').addEventListener('input', function() {
+  intervalMs = +this.value;
+  document.getElementById('val-interval').textContent = intervalMs + 'ms';
+});
+document.getElementById('ctrl-dur').addEventListener('input', function() {
+  durationMs = +this.value;
+  document.getElementById('val-dur').textContent = durationMs + 'ms';
+});
+document.getElementById('btn-replay').addEventListener('click', replayDemo);
+
+/* ─── CALCULATOR ─── */
+function recalc() {
+  const cards    = +document.getElementById('calc-cards').value    || 0;
+  const interval = +document.getElementById('calc-interval').value || 0;
+  const duration = +document.getElementById('calc-duration').value || 0;
+  const start    = +document.getElementById('calc-start').value    || 0;
+  const last     = start + (cards - 1) * interval;
+  const total    = last + duration;
+  document.getElementById('res-last').textContent  = last;
+  document.getElementById('res-total').textContent = total;
+  document.getElementById('res-sec').textContent   = (total / 1000).toFixed(2);
+}
+
+['calc-cards','calc-interval','calc-duration','calc-start'].forEach(id => {
+  document.getElementById(id).addEventListener('input', recalc);
+});
+
+/* ─── BEZIER CANVAS ─── */
+function drawBezier() {
+  const canvas = document.getElementById('bezier-canvas');
+  const ctx = canvas.getContext('2d');
+  const W = canvas.width, H = canvas.height;
+  const pad = 20;
+
+  ctx.clearRect(0, 0, W, H);
+
+  ctx.strokeStyle = 'rgba(255,255,255,0.06)';
+  ctx.lineWidth = 1;
+  for (let i = 0; i <= 4; i++) {
+    const x = pad + (i / 4) * (W - pad * 2);
+    const y = pad + (i / 4) * (H - pad * 2);
+    ctx.beginPath(); ctx.moveTo(x, pad); ctx.lineTo(x, H - pad); ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(pad, y); ctx.lineTo(W - pad, y); ctx.stroke();
+  }
+
+  const p0 = { x: pad, y: H - pad };
+  const p3 = { x: W - pad, y: pad };
+  const P1x = 0.36, P1y = 0.07, P2x = 0.19, P2y = 0.97;
+  const cw = W - pad * 2, ch = H - pad * 2;
+  const p1 = { x: pad + P1x * cw, y: H - pad - P1y * ch };
+  const p2 = { x: pad + P2x * cw, y: H - pad - P2y * ch };
+
+  ctx.strokeStyle = 'rgba(108,99,255,0.3)';
+  ctx.lineWidth = 1;
+  ctx.setLineDash([4, 4]);
+  ctx.beginPath(); ctx.moveTo(p0.x, p0.y); ctx.lineTo(p1.x, p1.y); ctx.stroke();
+  ctx.beginPath(); ctx.moveTo(p3.x, p3.y); ctx.lineTo(p2.x, p2.y); ctx.stroke();
+  ctx.setLineDash([]);
+
+  ctx.strokeStyle = '#6c63ff';
+  ctx.lineWidth = 2.5;
+  ctx.beginPath();
+  ctx.moveTo(p0.x, p0.y);
+  ctx.bezierCurveTo(p1.x, p1.y, p2.x, p2.y, p3.x, p3.y);
+  ctx.stroke();
+
+  [[p1, '#6c63ff'], [p2, '#ff6b9d']].forEach(([p, col]) => {
+    ctx.fillStyle = col;
+    ctx.beginPath(); ctx.arc(p.x, p.y, 5, 0, Math.PI * 2); ctx.fill();
+  });
+
+  ctx.fillStyle = '#43e8a0';
+  ctx.beginPath(); ctx.arc(p0.x, p0.y, 4, 0, Math.PI * 2); ctx.fill();
+  ctx.beginPath(); ctx.arc(p3.x, p3.y, 4, 0, Math.PI * 2); ctx.fill();
+}
+
+drawBezier();
+
+/* ─── INIT ─── */
+setTimeout(replayDemo, 600);
+recalc();
+</script>
+</body>
+</html>

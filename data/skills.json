@@ -121,18 +121,6 @@
       "featured": false
     },
     {
-      "id": "react-native",
-      "name": "React Native",
-      "nameAr": "React Native",
-      "icon": "bi-mobile",
-      "logo": "assets/img/skills-logos/react.svg",
-      "level": "good",
-      "levelAr": "جيد",
-      "category": "mobile",
-      "categoryAr": "تطبيقات جوال",
-      "featured": false
-    },
-    {
       "id": "firebase",
       "name": "Firebase",
       "nameAr": "Firebase",
@@ -166,18 +154,6 @@
       "levelAr": "ممتاز",
       "category": "tools",
       "categoryAr": "أدوات",
-      "featured": false
-    },
-    {
-      "id": "python",
-      "name": "Python",
-      "nameAr": "Python",
-      "icon": "bi-filetype-py",
-      "logo": "assets/img/skills-logos/python.svg",
-      "level": "good",
-      "levelAr": "جيد",
-      "category": "backend",
-      "categoryAr": "باك إند",
       "featured": false
     },
     {
@@ -250,7 +226,7 @@
   "metadata": {
     "version": "1.0.0",
     "lastUpdated": "2025-05-05",
-    "totalSkills": 20,
+    "totalSkills": 18,
     "author": "Assem Adel Habib"
   }
 }

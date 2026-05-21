@@ -127,14 +127,47 @@
         const desc = document.querySelector('.project-description');
         if (desc) desc.textContent = projectDesc || '';
 
-        // Hero image - theme-aware
-        const heroImg = document.querySelector('.hero-image-wrap .project-image');
+        // Hero image - theme-aware (phone mockup)
+        const heroImg = document.querySelector('.phone-project-img');
         if (heroImg) {
             const isDarkMode = document.body.classList.contains('dark-mode');
             const lightImg = project.image || 'assets/img/portfolio-placeholder.jpg';
             const darkImg = project.imageDark || lightImg;
             heroImg.src = isDarkMode ? darkImg : lightImg;
             heroImg.alt = projectTitle;
+        }
+
+        // Phone mockup header
+        const phoneName = document.querySelector('.phone-project-name');
+        if (phoneName) phoneName.textContent = projectTitle;
+
+        // Status dot + label
+        const statusDot = document.querySelector('.phone-status-dot');
+        const statusLabel = document.querySelector('.phone-status-label');
+        const activeStatus = projectStatus || (isArabic ? 'نشط' : 'Active');
+        const statusColor = projectStatus && projectStatus.toLowerCase() === 'completed'
+            ? 'var(--accent-color)'
+            : 'var(--accent-color)';
+        if (statusDot) statusDot.style.background = statusColor;
+        if (statusLabel) statusLabel.textContent = activeStatus;
+
+        // Categories chips
+        const catContainer = document.getElementById('phoneCategories');
+        if (catContainer && project.category) {
+            const chips = project.category.split(',').map(c => c.trim());
+            catContainer.innerHTML = chips.map(c =>
+                `<span class="phone-cat-chip">${c}</span>`
+            ).join('');
+        }
+
+        // Floating badges
+        const badgeCategory = document.getElementById('badgeCategory');
+        const badgeStatus = document.getElementById('badgeStatus');
+        if (badgeCategory) {
+            badgeCategory.querySelector('.badge-text').textContent = projectCategory || project.category;
+        }
+        if (badgeStatus) {
+            badgeStatus.querySelector('.badge-text').textContent = activeStatus;
         }
 
         // Page title

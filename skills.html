@@ -164,23 +164,30 @@
           });
 
           // Staggered bubble pop animation
-          const interval = 120;
+          const startDelay = 400;
+          const interval = 150;
+          const duration = 600;
           const skillCards = document.querySelectorAll('#skills-container .skill-card');
           console.log(`🧪 [Skills Page] Built ${skillCards.length} cards — waiting for initial paint...`);
 
+          // Set animation duration via CSS variable
+          document.documentElement.style.setProperty('--anim-dur', duration + 'ms');
+
           // Force reflow so browser renders initial state (scale:0, opacity:0) before stagger
           requestAnimationFrame(() => {
-            console.log(`🧪 [Skills Page] Initial paint done — starting stagger. interval=${interval}ms, duration=450ms`);
-            skillCards.forEach((card, i) => {
-              const delay = i * interval;
-              setTimeout(() => {
-                card.classList.add('bubble-animate');
-                console.log(`🎯 [Skills Page] Card ${i+1}/${skillCards.length} "${card.querySelector('h6')?.textContent}" → bubble-animate at ${delay}ms`);
-              }, delay);
-            });
+            console.log(`🧪 [Skills Page] Initial paint done — starting in ${startDelay}ms. interval=${interval}ms, duration=${duration}ms`);
+            setTimeout(() => {
+              skillCards.forEach((card, i) => {
+                const delay = i * interval;
+                setTimeout(() => {
+                  card.classList.add('bubble-animate');
+                  console.log(`🎯 [Skills Page] Card ${i+1}/${skillCards.length} "${card.querySelector('h6')?.textContent}" → bubble-animate at ${startDelay + delay}ms`);
+                }, delay);
+              });
 
-            const total = (skillCards.length - 1) * interval + 450;
-            console.log(`🧪 [Skills Page] Last card finishes at ~${total}ms (${(total/1000).toFixed(2)}s)`);
+              const total = (skillCards.length - 1) * interval + duration;
+              console.log(`🧪 [Skills Page] Last card finishes at ~${startDelay + total}ms (${((startDelay + total)/1000).toFixed(2)}s)`);
+            }, startDelay);
           });
         })
         .catch(error => console.error('Error loading skills:', error));

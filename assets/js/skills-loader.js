@@ -118,3 +118,6 @@ async function initSkillsLoader() {
 
   console.log('✅ Skills Loader initialized');
 }
+
+// Auto-start when DOM is ready
+document.addEventListener('DOMContentLoaded', () => initSkillsLoader());

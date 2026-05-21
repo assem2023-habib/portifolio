@@ -52,7 +52,7 @@ body.dark-mode #project-nav {
     radial-gradient(ellipse 40% 60% at 20% 70%, color-mix(in srgb, var(--accent-color), transparent 90%) 0%, transparent 60%);
 }
 .hero-grid {
-  position: absolute; inset: 0; z-index: 0;
+  position: absolute; inset: 0; z-index: 1;
   background-image:
     linear-gradient(color-mix(in srgb, var(--default-color), transparent 92%) 1px, transparent 1px),
     linear-gradient(90deg, color-mix(in srgb, var(--default-color), transparent 92%) 1px, transparent 1px);

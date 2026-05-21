@@ -116,7 +116,7 @@
         if (eyebrow) eyebrow.textContent = projectCategory;
 
         // Nav tag
-        const navTag = document.querySelector('.nav-tag');
+        const navTag = document.querySelector('.project-category');
         if (navTag) navTag.textContent = projectCategory;
 
         // Title

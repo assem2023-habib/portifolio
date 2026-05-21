@@ -944,6 +944,13 @@ body.dark-mode section.section {
   flex-shrink: 0;
 }
 
+.skills-marquee-item .skill-logo {
+  width: 28px;
+  height: 28px;
+  object-fit: contain;
+  flex-shrink: 0;
+}
+
 .skills-marquee-item i {
   font-size: 24px;
   color: var(--accent-color);

@@ -1,0 +1,904 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Shehrezad Backend – Assem Adel Habib</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  :root{
+    --bg:#0d0f14;
+    --bg2:#13161e;
+    --bg3:#1a1e28;
+    --surface:#1e2333;
+    --surface2:#252b3b;
+    --border:rgba(255,255,255,0.07);
+    --border2:rgba(255,255,255,0.12);
+    --text:#e8ecf4;
+    --text2:#8a93aa;
+    --text3:#5a6175;
+    --accent:#4f8ef7;
+    --accent2:#6c63ff;
+    --accent3:#00d4aa;
+    --gold:#f5a623;
+    --glow:rgba(79,142,247,0.15);
+    --font:'Sora',sans-serif;
+  }
+  html{scroll-behavior:smooth}
+  body{
+    background:var(--bg);
+    color:var(--text);
+    font-family:var(--font);
+    font-size:15px;
+    line-height:1.7;
+    overflow-x:hidden;
+  }
+
+  /* ── NOISE TEXTURE OVERLAY ── */
+  body::before{
+    content:'';
+    position:fixed;inset:0;
+    background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+    pointer-events:none;z-index:0;opacity:.4;
+  }
+
+  /* ── NAV ── */
+  nav{
+    position:fixed;top:0;left:0;right:0;z-index:100;
+    padding:1rem 2.5rem;
+    display:flex;align-items:center;justify-content:space-between;
+    background:rgba(13,15,20,0.7);
+    backdrop-filter:blur(20px);
+    border-bottom:1px solid var(--border);
+    transition:background .3s;
+  }
+  .nav-bread{display:flex;align-items:center;gap:.5rem;font-size:13px;color:var(--text2)}
+  .nav-bread a{color:var(--text2);text-decoration:none;transition:color .2s}
+  .nav-bread a:hover{color:var(--accent)}
+  .nav-bread span{color:var(--text3)}
+  .nav-tag{
+    font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;
+    padding:.3rem .8rem;border-radius:20px;
+    background:rgba(79,142,247,0.12);color:var(--accent);
+    border:1px solid rgba(79,142,247,0.25);
+  }
+
+  /* ── HERO ── */
+  .hero{
+    position:relative;min-height:100vh;
+    display:flex;align-items:center;
+    padding:6rem 2.5rem 4rem;
+    overflow:hidden;
+  }
+  .hero-bg{
+    position:absolute;inset:0;z-index:0;
+    background:
+      radial-gradient(ellipse 60% 50% at 70% 40%, rgba(79,142,247,0.08) 0%, transparent 70%),
+      radial-gradient(ellipse 40% 60% at 20% 70%, rgba(108,99,255,0.06) 0%, transparent 60%),
+      var(--bg);
+  }
+  .hero-grid{
+    position:absolute;inset:0;z-index:0;
+    background-image:
+      linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
+    background-size:60px 60px;
+    mask-image:radial-gradient(ellipse 80% 80% at 50% 50%, black 40%, transparent 100%);
+  }
+  .hero-inner{
+    position:relative;z-index:1;
+    max-width:1200px;margin:0 auto;width:100%;
+    display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center;
+  }
+  .hero-left{opacity:0;transform:translateY(30px);animation:fadeUp .8s .2s forwards ease}
+  .hero-eyebrow{
+    display:inline-flex;align-items:center;gap:.5rem;
+    font-size:11px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;
+    color:var(--accent3);margin-bottom:1.25rem;
+  }
+  .hero-eyebrow::before{
+    content:'';width:24px;height:1px;background:var(--accent3);
+  }
+  h1.hero-title{
+    font-family:'Playfair Display',serif;
+    font-size:clamp(2.5rem,4vw,3.8rem);
+    font-weight:700;line-height:1.1;
+    color:#fff;margin-bottom:1.5rem;
+  }
+  h1.hero-title em{
+    font-style:italic;color:var(--accent);
+  }
+  .hero-desc{
+    font-size:15px;color:var(--text2);line-height:1.8;
+    max-width:480px;margin-bottom:2rem;
+  }
+  .hero-buttons{display:flex;gap:.75rem;flex-wrap:wrap}
+  .btn{
+    display:inline-flex;align-items:center;gap:.5rem;
+    padding:.75rem 1.5rem;border-radius:10px;
+    font-size:13px;font-weight:600;cursor:pointer;
+    text-decoration:none;transition:all .25s;
+    border:none;font-family:var(--font);
+  }
+  .btn-primary{
+    background:var(--accent);color:#fff;
+    box-shadow:0 0 24px rgba(79,142,247,0.3);
+  }
+  .btn-primary:hover{background:#3a7df6;transform:translateY(-2px);box-shadow:0 6px 30px rgba(79,142,247,0.4)}
+  .btn-secondary{
+    background:var(--surface2);color:var(--text);
+    border:1px solid var(--border2);
+  }
+  .btn-secondary:hover{background:var(--surface);border-color:var(--accent);color:var(--accent);transform:translateY(-2px)}
+  .btn-ghost{
+    background:transparent;color:var(--text2);
+    border:1px solid var(--border);
+  }
+  .btn-ghost:hover{color:var(--text);border-color:var(--border2)}
+
+  .hero-right{
+    position:relative;
+    opacity:0;transform:translateX(30px);animation:fadeLeft .9s .4s forwards ease;
+  }
+  .hero-phone-wrap{
+    position:relative;display:flex;align-items:center;justify-content:center;
+    height:520px;
+  }
+  .hero-orb{
+    position:absolute;width:320px;height:320px;border-radius:50%;
+    background:radial-gradient(circle, rgba(79,142,247,0.12) 0%, transparent 70%);
+    filter:blur(40px);animation:pulse 4s ease-in-out infinite;
+  }
+  .hero-phone{
+    position:relative;z-index:2;width:240px;
+    border-radius:36px;overflow:hidden;
+    border:1.5px solid rgba(255,255,255,0.15);
+    box-shadow:0 30px 80px rgba(0,0,0,0.5), 0 0 0 0.5px rgba(255,255,255,0.05);
+    animation:float 6s ease-in-out infinite;
+    background:#1a1e28;
+  }
+  .hero-phone img{width:100%;display:block}
+  .hero-phone-placeholder{
+    width:100%;height:480px;
+    background:linear-gradient(160deg, #1e2333 0%, #252b3b 100%);
+    display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1rem;
+  }
+  .phone-screen-mock{padding:1.5rem;width:100%}
+  .phone-header{
+    display:flex;justify-content:space-between;align-items:center;
+    margin-bottom:1rem;font-size:11px;color:var(--text3);
+  }
+  .phone-product-card{
+    background:rgba(255,255,255,0.05);border-radius:14px;
+    padding:1rem;margin-bottom:.75rem;
+    border:1px solid rgba(255,255,255,0.07);
+  }
+  .phone-product-img{
+    width:100%;height:70px;border-radius:8px;
+    background:linear-gradient(135deg,rgba(79,142,247,.2),rgba(108,99,255,.2));
+    margin-bottom:.6rem;display:flex;align-items:center;justify-content:center;
+    font-size:20px;
+  }
+  .phone-product-name{font-size:10px;font-weight:600;color:var(--text);margin-bottom:.2rem}
+  .phone-product-price{font-size:12px;color:var(--accent);font-weight:700}
+  .floating-badge{
+    position:absolute;z-index:3;
+    background:var(--surface);border:1px solid var(--border2);
+    border-radius:12px;padding:.6rem 1rem;
+    font-size:11px;font-weight:600;
+    box-shadow:0 8px 24px rgba(0,0,0,0.3);
+    backdrop-filter:blur(10px);
+    white-space:nowrap;
+  }
+  .badge-tl{top:60px;left:-30px;color:var(--accent3)}
+  .badge-br{bottom:80px;right:-20px;color:var(--gold)}
+  .badge-dot{
+    display:inline-block;width:6px;height:6px;border-radius:50%;
+    margin-left:.4rem;
+    animation:blink 2s ease-in-out infinite;
+  }
+
+  /* ── STATS BAR ── */
+  .stats-bar{
+    position:relative;z-index:1;
+    border-top:1px solid var(--border);border-bottom:1px solid var(--border);
+    background:rgba(30,35,51,0.6);backdrop-filter:blur(20px);
+    padding:1.5rem 2.5rem;
+  }
+  .stats-inner{
+    max-width:1200px;margin:0 auto;
+    display:grid;grid-template-columns:repeat(4,1fr);gap:2rem;
+  }
+  .stat-item{text-align:center}
+  .stat-num{font-size:1.8rem;font-weight:700;color:#fff;letter-spacing:-.02em}
+  .stat-label{font-size:11px;color:var(--text3);text-transform:uppercase;letter-spacing:.08em;margin-top:.2rem}
+
+  /* ── SECTION LAYOUT ── */
+  .section{padding:5rem 2.5rem}
+  .section-inner{max-width:1200px;margin:0 auto}
+  .section-header{margin-bottom:3rem}
+  .section-eyebrow{
+    font-size:11px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;
+    color:var(--accent);display:flex;align-items:center;gap:.5rem;margin-bottom:.75rem;
+  }
+  .section-eyebrow::after{content:'';flex:1;height:1px;background:linear-gradient(90deg,var(--accent),transparent);max-width:80px}
+  h2.section-title{
+    font-size:clamp(1.6rem,2.5vw,2.2rem);font-weight:700;color:#fff;
+    line-height:1.2;
+  }
+
+  /* ── INFO + OVERVIEW ── */
+  .info-grid{
+    display:grid;grid-template-columns:320px 1fr;gap:2rem;align-items:start;
+  }
+  .info-card{
+    background:var(--surface);border:1px solid var(--border);
+    border-radius:20px;padding:1.75rem;
+    position:sticky;top:80px;
+  }
+  .info-card-header{
+    font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;
+    color:var(--accent);margin-bottom:1.25rem;
+    padding-bottom:.75rem;border-bottom:1px solid var(--border);
+  }
+  .info-row{
+    display:flex;align-items:flex-start;gap:.75rem;
+    padding:.75rem 0;border-bottom:1px solid var(--border);
+  }
+  .info-row:last-of-type{border-bottom:none}
+  .info-icon{
+    width:32px;height:32px;border-radius:8px;
+    background:rgba(79,142,247,0.1);border:1px solid rgba(79,142,247,0.2);
+    display:flex;align-items:center;justify-content:center;
+    flex-shrink:0;font-size:15px;
+  }
+  .info-row-label{font-size:11px;color:var(--text3);margin-bottom:.15rem;text-transform:uppercase;letter-spacing:.06em}
+  .info-row-value{font-size:13px;font-weight:600;color:var(--text)}
+  .status-badge{
+    display:inline-flex;align-items:center;gap:.35rem;
+    font-size:12px;font-weight:600;color:var(--accent3);
+    background:rgba(0,212,170,0.1);border:1px solid rgba(0,212,170,0.2);
+    border-radius:20px;padding:.25rem .75rem;
+  }
+  .status-dot{width:6px;height:6px;border-radius:50%;background:var(--accent3);animation:blink 2s ease-in-out infinite}
+  .tech-chips{display:flex;flex-wrap:wrap;gap:.4rem;margin-top:.4rem}
+  .tech-chip{
+    font-size:11px;font-weight:500;padding:.2rem .6rem;border-radius:6px;
+    background:rgba(79,142,247,0.08);color:var(--accent);
+    border:1px solid rgba(79,142,247,0.15);
+  }
+  .info-buttons{margin-top:1.25rem;display:flex;flex-direction:column;gap:.5rem}
+
+  .overview-card{
+    background:var(--surface);border:1px solid var(--border);
+    border-radius:20px;padding:2rem;height:100%;
+  }
+  .overview-quote{
+    font-family:'Playfair Display',serif;
+    font-size:1.4rem;font-style:italic;
+    color:var(--text);line-height:1.6;margin-bottom:1.5rem;
+    position:relative;padding-right:1.5rem;
+  }
+  .overview-quote::before{
+    content:'"';
+    position:absolute;right:0;top:-.5rem;
+    font-size:4rem;line-height:1;color:var(--accent);opacity:.3;
+  }
+  .overview-desc{color:var(--text2);line-height:1.8;font-size:14px}
+  .overview-highlights{
+    display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-top:1.5rem;
+  }
+  .highlight-item{
+    background:rgba(79,142,247,0.04);
+    border:1px solid var(--border);border-radius:12px;
+    padding:1rem;
+  }
+  .highlight-icon{font-size:1.25rem;margin-bottom:.4rem}
+  .highlight-label{font-size:11px;color:var(--text3);text-transform:uppercase;letter-spacing:.06em}
+  .highlight-value{font-size:14px;font-weight:600;color:var(--text);margin-top:.1rem}
+
+  /* ── FEATURES ── */
+  .features-bg{background:var(--bg2)}
+  .features-grid{
+    display:grid;grid-template-columns:repeat(3,1fr);gap:1.25rem;
+  }
+  .feature-card{
+    background:var(--surface);border:1px solid var(--border);
+    border-radius:16px;padding:1.5rem;
+    position:relative;overflow:hidden;cursor:default;
+    transition:all .3s cubic-bezier(.25,.46,.45,.94);
+    opacity:0;transform:translateY(20px);
+  }
+  .feature-card.visible{opacity:1;transform:translateY(0)}
+  .feature-card::before{
+    content:'';position:absolute;inset:0;
+    background:radial-gradient(circle at 50% 0%, rgba(79,142,247,.06) 0%, transparent 60%);
+    opacity:0;transition:opacity .3s;
+  }
+  .feature-card:hover{
+    border-color:rgba(79,142,247,0.3);
+    transform:translateY(-4px);
+    box-shadow:0 12px 32px rgba(0,0,0,0.2);
+  }
+  .feature-card:hover::before{opacity:1}
+  .feature-num{
+    position:absolute;top:1rem;left:1rem;
+    font-size:11px;font-weight:700;color:var(--text3);
+    font-variant-numeric:tabular-nums;
+  }
+  .feature-icon-wrap{
+    width:42px;height:42px;border-radius:12px;
+    display:flex;align-items:center;justify-content:center;
+    margin-bottom:1rem;font-size:1.2rem;
+    transition:transform .3s;
+  }
+  .feature-card:hover .feature-icon-wrap{transform:scale(1.1) rotate(-5deg)}
+  .feature-title{font-size:13px;font-weight:600;color:var(--text);margin-bottom:.4rem}
+  .feature-desc{font-size:12px;color:var(--text2);line-height:1.6}
+  .feature-line{
+    position:absolute;bottom:0;left:0;right:0;height:2px;
+    background:linear-gradient(90deg,var(--accent),var(--accent2));
+    transform:scaleX(0);transform-origin:left;
+    transition:transform .3s;
+  }
+  .feature-card:hover .feature-line{transform:scaleX(1)}
+
+  /* ── GALLERY ── */
+  .gallery-track-wrap{
+    position:relative;
+    margin:0 -2.5rem;
+  }
+  .gallery-track{
+    display:flex;gap:1.25rem;
+    padding:0 2.5rem;
+    overflow-x:auto;scroll-behavior:smooth;
+    scrollbar-width:none;-ms-overflow-style:none;
+    cursor:grab;
+    -webkit-overflow-scrolling:touch;
+  }
+  .gallery-track::-webkit-scrollbar{display:none}
+  .gallery-track.grabbing{cursor:grabbing}
+  .gallery-item{
+    flex-shrink:0;width:260px;height:200px;
+    border-radius:16px;overflow:hidden;
+    background:var(--surface2);border:1px solid var(--border);
+    position:relative;
+    transition:transform .3s;
+  }
+  .gallery-item:hover{transform:scale(1.03)}
+  .gallery-item img{width:100%;height:100%;object-fit:cover;display:block}
+  .gallery-item-placeholder{
+    width:100%;height:100%;
+    display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.5rem;
+  }
+  .gallery-scroll-hint{
+    display:flex;align-items:center;gap:.5rem;
+    font-size:12px;color:var(--text3);margin-top:1rem;
+  }
+  .scroll-arrow{
+    display:flex;gap:.25rem;
+  }
+  .scroll-arrow span{
+    width:20px;height:20px;border-radius:50%;
+    background:var(--surface2);border:1px solid var(--border);
+    display:flex;align-items:center;justify-content:center;
+    font-size:10px;cursor:pointer;color:var(--text2);
+    transition:all .2s;
+  }
+  .scroll-arrow span:hover{background:var(--accent);color:#fff;border-color:var(--accent)}
+
+  /* ── PROJECT DETAILS ── */
+  .details-card{
+    background:var(--surface);border:1px solid var(--border);
+    border-radius:20px;padding:2.5rem;
+    position:relative;overflow:hidden;
+  }
+  .details-card::before{
+    content:'';position:absolute;top:0;right:0;bottom:0;width:4px;
+    background:linear-gradient(180deg,var(--accent),var(--accent2));
+  }
+  .details-text{
+    font-size:1.1rem;font-family:'Playfair Display',serif;
+    font-style:italic;color:var(--text);line-height:1.8;
+    direction:rtl;text-align:right;
+  }
+
+  /* ── FOOTER ── */
+  footer{
+    border-top:1px solid var(--border);
+    padding:3rem 2.5rem;text-align:center;
+    background:var(--bg2);
+  }
+  .footer-name{
+    font-family:'Playfair Display',serif;
+    font-size:1.6rem;font-weight:700;color:#fff;
+    margin-bottom:.5rem;
+  }
+  .footer-role{font-size:13px;color:var(--text2);margin-bottom:1.5rem}
+  .footer-links{display:flex;justify-content:center;gap:.75rem}
+  .footer-link{
+    width:40px;height:40px;border-radius:10px;
+    background:var(--surface2);border:1px solid var(--border);
+    display:flex;align-items:center;justify-content:center;
+    text-decoration:none;font-size:1rem;
+    transition:all .2s;
+  }
+  .footer-link:hover{background:var(--accent);border-color:var(--accent);transform:translateY(-2px)}
+
+  /* ── ANIMATIONS ── */
+  @keyframes fadeUp{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:translateY(0)}}
+  @keyframes fadeLeft{from{opacity:0;transform:translateX(30px)}to{opacity:1;transform:translateX(0)}}
+  @keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-12px)}}
+  @keyframes pulse{0%,100%{transform:scale(1);opacity:1}50%{transform:scale(1.1);opacity:.7}}
+  @keyframes blink{0%,100%{opacity:1}50%{opacity:.4}}
+  @keyframes slideIn{from{opacity:0;transform:translateX(20px)}to{opacity:1;transform:translateX(0)}}
+
+  .reveal{opacity:0;transform:translateY(24px);transition:opacity .6s ease,transform .6s ease}
+  .reveal.visible{opacity:1;transform:translateY(0)}
+
+  /* ── SCROLLBAR ── */
+  ::-webkit-scrollbar{width:6px}
+  ::-webkit-scrollbar-track{background:var(--bg)}
+  ::-webkit-scrollbar-thumb{background:var(--surface2);border-radius:3px}
+
+  /* responsive tweaks */
+  @media(max-width:900px){
+    .hero-inner,.info-grid,.features-grid{grid-template-columns:1fr}
+    .hero-right{display:none}
+    .stats-inner{grid-template-columns:repeat(2,1fr)}
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-bread">
+    <a href="#">Home</a>
+    <span>/</span>
+    <a href="#">Portfolio</a>
+    <span>/</span>
+    <span style="color:var(--text)">Shehrezad Backend</span>
+  </div>
+  <div class="nav-tag">Web Development</div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-grid"></div>
+  <div class="hero-inner">
+    <div class="hero-left">
+      <div class="hero-eyebrow">Lead Backend Developer</div>
+      <h1 class="hero-title">Shehrezad<br><em>Backend</em></h1>
+      <p class="hero-desc">نظام تجارة إلكترونية وCRM متكامل مع APIs متقدمة لإدارة المنتجات والطلبات والديون مع دعم تعدد العملات.</p>
+      <div class="hero-buttons">
+        <a href="#" class="btn btn-primary">⊕ عرض التفاصيل</a>
+        <a href="#" class="btn btn-secondary">↓ تحميل التطبيق</a>
+        <a href="#" class="btn btn-ghost">⊞ سطح المكتب</a>
+      </div>
+    </div>
+    <div class="hero-right">
+      <div class="hero-phone-wrap">
+        <div class="hero-orb"></div>
+        <div class="hero-phone">
+          <div class="phone-screen-mock">
+            <div class="phone-header">
+              <span>Shehrezad</span><span style="color:var(--accent3)">● مباشر</span>
+            </div>
+            <div style="display:flex;gap:.5rem;margin-bottom:.75rem;font-size:11px;color:var(--text3)">
+              <span style="background:rgba(79,142,247,.15);color:var(--accent);padding:.2rem .6rem;border-radius:20px">الكل</span>
+              <span style="padding:.2rem .6rem">وردي</span>
+              <span style="padding:.2rem .6rem">صيفي</span>
+              <span style="padding:.2rem .6rem">عبايات</span>
+            </div>
+            <div class="phone-product-card">
+              <div class="phone-product-img">👗</div>
+              <div class="phone-product-name">فستان ستايل صيفي</div>
+              <div class="phone-product-price">TRY 1150</div>
+            </div>
+            <div class="phone-product-card" style="display:flex;gap:.6rem;align-items:center">
+              <div style="width:44px;height:44px;border-radius:8px;background:rgba(108,99,255,.2);display:flex;align-items:center;justify-content:center;font-size:1.1rem;flex-shrink:0">👘</div>
+              <div>
+                <div class="phone-product-name">عباءة فاخرة</div>
+                <div class="phone-product-price">TRY 890</div>
+              </div>
+            </div>
+            <div style="display:flex;gap:.4rem;margin-top:.75rem">
+              <div style="flex:1;background:rgba(0,212,170,.08);border:1px solid rgba(0,212,170,.2);border-radius:8px;padding:.5rem;text-align:center;font-size:10px;color:var(--accent3)">🛒 السلة</div>
+              <div style="flex:1;background:rgba(79,142,247,.08);border:1px solid rgba(79,142,247,.2);border-radius:8px;padding:.5rem;text-align:center;font-size:10px;color:var(--accent)">📦 الطلبات</div>
+            </div>
+          </div>
+        </div>
+        <div class="floating-badge badge-tl">
+          <span style="color:var(--accent3)">✓</span> نظام مباشر
+          <span class="badge-dot" style="background:var(--accent3)"></span>
+        </div>
+        <div class="floating-badge badge-br">
+          <span>🔒</span> متعدد العملات
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- STATS -->
+<div class="stats-bar">
+  <div class="stats-inner">
+    <div class="stat-item reveal">
+      <div class="stat-num" data-count="12">0</div>
+      <div class="stat-label">شهر تطوير</div>
+    </div>
+    <div class="stat-item reveal" style="transition-delay:.1s">
+      <div class="stat-num" data-count="3">0</div>
+      <div class="stat-label">عملات مدعومة</div>
+    </div>
+    <div class="stat-item reveal" style="transition-delay:.2s">
+      <div class="stat-num" data-count="10">0</div>
+      <div class="stat-label">ميزات رئيسية</div>
+    </div>
+    <div class="stat-item reveal" style="transition-delay:.3s">
+      <div class="stat-num">✓</div>
+      <div class="stat-label">مكتمل</div>
+    </div>
+  </div>
+</div>
+
+<!-- INFO + OVERVIEW -->
+<section class="section">
+  <div class="section-inner">
+    <div class="info-grid">
+      <!-- Info Card -->
+      <div class="info-card reveal">
+        <div class="info-card-header">معلومات المشروع</div>
+
+        <div class="info-row">
+          <div class="info-icon">📂</div>
+          <div>
+            <div class="info-row-label">التصنيف</div>
+            <div class="info-row-value">Web Development</div>
+          </div>
+        </div>
+
+        <div class="info-row">
+          <div class="info-icon">⚙️</div>
+          <div>
+            <div class="info-row-label">التقنيات</div>
+            <div class="tech-chips">
+              <span class="tech-chip">Node.js</span>
+              <span class="tech-chip">Express</span>
+              <span class="tech-chip">MySQL</span>
+              <span class="tech-chip">Firebase</span>
+              <span class="tech-chip">JWT</span>
+              <span class="tech-chip">PDFKit</span>
+              <span class="tech-chip">Sharp</span>
+              <span class="tech-chip">Bcrypt</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="info-row">
+          <div class="info-icon">🏢</div>
+          <div>
+            <div class="info-row-label">العميل</div>
+            <div class="info-row-value">شركة شهرزاد للأزياء</div>
+          </div>
+        </div>
+
+        <div class="info-row">
+          <div class="info-icon">👤</div>
+          <div>
+            <div class="info-row-label">الدور</div>
+            <div class="info-row-value">Lead Backend Developer</div>
+          </div>
+        </div>
+
+        <div class="info-row">
+          <div class="info-icon">🗓️</div>
+          <div>
+            <div class="info-row-label">المدة</div>
+            <div class="info-row-value">12 شهر</div>
+          </div>
+        </div>
+
+        <div class="info-row">
+          <div class="info-icon">✅</div>
+          <div>
+            <div class="info-row-label">الحالة</div>
+            <div style="margin-top:.3rem">
+              <span class="status-badge"><span class="status-dot"></span>Completed</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="info-buttons">
+          <a href="#" class="btn btn-primary" style="justify-content:center">⊕ عرض التفاصيل</a>
+          <a href="#" class="btn btn-secondary" style="justify-content:center">↓ تحميل التطبيق</a>
+          <a href="#" class="btn btn-ghost" style="justify-content:center">⊞ تحميل سطح المكتب</a>
+        </div>
+      </div>
+
+      <!-- Overview Card -->
+      <div class="overview-card reveal" style="transition-delay:.15s">
+        <div class="section-eyebrow">نظرة عامة</div>
+        <div class="overview-quote">نظام متكامل يجمع بين التجارة الإلكترونية وإدارة علاقات العملاء في منصة واحدة قوية.</div>
+        <p class="overview-desc">
+          تم بناء هذا النظام كحل شامل لشركة شهرزاد للأزياء، يتضمن APIs متقدمة لإدارة المنتجات، الطلبات، والديون مع دعم كامل لتعدد العملات (USD, TRY, SYP). يوفر النظام تجربة سلسة من السلة حتى الفاتورة مع إشعارات Firebase الفورية.
+        </p>
+        <div class="overview-highlights">
+          <div class="highlight-item">
+            <div class="highlight-icon">🔐</div>
+            <div class="highlight-label">الأمان</div>
+            <div class="highlight-value">JWT + RBAC System</div>
+          </div>
+          <div class="highlight-item">
+            <div class="highlight-icon">💳</div>
+            <div class="highlight-label">الدفع</div>
+            <div class="highlight-value">FIFO Allocation</div>
+          </div>
+          <div class="highlight-item">
+            <div class="highlight-icon">📄</div>
+            <div class="highlight-label">الفواتير</div>
+            <div class="highlight-value">PDF Auto-Generated</div>
+          </div>
+          <div class="highlight-item">
+            <div class="highlight-icon">⏰</div>
+            <div class="highlight-label">الصيانة</div>
+            <div class="highlight-value">Cron Jobs System</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- KEY FEATURES -->
+<section class="section features-bg">
+  <div class="section-inner">
+    <div class="section-header reveal">
+      <div class="section-eyebrow">المميزات</div>
+      <h2 class="section-title">الميزات الرئيسية</h2>
+    </div>
+    <div class="features-grid">
+
+      <div class="feature-card" style="transition-delay:0s">
+        <div class="feature-num">01</div>
+        <div class="feature-icon-wrap" style="background:rgba(79,142,247,.1)">🛒</div>
+        <div class="feature-title">منصة e-Commerce + CRM</div>
+        <div class="feature-desc">نظام متكامل يجمع التجارة الإلكترونية وإدارة العملاء في واجهة واحدة</div>
+        <div class="feature-line"></div>
+      </div>
+
+      <div class="feature-card" style="transition-delay:.07s">
+        <div class="feature-num">02</div>
+        <div class="feature-icon-wrap" style="background:rgba(0,212,170,.1)">📦</div>
+        <div class="feature-title">إدارة الطلبات الكاملة</div>
+        <div class="feature-desc">من السلة حتى الفاتورة – تتبع كل مرحلة بدقة عالية</div>
+        <div class="feature-line" style="background:linear-gradient(90deg,var(--accent3),#00a87e)"></div>
+      </div>
+
+      <div class="feature-card" style="transition-delay:.14s">
+        <div class="feature-num">03</div>
+        <div class="feature-icon-wrap" style="background:rgba(245,166,35,.1)">💰</div>
+        <div class="feature-title">تتبع الديون والحسابات</div>
+        <div class="feature-desc">نظام متكامل لتتبع ديون العملاء وتاريخ المعاملات المالية</div>
+        <div class="feature-line" style="background:linear-gradient(90deg,var(--gold),#d4830a)"></div>
+      </div>
+
+      <div class="feature-card" style="transition-delay:.21s">
+        <div class="feature-num">04</div>
+        <div class="feature-icon-wrap" style="background:rgba(108,99,255,.1)">👥</div>
+        <div class="feature-title">RBAC متعدد الأدوار</div>
+        <div class="feature-desc">صلاحيات مخصصة: Customer, Employee, Super Admin مع JWT</div>
+        <div class="feature-line" style="background:linear-gradient(90deg,var(--accent2),#5048cc)"></div>
+      </div>
+
+      <div class="feature-card" style="transition-delay:.28s">
+        <div class="feature-num">05</div>
+        <div class="feature-icon-wrap" style="background:rgba(255,87,87,.1)">🔔</div>
+        <div class="feature-title">إشعارات Firebase Push</div>
+        <div class="feature-desc">إشعارات فورية للعملاء عند تحديث الطلب أو الدفع</div>
+        <div class="feature-line" style="background:linear-gradient(90deg,#ff5757,#cc3030)"></div>
+      </div>
+
+      <div class="feature-card" style="transition-delay:.35s">
+        <div class="feature-num">06</div>
+        <div class="feature-icon-wrap" style="background:rgba(0,212,170,.1)">📄</div>
+        <div class="feature-title">فواتير PDF أوتوماتيكية</div>
+        <div class="feature-desc">توليد فواتير احترافية بصيغة PDF عند كل عملية بيع</div>
+        <div class="feature-line" style="background:linear-gradient(90deg,var(--accent3),#00a87e)"></div>
+      </div>
+
+      <div class="feature-card" style="transition-delay:.42s">
+        <div class="feature-num">07</div>
+        <div class="feature-icon-wrap" style="background:rgba(79,142,247,.1)">⏰</div>
+        <div class="feature-title">Cron Jobs للصيانة</div>
+        <div class="feature-desc">مهام مجدولة تلقائية لصيانة النظام وتنظيف البيانات</div>
+        <div class="feature-line"></div>
+      </div>
+
+      <div class="feature-card" style="transition-delay:.49s">
+        <div class="feature-num">08</div>
+        <div class="feature-icon-wrap" style="background:rgba(245,166,35,.1)">💱</div>
+        <div class="feature-title">دعم متعدد العملات</div>
+        <div class="feature-desc">دعم كامل لـ USD, TRY, SYP مع تحويل تلقائي</div>
+        <div class="feature-line" style="background:linear-gradient(90deg,var(--gold),#d4830a)"></div>
+      </div>
+
+      <div class="feature-card" style="transition-delay:.56s">
+        <div class="feature-num">09</div>
+        <div class="feature-icon-wrap" style="background:rgba(108,99,255,.1)">🔒</div>
+        <div class="feature-title">قفل السلة الذكي</div>
+        <div class="feature-desc">نظام قفل السلة يمنع تعارض الطلبات المتزامنة</div>
+        <div class="feature-line" style="background:linear-gradient(90deg,var(--accent2),#5048cc)"></div>
+      </div>
+
+      <div class="feature-card" style="transition-delay:.63s">
+        <div class="feature-num">10</div>
+        <div class="feature-icon-wrap" style="background:rgba(0,212,170,.1)">📊</div>
+        <div class="feature-title">توزيع FIFO للمدفوعات</div>
+        <div class="feature-desc">خوارزمية FIFO الذكية لتوزيع المدفوعات على الديون المستحقة</div>
+        <div class="feature-line" style="background:linear-gradient(90deg,var(--accent3),#00a87e)"></div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- GALLERY -->
+<section class="section">
+  <div class="section-inner">
+    <div class="section-header reveal" style="display:flex;justify-content:space-between;align-items:flex-end">
+      <div>
+        <div class="section-eyebrow">المعرض</div>
+        <h2 class="section-title">لقطات من المشروع</h2>
+      </div>
+      <div class="scroll-arrow">
+        <span id="gallPrev" title="السابق">←</span>
+        <span id="gallNext" title="التالي">→</span>
+      </div>
+    </div>
+    <div class="gallery-track-wrap">
+      <div class="gallery-track reveal" id="galleryTrack" style="transition-delay:.2s">
+
+        <div class="gallery-item">
+          <div class="gallery-item-placeholder" style="background:linear-gradient(135deg,rgba(79,142,247,.15),rgba(108,99,255,.1));color:var(--text2);font-size:12px;text-align:center;gap:1rem">
+            <div style="font-size:2rem">📱</div>
+            <div>شاشة المنتجات</div>
+          </div>
+        </div>
+
+        <div class="gallery-item">
+          <div class="gallery-item-placeholder" style="background:linear-gradient(135deg,rgba(0,212,170,.1),rgba(79,142,247,.1));color:var(--text2);font-size:12px;text-align:center;gap:1rem">
+            <div style="font-size:2rem">📊</div>
+            <div>لوحة التحكم</div>
+          </div>
+        </div>
+
+        <div class="gallery-item">
+          <div class="gallery-item-placeholder" style="background:linear-gradient(135deg,rgba(245,166,35,.1),rgba(108,99,255,.1));color:var(--text2);font-size:12px;text-align:center;gap:1rem">
+            <div style="font-size:2rem">📄</div>
+            <div>الفواتير PDF</div>
+          </div>
+        </div>
+
+        <div class="gallery-item">
+          <div class="gallery-item-placeholder" style="background:linear-gradient(135deg,rgba(255,87,87,.1),rgba(79,142,247,.1));color:var(--text2);font-size:12px;text-align:center;gap:1rem">
+            <div style="font-size:2rem">💳</div>
+            <div>نظام المدفوعات</div>
+          </div>
+        </div>
+
+        <div class="gallery-item">
+          <div class="gallery-item-placeholder" style="background:linear-gradient(135deg,rgba(79,142,247,.15),rgba(0,212,170,.1));color:var(--text2);font-size:12px;text-align:center;gap:1rem">
+            <div style="font-size:2rem">👗</div>
+            <div>كتالوج المنتجات</div>
+          </div>
+        </div>
+
+        <div class="gallery-item">
+          <div class="gallery-item-placeholder" style="background:linear-gradient(135deg,rgba(108,99,255,.15),rgba(245,166,35,.1));color:var(--text2);font-size:12px;text-align:center;gap:1rem">
+            <div style="font-size:2rem">🔐</div>
+            <div>لوحة الإدارة</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+    <div class="gallery-scroll-hint reveal" style="transition-delay:.3s">
+      <span>اسحب للتصفح</span>
+      <span style="color:var(--accent)">←→</span>
+    </div>
+  </div>
+</section>
+
+<!-- PROJECT DETAILS -->
+<section class="section" style="padding-top:0">
+  <div class="section-inner">
+    <div class="section-header reveal">
+      <div class="section-eyebrow">تفاصيل المشروع</div>
+      <h2 class="section-title">الوصف التفصيلي</h2>
+    </div>
+    <div class="details-card reveal" style="transition-delay:.1s">
+      <p class="details-text">
+        بناء نظام مالي معقد يدعم تعدد العملات والديون مع الحفاظ على أمان عالي
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-name">Assem Adel Habib</div>
+  <div class="footer-role">Software engineer specializing in building modern applications and innovative software solutions using the latest technologies</div>
+  <div class="footer-links">
+    <a href="#" class="footer-link" title="GitHub">🐙</a>
+    <a href="#" class="footer-link" title="LinkedIn">💼</a>
+  </div>
+</footer>
+
+<script>
+  // ── SCROLL REVEAL ──
+  const revealEls = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        observer.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+  revealEls.forEach(el => observer.observe(el));
+
+  // ── FEATURE CARDS REVEAL ──
+  const fcards = document.querySelectorAll('.feature-card');
+  const fcObs = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        setTimeout(() => e.target.classList.add('visible'), parseFloat(e.target.style.transitionDelay) * 1000 || 0);
+        fcObs.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.05 });
+  fcards.forEach(c => fcObs.observe(c));
+
+  // ── COUNTER ANIMATION ──
+  const counters = document.querySelectorAll('.stat-num[data-count]');
+  const counterObs = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (!e.isIntersecting) return;
+      const target = +e.target.dataset.count;
+      let current = 0;
+      const inc = target / 30;
+      const timer = setInterval(() => {
+        current = Math.min(current + inc, target);
+        e.target.textContent = Math.round(current);
+        if (current >= target) clearInterval(timer);
+      }, 40);
+      counterObs.unobserve(e.target);
+    });
+  }, { threshold: 0.5 });
+  counters.forEach(c => counterObs.observe(c));
+
+  // ── GALLERY DRAG ──
+  const track = document.getElementById('galleryTrack');
+  let isDown = false, startX, scrollLeft;
+  track.addEventListener('mousedown', e => { isDown = true; track.classList.add('grabbing'); startX = e.pageX - track.offsetLeft; scrollLeft = track.scrollLeft; });
+  track.addEventListener('mouseleave', () => { isDown = false; track.classList.remove('grabbing'); });
+  track.addEventListener('mouseup', () => { isDown = false; track.classList.remove('grabbing'); });
+  track.addEventListener('mousemove', e => { if (!isDown) return; e.preventDefault(); const x = e.pageX - track.offsetLeft; track.scrollLeft = scrollLeft - (x - startX) * 1.5; });
+
+  // Arrow buttons
+  document.getElementById('gallPrev').addEventListener('click', () => track.scrollBy({ left: -290, behavior: 'smooth' }));
+  document.getElementById('gallNext').addEventListener('click', () => track.scrollBy({ left: 290, behavior: 'smooth' }));
+
+  // ── NAV SCROLL EFFECT ──
+  const nav = document.querySelector('nav');
+  window.addEventListener('scroll', () => {
+    nav.style.background = window.scrollY > 50 ? 'rgba(13,15,20,0.95)' : 'rgba(13,15,20,0.7)';
+  });
+</script>
+</body>
+</html>

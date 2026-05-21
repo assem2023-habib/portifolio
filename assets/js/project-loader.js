@@ -1,20 +1,15 @@
 /**
  * Project Details Loader
- * Handles dynamic content population for the project.html page based on URL parameters.
- * Updated to fetch data dynamically from projects.json and support full localization.
- * Wrapped in an IIFE to avoid global scope identifier conflicts.
+ * Populates project.html with dynamic data from projects.json.
  */
 
 (function () {
     let portfolioData = {};
 
-    // Function to get URL parameter
     function getURLParameter(name) {
-        const urlParams = new URLSearchParams(window.location.search);
-        return urlParams.get(name);
+        return new URLSearchParams(window.location.search).get(name);
     }
 
-    // Function to fetch projects data dynamically
     async function fetchProjectsData() {
         try {
             const response = await fetch('data/projects.json');
@@ -22,429 +17,569 @@
             const data = await response.json();
             portfolioData = {};
             data.projects.forEach(project => {
-                // Map snake_case to camelCase where necessary for backward compatibility
                 project.imageDark = project.image_dark || project.imageDark;
                 project.thumbnailDark = project.thumbnail_dark || project.thumbnailDark;
                 project.galleryImages = project.screenshots || project.galleryImages || [];
-                
                 portfolioData[project.id] = project;
             });
-            console.log('✅ Projects loaded dynamically into portfolioData');
+            console.log('✅ Projects loaded dynamically');
         } catch (error) {
-            console.error('Error loading projects dynamically:', error);
+            console.error('Error loading projects:', error);
         }
     }
 
-    // Translation helpers
     function translateCategory(cat) {
-        const cats = {
-            'web': 'تطوير ويب',
-            'mobile': 'تطبيق هاتف',
-            'desktop': 'تطبيق سطح مكتب',
-            'backend': 'نظام خلفي (Backend)'
-        };
+        const cats = { 'web': 'تطوير ويب', 'mobile': 'تطبيق هاتف', 'desktop': 'تطبيق سطح مكتب', 'backend': 'نظام خلفي (Backend)' };
         return cats[cat.toLowerCase()] || cat;
     }
 
-    // Status translation helper
     function translateStatus(status) {
         if (status && status.toLowerCase() === 'completed') return 'مكتمل';
         return status;
     }
 
-    // Translate static UI labels based on language
-    function translateStaticLabels(isAr) {
-        // Translate Page title breadcrumbs
-        const breadcrumbs = document.querySelectorAll('.breadcrumbs ol li a');
-        if (breadcrumbs.length >= 2) {
-            breadcrumbs[0].textContent = isAr ? 'الرئيسية' : 'Home';
-            breadcrumbs[1].textContent = isAr ? 'المعرض' : 'Portfolio';
-        }
-
-        // Info header
-        const infoHeader = document.querySelector('.glass-card h4');
-        if (infoHeader) {
-            infoHeader.textContent = isAr ? 'معلومات المشروع' : 'Project Information';
-        }
-
-        // Small labels in Project Information
-        const smallLabels = document.querySelectorAll('.glass-card small.text-muted');
-        smallLabels.forEach(label => {
-            const text = label.textContent.trim();
-            if (isAr) {
-                if (text === 'Category') label.textContent = 'التصنيف';
-                else if (text === 'Technologies') label.textContent = 'التقنيات';
-                else if (text === 'Status') label.textContent = 'الحالة';
-                else if (text === 'Client') label.textContent = 'العميل';
-                else if (text === 'Role') label.textContent = 'الدور';
-                else if (text === 'Duration') label.textContent = 'المدة';
-            } else {
-                if (text === 'التصنيف') label.textContent = 'Category';
-                else if (text === 'التقنيات') label.textContent = 'Technologies';
-                else if (text === 'الحالة') label.textContent = 'Status';
-                else if (text === 'العميل') label.textContent = 'Client';
-                else if (text === 'الدور') label.textContent = 'Role';
-                else if (text === 'المدة') label.textContent = 'Duration';
-            }
-        });
-
-        // Overview, Features, Gallery, Project Details section headers
-        const h2Elements = document.querySelectorAll('main h2');
-        h2Elements.forEach(h2 => {
-            const text = h2.textContent.trim();
-            if (isAr) {
-                if (text === 'Overview') h2.textContent = 'نظرة عامة';
-                else if (text === 'Key Features') h2.textContent = 'المميزات الرئيسية';
-                else if (text === 'Gallery') h2.textContent = 'معرض الصور';
-                else if (text === 'Project Details') h2.textContent = 'التحديات والحلول';
-            } else {
-                if (text === 'نظرة عامة') h2.textContent = 'Overview';
-                else if (text === 'المميزات الرئيسية') h2.textContent = 'Key Features';
-                else if (text === 'معرض الصور') h2.textContent = 'Gallery';
-                else if (text === 'التحديات والحلول') h2.textContent = 'Project Details';
-            }
-        });
-
-        // Scroll for more text
-        const scrollText = document.querySelector('small.text-primary.fw-medium');
-        if (scrollText) {
-            if (isAr) {
-                if (scrollText.textContent.includes('Scroll')) scrollText.textContent = 'اسحب للمزيد';
-            } else {
-                if (scrollText.textContent.includes('اسحب')) scrollText.textContent = 'Scroll for more';
-            }
-        }
+    function getLang() {
+        return localStorage.getItem('portfolio_language') || 'en';
     }
 
-    // Dynamic info list items injector
-    function insertInfoItem(label, value, iconClass, referenceElement) {
-        const id = `project-info-${label.toLowerCase().replace(/\s+/g, '-')}`;
-        let item = document.getElementById(id);
-        if (!item) {
-            item = document.createElement('div');
-            item.id = id;
-            item.className = 'd-flex align-items-center gap-3 p-2 rounded-2 mb-2';
-            item.style.transition = 'background 0.2s';
-            referenceElement.parentNode.insertBefore(item, referenceElement);
+    function isAr() {
+        return getLang() === 'ar';
+    }
+
+    function getHighlights(project) {
+        const lang = getLang();
+        const isArabic = lang === 'ar';
+        const rawDuration = isArabic ? (project.durationAr || project.duration) : project.duration;
+        const featCount = Array.isArray(project.features) ? project.features.length : 0;
+        const screenCount = Array.isArray(project.screenshots) ? project.screenshots.length : 0;
+        const status = isArabic
+            ? translateStatus(project.status || 'Completed')
+            : (project.status || 'Completed');
+
+        const labels = {
+            duration: { en: 'Duration', ar: 'المدة' },
+            features: { en: 'Features', ar: 'المميزات' },
+            screenshots: { en: 'Screenshots', ar: 'لقطات' },
+            status: { en: 'Status', ar: 'الحالة' }
+        };
+
+        return [
+            { icon: '📅', label: isArabic ? labels.duration.ar : labels.duration.en, value: rawDuration || '—' },
+            { icon: '⚡', label: isArabic ? labels.features.ar : labels.features.en, value: `${featCount}` },
+            { icon: '📸', label: isArabic ? labels.screenshots.ar : labels.screenshots.en, value: `${screenCount}` },
+            { icon: '✅', label: isArabic ? labels.status.ar : labels.status.en, value: status }
+        ];
+    }
+
+    function getHighlightsForStats(project) {
+        const lang = getLang();
+        const isArabic = lang === 'ar';
+        const rawDuration = isArabic ? (project.durationAr || project.duration) : project.duration;
+
+        const durationNum = rawDuration ? parseInt(rawDuration) : 0;
+        const featCount = Array.isArray(project.features) ? project.features.length : 0;
+        const screenCount = Array.isArray(project.screenshots) ? project.screenshots.length : 0;
+        const statusText = isArabic
+            ? translateStatus(project.status || 'Completed')
+            : (project.status || 'Completed');
+
+        const labels = {
+            months: { en: 'Months Dev', ar: 'شهر تطوير' },
+            features: { en: 'Features', ar: 'ميزة' },
+            screenshots: { en: 'Screenshots', ar: 'لقطة' },
+            status: { en: 'Status', ar: 'الحالة' }
+        };
+
+        return [
+            { num: durationNum || '—', label: isArabic ? labels.months.ar : labels.months.en },
+            { num: featCount, label: isArabic ? labels.features.ar : labels.features.en },
+            { num: screenCount, label: isArabic ? labels.screenshots.ar : labels.screenshots.en },
+            { num: '✓', label: statusText }
+        ];
+    }
+
+    function populateStats(project) {
+        const container = document.getElementById('stats-container');
+        if (!container) return;
+        const stats = getHighlightsForStats(project);
+        container.innerHTML = stats.map((s, i) => `
+            <div class="stat-item reveal" style="transition-delay:${i * 0.1}s">
+                <div class="stat-num" ${typeof s.num === 'number' ? `data-count="${s.num}"` : ''}>${s.num}</div>
+                <div class="stat-label">${s.label}</div>
+            </div>
+        `).join('');
+    }
+
+    function populateHero(project, isArabic, projectTitle, projectDesc, projectCategory, projectStatus) {
+        // Category eyebrow
+        const eyebrow = document.querySelector('.hero-eyebrow');
+        if (eyebrow) eyebrow.textContent = projectCategory;
+
+        // Nav tag
+        const navTag = document.querySelector('.nav-tag');
+        if (navTag) navTag.textContent = projectCategory;
+
+        // Title
+        const titles = document.querySelectorAll('.project-title');
+        titles.forEach(el => { el.textContent = projectTitle; });
+
+        // Description
+        const desc = document.querySelector('.project-description');
+        if (desc) desc.textContent = projectDesc || '';
+
+        // Hero image - theme-aware
+        const heroImg = document.querySelector('.hero-image-wrap .project-image');
+        if (heroImg) {
+            const isDarkMode = document.body.classList.contains('dark-mode');
+            const lightImg = project.image || 'assets/img/portfolio-placeholder.jpg';
+            const darkImg = project.imageDark || lightImg;
+            heroImg.src = isDarkMode ? darkImg : lightImg;
+            heroImg.alt = projectTitle;
         }
-        
-        item.innerHTML = `
-            <span class="text-primary icon-container flex-shrink-0"><i class="bi ${iconClass}"></i></span>
-            <div>
-                <small class="text-muted d-block">${label}</small>
-                <strong class="info-value">${value}</strong>
+
+        // Page title
+        document.title = projectTitle + ' - Assem Adel Habib';
+    }
+
+    function populateButtons(project, isArabic) {
+        // Primary button (repo or URL)
+        const btns = document.querySelectorAll('.project-url');
+        btns.forEach(btn => {
+            const url = project.repoUrl || project.url || '#';
+            btn.href = url;
+            if (project.repoUrl) {
+                btn.innerHTML = `<i class="bi bi-code-slash"></i><span>${isArabic ? 'عرض الكود' : 'View Code'}</span>`;
+            } else if (project.url && project.url !== '#') {
+                btn.innerHTML = `<i class="bi bi-box-arrow-up-right"></i><span>${isArabic ? 'زيارة المشروع' : 'Visit Project'}</span>`;
+            } else {
+                btn.innerHTML = `<i class="bi bi-info-circle"></i><span>${isArabic ? 'عرض التفاصيل' : 'View Details'}</span>`;
+            }
+        });
+
+        // Mobile button
+        const mobileBtns = document.querySelectorAll('.project-mobile-url');
+        mobileBtns.forEach(btn => {
+            if (project.mobileUrl) {
+                btn.href = project.mobileUrl;
+                btn.style.display = 'flex';
+                btn.innerHTML = `<i class="bi bi-download"></i><span>${isArabic ? 'تحميل تطبيق الهاتف' : 'Download Mobile App'}</span>`;
+            } else {
+                btn.style.display = 'none';
+            }
+        });
+
+        // Desktop button
+        const desktopBtns = document.querySelectorAll('.project-desktop-url');
+        desktopBtns.forEach(btn => {
+            if (project.desktopUrl) {
+                btn.href = project.desktopUrl;
+                btn.style.display = 'flex';
+                btn.innerHTML = `<i class="bi bi-pc-display"></i><span>${isArabic ? 'تحميل تطبيق سطح المكتب' : 'Download Desktop App'}</span>`;
+            } else {
+                btn.style.display = 'none';
+            }
+        });
+    }
+
+    function populateInfoCard(project, isArabic) {
+        const container = document.getElementById('info-rows');
+        if (!container) return;
+
+        const categoryLabel = isArabic ? 'التصنيف' : 'Category';
+        const techLabel = isArabic ? 'التقنيات' : 'Technologies';
+        const statusLabel = isArabic ? 'الحالة' : 'Status';
+        const clientLabel = isArabic ? 'العميل' : 'Client';
+        const roleLabel = isArabic ? 'الدور' : 'Role';
+        const durationLabel = isArabic ? 'المدة' : 'Duration';
+
+        const projectCategory = isArabic
+            ? translateCategory(project.category)
+            : project.category;
+        const projectStatus = isArabic
+            ? translateStatus(project.status || 'Completed')
+            : (project.status || 'Completed');
+        const clientVal = isArabic ? (project.clientAr || project.client) : project.client;
+        const roleVal = isArabic ? (project.roleAr || project.role) : project.role;
+        const durationVal = isArabic ? (project.durationAr || project.duration) : project.duration;
+
+        const techStr = Array.isArray(project.technologies)
+            ? project.technologies.join(', ')
+            : (project.technologies || '');
+
+        // Category
+        container.innerHTML = `
+            <div class="info-row">
+                <div class="info-icon"><i class="bi bi-grid"></i></div>
+                <div>
+                    <div class="info-row-label">${categoryLabel}</div>
+                    <div class="info-row-value">${projectCategory}</div>
+                </div>
+            </div>
+            <div class="info-row">
+                <div class="info-icon"><i class="bi bi-code-slash"></i></div>
+                <div>
+                    <div class="info-row-label">${techLabel}</div>
+                    <div class="info-row-value" style="font-weight:400;font-size:12px">${techStr}</div>
+                </div>
+            </div>
+            <div class="info-row">
+                <div class="info-icon"><i class="bi bi-check-circle"></i></div>
+                <div>
+                    <div class="info-row-label">${statusLabel}</div>
+                    <div style="margin-top:0.3rem">
+                        <span class="status-badge"><span class="status-dot"></span>${projectStatus}</span>
+                    </div>
+                </div>
             </div>
         `;
-        item.style.display = 'flex';
-    }
 
-    // Remove dynamic info list items helper
-    function removeInfoItem(label) {
-        const id = `project-info-${label.toLowerCase().replace(/\s+/g, '-')}`;
-        const item = document.getElementById(id);
-        if (item) {
-            item.remove();
-        }
-    }
-
-    // Function to update projects list sidebar (Bento Style)
-    function updateProjectsList(activeProject) {
-        const projectsList = document.getElementById('other-projects-list');
-        if (projectsList && typeof portfolioData !== 'undefined') {
-            projectsList.innerHTML = '';
-            const lang = localStorage.getItem('portfolio_language') || 'en';
-            const isAr = lang === 'ar';
-
-            Object.keys(portfolioData).forEach(projectId => {
-                const project = portfolioData[projectId];
-                const li = document.createElement('li');
-                li.className = 'mb-2';
-
-                const isActive = projectId === activeProject;
-                const activeClass = isActive ? 'bg-primary bg-opacity-10 text-primary fw-bold' : 'text-muted';
-                const iconClass = isActive ? 'bi-dot-fill' : 'bi-circle';
-                const pTitle = isAr ? (project.titleAr || project.title) : project.title;
-                const pCategory = isAr ? translateCategory(project.category) : project.category;
-
-                li.innerHTML = `
-                <a href="project.html?project=${projectId}" class="d-flex align-items-center gap-3 p-2 rounded-2 text-decoration-none transition-colors ${activeClass}">
-                    <i class="bi ${iconClass} flex-shrink-0"></i>
-                    <div class="min-w-0">
-                        <div class="fw-semibold" style="font-size: 0.875rem;">${pTitle}</div>
-                        <small class="text-muted d-block">${pCategory}</small>
+        // Optional: Client
+        if (clientVal) {
+            container.insertAdjacentHTML('beforeend', `
+                <div class="info-row">
+                    <div class="info-icon"><i class="bi bi-building"></i></div>
+                    <div>
+                        <div class="info-row-label">${clientLabel}</div>
+                        <div class="info-row-value">${clientVal}</div>
                     </div>
-                </a>
-                `;
-                projectsList.appendChild(li);
+                </div>
+            `);
+        }
+
+        // Optional: Role
+        if (roleVal) {
+            container.insertAdjacentHTML('beforeend', `
+                <div class="info-row">
+                    <div class="info-icon"><i class="bi bi-briefcase"></i></div>
+                    <div>
+                        <div class="info-row-label">${roleLabel}</div>
+                        <div class="info-row-value">${roleVal}</div>
+                    </div>
+                </div>
+            `);
+        }
+
+        // Optional: Duration
+        if (durationVal) {
+            container.insertAdjacentHTML('beforeend', `
+                <div class="info-row">
+                    <div class="info-icon"><i class="bi bi-calendar3"></i></div>
+                    <div>
+                        <div class="info-row-label">${durationLabel}</div>
+                        <div class="info-row-value">${durationVal}</div>
+                    </div>
+                </div>
+            `);
+        }
+
+        // Header
+        const header = document.getElementById('info-card-header');
+        if (header) header.textContent = isArabic ? 'معلومات المشروع' : 'Project Information';
+    }
+
+    function populateOverview(project, isArabic, projectDesc) {
+        const fullDesc = document.querySelector('.project-description-full');
+        if (fullDesc) {
+            fullDesc.textContent = projectDesc || '';
+        }
+
+        // Eyebrow
+        const eyebrow = document.getElementById('overview-eyebrow');
+        if (eyebrow) eyebrow.textContent = isArabic ? 'نظرة عامة' : 'Overview';
+
+        // Highlights
+        const container = document.getElementById('highlights-container');
+        if (!container) return;
+        const highlights = getHighlights(project);
+        container.innerHTML = highlights.map(h => `
+            <div class="highlight-item">
+                <div class="highlight-icon">${h.icon}</div>
+                <div class="highlight-label">${h.label}</div>
+                <div class="highlight-value">${h.value}</div>
+            </div>
+        `).join('');
+    }
+
+    function populateFeatures(project, isArabic) {
+        const container = document.getElementById('project-features');
+        if (!container) return;
+
+        const features = isArabic ? (project.featuresAr || project.features) : project.features;
+        if (!features || features.length === 0) {
+            container.innerHTML = '<p class="text-muted">No features listed.</p>';
+            return;
+        }
+
+        container.innerHTML = '';
+        const featureIcons = ['🛒', '📦', '💰', '👥', '🔔', '📄', '⏰', '💱', '🔒', '📊', '⚡', '🎯', '🛡️', '🔗', '📱', '🖥️'];
+        const featureGradients = [
+            'rgba(79,142,247,0.1)', 'rgba(0,212,170,0.1)', 'rgba(245,166,35,0.1)',
+            'rgba(108,99,255,0.1)', 'rgba(255,87,87,0.1)', 'rgba(0,212,170,0.1)',
+            'rgba(79,142,247,0.1)', 'rgba(245,166,35,0.1)', 'rgba(108,99,255,0.1)',
+            'rgba(0,212,170,0.1)', 'rgba(79,142,247,0.1)', 'rgba(245,166,35,0.1)',
+            'rgba(255,87,87,0.1)', 'rgba(108,99,255,0.1)', 'rgba(0,212,170,0.1)', 'rgba(79,142,247,0.1)'
+        ];
+
+        features.forEach((feature, i) => {
+            const desc = feature.description || feature;
+            const icon = featureIcons[i % featureIcons.length];
+            const bg = featureGradients[i % featureGradients.length];
+            const delay = Math.min(i * 0.07, 2);
+
+            const card = document.createElement('div');
+            card.className = 'feature-card';
+            card.style.transitionDelay = delay + 's';
+            card.innerHTML = `
+                <div class="feature-num">${String(i + 1).padStart(2, '0')}</div>
+                <div class="feature-icon-wrap" style="background:${bg}">${icon}</div>
+                <div class="feature-title">${desc}</div>
+                <div class="feature-line"></div>
+            `;
+            container.appendChild(card);
+
+            // Observe with staggered delay
+            setTimeout(() => {
+                const fcObs = new IntersectionObserver((entries) => {
+                    entries.forEach(e => {
+                        if (e.isIntersecting) {
+                            setTimeout(() => {
+                                e.target.classList.add('visible');
+                            }, parseFloat(e.target.style.transitionDelay) * 1000 || 0);
+                            fcObs.unobserve(e.target);
+                        }
+                    });
+                }, { threshold: 0.05 });
+                fcObs.observe(card);
+            }, 50);
+        });
+    }
+
+    function populateGallery(project, isArabic, projectTitle) {
+        const track = document.getElementById('galleryTrack');
+        if (!track) return;
+
+        const images = project.galleryImages || [];
+        track.innerHTML = '';
+
+        if (images.length > 0) {
+            images.forEach((src, i) => {
+                const item = document.createElement('div');
+                item.className = 'gallery-item';
+                const img = document.createElement('img');
+                img.src = src;
+                img.alt = `${projectTitle} - ${i + 1}`;
+                img.loading = 'lazy';
+                item.appendChild(img);
+                track.appendChild(item);
             });
+        } else {
+            track.innerHTML = `
+                <div class="gallery-item">
+                    <div class="gallery-item-placeholder" style="background:linear-gradient(135deg,rgba(79,142,247,0.1),rgba(108,99,255,0.08));gap:1rem">
+                        <div style="font-size:2rem">📱</div>
+                        <div>${isArabic ? 'لا توجد لقطات' : 'No screenshots available'}</div>
+                    </div>
+                </div>
+            `;
         }
     }
 
-    // Function to update project details
+    function populateChallenges(project, isArabic) {
+        const el = document.querySelector('.project-challenges');
+        if (!el) return;
+
+        const challenges = isArabic ? (project.challengesAr || project.challenges) : project.challenges;
+        if (challenges) {
+            el.textContent = challenges;
+        } else {
+            el.textContent = isArabic
+                ? 'لا تتوفر تفاصيل إضافية لهذا المشروع حالياً.'
+                : 'No additional details are currently available for this project.';
+        }
+    }
+
+    function updateStaticLabels(isArabic) {
+        // Nav breadcrumbs
+        const breadLinks = document.querySelectorAll('.nav-bread a');
+        if (breadLinks.length >= 2) {
+            breadLinks[0].textContent = isArabic ? 'الرئيسية' : 'Home';
+            breadLinks[1].textContent = isArabic ? 'المعرض' : 'Portfolio';
+        }
+
+        // Section headers
+        const sectionEyebrows = document.querySelectorAll('.section-eyebrow');
+        sectionEyebrows.forEach(el => {
+            const text = el.textContent.trim();
+            if (isArabic) {
+                if (text === 'Overview') el.textContent = 'نظرة عامة';
+                else if (text === 'Features') el.textContent = 'المميزات';
+                else if (text === 'Gallery') el.textContent = 'المعرض';
+                else if (text === 'Details') el.textContent = 'التفاصيل';
+            } else {
+                if (text === 'نظرة عامة') el.textContent = 'Overview';
+                else if (text === 'المميزات') el.textContent = 'Features';
+                else if (text === 'المعرض') el.textContent = 'Gallery';
+                else if (text === 'التفاصيل') el.textContent = 'Details';
+            }
+        });
+
+        // Section titles
+        const sectionTitles = document.querySelectorAll('h2.section-title');
+        sectionTitles.forEach(el => {
+            const text = el.textContent.trim();
+            if (isArabic) {
+                if (text === 'Key Features') el.textContent = 'المميزات الرئيسية';
+                else if (text === 'Project Screenshots') el.textContent = 'لقطات المشروع';
+                else if (text === 'Project Details') el.textContent = 'تفاصيل المشروع';
+            } else {
+                if (text === 'المميزات الرئيسية') el.textContent = 'Key Features';
+                else if (text === 'لقطات المشروع') el.textContent = 'Project Screenshots';
+                else if (text === 'تفاصيل المشروع') el.textContent = 'Project Details';
+            }
+        });
+
+        // Gallery hint
+        const hint = document.querySelector('.gallery-scroll-hint span:first-child');
+        if (hint) {
+            hint.textContent = isArabic ? 'اسحب للتصفح' : 'Drag to browse';
+        }
+    }
+
+    function initScrollReveal() {
+        const revealEls = document.querySelectorAll('.reveal');
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(e => {
+                if (e.isIntersecting) {
+                    e.target.classList.add('visible');
+                    observer.unobserve(e.target);
+                }
+            });
+        }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+        revealEls.forEach(el => observer.observe(el));
+    }
+
+    function initGalleryDrag() {
+        const track = document.getElementById('galleryTrack');
+        if (!track) return;
+
+        let isDown = false, startX, scrollLeft;
+
+        track.addEventListener('mousedown', e => {
+            isDown = true;
+            track.classList.add('grabbing');
+            startX = e.pageX - track.offsetLeft;
+            scrollLeft = track.scrollLeft;
+        });
+        track.addEventListener('mouseleave', () => {
+            isDown = false;
+            track.classList.remove('grabbing');
+        });
+        track.addEventListener('mouseup', () => {
+            isDown = false;
+            track.classList.remove('grabbing');
+        });
+        track.addEventListener('mousemove', e => {
+            if (!isDown) return;
+            e.preventDefault();
+            const x = e.pageX - track.offsetLeft;
+            track.scrollLeft = scrollLeft - (x - startX) * 1.5;
+        });
+
+        // Arrow buttons
+        const prev = document.getElementById('gallPrev');
+        const next = document.getElementById('gallNext');
+        if (prev) prev.addEventListener('click', () => track.scrollBy({ left: -290, behavior: 'smooth' }));
+        if (next) next.addEventListener('click', () => track.scrollBy({ left: 290, behavior: 'smooth' }));
+    }
+
+    function initCounterAnimation() {
+        const counters = document.querySelectorAll('.stat-num[data-count]');
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(e => {
+                if (!e.isIntersecting) return;
+                const target = +e.target.dataset.count;
+                if (!target || target <= 0) return;
+                let current = 0;
+                const inc = target / 30;
+                const timer = setInterval(() => {
+                    current = Math.min(current + inc, target);
+                    e.target.textContent = Math.round(current);
+                    if (current >= target) clearInterval(timer);
+                }, 40);
+                observer.unobserve(e.target);
+            });
+        }, { threshold: 0.5 });
+        counters.forEach(c => observer.observe(c));
+    }
+
+    function initNavScroll() {
+        const nav = document.getElementById('project-nav');
+        if (!nav) return;
+        window.addEventListener('scroll', () => {
+            const isDark = document.body.classList.contains('dark-mode');
+            if (window.scrollY > 50) {
+                nav.style.background = isDark ? 'rgba(26,26,46,0.95)' : 'rgba(255,255,255,0.95)';
+            } else {
+                nav.style.background = isDark ? 'rgba(26,26,46,0.7)' : 'rgba(255,255,255,0.7)';
+            }
+        });
+    }
+
     function updateProjectDetails() {
         const projectId = getURLParameter('project');
-
-        if (projectId && typeof portfolioData !== 'undefined' && portfolioData[projectId]) {
-            const project = portfolioData[projectId];
-            const lang = localStorage.getItem('portfolio_language') || 'en';
-            const isAr = lang === 'ar';
-
-            // 1. Translated details
-            const projectTitle = isAr ? (project.titleAr || project.title) : project.title;
-            const projectDesc = isAr ? (project.descriptionAr || project.description) : project.description;
-            const projectCategory = isAr ? translateCategory(project.category) : project.category;
-            const projectFeatures = isAr ? (project.featuresAr || project.features) : project.features;
-            const projectChallenges = isAr ? (project.challengesAr || project.challenges) : project.challenges;
-            const projectStatus = isAr ? translateStatus(project.status || 'Completed') : (project.status || 'Completed');
-            const projectTechnologiesStr = Array.isArray(project.technologies) 
-                ? project.technologies.join(', ') 
-                : (project.technologies || 'Laravel, PHP, MySQL');
-
-            // Update page title
-            document.title = projectTitle + " - Assem Adel Habib";
-
-            // Update all project title elements
-            const projectTitleElements = document.querySelectorAll('.project-title');
-            projectTitleElements.forEach(element => {
-                element.textContent = projectTitle;
-            });
-
-            // Update project image with lazy loading (Theme-aware)
-            const projectImage = document.querySelector('.project-image');
-            if (projectImage) {
-                const isDarkMode = document.body.classList.contains('dark-mode');
-                const lightImg = project.image || 'assets/img/portfolio-placeholder.jpg';
-                const darkImg = project.imageDark || lightImg;
-                
-                projectImage.src = isDarkMode ? darkImg : lightImg;
-                projectImage.alt = projectTitle;
-                projectImage.loading = 'lazy';
-            }
-
-            // Update project category and badges
-            const categoryBadge = document.querySelector('#project-badges span');
-            if (categoryBadge) {
-                categoryBadge.textContent = projectCategory.charAt(0).toUpperCase() + projectCategory.slice(1);
-            }
-
-            // Update project description
-            const projectDescription = document.querySelector('.project-description');
-            if (projectDescription) {
-                projectDescription.textContent = projectDesc || 'No description available.';
-            }
-
-            // Update project technologies
-            const projectTechnologies = document.querySelector('.project-technologies');
-            if (projectTechnologies) {
-                projectTechnologies.textContent = projectTechnologiesStr;
-            }
-
-            // Update project status
-            const projectStatusEl = document.querySelector('.project-status');
-            if (projectStatusEl) {
-                projectStatusEl.textContent = projectStatus;
-            }
-
-            // 2. Translate Static Labels on the page
-            translateStaticLabels(isAr);
-
-            // 3. Inject dynamic info items: Client, Role, Duration
-            const statusContainer = document.querySelector('.project-status').closest('.d-flex');
-            if (statusContainer) {
-                // Client
-                const clientVal = isAr ? (project.clientAr || project.client) : project.client;
-                if (clientVal) {
-                    insertInfoItem(isAr ? 'العميل' : 'Client', clientVal, 'bi-building', statusContainer);
-                } else {
-                    removeInfoItem('Client');
-                }
-
-                // Role
-                const roleVal = isAr ? (project.roleAr || project.role) : project.role;
-                if (roleVal) {
-                    insertInfoItem(isAr ? 'الدور' : 'Role', roleVal, 'bi-briefcase', statusContainer);
-                } else {
-                    removeInfoItem('Role');
-                }
-
-                // Duration
-                const durationVal = isAr ? (project.durationAr || project.duration) : project.duration;
-                if (durationVal) {
-                    insertInfoItem(isAr ? 'المدة' : 'Duration', durationVal, 'bi-calendar3', statusContainer);
-                } else {
-                    removeInfoItem('Duration');
-                }
-            }
-
-            // 4. Update project details / challenges section
-            const detailsContainer = document.querySelector('main section.mt-5:last-of-type p');
-            if (detailsContainer) {
-                if (projectChallenges) {
-                    detailsContainer.textContent = projectChallenges;
-                } else {
-                    detailsContainer.textContent = isAr 
-                        ? 'لا تتوفر تفاصيل إضافية لهذا المشروع حالياً.' 
-                        : 'No additional details are currently available for this project.';
-                }
-            }
-
-            // 5. Update project URL (Visit Project button / View Code button)
-            const projectUrl = document.querySelector('.project-url');
-            if (projectUrl) {
-                const url = project.repoUrl || project.url || '#';
-                projectUrl.href = url;
-                if (project.repoUrl) {
-                    projectUrl.innerHTML = `<i class="bi bi-code-slash"></i><span>${isAr ? 'عرض الكود' : 'View Code'}</span>`;
-                } else if (project.url && project.url !== '#') {
-                    projectUrl.innerHTML = `<i class="bi bi-box-arrow-up-right"></i><span>${isAr ? 'زيارة المشروع' : 'Visit Project'}</span>`;
-                } else {
-                    projectUrl.innerHTML = `<i class="bi bi-info-circle"></i><span>${isAr ? 'عرض التفاصيل' : 'View Details'}</span>`;
-                }
-            }
-
-            // Update mobile download URL (APK)
-            const mobileUrl = document.querySelector('.project-mobile-url');
-            if (mobileUrl) {
-                if (project.mobileUrl) {
-                    mobileUrl.href = project.mobileUrl;
-                    mobileUrl.style.display = 'flex';
-                    mobileUrl.innerHTML = `<i class="bi bi-download"></i><span>${isAr ? 'تحميل تطبيق الهاتف' : 'Download Mobile App'}</span>`;
-                    console.log('Mobile URL added:', project.mobileUrl);
-                } else {
-                    mobileUrl.style.display = 'none';
-                }
-            }
-
-            // Update desktop download URL
-            const desktopUrl = document.querySelector('.project-desktop-url');
-            if (desktopUrl) {
-                if (project.desktopUrl) {
-                    desktopUrl.href = project.desktopUrl;
-                    desktopUrl.style.display = 'flex';
-                    desktopUrl.innerHTML = `<i class="bi bi-pc-display"></i><span>${isAr ? 'تحميل تطبيق سطح المكتب' : 'Download Desktop App'}</span>`;
-                    console.log('Desktop URL added:', project.desktopUrl);
-                } else {
-                    desktopUrl.style.display = 'none';
-                }
-            }
-
-            // Update project features
-            const featuresContainer = document.getElementById('project-features');
-            if (featuresContainer && projectFeatures) {
-                featuresContainer.innerHTML = '';
-
-                const featureIcons = {
-                    'translate': 'bi-translate',
-                    'language': 'bi-translate',
-                    'settings': 'bi-gear',
-                    'dashboard': 'bi-speedometer2',
-                    'security': 'bi-shield-check',
-                    'analytics': 'bi-graph-up-arrow',
-                    'payment': 'bi-credit-card',
-                    'search': 'bi-search',
-                    'default': 'bi-check-circle'
-                };
-
-                projectFeatures.forEach((feature) => {
-                    const featureDiv = document.createElement('div');
-                    featureDiv.className = 'col-md-6 col-lg-4';
-
-                    const desc = feature.description || feature;
-                    const iconName = featureIcons[feature.icon] || featureIcons.default;
-
-                    featureDiv.innerHTML = `
-                        <div class="d-flex gap-3 align-items-start p-3 glass-card rounded-3 shadow-sm h-100">
-                            <div class="feature-icon-box bg-primary bg-opacity-10">
-                                <i class="bi ${iconName} text-primary"></i>
-                            </div>
-                            <div>
-                                <small class="text-muted d-block lh-base">${desc}</small>
-                            </div>
-                        </div>
-                    `;
-                    featuresContainer.appendChild(featureDiv);
-                });
-            }
-
-            // Update project gallery images with lazy loading
-            const galleryContainer = document.getElementById('project-gallery');
-            if (galleryContainer) {
-                galleryContainer.innerHTML = '';
-
-                const projectImages = project.galleryImages || [];
-
-                if (projectImages.length > 0) {
-                    projectImages.forEach((imgSrc, index) => {
-                        const imgDiv = document.createElement('div');
-                        imgDiv.className = 'flex-shrink-0';
-
-                        const img = document.createElement('img');
-                        img.src = imgSrc;
-                        img.alt = `${projectTitle} - Screenshot ${index + 1}`;
-                        img.className = 'project-gallery-img shadow-sm border';
-                        img.loading = 'lazy';
-
-                        imgDiv.appendChild(img);
-                        galleryContainer.appendChild(imgDiv);
-                    });
-                } else {
-                    // Add placeholder if no images
-                    const placeholderDiv = document.createElement('div');
-                    placeholderDiv.className = 'flex-shrink-0 d-flex align-items-center justify-content-center';
-                    placeholderDiv.style.cssText = 'width: 18rem; height: 12rem; background: var(--color-surface-container, #e9ecef); border-radius: 0.75rem;';
-                    placeholderDiv.innerHTML = '<i class="bi bi-image text-muted" style="font-size: 2.5rem;"></i>';
-                    galleryContainer.appendChild(placeholderDiv);
-                }
-            }
-
-            // Update "More Projects" section
-            const moreProjectsContainer = document.getElementById('more-projects');
-            if (moreProjectsContainer && typeof portfolioData !== 'undefined') {
-                moreProjectsContainer.innerHTML = '';
-
-                Object.keys(portfolioData).forEach(pid => {
-                    if (pid === projectId) return; // Skip current project
-
-                    const p = portfolioData[pid];
-                    const pTitle = isAr ? (p.titleAr || p.title) : p.title;
-                    const pCategory = isAr ? translateCategory(p.category) : p.category;
-
-                    const projectDiv = document.createElement('a');
-                    projectDiv.href = `project.html?project=${pid}`;
-                    projectDiv.className = 'd-flex align-items-center p-3 glass-card rounded-3 text-decoration-none mb-2 transition-colors';
-
-                    projectDiv.innerHTML = `
-                        <div class="d-flex align-items-center justify-content-center flex-shrink-0 me-3" style="width: 48px; height: 48px; border-radius: 0.5rem; background: var(--color-surface-container, #e9ecef);">
-                            <i class="bi ${p.icon ? 'bi-' + p.icon : 'bi-code-slash'} text-muted"></i>
-                        </div>
-                        <div class="flex-grow-1 min-w-0">
-                            <h6 class="fw-bold mb-0" style="font-size: 0.875rem;">${pTitle}</h6>
-                            <small class="text-muted d-block">${pCategory}</small>
-                        </div>
-                        <i class="bi bi-chevron-right text-muted flex-shrink-0"></i>
-                    `;
-
-                    moreProjectsContainer.appendChild(projectDiv);
-                });
-            }
-
-            // Update projects list sidebar
-            updateProjectsList(projectId);
-
-            console.log('Project loaded:', projectTitle);
-        } else {
-            console.log('No project data found, redirecting...');
-            // Default to first project if no valid project ID
-            if (typeof portfolioData !== 'undefined') {
-                const firstProjectId = Object.keys(portfolioData)[0];
-                if (firstProjectId) {
-                    window.location.href = `project.html?project=${firstProjectId}`;
-                }
-            }
+        if (!projectId || !portfolioData[projectId]) {
+            console.log('No project found, redirecting...');
+            const firstId = Object.keys(portfolioData)[0];
+            if (firstId) window.location.href = `project.html?project=${firstId}`;
+            return;
         }
+
+        const project = portfolioData[projectId];
+        const lang = getLang();
+        const arabic = lang === 'ar';
+
+        const projectTitle = arabic ? (project.titleAr || project.title) : project.title;
+        const projectDesc = arabic ? (project.descriptionAr || project.description) : project.description;
+        const projectCategory = arabic ? translateCategory(project.category) : project.category;
+
+        // 1. Hero
+        populateHero(project, arabic, projectTitle, projectDesc, projectCategory, project.status);
+
+        // 2. Buttons
+        populateButtons(project, arabic);
+
+        // 3. Stats
+        populateStats(project);
+
+        // 4. Info card
+        populateInfoCard(project, arabic);
+
+        // 5. Overview
+        populateOverview(project, arabic, projectDesc);
+
+        // 6. Features
+        populateFeatures(project, arabic);
+
+        // 7. Gallery
+        populateGallery(project, arabic, projectTitle);
+
+        // 8. Challenges
+        populateChallenges(project, arabic);
+
+        // 9. Static labels
+        updateStaticLabels(arabic);
+
+        // 10. Init interactions
+        requestAnimationFrame(() => {
+            initScrollReveal();
+            initGalleryDrag();
+            initCounterAnimation();
+            initNavScroll();
+        });
+
+        console.log('✅ Project loaded:', projectTitle);
     }
 
-    // Initialize when page loads
     document.addEventListener('DOMContentLoaded', async () => {
         await fetchProjectsData();
         updateProjectDetails();

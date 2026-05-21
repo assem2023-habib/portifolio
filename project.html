@@ -27,186 +27,144 @@
   <!-- Main CSS File -->
   <link href="assets/css/main.css" rel="stylesheet">
 
-  <style>
-    .project-details-page #header { display: none; }
-    .glass-card {
-      background: rgba(255, 255, 255, 0.6);
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
-      border: 1px solid rgba(255, 255, 255, 0.3);
-    }
-    body.dark-mode .glass-card {
-      background: rgba(26, 26, 46, 0.6);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-    }
-    .custom-scrollbar::-webkit-scrollbar { display: none; }
-    .custom-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
-    .icon-container {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-    }
-    .transition-colors { transition: color 0.2s, background-color 0.2s, border-color 0.2s; }
-    .hero-aspect {
-      aspect-ratio: 16/9;
-    }
-    @media (min-width: 768px) {
-      .hero-aspect {
-        aspect-ratio: 21/9;
-      }
-    }
-    .feature-icon-box {
-      width: 48px;
-      height: 48px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      border-radius: 0.5rem;
-      flex-shrink: 0;
-    }
-    .project-gallery-img {
-      width: 18rem;
-      height: 12rem;
-      object-fit: cover;
-      border-radius: 0.75rem;
-    }
-    @media (min-width: 768px) {
-      .project-gallery-img {
-        width: 20rem;
-        height: 14rem;
-      }
-    }
-  </style>
+  <!-- Project Details CSS -->
+  <link href="assets/css/project-details.css" rel="stylesheet">
 </head>
 
 <body class="project-details-page">
 
-
-
   <main class="main">
 
-    <!-- Page Title -->
-    <div class="page-title" data-aos="fade">
-      <div class="container">
-        <nav class="breadcrumbs">
-          <ol>
-            <li><a href="index.html">Home</a></li>
-            <li><a href="projects.html">Portfolio</a></li>
-            <li class="current project-title">Project Details</li>
-          </ol>
-        </nav>
-        <h1 class="project-title">Project Details</h1>
+    <!-- NAV -->
+    <nav id="project-nav">
+      <div class="nav-bread">
+        <a href="index.html">Home</a>
+        <span>/</span>
+        <a href="projects.html">Portfolio</a>
+        <span>/</span>
+        <span class="current project-title">Project Details</span>
+      </div>
+      <div class="nav-tag project-category">Category</div>
+    </nav>
+
+    <!-- HERO -->
+    <section class="hero">
+      <div class="hero-bg"></div>
+      <div class="hero-grid"></div>
+      <div class="hero-inner">
+        <div class="hero-left">
+          <div class="hero-eyebrow">Category</div>
+          <h1 class="hero-title project-title">Project Title</h1>
+          <p class="hero-desc project-description">Project description will be loaded here...</p>
+          <div class="hero-buttons">
+            <a href="#" class="btn btn-primary project-url" target="_blank">
+              <i class="bi bi-box-arrow-up-right"></i><span>Visit Project</span>
+            </a>
+            <a href="#" class="btn btn-secondary project-mobile-url" target="_blank" style="display:none;">
+              <i class="bi bi-download"></i><span>Download Mobile</span>
+            </a>
+            <a href="#" class="btn btn-ghost project-desktop-url" target="_blank" style="display:none;">
+              <i class="bi bi-pc-display"></i><span>Download Desktop</span>
+            </a>
+          </div>
+        </div>
+        <div class="hero-right">
+          <div class="hero-image-wrap">
+            <img alt="Project Main Image" class="project-image w-100 h-100 object-fit-cover" src="" loading="lazy">
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- STATS BAR -->
+    <div class="stats-bar">
+      <div class="stats-inner" id="stats-container">
+        <!-- Filled dynamically -->
       </div>
     </div>
 
-    <!-- Portfolio Details Section -->
-    <section class="portfolio-details section">
-      <div class="container">
-
-        <!-- Hero Section -->
-        <div class="hero-aspect rounded-3 overflow-hidden shadow mb-5 position-relative" data-aos="fade-up">
-          <img alt="Project Main Image" class="project-image w-100 h-100 object-fit-cover" src="" loading="lazy">
-          <div class="position-absolute bottom-0 start-0 end-0 p-4" style="background: linear-gradient(to top, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.2) 60%, transparent 100%);">
-            <h1 class="text-white fw-bold project-title" style="font-size: 2rem;">Project Title</h1>
-            <div class="d-flex flex-wrap gap-2" id="project-badges">
-              <span class="badge bg-primary">Category</span>
+    <!-- INFO + OVERVIEW -->
+    <section class="section">
+      <div class="section-inner">
+        <div class="info-grid">
+          <!-- Info Card -->
+          <div class="info-card reveal" id="info-card">
+            <div class="info-card-header" id="info-card-header">Project Information</div>
+            <div id="info-rows">
+              <!-- Dynamic info rows go here -->
+            </div>
+            <div class="info-buttons" id="info-buttons">
+              <a href="#" class="btn btn-primary project-url" target="_blank" style="justify-content:center">
+                <i class="bi bi-box-arrow-up-right"></i><span>Visit Project</span>
+              </a>
+              <a href="#" class="btn btn-secondary project-mobile-url" target="_blank" style="justify-content:center;display:none;">
+                <i class="bi bi-download"></i><span>Download Mobile</span>
+              </a>
+              <a href="#" class="btn btn-ghost project-desktop-url" target="_blank" style="justify-content:center;display:none;">
+                <i class="bi bi-pc-display"></i><span>Download Desktop</span>
+              </a>
+            </div>
+          </div>
+          <!-- Overview -->
+          <div class="overview-card reveal" style="transition-delay:.15s">
+            <div class="section-eyebrow" id="overview-eyebrow">Overview</div>
+            <p class="overview-desc project-description-full">Project description will be loaded here...</p>
+            <div class="overview-highlights" id="highlights-container">
+              <!-- Highlights filled dynamically -->
             </div>
           </div>
         </div>
+      </div>
+    </section>
 
-        <div class="row g-4">
-          <div class="col-12">
-            
-            <div class="row g-4">
-              <!-- Left: Project Information (Merged) -->
-              <div class="col-lg-4" data-aos="fade-up">
-                <div class="glass-card rounded-3 p-4 shadow-sm h-100">
-                  <h4 class="text-primary text-center mb-4 fw-semibold">Project Information</h4>
+    <!-- KEY FEATURES -->
+    <section class="section features-bg">
+      <div class="section-inner">
+        <div class="section-header reveal">
+          <div class="section-eyebrow">Features</div>
+          <h2 class="section-title">Key Features</h2>
+        </div>
+        <div class="features-grid" id="project-features">
+          <!-- Filled dynamically -->
+        </div>
+      </div>
+    </section>
 
-                  <div class="d-flex align-items-center gap-3 p-2 rounded-2 mb-2" style="transition: background 0.2s;">
-                    <span class="text-primary icon-container flex-shrink-0"><i class="bi bi-grid"></i></span>
-                    <div>
-                      <small class="text-muted d-block">Category</small>
-                      <strong class="project-category">Web Development</strong>
-                    </div>
-                  </div>
-
-                  <div class="d-flex align-items-center gap-3 p-2 rounded-2 mb-2" style="transition: background 0.2s;">
-                    <span class="text-primary icon-container flex-shrink-0"><i class="bi bi-code-slash"></i></span>
-                    <div>
-                      <small class="text-muted d-block">Technologies</small>
-                      <strong class="project-technologies">Loading...</strong>
-                    </div>
-                  </div>
-
-                  <div class="d-flex align-items-center gap-3 p-2 rounded-2 mb-4" style="transition: background 0.2s;">
-                    <span class="text-primary icon-container flex-shrink-0"><i class="bi bi-check-circle"></i></span>
-                    <div>
-                      <small class="text-muted d-block">Status</small>
-                      <strong class="project-status">Completed</strong>
-                    </div>
-                  </div>
-
-                  <div class="d-flex flex-column gap-2 mt-auto">
-                    <a href="#" class="project-url btn btn-primary d-flex align-items-center justify-content-center gap-2" target="_blank">
-                      <i class="bi bi-box-arrow-up-right"></i>
-                      <span>Visit Project</span>
-                    </a>
-                    <a href="#" class="project-mobile-url btn btn-secondary d-flex align-items-center justify-content-center gap-2" target="_blank" style="display:none;">
-                      <i class="bi bi-download"></i>
-                      <span>Download Mobile</span>
-                    </a>
-                    <a href="#" class="project-desktop-url btn btn-outline-primary d-flex align-items-center justify-content-center gap-2" target="_blank" style="display:none;">
-                      <i class="bi bi-pc-display"></i>
-                      <span>Download Desktop</span>
-                    </a>
-                  </div>
-                </div>
-              </div>
-
-              <!-- Right: Overview -->
-              <div class="col-lg-8" data-aos="fade-up">
-                <div class="glass-card rounded-3 p-4 shadow-sm h-100">
-                  <h2 class="mb-3 fw-semibold">Overview</h2>
-                  <p class="text-muted mb-0 project-description lh-lg">
-                    Project description will be loaded here...
-                  </p>
-                </div>
-              </div>
-            </div>
-
-            <!-- Key Features (Full Width) -->
-            <section class="mt-5" data-aos="fade-up">
-              <h2 class="mb-3 fw-semibold">Key Features</h2>
-              <div id="project-features" class="row g-3">
-                <!-- Features will be loaded dynamically into grid -->
-              </div>
-            </section>
-
-            <!-- Gallery (Full Width) -->
-            <section class="mt-5" data-aos="fade-up">
-              <div class="d-flex justify-content-between align-items-center mb-3">
-                <h2 class="fw-semibold mb-0">Gallery</h2>
-                <small class="text-primary fw-medium">Scroll for more</small>
-              </div>
-              <div class="d-flex overflow-x-auto gap-3 pb-3 custom-scrollbar" id="project-gallery" style="width: 100%;">
-                <!-- Gallery images will be loaded dynamically -->
-              </div>
-            </section>
-
-            <!-- Project Details (Full Width) -->
-            <section class="mt-5" data-aos="fade-up">
-              <h2 class="mb-3 fw-semibold">Project Details</h2>
-              <div class="glass-card rounded-3 p-4 shadow-sm border-start border-4 border-primary">
-                <p class="text-muted mb-0 lh-lg">
-                  More detailed project information and implementation details will be displayed here.
-                </p>
-              </div>
-            </section>
-
+    <!-- GALLERY -->
+    <section class="section">
+      <div class="section-inner">
+        <div class="section-header reveal" id="gallery-header" style="display:flex;justify-content:space-between;align-items:flex-end">
+          <div>
+            <div class="section-eyebrow">Gallery</div>
+            <h2 class="section-title">Project Screenshots</h2>
+          </div>
+          <div class="scroll-arrow">
+            <span id="gallPrev">&#8592;</span>
+            <span id="gallNext">&#8594;</span>
           </div>
         </div>
+        <div class="gallery-track-wrap">
+          <div class="gallery-track reveal" id="galleryTrack" style="transition-delay:.2s">
+            <!-- Filled dynamically -->
+          </div>
+        </div>
+        <div class="gallery-scroll-hint reveal" id="gallery-hint" style="transition-delay:.3s">
+          <span>Drag to browse</span>
+          <span style="color:var(--accent-color)">&#8592;&#8594;</span>
+        </div>
+      </div>
+    </section>
 
+    <!-- PROJECT DETAILS -->
+    <section class="section" style="padding-top:0">
+      <div class="section-inner">
+        <div class="section-header reveal">
+          <div class="section-eyebrow">Details</div>
+          <h2 class="section-title">Project Details</h2>
+        </div>
+        <div class="details-card reveal" style="transition-delay:.1s">
+          <p class="details-text project-challenges">No additional details are currently available for this project.</p>
+        </div>
       </div>
     </section>
 

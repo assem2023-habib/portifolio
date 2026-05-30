@@ -714,7 +714,7 @@ body.dark-mode section.section {
  color-mix(in srgb, var(--background-color), transparent 50%));
     position: absolute;
     inset: 0;
-    z-index: 0;
+    z-index: 1;
     transition: background 0.5s ease;
 }
 

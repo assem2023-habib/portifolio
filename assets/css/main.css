@@ -706,12 +706,16 @@ body.dark-mode section.section {
 }
 
 .hero:before {
-  content: "";
-  background: linear-gradient(45deg, color-mix(in srgb, var(--background-color), transparent 20%), color-mix(in srgb, var(--background-color), transparent 50%));
-  position: absolute;
-  inset: 0;
-  z-index: 2;
-  transition: background 0.5s ease;
+    content: "";
+    background: linear-gradient(45deg,
+ color-mix(in srgb, #1a1a1a, transparent 20%)
+↳
+ color-mix(in srgb, var(--background-color), transparent 20%),
+ color-mix(in srgb, var(--background-color), transparent 50%));
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    transition: background 0.5s ease;
 }
 
 .hero .container {

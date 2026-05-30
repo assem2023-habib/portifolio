@@ -398,6 +398,7 @@
             images.forEach((src, i) => {
                 const item = document.createElement('div');
                 item.className = 'gallery-item';
+                item.dataset.index = i;
                 const img = document.createElement('img');
                 img.src = src;
                 img.alt = `${projectTitle} - ${i + 1}`;
@@ -545,6 +546,68 @@
         counters.forEach(c => observer.observe(c));
     }
 
+    function initGalleryLightbox() {
+        const lightbox = document.getElementById('galleryLightbox');
+        const overlay = document.getElementById('lightboxOverlay');
+        const closeBtn = document.getElementById('lightboxClose');
+        const prevBtn = document.getElementById('lightboxPrev');
+        const nextBtn = document.getElementById('lightboxNext');
+        const imgEl = document.getElementById('lightboxImg');
+        const counter = document.getElementById('lightboxCounter');
+        const track = document.getElementById('galleryTrack');
+        if (!lightbox || !track) return;
+
+        let currentIndex = 0;
+        const items = () => track.querySelectorAll('.gallery-item img');
+
+        function open(index) {
+            const imgs = items();
+            if (!imgs[index]) return;
+            currentIndex = index;
+            imgEl.src = imgs[index].src;
+            imgEl.alt = imgs[index].alt;
+            counter.textContent = `${index + 1} / ${imgs.length}`;
+            lightbox.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function close() {
+            lightbox.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        function prev() {
+            const imgs = items();
+            currentIndex = (currentIndex - 1 + imgs.length) % imgs.length;
+            open(currentIndex);
+        }
+
+        function next() {
+            const imgs = items();
+            currentIndex = (currentIndex + 1) % imgs.length;
+            open(currentIndex);
+        }
+
+        track.addEventListener('click', e => {
+            const item = e.target.closest('.gallery-item');
+            if (!item) return;
+            const idx = parseInt(item.dataset.index);
+            if (!isNaN(idx)) open(idx);
+        });
+
+        closeBtn.addEventListener('click', close);
+        overlay.addEventListener('click', close);
+        prevBtn.addEventListener('click', prev);
+        nextBtn.addEventListener('click', next);
+
+        document.addEventListener('keydown', e => {
+            if (!lightbox.classList.contains('active')) return;
+            if (e.key === 'Escape') close();
+            if (e.key === 'ArrowLeft') prev();
+            if (e.key === 'ArrowRight') next();
+        });
+    }
+
     function initNavScroll() {
         const nav = document.getElementById('project-nav');
         if (!nav) return;
@@ -606,6 +669,7 @@
         requestAnimationFrame(() => {
             initScrollReveal();
             initGalleryDrag();
+            initGalleryLightbox();
             initCounterAnimation();
             initNavScroll();
         });

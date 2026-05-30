@@ -620,6 +620,57 @@
         "readme": "assets/Docs_Project/Third_project_Html_Css.md",
         "type": "overview"
       }
+    },
+    {
+      "id": "kasper",
+      "priority": 9,
+      "title": "Kasper - Creative Agency Template",
+      "titleAr": "كاسبر - قالب وكالة إبداعية",
+      "category": "frontend",
+      "image": "assets/img/Projects_Images/Second_template/Second_template.png",
+      "thumbnail": "assets/img/Projects_Images/Second_template/Second_template.png",
+      "description": "Professional creative agency website template built with pure HTML & CSS, featuring 14 sections including portfolio gallery, pricing plans, testimonials, stats counter, background video, and responsive design.",
+      "descriptionAr": "قالب موقع وكالة إبداعية احترافي بـ HTML و CSS فقط، يضم 14 قسماً يشمل معرض أعمال، خطط تسعير، آراء العملاء، إحصائيات، فيديو خلفية، وتصميم متجاوب.",
+      "status": "completed",
+      "year": 2024,
+      "duration": "شهرين",
+      "technologies": [
+        "HTML5",
+        "CSS3",
+        "Font Awesome",
+        "Google Fonts"
+      ],
+      "role": "Frontend Developer",
+      "client": "Elzero Web School (تعديلات شخصية)",
+      "liveUrl": "https://assem2023-habib.github.io/KasperPro/",
+      "repoUrl": "https://github.com/assem2023-habib/KasperPro",
+      "features": [
+        "14 fully designed sections in a single HTML page",
+        "Filterable portfolio gallery with 8 items",
+        "Full-screen background video section",
+        "4 pricing plans comparison table",
+        "Skill progress bars with animated fill",
+        "Responsive design for mobile, tablet, and desktop",
+        "991 lines of organized CSS with clear section structure",
+        "Font Awesome 6 icons and Google Fonts integration"
+      ],
+      "featuresAr": [
+        "14 قسماً كامل التصميم في صفحة HTML واحدة",
+        "معرض أعمال قابل للتصفية مع 8 عناصر",
+        "قسم فيديو خلفية كامل الشاشة",
+        "جدول مقارنة 4 خطط تسعير",
+        "أشرطة تقدم للمهارات مع تعبئة متحركة",
+        "تصميم متجاوب للموبايل والتابلت والكمبيوتر",
+        "991 سطراً من CSS منظم بهيكل واضح",
+        "أيقونات Font Awesome 6 وخطوط Google"
+      ],
+      "challenges": "Building a complete creative agency landing page with a filterable portfolio gallery, background video section, and responsive pricing tables using only pure CSS without any JavaScript.",
+      "challengesAr": "بناء صفحة وكالة إبداعية كاملة مع معرض أعمال قابل للتصفية، قسم فيديو خلفية، وجداول تسعير متجاوبة باستخدام CSS فقط بدون أي JavaScript.",
+      "screenshots": [],
+      "docs": {
+        "readme": "assets/Docs_Project/Second_Project_Html_Css.md",
+        "type": "overview"
+      }
     }
   ],
   "categories": [
@@ -656,13 +707,13 @@
       "name": "Front-End",
       "nameAr": "الواجهة الأمامية",
       "icon": "bi-layout-text-window-reverse",
-      "count": 5
+      "count": 6
     }
   ],
   "metadata": {
     "version": "1.1.0",
     "lastUpdated": "2026-05-30",
-    "totalProjects": 9,
+    "totalProjects": 10,
     "author": "Assem Adel Habib",
     "contact": "099assemhb@gmail.com"
   }

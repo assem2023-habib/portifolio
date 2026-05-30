@@ -569,6 +569,57 @@
         "readme": "assets/Docs_Project/DashBoard_FrontEnd.md",
         "type": "overview"
       }
+    },
+    {
+      "id": "elzero-skills-hub",
+      "priority": 8,
+      "title": "Elzero Skills Hub",
+      "titleAr": "مركز مهارات الزيرو",
+      "category": "frontend",
+      "image": "assets/img/Projects_Images/Third_template/third_template.png",
+      "thumbnail": "assets/img/Projects_Images/Third_template/third_template.png",
+      "description": "Professional multi-section one-page website template built with pure HTML & CSS, featuring 16 sections with mega menu, responsive design, progress bars, countdown timer, and advanced CSS animations.",
+      "descriptionAr": "قالب موقع ويب من صفحة واحدة احترافي بـ HTML و CSS فقط، يضم 16 قسماً مع قائمة تنقل ضخمة، تصميم متجاوب، أشرطة تقدم، عدّاد تنازلي، وتأثيرات CSS متقدمة.",
+      "status": "completed",
+      "year": 2024,
+      "duration": "3 أشهر",
+      "technologies": [
+        "HTML5",
+        "CSS3",
+        "Font Awesome",
+        "Google Fonts"
+      ],
+      "role": "Frontend Developer",
+      "client": "Elzero Web School (تعديلات شخصية)",
+      "liveUrl": "https://assem2023-habib.github.io/Elzero-Skills-Hub/",
+      "repoUrl": "https://github.com/assem2023-habib/Elzero-Skills-Hub",
+      "features": [
+        "16 unique sections in a single HTML page (Landing, Articles, Gallery, Features, Testimonials, Team, Services, Skills, Workflow, Events, Pricing, Videos, Stats, Discount, Footer)",
+        "Interactive Mega Menu navigation system",
+        "Fully responsive design with mobile breakpoints",
+        "Advanced CSS animations and hover effects",
+        "Countdown timer for upcoming events",
+        "Progress bars for technical skills visualization",
+        "1813 lines of organized CSS with 20+ section styles",
+        "Easy theme customization via CSS variables"
+      ],
+      "featuresAr": [
+        "16 قسماً فريداً في صفحة HTML واحدة (ترحيب، مقالات، معرض، مميزات، آراء، فريق، خدمات، مهارات، طريقة العمل، أحداث، تسعير، فيديوهات، إحصائيات، خصم، تذييل)",
+        "نظام قائمة تنقل ضخمة (Mega Menu) تفاعلي",
+        "تصميم متجاوب بالكامل مع نقاط قطع للموبايل",
+        "تأثيرات CSS متقدمة وحركات عند التمرير",
+        "عدّاد تنازلي للأحداث القادمة",
+        "أشرطة تقدم تفاعلية لعرض المهارات",
+        "1813 سطراً من CSS منظم مع 20+ قسماً",
+        "سهولة تخصيص الألوان عبر متغيرات CSS"
+      ],
+      "challenges": "Building a complex single-page website with 16 diverse sections, a mega menu, and advanced CSS animations while maintaining clean, organized code structure without any JavaScript.",
+      "challengesAr": "بناء موقع من صفحة واحدة مع 16 قسماً متنوعاً، قائمة ضخمة، وتأثيرات CSS متقدمة مع الحفاظ على كود نظيف ومنظم بدون أي JavaScript.",
+      "screenshots": [],
+      "docs": {
+        "readme": "assets/Docs_Project/Third_project_Html_Css.md",
+        "type": "overview"
+      }
     }
   ],
   "categories": [
@@ -605,13 +656,13 @@
       "name": "Front-End",
       "nameAr": "الواجهة الأمامية",
       "icon": "bi-layout-text-window-reverse",
-      "count": 4
+      "count": 5
     }
   ],
   "metadata": {
     "version": "1.1.0",
     "lastUpdated": "2026-05-30",
-    "totalProjects": 8,
+    "totalProjects": 9,
     "author": "Assem Adel Habib",
     "contact": "099assemhb@gmail.com"
   }

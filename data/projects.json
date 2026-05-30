@@ -511,6 +511,64 @@
         "readme": "assets/Docs_Project/README_CUTOPTIMIZER.md",
         "type": "comprehensive"
       }
+    },
+    {
+      "id": "dashboard-template",
+      "priority": 7,
+      "title": "HTML/CSS Dashboard Template",
+      "titleAr": "قالب لوحة التحكم",
+      "category": "frontend",
+      "image": "assets/img/Projects_Images/Dashboard/dashboard.png",
+      "thumbnail": "assets/img/Projects_Images/Dashboard/dashboard.png",
+      "description": "Professional dashboard template built with pure HTML & CSS, featuring 8 fully designed pages with a custom CSS framework, responsive layout, and Font Awesome icons.",
+      "descriptionAr": "قالب لوحة تحكم احترافي بـ HTML و CSS فقط، يضم 8 صفحات كاملة التصميم مع إطار عمل CSS مساعد، تصميم متجاوب، وأيقونات Font Awesome.",
+      "status": "completed",
+      "year": 2024,
+      "duration": "3 أشهر",
+      "technologies": [
+        "HTML5",
+        "CSS3",
+        "Font Awesome",
+        "Google Fonts"
+      ],
+      "role": "Frontend Developer",
+      "client": "Elzero Web School (تعديلات شخصية)",
+      "liveUrl": "https://assem2023-habib.github.io/Dashboard/",
+      "repoUrl": "https://github.com/assem2023-habib/Dashboard",
+      "features": [
+        "8 fully designed HTML pages (Dashboard, Settings, Profile, Projects, Courses, Friends, Files, Plans)",
+        "Custom CSS utility framework (247 lines) with flex/grid helpers, spacing, colors, responsive utilities",
+        "1171 lines of organized master CSS with 25+ widget sections",
+        "Fully responsive design with mobile breakpoints",
+        "Font Awesome 6 icon library integration",
+        "Clean, documented code with comments",
+        "Easy theme customization via CSS variables"
+      ],
+      "featuresAr": [
+        "8 صفحات HTML كاملة (لوحة التحكم، الإعدادات، الملف الشخصي، المشاريع، الكورسات، الأصدقاء، الملفات، الخطط)",
+        "إطار عمل CSS مساعد (247 سطر) مع كلاسات Flexbox/Grid والمسافات والألوان والتجاوب",
+        "1171 سطراً من CSS منظم مع 25+ قسماً من الودجتس",
+        "تصميم متجاوب بالكامل مع نقاط قطع للموبايل",
+        "مكتبة أيقونات Font Awesome 6",
+        "كود نظيف وموثق بتعليقات",
+        "سهولة تخصيص الألوان عبر متغيرات CSS"
+      ],
+      "challenges": "Building a complete 8-page dashboard UI with pure CSS only, implementing complex layouts (grids, progress bars, tables, cards) without any JavaScript framework or library.",
+      "challengesAr": "بناء واجهة لوحة تحكم كاملة من 8 صفحات بـ CSS فقط، وتنفيذ تخطيطات معقدة (شبكات، أشرطة تقدم، جداول، بطاقات) بدون أي مكتبة JavaScript.",
+      "screenshots": [
+        "assets/img/Projects_Images/Dashboard/dashboard.png",
+        "assets/img/Projects_Images/Dashboard/settings.png",
+        "assets/img/Projects_Images/Dashboard/profile.png",
+        "assets/img/Projects_Images/Dashboard/projects.png",
+        "assets/img/Projects_Images/Dashboard/courses.png",
+        "assets/img/Projects_Images/Dashboard/friends.png",
+        "assets/img/Projects_Images/Dashboard/files.png",
+        "assets/img/Projects_Images/Dashboard/plans.png"
+      ],
+      "docs": {
+        "readme": "assets/Docs_Project/DashBoard_FrontEnd.md",
+        "type": "overview"
+      }
     }
   ],
   "categories": [
@@ -547,13 +605,13 @@
       "name": "Front-End",
       "nameAr": "الواجهة الأمامية",
       "icon": "bi-layout-text-window-reverse",
-      "count": 3
+      "count": 4
     }
   ],
   "metadata": {
     "version": "1.1.0",
-    "lastUpdated": "2026-05-08",
-    "totalProjects": 7,
+    "lastUpdated": "2026-05-30",
+    "totalProjects": 8,
     "author": "Assem Adel Habib",
     "contact": "099assemhb@gmail.com"
   }

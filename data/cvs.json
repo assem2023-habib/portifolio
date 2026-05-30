@@ -38,6 +38,19 @@
       },
       "description": "Mobile Developer with expertise in Flutter, Dart, Bloc, Clean Architecture, and cross-platform development. Experienced in building offline-first mobile applications with modern UI.",
       "descriptionAr": "مطور تطبيقات هواتف بخبرة في Flutter و Dart و Bloc و Clean Architecture. خبير في بناء تطبيقات موبايل تعمل بدون إنترنت بواجهات حديثة."
+    },
+    {
+      "id": "fullstack",
+      "title": "Full-Stack Developer CV",
+      "titleAr": "سيرة ذاتية - مطور Full-Stack",
+      "specialization": "Full-Stack Development",
+      "specializationAr": "تطوير Full-Stack",
+      "files": {
+        "pdf": "assets/cvs/FullStack-Developer/Assem_habib_CV_FullStack.pdf",
+        "docx": "assets/cvs/FullStack-Developer/Assem_habib_CV_FullStack.docx"
+      },
+      "description": "Full-Stack Developer with expertise in multiple frameworks including Laravel, NestJS, and Flutter. Experienced in building complete web and mobile applications with modern technologies.",
+      "descriptionAr": "مطور Full-Stack بخبرة في عدة أطر عمل تشمل Laravel و NestJS و Flutter. خبير في بناء تطبيقات ويب وهاتف كاملة بأحدث التقنيات."
     }
   ],
   "metadata": {
@@ -45,6 +58,6 @@
     "createdAt": "2026-04-23",
     "author": "Assem Adel Habib",
     "contact": "099assemhb@gmail.com",
-    "totalCVs": 3
+    "totalCVs": 4
   }
 }

@@ -83,52 +83,30 @@
     </div><!-- End Page Title -->
 
     <!-- All Projects Section -->
-    <section id="all-projects" class="all-projects section">
-
-      <!-- Section Title -->
-      <div class="container section-title" data-aos="fade-up">
-        <h2>All Projects</h2>
-        <p>Complete portfolio showcasing all web development, mobile applications, and desktop software projects</p>
-      </div><!-- End Section Title -->
+    <section id="all-projects" class="all-projects section bento-portfolio">
 
       <div class="container">
-        <div
-          class="isotope-layout"
-          data-default-filter="*"
-          data-layout="masonry"
-          data-sort="original-order"
-        >
-          <ul
-            class="portfolio-filters isotope-filters"
-            data-aos="fade-up"
-            data-aos-delay="100"
-          >
-            <li data-filter="*" class="filter-active"><span class="lang-en">All</span><span class="lang-ar" style="display:none;">الكل</span></li>
-            <li data-filter=".filter-web"><span class="lang-en">Web App</span><span class="lang-ar" style="display:none;">تطبيق ويب</span></li>
-            <li data-filter=".filter-mobile"><span class="lang-en">Mobile Application</span><span class="lang-ar" style="display:none;">تطبيق جوال</span></li>
-            <li data-filter=".filter-desktop"><span class="lang-en">Desktop Application</span><span class="lang-ar" style="display:none;">تطبيق سطح المكتب</span></li>
-            <li data-filter=".filter-backend"><span class="lang-en">Back-End</span><span class="lang-ar" style="display:none;">الجزء الخلفي</span></li>
-            <li data-filter=".filter-frontend"><span class="lang-en">Front-End</span><span class="lang-ar" style="display:none;">الواجهة الأمامية</span></li>
-          </ul>
-          <!-- End Portfolio Filters -->
+        <div class="port-header">
+          <div class="ph-eyebrow">Assem Adel Habib</div>
+          <h1>All <em>Projects</em></h1>
+          <p class="ph-sub">Web · Mobile · Desktop · Back-End · Front-End</p>
+        </div>
 
-          <div
-            class="row gy-4 isotope-container"
-            data-aos="fade-up"
-            data-aos-delay="200"
-          >
-            <!-- Single portfolio template - will be cloned for each project -->
-            <div class="col-lg-4 col-md-6 portfolio-item isotope-item filter-web portfolio-template" style="display: none;">
-              <img src="" class="img-fluid" alt="">
-              <div class="portfolio-info">
-                <h4 class="portfolio-title">Project Title</h4>
-                <p class="portfolio-description">Project description</p>
-                <a href="" title="" data-gallery="" class="glightbox preview-link"><i class="bi bi-zoom-in"></i></a>
-                <a href="" title="More Details" class="details-link"><i class="bi bi-link-45deg"></i></a>
-              </div>
-            </div><!-- End Portfolio Template -->
-          </div>
-          <!-- End Portfolio Container -->
+        <div class="filters" id="filters">
+          <button class="fb on" data-f="all">ALL <span class="n">10</span></button>
+          <button class="fb" data-f="web">Web App <span class="n">3</span></button>
+          <button class="fb" data-f="mobile">Mobile <span class="n">2</span></button>
+          <button class="fb" data-f="desktop">Desktop <span class="n">1</span></button>
+          <button class="fb" data-f="backend">Back-End <span class="n">3</span></button>
+          <button class="fb" data-f="frontend">Front-End <span class="n">6</span></button>
+        </div>
+
+        <div class="bento-grid" id="bento"></div>
+
+        <div class="stats-bar">
+          <div class="stat"><div class="stat-num" id="visible-count">10</div><div class="stat-lbl">Projects</div></div>
+          <div class="stat"><div class="stat-num">5+</div><div class="stat-lbl">Categories</div></div>
+          <div class="stat"><div class="stat-num">10</div><div class="stat-lbl">Technologies</div></div>
         </div>
       </div>
 
@@ -177,7 +155,7 @@
   <script src="assets/js/data-loader.js"></script>
   <script src="assets/js/main.js"></script>
 
-  <script src="assets/js/projects-gallery-loader.js"></script>
+  <script src="assets/js/bento-grid.js"></script>
 
 </body>
 

@@ -2954,3 +2954,447 @@ body.dark-mode #cvDownloadModal .btn-download-option.btn-success {
 .star-rating i:hover {
   transform: scale(1.15);
 }
+
+/* =====================================================
+   BENTO GRID — 12‑Column Dynamic Portfolio Grid
+   ===================================================== */
+
+/* ── Category Colors (Dark Mode) ── */
+:root {
+  --cat-blue:   #3B82F6;
+  --cat-green:  #1D9E75;
+  --cat-amber:  #EF9F27;
+  --cat-red:    #D85A30;
+  --cat-teal:   #5DCAA5;
+}
+
+.bento-portfolio {
+  padding-top: 2rem;
+}
+
+/* ── Header ── */
+.bento-portfolio .port-header {
+  text-align: center;
+  margin-bottom: 1.8rem;
+}
+.bento-portfolio .ph-eyebrow {
+  font-size: .7rem;
+  font-weight: 700;
+  color: var(--accent-color);
+  letter-spacing: .2em;
+  text-transform: uppercase;
+  margin-bottom: .5rem;
+}
+.bento-portfolio .port-header h1 {
+  font-size: 1.9rem;
+  font-weight: 800;
+  letter-spacing: -1px;
+  color: var(--heading-color);
+}
+.bento-portfolio .port-header h1 em {
+  color: var(--accent-color);
+  font-style: normal;
+}
+.bento-portfolio .ph-sub {
+  font-size: .85rem;
+  color: var(--default-color);
+  opacity: .6;
+  margin-top: .3rem;
+}
+
+/* ── Filter Buttons ── */
+.bento-portfolio .filters {
+  display: flex;
+  gap: 6px;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-bottom: 2rem;
+}
+.bento-portfolio .fb {
+  padding: 5px 14px;
+  border-radius: 999px;
+  font-size: .72rem;
+  border: 1px solid var(--border-color, #2a2a2a);
+  color: var(--default-color);
+  opacity: .7;
+  background: transparent;
+  cursor: pointer;
+  transition: all .2s;
+  font-family: var(--nav-font);
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+.bento-portfolio .fb:hover {
+  border-color: var(--accent-color);
+  color: var(--accent-color);
+  opacity: 1;
+}
+.bento-portfolio .fb.on {
+  background: var(--accent-color);
+  border-color: var(--accent-color);
+  color: var(--contrast-color);
+  opacity: 1;
+  font-weight: 700;
+}
+.bento-portfolio .fb .n {
+  background: rgba(255,255,255,.15);
+  border-radius: 999px;
+  padding: 0 6px;
+  font-size: .65rem;
+  line-height: 1.5;
+}
+.bento-portfolio .fb.on .n {
+  background: rgba(255,255,255,.25);
+}
+
+/* ── Grid ── */
+.bento-grid {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  grid-auto-rows: 100px;
+  gap: 8px;
+  max-width: 860px;
+  margin: 0 auto;
+}
+
+/* span classes */
+.s3  { grid-column: span 3; }
+.s4  { grid-column: span 4; }
+.s5  { grid-column: span 5; }
+.s7  { grid-column: span 7; }
+.r2  { grid-row: span 2; }
+
+/* ── Card ── */
+.bento-grid .card {
+  position: relative;
+  overflow: hidden;
+  border-radius: 14px;
+  border: 1px solid color-mix(in srgb, var(--default-color), transparent 88%);
+  cursor: pointer;
+  background: color-mix(in srgb, var(--surface-color), black 3%);
+  transition: border-color .25s, transform .25s;
+  min-height: 0;
+}
+.bento-grid .card:hover {
+  border-color: var(--accent-color);
+  transform: translateY(-2px);
+}
+
+/* Glow layer */
+.bento-grid .card-glow {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity .3s;
+  pointer-events: none;
+  z-index: 0;
+  background: radial-gradient(circle at 30% 30%, rgba(59,130,246,.07) 0%, transparent 70%);
+}
+.bento-grid .card:hover .card-glow { opacity: 1; }
+
+/* Icon wrap — top right */
+.bento-grid .card-icon-wrap {
+  position: absolute;
+  top: 8px; right: 10px;
+  width: 28px; height: 28px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid;
+  z-index: 1;
+  font-size: .8rem;
+}
+.bento-grid .card-icon-wrap.blue {
+  background: #0c1e3a; border-color: #1a3a5c; color: #378ADD;
+}
+.bento-grid .card-icon-wrap.green {
+  background: #0c1e14; border-color: #0f3a20; color: #1D9E75;
+}
+.bento-grid .card-icon-wrap.amber {
+  background: #1e180c; border-color: #3a2d1a; color: #EF9F27;
+}
+.bento-grid .card-icon-wrap.red {
+  background: #1e0f0c; border-color: #3a1d1a; color: #D85A30;
+}
+.bento-grid .card-icon-wrap.teal {
+  background: #0c1e1a; border-color: #1a3a30; color: #5DCAA5;
+}
+
+/* Card type label — top left */
+.bento-grid .card-type {
+  position: absolute;
+  top: 10px; left: 12px;
+  font-size: .55rem;
+  text-transform: uppercase;
+  letter-spacing: .1em;
+  opacity: .4;
+  color: #fff;
+  z-index: 1;
+}
+
+/* Card body — always visible bottom */
+.bento-grid .card-body {
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  padding: 10px 12px;
+  background: linear-gradient(to top, rgba(0,0,0,.9) 0%, transparent 100%);
+  z-index: 1;
+}
+.bento-grid .card-body .card-title {
+  font-size: .82rem;
+  font-weight: 600;
+  color: #fff;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.bento-grid .card-body .card-meta {
+  font-size: .62rem;
+  color: rgba(255,255,255,.5);
+  margin-top: 2px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Overlay — shows on hover */
+.bento-grid .card-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(8,8,8,.93);
+  border-radius: 13px;
+  opacity: 0;
+  transition: opacity .25s;
+  display: flex;
+  flex-direction: column;
+  padding: 10px 10px 8px;
+  z-index: 2;
+  overflow-y: auto;
+  gap: 0;
+}
+.bento-grid .card-overlay::-webkit-scrollbar { width: 3px; }
+.bento-grid .card-overlay::-webkit-scrollbar-track { background: transparent; }
+.bento-grid .card-overlay::-webkit-scrollbar-thumb { background: rgba(255,255,255,.15); border-radius: 3px; }
+.bento-grid .card:hover .card-overlay { opacity: 1; }
+
+.bento-grid .card-overlay .ov-title {
+  font-size: .78rem;
+  font-weight: 700;
+  color: #fff;
+  line-height: 1.3;
+  margin-bottom: 2px;
+  flex-shrink: 0;
+}
+.bento-grid .card-overlay .ov-desc {
+  font-size: .64rem;
+  color: rgba(255,255,255,.55);
+  line-height: 1.4;
+  margin-bottom: 4px;
+  flex-shrink: 0;
+}
+
+/* ── Overlay Section Labels ── */
+.bento-grid .card-overlay .ov-label {
+  font-size: .5rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .1em;
+  color: rgba(255,255,255,.3);
+  margin-top: 4px;
+  margin-bottom: 3px;
+  flex-shrink: 0;
+}
+
+/* ── Tech Tags ── */
+.bento-grid .card-overlay .ov-tags {
+  display: flex;
+  gap: 3px;
+  flex-wrap: wrap;
+  flex-shrink: 0;
+}
+.bento-grid .card-overlay .ot {
+  font-size: .56rem;
+  padding: 1px 6px;
+  border-radius: 999px;
+  font-weight: 600;
+  border: 1px solid;
+  line-height: 1.4;
+}
+.bento-grid .card-overlay .ot.blue {
+  background: rgba(59,130,246,.18);
+  color: #93c5fd;
+  border-color: rgba(59,130,246,.3);
+}
+.bento-grid .card-overlay .ot.green {
+  background: rgba(29,158,117,.18);
+  color: #6ee7b7;
+  border-color: rgba(29,158,117,.3);
+}
+.bento-grid .card-overlay .ot.amber {
+  background: rgba(239,159,39,.18);
+  color: #fcd34d;
+  border-color: rgba(239,159,39,.3);
+}
+.bento-grid .card-overlay .ot.red {
+  background: rgba(216,90,48,.18);
+  color: #fca5a5;
+  border-color: rgba(216,90,48,.3);
+}
+.bento-grid .card-overlay .ot.teal {
+  background: rgba(93,202,165,.18);
+  color: #6ee7b7;
+  border-color: rgba(93,202,165,.3);
+}
+
+/* ── Features List ── */
+.bento-grid .card-overlay .ov-f-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  flex-shrink: 0;
+}
+.bento-grid .card-overlay .ov-f {
+  font-size: .6rem;
+  color: rgba(255,255,255,.55);
+  line-height: 1.4;
+  padding-left: 0;
+}
+.bento-grid .card-overlay .ov-f::before {
+  content: '›';
+  margin-right: 4px;
+  font-weight: 700;
+  color: rgba(255,255,255,.6);
+}
+
+/* ── View Details Link ── */
+.bento-grid .card-overlay .ov-link {
+  font-size: .6rem;
+  font-weight: 700;
+  color: rgba(255,255,255,.7);
+  text-decoration: none;
+  margin-top: 5px;
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  transition: color .2s;
+  flex-shrink: 0;
+  border-bottom: 1px solid transparent;
+  padding-bottom: 1px;
+  align-self: flex-start;
+}
+.bento-grid .card-overlay .ov-link:hover {
+  color: #fff;
+  border-bottom-color: rgba(255,255,255,.3);
+}
+
+/* Card bar — bottom line on hover */
+.bento-grid .card-bar {
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 2px;
+  border-radius: 0 0 13px 13px;
+  opacity: 0;
+  transition: opacity .3s;
+  z-index: 3;
+}
+.bento-grid .card:hover .card-bar { opacity: 1; }
+
+/* Card bar colors per category */
+.bento-grid .card-bar.bar-blue  { background: #3B82F6; }
+.bento-grid .card-bar.bar-green { background: #1D9E75; }
+.bento-grid .card-bar.bar-amber { background: #EF9F27; }
+.bento-grid .card-bar.bar-red   { background: #D85A30; }
+.bento-grid .card-bar.bar-teal  { background: #5DCAA5; }
+
+/* Card glow tint per category (override default glow) */
+.bento-grid .card.g-blue:hover   { border-color: #3B82F6; }
+.bento-grid .card.g-green:hover  { border-color: #1D9E75; }
+.bento-grid .card.g-amber:hover  { border-color: #EF9F27; }
+.bento-grid .card.g-red:hover    { border-color: #D85A30; }
+.bento-grid .card.g-teal:hover   { border-color: #5DCAA5; }
+
+.bento-grid .card.g-blue:hover .card-glow   { background: radial-gradient(circle at 30% 30%, rgba(59,130,246,.07) 0%, transparent 70%); }
+.bento-grid .card.g-green:hover .card-glow  { background: radial-gradient(circle at 30% 30%, rgba(29,158,117,.07) 0%, transparent 70%); }
+.bento-grid .card.g-amber:hover .card-glow  { background: radial-gradient(circle at 30% 30%, rgba(239,159,39,.07) 0%, transparent 70%); }
+.bento-grid .card.g-red:hover .card-glow    { background: radial-gradient(circle at 30% 30%, rgba(216,90,48,.07) 0%, transparent 70%); }
+.bento-grid .card.g-teal:hover .card-glow   { background: radial-gradient(circle at 30% 30%, rgba(93,202,165,.07) 0%, transparent 70%); }
+
+/* ── Stats Bar ── */
+.bento-portfolio .stats-bar {
+  display: flex;
+  gap: 1.5rem;
+  justify-content: center;
+  margin-top: 1.8rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--border-color, #1f1f1f);
+}
+.bento-portfolio .stat { text-align: center; }
+.bento-portfolio .stat-num {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--accent-color);
+}
+.bento-portfolio .stat-lbl {
+  font-size: .72rem;
+  color: var(--default-color);
+  opacity: .6;
+  margin-top: 2px;
+}
+
+/* ── Hidden (filtered out) ── */
+.bento-grid .card.hidden { display: none !important; }
+
+/* ── Responsive ── */
+@media (max-width: 768px) {
+  .bento-grid {
+    grid-template-columns: repeat(6, 1fr);
+    grid-auto-rows: 90px;
+    gap: 6px;
+  }
+  .s3, .s4, .s5, .s7 { grid-column: span 3; }
+  .r2 { grid-row: span 2; }
+}
+
+@media (max-width: 480px) {
+  .bento-grid {
+    grid-template-columns: repeat(2, 1fr);
+    grid-auto-rows: 120px;
+    gap: 6px;
+  }
+  .s3, .s4, .s5, .s7 { grid-column: span 2; }
+  .bento-grid .card-body .card-meta { display: none; }
+  .bento-grid .card-overlay .ov-desc { font-size: .6rem; }
+}
+
+/* Dark mode overrides for card backgrounds */
+body.dark-mode .bento-grid .card {
+  background: #151515;
+  border-color: #222;
+}
+body.dark-mode .bento-grid .card:hover {
+  border-color: var(--accent-color);
+}
+body.dark-mode .bento-portfolio .port-header h1 {
+  color: #fff;
+}
+body.dark-mode .bento-portfolio .fb {
+  border-color: #2a2a2a;
+  color: #9ca3af;
+}
+body.dark-mode .bento-portfolio .fb:hover {
+  border-color: var(--accent-color);
+  color: var(--accent-color);
+}
+body.dark-mode .bento-portfolio .fb.on {
+  background: var(--accent-color);
+  border-color: var(--accent-color);
+  color: #fff;
+}
+body.dark-mode .bento-portfolio .stats-bar {
+  border-top-color: #1f1f1f;
+}
+body.dark-mode .bento-portfolio .stat-lbl {
+  color: #6b7280;
+}

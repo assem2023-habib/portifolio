@@ -9,6 +9,10 @@
     frontend: { key: 'teal',  icon: 'bi-layout-text-window-reverse', label: 'Front-End' }
   };
 
+  var techData = [];
+  var selectedTechs = [];
+  var currentCategory = 'all';
+
   function getCardSize(priority) {
     if (priority === 1) return { s: 's7', r: 'r2' };
     if (priority <= 3)  return { s: 's5', r: 'r2' };
@@ -19,6 +23,27 @@
   function truncate(str, len) {
     if (!str) return '';
     return str.length > len ? str.slice(0, len) + '…' : str;
+  }
+
+  function matchesTech(project, filter) {
+    var techs = project.technologies || [];
+    for (var i = 0; i < techs.length; i++) {
+      for (var j = 0; j < filter.match.length; j++) {
+        if (techs[i].toLowerCase().indexOf(filter.match[j].toLowerCase()) !== -1) {
+          return true;
+        }
+      }
+    }
+    return false;
+  }
+
+  function matchesAllTechs(project) {
+    if (!selectedTechs.length) return true;
+    for (var i = 0; i < selectedTechs.length; i++) {
+      var filter = selectedTechs[i];
+      if (!matchesTech(project, filter)) return false;
+    }
+    return true;
   }
 
   function buildCard(project) {
@@ -72,6 +97,7 @@
   }
 
   function renderAll(category) {
+    currentCategory = category;
     var grid  = document.getElementById('bento');
     if (!grid) return;
 
@@ -84,12 +110,80 @@
       return false;
     });
 
+    if (selectedTechs.length) {
+      filtered = filtered.filter(matchesAllTechs);
+    }
+
     var html = '';
     filtered.forEach(function (p) { html += buildCard(p); });
     grid.innerHTML = html;
 
     var countEl = document.getElementById('visible-count');
     if (countEl) countEl.textContent = filtered.length;
+
+    animateCards();
+  }
+
+  function animateCards() {
+    var cards = document.querySelectorAll('.bento-grid .card');
+    cards.forEach(function (c, i) {
+      c.style.animation = 'none';
+      c.offsetHeight;
+      c.style.animation = 'cardFadeIn 0.4s ease forwards';
+      c.style.animationDelay = (i * 0.04) + 's';
+    });
+  }
+
+  function renderTechFilters() {
+    var container = document.getElementById('techFilters');
+    var wrap = document.getElementById('techFiltersWrap');
+    if (!container || !techData.length) return;
+
+    var lang = localStorage.getItem('portfolio_language') || 'en';
+    var label = lang === 'ar' ? 'التقنيات' : 'Technology';
+
+    var html = '<span class="tf-label">' + label + '</span>';
+    techData.forEach(function (t) {
+      var active = selectedTechs.indexOf(t) !== -1;
+      html += '<button class="tf-btn' + (active ? ' selected' : '') + '" data-tf="' + t.id + '">'
+            + '<span class="tf-flag">' + t.flag + '</span> '
+            + (lang === 'ar' ? (t.nameAr || t.name) : t.name)
+            + '</button>';
+    });
+
+    container.innerHTML = html;
+    wrap.style.display = '';
+
+    container.querySelectorAll('.tf-btn').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        var id = btn.getAttribute('data-tf');
+        var idx = -1;
+        for (var i = 0; i < selectedTechs.length; i++) {
+          if (selectedTechs[i].id === id) { idx = i; break; }
+        }
+
+        if (idx === -1) {
+          var filter = null;
+          for (var i = 0; i < techData.length; i++) {
+            if (techData[i].id === id) { filter = techData[i]; break; }
+          }
+          if (filter) selectedTechs.push(filter);
+          btn.classList.add('selected');
+          animateBtn(btn);
+        } else {
+          selectedTechs.splice(idx, 1);
+          btn.classList.remove('selected');
+        }
+
+        renderAll(currentCategory);
+      });
+    });
+  }
+
+  function animateBtn(btn) {
+    btn.style.animation = 'none';
+    btn.offsetHeight;
+    btn.style.animation = 'techPop 0.35s ease forwards';
   }
 
   function setupFilters() {
@@ -109,7 +203,17 @@
     if (window.DataLoader) {
       await DataLoader.loadProjectsData();
     }
+
+    try {
+      var resp = await fetch('data/tech-filters.json');
+      var data = await resp.json();
+      techData = data.techFilters || [];
+    } catch (e) {
+      console.warn('Failed to load tech-filters.json:', e);
+    }
+
     renderAll('all');
+    if (techData.length) renderTechFilters();
     setupFilters();
   });
 

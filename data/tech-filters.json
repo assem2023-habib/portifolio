@@ -1,0 +1,29 @@
+{
+  "techFilters": [
+    { "id": "php",     "name": "PHP",          "nameAr": "PHP",          "flag": "🐘", "match": ["PHP"] },
+    { "id": "laravel", "name": "Laravel",      "nameAr": "Laravel",      "flag": "⚡", "match": ["Laravel"] },
+    { "id": "nestjs",  "name": "NestJS",       "nameAr": "NestJS",       "flag": "🔷", "match": ["NestJS"] },
+    { "id": "js",      "name": "JavaScript",   "nameAr": "جافاسكريبت",   "flag": "💛", "match": ["JavaScript"] },
+    { "id": "ts",      "name": "TypeScript",   "nameAr": "تايب سكريبت",  "flag": "💙", "match": ["TypeScript"] },
+    { "id": "nodejs",  "name": "Node.js",      "nameAr": "Node.js",      "flag": "🟢", "match": ["Node.js", "Express"] },
+    { "id": "python",  "name": "Python",       "nameAr": "بايثون",       "flag": "🐍", "match": ["Python"] },
+    { "id": "dart",    "name": "Dart",         "nameAr": "Dart",         "flag": "🎯", "match": ["Dart"] },
+    { "id": "flutter", "name": "Flutter",      "nameAr": "Flutter",      "flag": "💧", "match": ["Flutter"] },
+    { "id": "htmlcss", "name": "HTML & CSS",   "nameAr": "HTML و CSS",   "flag": "🎨", "match": ["HTML5", "CSS3"] },
+    { "id": "bootstrap","name": "Bootstrap",   "nameAr": "Bootstrap",    "flag": "📐", "match": ["Bootstrap"] },
+    { "id": "tailwind","name": "Tailwind CSS",  "nameAr": "Tailwind CSS", "flag": "💨", "match": ["Tailwind"] },
+    { "id": "mysql",   "name": "MySQL",        "nameAr": "MySQL",        "flag": "🗄️", "match": ["MySQL"] },
+    { "id": "postgres","name": "PostgreSQL",    "nameAr": "PostgreSQL",   "flag": "📊", "match": ["PostgreSQL"] },
+    { "id": "redis",   "name": "Redis",         "nameAr": "Redis",       "flag": "⚡", "match": ["Redis"] },
+    { "id": "mongodb", "name": "MongoDB",       "nameAr": "MongoDB",     "flag": "🍃", "match": ["MongoDB"] },
+    { "id": "firebase","name": "Firebase",      "nameAr": "Firebase",    "flag": "🔥", "match": ["Firebase"] },
+    { "id": "socketio","name": "Socket.io",     "nameAr": "Socket.io",   "flag": "🔌", "match": ["Socket.io"] },
+    { "id": "docker",  "name": "Docker",        "nameAr": "Docker",      "flag": "🐳", "match": ["Docker"] },
+    { "id": "git",     "name": "Git",           "nameAr": "Git",         "flag": "🔀", "match": ["Git"] }
+  ],
+  "metadata": {
+    "version": "1.0.0",
+    "lastUpdated": "2026-06-03",
+    "totalFilters": 20
+  }
+}

@@ -1,0 +1,378 @@
+
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  .portfolio-wrap {
+    background: #0d0d0d;
+    min-height: 100vh;
+    font-family: 'Segoe UI', system-ui, sans-serif;
+    padding: 2rem 1.5rem;
+    color: #fff;
+  }
+  .port-header {
+    text-align: center;
+    margin-bottom: 2rem;
+  }
+  .port-header h1 {
+    font-size: 2rem;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+    color: #fff;
+    margin-bottom: 0.4rem;
+  }
+  .port-header h1 span { color: #3B82F6; }
+  .port-header p {
+    font-size: 0.85rem;
+    color: #6b7280;
+    max-width: 480px;
+    margin: 0 auto;
+  }
+  .filters {
+    display: flex;
+    gap: 8px;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-bottom: 2rem;
+  }
+  .filter-btn {
+    background: #1a1a1a;
+    border: 1px solid #2a2a2a;
+    color: #9ca3af;
+    padding: 6px 14px;
+    border-radius: 999px;
+    font-size: 0.78rem;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+  .filter-btn:hover { border-color: #3B82F6; color: #3B82F6; }
+  .filter-btn.active {
+    background: #3B82F6;
+    border-color: #3B82F6;
+    color: #fff;
+    font-weight: 600;
+  }
+  .filter-btn .count {
+    background: rgba(255,255,255,0.15);
+    border-radius: 999px;
+    padding: 1px 7px;
+    font-size: 0.7rem;
+  }
+  .filter-btn.active .count { background: rgba(255,255,255,0.25); }
+
+  .bento-grid {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    grid-auto-rows: 160px;
+    gap: 10px;
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  .card {
+    position: relative;
+    overflow: hidden;
+    border-radius: 12px;
+    background: #1a1a1a;
+    border: 1px solid #222;
+    cursor: pointer;
+    transition: transform 0.25s, border-color 0.25s, box-shadow 0.25s;
+  }
+  .card:hover {
+    transform: translateY(-3px);
+    border-color: #3B82F6;
+    box-shadow: 0 8px 32px rgba(59,130,246,0.18);
+  }
+  .card.span-2 { grid-column: span 2; }
+  .card.span-3 { grid-column: span 3; }
+  .card.span-4 { grid-column: span 4; }
+  .card.row-2 { grid-row: span 2; }
+
+  .card-bg {
+    position: absolute; inset: 0;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 3rem;
+    opacity: 0.12;
+    transition: opacity 0.25s;
+  }
+  .card:hover .card-bg { opacity: 0.06; }
+
+  .card-content {
+    position: absolute; inset: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 1rem;
+    background: linear-gradient(to top, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.2) 60%, transparent 100%);
+    transform: translateY(30px);
+    opacity: 0;
+    transition: opacity 0.25s, transform 0.25s;
+  }
+  .card:hover .card-content {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  .card-static {
+    position: absolute; inset: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 0.85rem;
+    background: linear-gradient(to top, rgba(0,0,0,0.7) 0%, transparent 70%);
+  }
+  .card-title {
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: #fff;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .card-desc {
+    font-size: 0.72rem;
+    color: #9ca3af;
+    margin-top: 3px;
+    line-height: 1.4;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  .card-tags {
+    display: flex;
+    gap: 4px;
+    flex-wrap: wrap;
+    margin-top: 6px;
+  }
+  .tag {
+    background: rgba(59,130,246,0.25);
+    color: #93c5fd;
+    border: 1px solid rgba(59,130,246,0.3);
+    font-size: 0.62rem;
+    padding: 2px 7px;
+    border-radius: 999px;
+    font-weight: 500;
+  }
+  .card-type-badge {
+    position: absolute;
+    top: 10px; right: 10px;
+    background: rgba(0,0,0,0.6);
+    border: 1px solid #333;
+    color: #9ca3af;
+    font-size: 0.62rem;
+    padding: 3px 8px;
+    border-radius: 999px;
+    backdrop-filter: blur(4px);
+  }
+
+  .color-1 { background: #111827; }
+  .color-2 { background: #0f172a; }
+  .color-3 { background: #1c1917; }
+  .color-4 { background: #0c1a12; }
+  .color-5 { background: #1a0a0a; }
+  .color-6 { background: #111; }
+
+  .card-icon {
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 2.4rem;
+    opacity: 0.15;
+    transition: opacity 0.25s, transform 0.25s;
+  }
+  .card:hover .card-icon { opacity: 0.07; transform: translate(-50%, -50%) scale(0.9); }
+
+  .stats-bar {
+    display: flex;
+    gap: 1.5rem;
+    justify-content: center;
+    margin-top: 1.8rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid #1f1f1f;
+  }
+  .stat { text-align: center; }
+  .stat-num { font-size: 1.5rem; font-weight: 700; color: #3B82F6; }
+  .stat-lbl { font-size: 0.72rem; color: #6b7280; margin-top: 2px; }
+
+  .hidden { display: none !important; }
+
+  @media (max-width: 640px) {
+    .bento-grid {
+      grid-template-columns: repeat(2, 1fr);
+      grid-auto-rows: 140px;
+    }
+    .card.span-2, .card.span-3, .card.span-4 { grid-column: span 2; }
+  }
+</style>
+
+<div class="portfolio-wrap">
+  <div class="port-header">
+    <h1>All <span>Projects</span></h1>
+    <p>Complete portfolio showcasing web, mobile & desktop software projects</p>
+  </div>
+
+  <div class="filters" id="filters">
+    <button class="filter-btn active" data-filter="all">ALL <span class="count">10</span></button>
+    <button class="filter-btn" data-filter="web">WEB APP <span class="count">3</span></button>
+    <button class="filter-btn" data-filter="mobile">MOBILE <span class="count">2</span></button>
+    <button class="filter-btn" data-filter="desktop">DESKTOP <span class="count">1</span></button>
+    <button class="filter-btn" data-filter="backend">BACK-END <span class="count">2</span></button>
+    <button class="filter-btn" data-filter="frontend">FRONT-END <span class="count">4</span></button>
+  </div>
+
+  <div class="bento-grid" id="bento">
+
+    <div class="card span-3 row-2 color-2" data-cat="mobile">
+      <i class="ti ti-device-mobile card-icon" aria-hidden="true" style="font-size:5rem;"></i>
+      <span class="card-type-badge">Mobile App</span>
+      <div class="card-static"><span class="card-title">Finance Tracker App</span></div>
+      <div class="card-content">
+        <span class="card-title">Finance Tracker App</span>
+        <span class="card-desc">Track income, expenses and budgets with beautiful visualizations and real-time sync.</span>
+        <div class="card-tags"><span class="tag">React Native</span><span class="tag">Firebase</span><span class="tag">Charts</span></div>
+      </div>
+    </div>
+
+    <div class="card span-2 color-1" data-cat="mobile">
+      <i class="ti ti-shopping-bag card-icon" aria-hidden="true"></i>
+      <span class="card-type-badge">Mobile App</span>
+      <div class="card-static"><span class="card-title">E-Commerce App</span></div>
+      <div class="card-content">
+        <span class="card-title">E-Commerce App</span>
+        <span class="card-desc">Full-featured shopping app with cart, payments & orders.</span>
+        <div class="card-tags"><span class="tag">Flutter</span><span class="tag">Stripe</span></div>
+      </div>
+    </div>
+
+    <div class="card span-1 color-5" data-cat="backend">
+      <i class="ti ti-server card-icon" aria-hidden="true"></i>
+      <span class="card-type-badge">Back-End</span>
+      <div class="card-static"><span class="card-title">Auth API</span></div>
+      <div class="card-content">
+        <span class="card-title">Auth API</span>
+        <div class="card-tags"><span class="tag">Node.js</span></div>
+      </div>
+    </div>
+
+    <div class="card span-2 color-3" data-cat="backend">
+      <i class="ti ti-database card-icon" aria-hidden="true"></i>
+      <span class="card-type-badge">Back-End</span>
+      <div class="card-static"><span class="card-title">IMA Dashboard API</span></div>
+      <div class="card-content">
+        <span class="card-title">IMA Dashboard API</span>
+        <span class="card-desc">RESTful backend for analytics dashboard with real-time data.</span>
+        <div class="card-tags"><span class="tag">Express</span><span class="tag">MongoDB</span></div>
+      </div>
+    </div>
+
+    <div class="card span-4 color-2" data-cat="web">
+      <i class="ti ti-layout-dashboard card-icon" aria-hidden="true" style="font-size:4rem;"></i>
+      <span class="card-type-badge">Web App</span>
+      <div class="card-static"><span class="card-title">IMA Management Dashboard</span></div>
+      <div class="card-content">
+        <span class="card-title">IMA Management Dashboard</span>
+        <span class="card-desc">Full-stack admin dashboard with analytics, charts, employee management and reporting tools.</span>
+        <div class="card-tags"><span class="tag">React</span><span class="tag">TailwindCSS</span><span class="tag">Chart.js</span><span class="tag">Redux</span></div>
+      </div>
+    </div>
+
+    <div class="card span-2 color-6" data-cat="web">
+      <i class="ti ti-book card-icon" aria-hidden="true"></i>
+      <span class="card-type-badge">Web App</span>
+      <div class="card-static"><span class="card-title">John Sandoe Books</span></div>
+      <div class="card-content">
+        <span class="card-title">John Sandoe Books Ltd</span>
+        <span class="card-desc">Bookstore website with inventory & online ordering system.</span>
+        <div class="card-tags"><span class="tag">Next.js</span><span class="tag">Prisma</span></div>
+      </div>
+    </div>
+
+    <div class="card span-2 color-3" data-cat="desktop">
+      <i class="ti ti-device-desktop card-icon" aria-hidden="true"></i>
+      <span class="card-type-badge">Desktop</span>
+      <div class="card-static"><span class="card-title">File Management Tool</span></div>
+      <div class="card-content">
+        <span class="card-title">File Management Tool</span>
+        <span class="card-desc">Desktop app for file organization, processing & batch operations.</span>
+        <div class="card-tags"><span class="tag">Electron</span><span class="tag">Node.js</span></div>
+      </div>
+    </div>
+
+    <div class="card span-2 color-4" data-cat="frontend">
+      <i class="ti ti-ticket card-icon" aria-hidden="true"></i>
+      <span class="card-type-badge">Front-End</span>
+      <div class="card-static"><span class="card-title">Bizro Dashboard UI</span></div>
+      <div class="card-content">
+        <span class="card-title">Bizro Dashboard UI</span>
+        <span class="card-desc">Modern SaaS dashboard with quick-draft, targets & ticket stats.</span>
+        <div class="card-tags"><span class="tag">Vue.js</span><span class="tag">SCSS</span></div>
+      </div>
+    </div>
+
+    <div class="card span-2 color-1" data-cat="frontend">
+      <i class="ti ti-world card-icon" aria-hidden="true"></i>
+      <span class="card-type-badge">Front-End</span>
+      <div class="card-static"><span class="card-title">Elzero World Website</span></div>
+      <div class="card-content">
+        <span class="card-title">Elzero World Website</span>
+        <span class="card-desc">Landing page with articles, blog, gallery & smooth animations.</span>
+        <div class="card-tags"><span class="tag">HTML5</span><span class="tag">CSS3</span><span class="tag">JS</span></div>
+      </div>
+    </div>
+
+    <div class="card span-2 color-5" data-cat="frontend">
+      <i class="ti ti-palette card-icon" aria-hidden="true"></i>
+      <span class="card-type-badge">Front-End</span>
+      <div class="card-static"><span class="card-title">Kasper Agency Site</span></div>
+      <div class="card-content">
+        <span class="card-title">Kasper Creative Agency</span>
+        <span class="card-desc">Creative agency website with hero slider, services and portfolio.</span>
+        <div class="card-tags"><span class="tag">HTML5</span><span class="tag">Bootstrap</span></div>
+      </div>
+    </div>
+
+    <div class="card span-2 color-2" data-cat="web">
+      <i class="ti ti-building card-icon" aria-hidden="true"></i>
+      <span class="card-type-badge">Web App</span>
+      <div class="card-static"><span class="card-title">Speakup Platform</span></div>
+      <div class="card-content">
+        <span class="card-title">Speakup Platform</span>
+        <span class="card-desc">Presentation & speaking coaching web platform with feedback loops.</span>
+        <div class="card-tags"><span class="tag">React</span><span class="tag">Firebase</span></div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="stats-bar">
+    <div class="stat"><div class="stat-num" id="visible-count">10</div><div class="stat-lbl">Projects</div></div>
+    <div class="stat"><div class="stat-num">5+</div><div class="stat-lbl">Technologies</div></div>
+    <div class="stat"><div class="stat-num">4</div><div class="stat-lbl">Categories</div></div>
+  </div>
+</div>
+
+<script>
+const filterBtns = document.querySelectorAll('.filter-btn');
+const cards = document.querySelectorAll('.card');
+const countEl = document.getElementById('visible-count');
+
+filterBtns.forEach(btn => {
+  btn.addEventListener('click', () => {
+    filterBtns.forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    const filter = btn.dataset.filter;
+    let visible = 0;
+    cards.forEach(card => {
+      const cat = card.dataset.cat;
+      if (filter === 'all' || cat === filter) {
+        card.classList.remove('hidden');
+        visible++;
+      } else {
+        card.classList.add('hidden');
+      }
+    });
+    countEl.textContent = visible;
+  });
+});
+</script>

@@ -1,0 +1,1588 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>دليل بناء صفحة المشاريع — Assem Portfolio</title>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #080808;
+  --bg2: #0e0e0e;
+  --bg3: #151515;
+  --border: #1e1e1e;
+  --border2: #2a2a2a;
+  --text: #e5e5e5;
+  --text2: #888;
+  --text3: #444;
+  --blue: #3B82F6;
+  --blue-dim: rgba(59,130,246,0.12);
+  --blue-border: rgba(59,130,246,0.25);
+  --green: #1D9E75;
+  --green-dim: rgba(29,158,117,0.12);
+  --amber: #EF9F27;
+  --amber-dim: rgba(239,159,39,0.12);
+  --red: #D85A30;
+  --red-dim: rgba(216,90,48,0.12);
+  --teal: #5DCAA5;
+  --teal-dim: rgba(93,202,165,0.12);
+  --r: 12px;
+  --r-sm: 8px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  background:var(--bg);
+  color:var(--text);
+  font-family:'IBM Plex Sans Arabic',sans-serif;
+  font-size:15px;
+  line-height:1.7;
+  direction:rtl;
+}
+
+/* ===== SIDEBAR NAV ===== */
+.sidebar{
+  position:fixed;
+  right:0;top:0;bottom:0;
+  width:240px;
+  background:var(--bg2);
+  border-left:1px solid var(--border);
+  padding:2rem 1rem;
+  overflow-y:auto;
+  z-index:100;
+}
+.sidebar-logo{
+  font-size:.7rem;
+  font-weight:700;
+  color:var(--blue);
+  letter-spacing:.2em;
+  text-transform:uppercase;
+  margin-bottom:2rem;
+  padding-bottom:1rem;
+  border-bottom:1px solid var(--border);
+}
+.nav-section{
+  font-size:.6rem;
+  text-transform:uppercase;
+  letter-spacing:.15em;
+  color:var(--text3);
+  margin:1.5rem 0 .5rem;
+  font-weight:700;
+}
+.nav-link{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  padding:6px 10px;
+  border-radius:var(--r-sm);
+  color:var(--text2);
+  text-decoration:none;
+  font-size:.8rem;
+  transition:all .2s;
+  margin-bottom:2px;
+}
+.nav-link:hover,.nav-link.active{
+  background:var(--blue-dim);
+  color:var(--blue);
+}
+.nav-dot{
+  width:6px;height:6px;
+  border-radius:50%;
+  background:var(--border2);
+  flex-shrink:0;
+}
+.nav-link:hover .nav-dot,.nav-link.active .nav-dot{background:var(--blue)}
+
+/* ===== MAIN ===== */
+.main{
+  margin-right:240px;
+  padding:3rem 3rem 6rem;
+  max-width:900px;
+}
+
+/* ===== HERO ===== */
+.hero{
+  padding:3rem 0 4rem;
+  border-bottom:1px solid var(--border);
+  margin-bottom:4rem;
+}
+.hero-eyebrow{
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+  font-size:.7rem;
+  font-weight:700;
+  color:var(--blue);
+  letter-spacing:.2em;
+  text-transform:uppercase;
+  background:var(--blue-dim);
+  border:1px solid var(--blue-border);
+  padding:4px 12px;
+  border-radius:999px;
+  margin-bottom:1.5rem;
+}
+.hero h1{
+  font-size:3rem;
+  font-weight:700;
+  line-height:1.15;
+  letter-spacing:-1px;
+  margin-bottom:1rem;
+}
+.hero h1 .accent{color:var(--blue)}
+.hero p{
+  font-size:1rem;
+  color:var(--text2);
+  max-width:560px;
+  line-height:1.8;
+}
+.hero-stats{
+  display:flex;
+  gap:2rem;
+  margin-top:2.5rem;
+}
+.hstat{
+  text-align:right;
+}
+.hstat-n{
+  font-size:2rem;
+  font-weight:700;
+  color:var(--blue);
+  line-height:1;
+}
+.hstat-l{
+  font-size:.72rem;
+  color:var(--text3);
+  margin-top:3px;
+  text-transform:uppercase;
+  letter-spacing:.1em;
+}
+
+/* ===== SECTION ===== */
+.section{
+  margin-bottom:5rem;
+  scroll-margin-top:2rem;
+}
+.section-header{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  margin-bottom:2rem;
+}
+.section-num{
+  width:36px;height:36px;
+  border-radius:var(--r-sm);
+  background:var(--blue-dim);
+  border:1px solid var(--blue-border);
+  display:flex;align-items:center;justify-content:center;
+  font-size:.75rem;
+  font-weight:700;
+  color:var(--blue);
+  flex-shrink:0;
+}
+.section-header h2{
+  font-size:1.4rem;
+  font-weight:700;
+  color:var(--text);
+}
+.section-header p{
+  font-size:.82rem;
+  color:var(--text2);
+  margin-top:2px;
+}
+
+/* ===== CARDS (explanation) ===== */
+.card{
+  background:var(--bg2);
+  border:1px solid var(--border);
+  border-radius:var(--r);
+  padding:1.5rem;
+  margin-bottom:1rem;
+  transition:border-color .2s;
+}
+.card:hover{border-color:var(--border2)}
+.card-title{
+  font-size:.9rem;
+  font-weight:700;
+  color:var(--text);
+  margin-bottom:.5rem;
+  display:flex;align-items:center;gap:8px;
+}
+.card-text{
+  font-size:.82rem;
+  color:var(--text2);
+  line-height:1.8;
+}
+.badge{
+  font-size:.6rem;
+  font-weight:700;
+  text-transform:uppercase;
+  letter-spacing:.1em;
+  padding:2px 8px;
+  border-radius:999px;
+  border:1px solid;
+}
+.badge-blue{background:var(--blue-dim);color:var(--blue);border-color:var(--blue-border)}
+.badge-green{background:var(--green-dim);color:var(--green);border-color:rgba(29,158,117,.25)}
+.badge-amber{background:var(--amber-dim);color:var(--amber);border-color:rgba(239,159,39,.25)}
+.badge-red{background:var(--red-dim);color:var(--red);border-color:rgba(216,90,48,.25)}
+.badge-teal{background:var(--teal-dim);color:var(--teal);border-color:rgba(93,202,165,.25)}
+
+/* ===== CODE BLOCK ===== */
+.code-block{
+  background:#040404;
+  border:1px solid var(--border);
+  border-radius:var(--r);
+  overflow:hidden;
+  margin:1rem 0;
+  direction:ltr;
+}
+.code-header{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:10px 16px;
+  background:var(--bg3);
+  border-bottom:1px solid var(--border);
+}
+.code-lang{
+  font-size:.65rem;
+  color:var(--blue);
+  font-family:'JetBrains Mono',monospace;
+  font-weight:600;
+  text-transform:uppercase;
+  letter-spacing:.1em;
+}
+.code-dots{display:flex;gap:5px}
+.code-dots span{
+  width:10px;height:10px;
+  border-radius:50%;
+}
+.code-dots .d1{background:#3a1a1a}
+.code-dots .d2{background:#3a3a1a}
+.code-dots .d3{background:#1a3a1a}
+pre{
+  padding:1.2rem 1.5rem;
+  overflow-x:auto;
+  font-family:'JetBrains Mono',monospace;
+  font-size:.75rem;
+  line-height:1.8;
+  color:#d4d4d4;
+}
+.kw{color:#569cd6}
+.str{color:#ce9178}
+.prop{color:#9cdcfe}
+.val{color:#b5cea8}
+.cmt{color:#6a9955}
+.sel{color:#d7ba7d}
+
+/* ===== GRID VISUAL DEMO ===== */
+.grid-demo{
+  display:grid;
+  grid-template-columns:repeat(12,1fr);
+  gap:4px;
+  margin:1.5rem 0;
+  direction:ltr;
+}
+.gd-cell{
+  height:28px;
+  border-radius:4px;
+  background:var(--bg3);
+  border:1px solid var(--border);
+}
+.gd-cell.s2{grid-column:span 2}
+.gd-cell.s3{grid-column:span 3}
+.gd-cell.s4{grid-column:span 4}
+.gd-cell.s5{grid-column:span 5}
+.gd-cell.s6{grid-column:span 6}
+.gd-cell.s7{grid-column:span 7}
+.gd-cell.r2{grid-row:span 2;height:auto}
+.gd-cell.blue{background:var(--blue-dim);border-color:var(--blue-border)}
+.gd-cell.green{background:var(--green-dim);border-color:rgba(29,158,117,.3)}
+.gd-cell.amber{background:var(--amber-dim);border-color:rgba(239,159,39,.3)}
+.gd-cell.red{background:var(--red-dim);border-color:rgba(216,90,48,.3)}
+.gd-cell.teal{background:var(--teal-dim);border-color:rgba(93,202,165,.3)}
+.gd-label{
+  font-size:.55rem;
+  font-family:'JetBrains Mono',monospace;
+  color:var(--text3);
+  padding:3px 5px;
+  direction:ltr;
+}
+
+/* ===== MEASUREMENT BOX ===== */
+.measure-box{
+  position:relative;
+  border:1px dashed var(--border2);
+  border-radius:var(--r);
+  padding:1.5rem;
+  margin:1rem 0;
+}
+.measure-tag{
+  position:absolute;
+  font-size:.6rem;
+  font-family:'JetBrains Mono',monospace;
+  color:var(--blue);
+  background:var(--bg);
+  padding:1px 6px;
+}
+.measure-top{top:-9px;right:50%;transform:translateX(50%)}
+.measure-side{
+  position:absolute;
+  right:-1px;
+  top:50%;transform:translateY(-50%);
+  writing-mode:vertical-lr;
+  border:none;
+  padding:4px 4px;
+}
+.measure-side-tag{
+  font-size:.6rem;
+  font-family:'JetBrains Mono',monospace;
+  color:var(--blue);
+  background:var(--bg);
+  padding:1px 4px;
+  writing-mode:horizontal-tb;
+  transform:translateX(50%);
+  position:absolute;
+  right:-8px;
+  top:50%;
+  transform:translateY(-50%) translateX(100%);
+  white-space:nowrap;
+}
+
+/* ===== CARD ANATOMY ===== */
+.anatomy{
+  position:relative;
+  background:var(--bg3);
+  border:1px solid var(--border2);
+  border-radius:var(--r);
+  padding:1.5rem;
+  margin:1.5rem 0;
+  min-height:200px;
+}
+.anatomy-layer{
+  position:absolute;
+  border:1px dashed;
+  border-radius:6px;
+  display:flex;
+  align-items:flex-start;
+  justify-content:flex-end;
+}
+.anatomy-label{
+  font-size:.58rem;
+  font-family:'JetBrains Mono',monospace;
+  font-weight:600;
+  padding:2px 6px;
+  border-radius:4px;
+  margin:4px;
+  white-space:nowrap;
+}
+
+/* ===== TABLE ===== */
+.info-table{
+  width:100%;
+  border-collapse:collapse;
+  margin:1rem 0;
+  font-size:.8rem;
+  direction:rtl;
+}
+.info-table th{
+  padding:10px 14px;
+  background:var(--bg3);
+  color:var(--text2);
+  font-weight:700;
+  text-align:right;
+  font-size:.72rem;
+  text-transform:uppercase;
+  letter-spacing:.08em;
+  border-bottom:2px solid var(--border2);
+}
+.info-table td{
+  padding:10px 14px;
+  border-bottom:1px solid var(--border);
+  color:var(--text2);
+  vertical-align:top;
+}
+.info-table tr:hover td{background:rgba(255,255,255,.015)}
+.info-table .mono{
+  font-family:'JetBrains Mono',monospace;
+  font-size:.72rem;
+  color:var(--blue);
+}
+.info-table .desc{color:var(--text3);font-size:.75rem}
+
+/* ===== STEP LIST ===== */
+.steps{counter-reset:step;list-style:none;margin:1rem 0}
+.steps li{
+  counter-increment:step;
+  display:flex;
+  gap:16px;
+  padding:1rem 0;
+  border-bottom:1px solid var(--border);
+}
+.steps li:last-child{border-bottom:none}
+.step-num{
+  width:32px;height:32px;
+  border-radius:50%;
+  background:var(--blue-dim);
+  border:1px solid var(--blue-border);
+  display:flex;align-items:center;justify-content:center;
+  font-size:.75rem;
+  font-weight:700;
+  color:var(--blue);
+  flex-shrink:0;
+  font-family:'JetBrains Mono',monospace;
+}
+.step-num::before{content:counter(step,'0')}
+.step-body .title{font-weight:700;font-size:.85rem;margin-bottom:.3rem}
+.step-body .desc{font-size:.78rem;color:var(--text2);line-height:1.7}
+
+/* ===== COLOR SWATCHES ===== */
+.swatches{
+  display:grid;
+  grid-template-columns:repeat(5,1fr);
+  gap:8px;
+  margin:1rem 0;
+}
+.swatch{
+  border-radius:var(--r-sm);
+  padding:12px 10px 10px;
+  border:1px solid;
+}
+.swatch-color{
+  width:100%;
+  height:32px;
+  border-radius:6px;
+  margin-bottom:8px;
+}
+.swatch-name{
+  font-size:.65rem;
+  font-weight:700;
+  color:var(--text);
+  display:block;
+}
+.swatch-hex{
+  font-size:.6rem;
+  font-family:'JetBrains Mono',monospace;
+  color:var(--text3);
+  display:block;
+  margin-top:2px;
+}
+.swatch-use{
+  font-size:.6rem;
+  color:var(--text3);
+  margin-top:4px;
+  line-height:1.4;
+  display:block;
+}
+
+/* ===== DIVIDER ===== */
+.divider{
+  border:none;
+  border-top:1px solid var(--border);
+  margin:3rem 0;
+}
+
+/* ===== CALLOUT ===== */
+.callout{
+  border-radius:var(--r);
+  padding:1rem 1.2rem;
+  margin:1rem 0;
+  border:1px solid;
+  display:flex;
+  gap:10px;
+}
+.callout-blue{background:var(--blue-dim);border-color:var(--blue-border)}
+.callout-amber{background:var(--amber-dim);border-color:rgba(239,159,39,.25)}
+.callout-green{background:var(--green-dim);border-color:rgba(29,158,117,.25)}
+.callout-icon{font-size:1rem;flex-shrink:0;margin-top:2px}
+.callout-body{font-size:.8rem;color:var(--text2);line-height:1.7}
+.callout-body strong{color:var(--text);font-weight:700}
+
+/* ===== FILTER DEMO ===== */
+.filter-demo{
+  display:flex;gap:6px;flex-wrap:wrap;margin:1rem 0;direction:ltr;
+}
+.fd-btn{
+  padding:5px 14px;
+  border-radius:999px;
+  font-size:.72rem;
+  border:1px solid var(--border2);
+  color:var(--text3);
+  background:transparent;
+  cursor:pointer;
+  font-family:'IBM Plex Sans Arabic',sans-serif;
+}
+.fd-btn.active{background:var(--blue);border-color:var(--blue);color:#fff;font-weight:700}
+
+/* ===== CARD PREVIEW (mini) ===== */
+.card-preview{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:8px;
+  margin:1rem 0;
+}
+.cp-card{
+  background:var(--bg3);
+  border:1px solid var(--border);
+  border-radius:var(--r-sm);
+  padding:10px;
+  position:relative;
+  overflow:hidden;
+}
+.cp-card::after{
+  content:'';
+  display:block;
+  height:2px;
+  background:var(--blue);
+  border-radius:0 0 4px 4px;
+  margin-top:8px;
+}
+.cp-card.green::after{background:var(--green)}
+.cp-card.amber::after{background:var(--amber)}
+.cp-icon{
+  width:24px;height:24px;
+  border-radius:6px;
+  border:1px solid var(--blue-border);
+  background:var(--blue-dim);
+  display:flex;align-items:center;justify-content:center;
+  font-size:.65rem;
+  color:var(--blue);
+  margin-bottom:8px;
+}
+.cp-icon.green{border-color:rgba(29,158,117,.25);background:var(--green-dim);color:var(--green)}
+.cp-icon.amber{border-color:rgba(239,159,39,.25);background:var(--amber-dim);color:var(--amber)}
+.cp-title{font-size:.72rem;font-weight:700;color:var(--text);margin-bottom:3px}
+.cp-sub{font-size:.62rem;color:var(--text3)}
+
+/* ===== HOVER OVERLAY DEMO ===== */
+.hover-demo{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:12px;
+  margin:1rem 0;
+  direction:ltr;
+}
+.hd-card{
+  background:var(--bg3);
+  border:1px solid var(--border);
+  border-radius:var(--r);
+  padding:1.2rem;
+  min-height:110px;
+  position:relative;
+}
+.hd-label{
+  position:absolute;
+  top:8px;right:8px;
+  font-size:.6rem;
+  font-family:'JetBrains Mono',monospace;
+  color:var(--text3);
+  background:var(--bg);
+  padding:2px 6px;
+  border-radius:4px;
+  border:1px solid var(--border);
+}
+.hd-card.hover-state{border-color:var(--blue);background:#0a0a0a}
+.hd-card.hover-state .hd-label{color:var(--blue)}
+.hd-title{font-size:.8rem;font-weight:700;color:var(--text);margin-bottom:5px}
+.hd-desc{font-size:.7rem;color:var(--text2);margin-bottom:8px}
+.hd-tags{display:flex;gap:4px;flex-wrap:wrap}
+.hd-tag{
+  font-size:.58rem;
+  padding:2px 7px;
+  border-radius:999px;
+  background:var(--blue-dim);
+  color:#93c5fd;
+  border:1px solid var(--blue-border);
+  font-weight:600;
+}
+.hd-bar{
+  position:absolute;
+  bottom:0;left:0;right:0;
+  height:2px;
+  background:var(--blue);
+  border-radius:0 0 11px 11px;
+}
+
+/* ===== RESPONSIVE ===== */
+@media(max-width:860px){
+  .sidebar{display:none}
+  .main{margin-right:0;padding:2rem 1.5rem}
+}
+
+/* ===== SCROLL INDICATOR ===== */
+.progress-bar{
+  position:fixed;
+  top:0;right:0;left:0;
+  height:2px;
+  background:var(--border);
+  z-index:200;
+}
+.progress-fill{
+  height:100%;
+  background:var(--blue);
+  width:0%;
+  transition:width .1s;
+}
+</style>
+</head>
+<body>
+
+<div class="progress-bar"><div class="progress-fill" id="progress"></div></div>
+
+<!-- SIDEBAR -->
+<nav class="sidebar">
+  <div class="sidebar-logo">Portfolio Guide</div>
+
+  <div class="nav-section">البنية العامة</div>
+  <a href="#overview" class="nav-link active"><span class="nav-dot"></span>نظرة عامة</a>
+  <a href="#structure" class="nav-link"><span class="nav-dot"></span>هيكل الصفحة</a>
+  <a href="#colors" class="nav-link"><span class="nav-dot"></span>نظام الألوان</a>
+
+  <div class="nav-section">Grid النظام</div>
+  <a href="#grid-system" class="nav-link"><span class="nav-dot"></span>نظام الشبكة</a>
+  <a href="#grid-sizes" class="nav-link"><span class="nav-dot"></span>مقاسات الكاردات</a>
+  <a href="#grid-layout" class="nav-link"><span class="nav-dot"></span>توزيع الكاردات</a>
+
+  <div class="nav-section">الكاردات</div>
+  <a href="#card-anatomy" class="nav-link"><span class="nav-dot"></span>تشريح الكارد</a>
+  <a href="#card-states" class="nav-link"><span class="nav-dot"></span>حالات الكارد</a>
+  <a href="#card-types" class="nav-link"><span class="nav-dot"></span>أنواع الكاردات</a>
+
+  <div class="nav-section">المكونات</div>
+  <a href="#filters" class="nav-link"><span class="nav-dot"></span>نظام الفلاتر</a>
+  <a href="#header" class="nav-link"><span class="nav-dot"></span>الهيدر</a>
+  <a href="#css-code" class="nav-link"><span class="nav-dot"></span>الكود الكامل</a>
+</nav>
+
+<!-- MAIN CONTENT -->
+<main class="main">
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-eyebrow">📐 دليل تصميم شامل</div>
+    <h1>كيف تبني صفحة<br><span class="accent">المشاريع</span> من الصفر</h1>
+    <p>شرح تفصيلي كامل لكل عنصر في صفحة "All Projects" — من القالب والشبكة إلى كل كارد وكل لون وكل تأثير تفاعلي.</p>
+    <div class="hero-stats">
+      <div class="hstat"><div class="hstat-n">10</div><div class="hstat-l">مشروع</div></div>
+      <div class="hstat"><div class="hstat-n">5</div><div class="hstat-l">أنواع</div></div>
+      <div class="hstat"><div class="hstat-n">12</div><div class="hstat-l">عمود شبكة</div></div>
+      <div class="hstat"><div class="hstat-n">3</div><div class="hstat-l">حالات كارد</div></div>
+    </div>
+  </section>
+
+  <!-- SECTION 1: OVERVIEW -->
+  <section class="section" id="overview">
+    <div class="section-header">
+      <div class="section-num"></div>
+      <div>
+        <h2>نظرة عامة على الصفحة</h2>
+        <p>فهم الفكرة الكاملة قبل البناء</p>
+      </div>
+    </div>
+
+    <div class="callout callout-blue">
+      <div class="callout-icon">💡</div>
+      <div class="callout-body">
+        <strong>الفكرة الأساسية:</strong> بدلاً من عرض مشاريع كصور فقط في شبكة رتيبة 3×3، نستخدم <strong>Bento Grid</strong> — شبكة ديناميكية حيث كل مشروع يأخذ مساحة مختلفة حسب أهميته، مع بطاقات تكشف التفاصيل عند الـ Hover.
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">🗂️ المكونات الرئيسية للصفحة</div>
+      <div class="card-text">الصفحة تتكون من 5 أجزاء رئيسية متسلسلة من الأعلى للأسفل:</div>
+      <ol style="margin-top:.8rem;padding-right:1.2rem;color:var(--text2);font-size:.82rem;line-height:2">
+        <li><strong style="color:var(--text)">Header:</strong> اسم المطور + وصف + اسم الصفحة</li>
+        <li><strong style="color:var(--text)">Skill Strip:</strong> شريط يعرض التقنيات المستخدمة كـ Pills</li>
+        <li><strong style="color:var(--text)">Filter Bar:</strong> أزرار الفلترة (ALL / WEB / MOBILE...)</li>
+        <li><strong style="color:var(--text)">Bento Grid:</strong> شبكة المشاريع الديناميكية</li>
+        <li><strong style="color:var(--text)">Stats Bar:</strong> إحصائيات الإجمالية في الأسفل</li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- SECTION 2: STRUCTURE -->
+  <section class="section" id="structure">
+    <div class="section-header">
+      <div class="section-num"></div>
+      <div>
+        <h2>هيكل HTML الكامل</h2>
+        <p>شجرة العناصر من الخارج للداخل</p>
+      </div>
+    </div>
+
+    <div class="code-block">
+      <div class="code-header">
+        <div class="code-dots"><span class="d1"></span><span class="d2"></span><span class="d3"></span></div>
+        <div class="code-lang">HTML Structure</div>
+      </div>
+<pre><span class="cmt">&lt;!-- الغلاف الرئيسي للصفحة --&gt;</span>
+<span class="kw">&lt;div</span> <span class="prop">class</span>=<span class="str">"portfolio-wrap"</span><span class="kw">&gt;</span>
+
+  <span class="cmt">&lt;!-- 1. الهيدر --&gt;</span>
+  <span class="kw">&lt;div</span> <span class="prop">class</span>=<span class="str">"port-header"</span><span class="kw">&gt;</span>
+    <span class="kw">&lt;div</span> <span class="prop">class</span>=<span class="str">"ph-eyebrow"</span><span class="kw">&gt;</span>Assem Adel Habib<span class="kw">&lt;/div&gt;</span>
+    <span class="kw">&lt;h1&gt;</span>All <span class="kw">&lt;em&gt;</span>Projects<span class="kw">&lt;/em&gt;&lt;/h1&gt;</span>
+    <span class="kw">&lt;div</span> <span class="prop">class</span>=<span class="str">"ph-sub"</span><span class="kw">&gt;</span>Web · Mobile · Desktop...<span class="kw">&lt;/div&gt;</span>
+  <span class="kw">&lt;/div&gt;</span>
+
+  <span class="cmt">&lt;!-- 2. شريط التقنيات --&gt;</span>
+  <span class="kw">&lt;div</span> <span class="prop">class</span>=<span class="str">"skill-strip"</span><span class="kw">&gt;</span>
+    <span class="kw">&lt;span</span> <span class="prop">class</span>=<span class="str">"sk react"</span><span class="kw">&gt;</span>React<span class="kw">&lt;/span&gt;</span>
+    <span class="kw">&lt;span</span> <span class="prop">class</span>=<span class="str">"sk vue"</span><span class="kw">&gt;</span>Vue.js<span class="kw">&lt;/span&gt;</span>
+    <span class="cmt">&lt;!-- ... باقي التقنيات --&gt;</span>
+  <span class="kw">&lt;/div&gt;</span>
+
+  <span class="cmt">&lt;!-- 3. الفلاتر --&gt;</span>
+  <span class="kw">&lt;div</span> <span class="prop">class</span>=<span class="str">"filters"</span> <span class="prop">id</span>=<span class="str">"filters"</span><span class="kw">&gt;</span>
+    <span class="kw">&lt;button</span> <span class="prop">class</span>=<span class="str">"fb on"</span> <span class="prop">data-f</span>=<span class="str">"all"</span><span class="kw">&gt;</span>ALL<span class="kw">&lt;/button&gt;</span>
+    <span class="cmt">&lt;!-- ... باقي الفلاتر --&gt;</span>
+  <span class="kw">&lt;/div&gt;</span>
+
+  <span class="cmt">&lt;!-- 4. شبكة المشاريع --&gt;</span>
+  <span class="kw">&lt;div</span> <span class="prop">class</span>=<span class="str">"grid"</span> <span class="prop">id</span>=<span class="str">"grid"</span><span class="kw">&gt;</span>
+    <span class="cmt">&lt;!-- كل مشروع = div.card --&gt;</span>
+    <span class="kw">&lt;div</span> <span class="prop">class</span>=<span class="str">"card s7 r2 g-blue"</span> <span class="prop">data-c</span>=<span class="str">"web"</span><span class="kw">&gt;</span>
+      <span class="cmt">&lt;!-- محتوى الكارد الداخلي --&gt;</span>
+    <span class="kw">&lt;/div&gt;</span>
+  <span class="kw">&lt;/div&gt;</span>
+
+  <span class="cmt">&lt;!-- 5. شريط الإحصائيات --&gt;</span>
+  <span class="kw">&lt;div</span> <span class="prop">class</span>=<span class="str">"bottom"</span><span class="kw">&gt;</span>...<span class="kw">&lt;/div&gt;</span>
+
+<span class="kw">&lt;/div&gt;</span></pre>
+    </div>
+  </section>
+
+  <!-- SECTION 3: COLORS -->
+  <section class="section" id="colors">
+    <div class="section-header">
+      <div class="section-num"></div>
+      <div>
+        <h2>نظام الألوان</h2>
+        <p>5 ألوان رئيسية مع 3 مستويات لكل لون</p>
+      </div>
+    </div>
+
+    <div class="swatches">
+      <div class="swatch" style="background:rgba(59,130,246,.08);border-color:rgba(59,130,246,.2)">
+        <div class="swatch-color" style="background:#3B82F6"></div>
+        <span class="swatch-name">Blue</span>
+        <span class="swatch-hex">#3B82F6</span>
+        <span class="swatch-use">Web App / الرئيسي</span>
+      </div>
+      <div class="swatch" style="background:rgba(29,158,117,.08);border-color:rgba(29,158,117,.2)">
+        <div class="swatch-color" style="background:#1D9E75"></div>
+        <span class="swatch-name">Green</span>
+        <span class="swatch-hex">#1D9E75</span>
+        <span class="swatch-use">Mobile App</span>
+      </div>
+      <div class="swatch" style="background:rgba(239,159,39,.08);border-color:rgba(239,159,39,.2)">
+        <div class="swatch-color" style="background:#EF9F27"></div>
+        <span class="swatch-name">Amber</span>
+        <span class="swatch-hex">#EF9F27</span>
+        <span class="swatch-use">Back-End / Front</span>
+      </div>
+      <div class="swatch" style="background:rgba(216,90,48,.08);border-color:rgba(216,90,48,.2)">
+        <div class="swatch-color" style="background:#D85A30"></div>
+        <span class="swatch-name">Red</span>
+        <span class="swatch-hex">#D85A30</span>
+        <span class="swatch-use">Mobile / Desktop</span>
+      </div>
+      <div class="swatch" style="background:rgba(93,202,165,.08);border-color:rgba(93,202,165,.2)">
+        <div class="swatch-color" style="background:#5DCAA5"></div>
+        <span class="swatch-name">Teal</span>
+        <span class="swatch-hex">#5DCAA5</span>
+        <span class="swatch-use">Front-End</span>
+      </div>
+    </div>
+
+    <div class="callout callout-amber">
+      <div class="callout-icon">⚠️</div>
+      <div class="callout-body">
+        <strong>قاعدة الألوان:</strong> كل لون يأتي في 3 مستويات — <strong>اللون الكامل</strong> للأيقونات والحواف النشطة، <strong>12% opacity</strong> للخلفيات الشفافة، <strong>25% opacity</strong> للحدود. مثال الأزرق: <code style="color:var(--blue);font-family:JetBrains Mono,monospace">#3B82F6</code> و <code style="color:var(--blue);font-family:JetBrains Mono,monospace">rgba(59,130,246,.12)</code> و <code style="color:var(--blue);font-family:JetBrains Mono,monospace">rgba(59,130,246,.25)</code>
+      </div>
+    </div>
+
+    <div class="code-block">
+      <div class="code-header">
+        <div class="code-dots"><span class="d1"></span><span class="d2"></span><span class="d3"></span></div>
+        <div class="code-lang">CSS Variables</div>
+      </div>
+<pre><span class="sel">:root</span> {
+  <span class="cmt">/* الخلفيات - 3 مستويات داكنة */</span>
+  <span class="prop">--bg</span>:      <span class="val">#080808</span>;  <span class="cmt">/* الخلفية الرئيسية */</span>
+  <span class="prop">--bg2</span>:     <span class="val">#0e0e0e</span>;  <span class="cmt">/* خلفية الكاردات */</span>
+  <span class="prop">--bg3</span>:     <span class="val">#151515</span>;  <span class="cmt">/* خلفية ثالثة */</span>
+  <span class="prop">--border</span>:  <span class="val">#1e1e1e</span>;  <span class="cmt">/* الحدود العادية */</span>
+  <span class="prop">--border2</span>: <span class="val">#2a2a2a</span>;  <span class="cmt">/* حدود hover */</span>
+
+  <span class="cmt">/* ألوان النظام */</span>
+  <span class="prop">--blue</span>:  <span class="val">#3B82F6</span>;
+  <span class="prop">--green</span>: <span class="val">#1D9E75</span>;
+  <span class="prop">--amber</span>: <span class="val">#EF9F27</span>;
+  <span class="prop">--red</span>:   <span class="val">#D85A30</span>;
+  <span class="prop">--teal</span>:  <span class="val">#5DCAA5</span>;
+}</pre>
+    </div>
+  </section>
+
+  <!-- SECTION 4: GRID SYSTEM -->
+  <section class="section" id="grid-system">
+    <div class="section-header">
+      <div class="section-num"></div>
+      <div>
+        <h2>نظام الشبكة — Bento Grid</h2>
+        <p>12 عموداً بارتفاعات متغيرة</p>
+      </div>
+    </div>
+
+    <div class="callout callout-blue">
+      <div class="callout-icon">📐</div>
+      <div class="callout-body">
+        <strong>لماذا 12 عموداً؟</strong> العدد 12 قابل للقسمة على 2 و3 و4 و6، مما يتيح تقسيمات مرنة: نصف الشبكة = 6 أعمدة، ثلث = 4، ربع = 3، سدس = 2.
+      </div>
+    </div>
+
+    <div class="code-block">
+      <div class="code-header">
+        <div class="code-dots"><span class="d1"></span><span class="d2"></span><span class="d3"></span></div>
+        <div class="code-lang">CSS Grid</div>
+      </div>
+<pre><span class="sel">.grid</span> {
+  <span class="prop">display</span>: <span class="val">grid</span>;
+
+  <span class="cmt">/* 12 عمود متساوي */</span>
+  <span class="prop">grid-template-columns</span>: <span class="val">repeat(12, 1fr)</span>;
+
+  <span class="cmt">/* ارتفاع كل صف = 100px */</span>
+  <span class="prop">grid-auto-rows</span>: <span class="val">100px</span>;
+
+  <span class="cmt">/* المسافة بين الكاردات */</span>
+  <span class="prop">gap</span>: <span class="val">8px</span>;
+
+  <span class="prop">max-width</span>: <span class="val">860px</span>;
+  <span class="prop">margin</span>: <span class="val">0 auto</span>;
+}</pre>
+    </div>
+
+    <p style="font-size:.82rem;color:var(--text2);margin:1rem 0 .5rem">تصور الشبكة بصرياً — 12 عمود × ارتفاع 100px لكل صف:</p>
+    <div class="grid-demo">
+      <div class="gd-cell s7 r2 blue"><div class="gd-label">s7 r2</div></div>
+      <div class="gd-cell s5 r2 green"><div class="gd-label">s5 r2</div></div>
+      <div class="gd-cell s4 amber"><div class="gd-label">s4</div></div>
+      <div class="gd-cell s3 red"><div class="gd-label">s3</div></div>
+      <div class="gd-cell s5 r2 blue"><div class="gd-label">s5 r2</div></div>
+      <div class="gd-cell s4 amber"><div class="gd-label">s4</div></div>
+      <div class="gd-cell s3 red"><div class="gd-label">s3</div></div>
+      <div class="gd-cell s3 green"><div class="gd-label">s3</div></div>
+      <div class="gd-cell s3 amber"><div class="gd-label">s3</div></div>
+      <div class="gd-cell s3 red"><div class="gd-label">s3</div></div>
+      <div class="gd-cell s3 teal"><div class="gd-label">s3</div></div>
+    </div>
+  </section>
+
+  <!-- SECTION 5: GRID SIZES -->
+  <section class="section" id="grid-sizes">
+    <div class="section-header">
+      <div class="section-num"></div>
+      <div>
+        <h2>مقاسات الكاردات</h2>
+        <p>كلاسات span للعرض وspan للارتفاع</p>
+      </div>
+    </div>
+
+    <table class="info-table">
+      <tr>
+        <th>الكلاس</th>
+        <th>CSS المولّد</th>
+        <th>العرض بالأعمدة</th>
+        <th>الاستخدام</th>
+      </tr>
+      <tr>
+        <td><span class="mono">s2</span></td>
+        <td><span class="mono">grid-column: span 2</span></td>
+        <td><span class="desc">2 من 12 = صغير جداً</span></td>
+        <td><span class="desc">أيقونات / widgets صغيرة</span></td>
+      </tr>
+      <tr>
+        <td><span class="mono">s3</span></td>
+        <td><span class="mono">grid-column: span 3</span></td>
+        <td><span class="desc">3 من 12 = ربع الشبكة</span></td>
+        <td><span class="desc">معظم المشاريع الصغيرة</span></td>
+      </tr>
+      <tr>
+        <td><span class="mono">s4</span></td>
+        <td><span class="mono">grid-column: span 4</span></td>
+        <td><span class="desc">4 من 12 = ثلث الشبكة</span></td>
+        <td><span class="desc">مشاريع متوسطة</span></td>
+      </tr>
+      <tr>
+        <td><span class="mono">s5</span></td>
+        <td><span class="mono">grid-column: span 5</span></td>
+        <td><span class="desc">5 من 12 = أقل من نصف</span></td>
+        <td><span class="desc">مشاريع بارزة</span></td>
+      </tr>
+      <tr>
+        <td><span class="mono">s7</span></td>
+        <td><span class="mono">grid-column: span 7</span></td>
+        <td><span class="desc">7 من 12 = أكثر من نصف</span></td>
+        <td><span class="desc">المشروع الرئيسي (featured)</span></td>
+      </tr>
+      <tr>
+        <td><span class="mono">r2</span></td>
+        <td><span class="mono">grid-row: span 2</span></td>
+        <td><span class="desc">ارتفاع مزدوج = 200px + gap</span></td>
+        <td><span class="desc">للمشاريع المهمة</span></td>
+      </tr>
+      <tr>
+        <td><span class="mono">r3</span></td>
+        <td><span class="mono">grid-row: span 3</span></td>
+        <td><span class="desc">ارتفاع ثلاثي = 300px + gaps</span></td>
+        <td><span class="desc">بطل الصفحة</span></td>
+      </tr>
+    </table>
+
+    <div class="code-block">
+      <div class="code-header">
+        <div class="code-dots"><span class="d1"></span><span class="d2"></span><span class="d3"></span></div>
+        <div class="code-lang">CSS Classes</div>
+      </div>
+<pre><span class="cmt">/* العرض (columns) */</span>
+<span class="sel">.s2</span> { <span class="prop">grid-column</span>: <span class="val">span 2</span> }
+<span class="sel">.s3</span> { <span class="prop">grid-column</span>: <span class="val">span 3</span> }
+<span class="sel">.s4</span> { <span class="prop">grid-column</span>: <span class="val">span 4</span> }
+<span class="sel">.s5</span> { <span class="prop">grid-column</span>: <span class="val">span 5</span> }
+<span class="sel">.s6</span> { <span class="prop">grid-column</span>: <span class="val">span 6</span> }
+<span class="sel">.s7</span> { <span class="prop">grid-column</span>: <span class="val">span 7</span> }
+
+<span class="cmt">/* الارتفاع (rows) */</span>
+<span class="sel">.r2</span> { <span class="prop">grid-row</span>: <span class="val">span 2</span> }
+<span class="sel">.r3</span> { <span class="prop">grid-row</span>: <span class="val">span 3</span> }
+
+<span class="cmt">/* مثال كارد كبير: s7 r2 */</span>
+<span class="cmt">/* عرض: 7/12 = 58%  |  ارتفاع: 2×100+8 = 208px */</span></pre>
+    </div>
+  </section>
+
+  <!-- SECTION 6: GRID LAYOUT -->
+  <section class="section" id="grid-layout">
+    <div class="section-header">
+      <div class="section-num"></div>
+      <div>
+        <h2>توزيع المشاريع على الشبكة</h2>
+        <p>كيف تملأ الكاردات الصفوف تلقائياً</p>
+      </div>
+    </div>
+
+    <div class="callout callout-green">
+      <div class="callout-icon">✅</div>
+      <div class="callout-body">
+        <strong>الـ Auto-placement:</strong> CSS Grid تملأ الكاردات تلقائياً — أنت فقط تحدد الحجم لكل كارد، والمتصفح يقرر مكانها. الكاردات الكبيرة (s7 r2) تأخذ مساحتها وما تبقى يملأه الكارد التالي.
+      </div>
+    </div>
+
+    <table class="info-table">
+      <tr>
+        <th>#</th>
+        <th>المشروع</th>
+        <th>الكلاسات</th>
+        <th>المقاس الفعلي</th>
+        <th>اللون</th>
+      </tr>
+      <tr>
+        <td><span class="mono">1</span></td>
+        <td><span class="desc">IMA Dashboard</span></td>
+        <td><span class="mono">s7 r2 g-blue</span></td>
+        <td><span class="desc">~58% عرض × 208px ارتفاع</span></td>
+        <td><span class="badge badge-blue">Blue</span></td>
+      </tr>
+      <tr>
+        <td><span class="mono">2</span></td>
+        <td><span class="desc">Finance Tracker</span></td>
+        <td><span class="mono">s5 r2 g-green</span></td>
+        <td><span class="desc">~42% عرض × 208px ارتفاع</span></td>
+        <td><span class="badge badge-green">Green</span></td>
+      </tr>
+      <tr>
+        <td><span class="mono">3</span></td>
+        <td><span class="desc">Elzero World</span></td>
+        <td><span class="mono">s4 g-amber</span></td>
+        <td><span class="desc">~33% عرض × 100px ارتفاع</span></td>
+        <td><span class="badge badge-amber">Amber</span></td>
+      </tr>
+      <tr>
+        <td><span class="mono">4</span></td>
+        <td><span class="desc">E-Commerce App</span></td>
+        <td><span class="mono">s3 g-red</span></td>
+        <td><span class="desc">~25% عرض × 100px ارتفاع</span></td>
+        <td><span class="badge badge-red">Red</span></td>
+      </tr>
+      <tr>
+        <td><span class="mono">5</span></td>
+        <td><span class="desc">Bizro Dashboard</span></td>
+        <td><span class="mono">s5 r2 g-blue</span></td>
+        <td><span class="desc">~42% عرض × 208px ارتفاع</span></td>
+        <td><span class="badge badge-blue">Blue</span></td>
+      </tr>
+      <tr>
+        <td><span class="mono">6</span></td>
+        <td><span class="desc">IMA REST API</span></td>
+        <td><span class="mono">s4 g-amber</span></td>
+        <td><span class="desc">~33% عرض × 100px ارتفاع</span></td>
+        <td><span class="badge badge-amber">Amber</span></td>
+      </tr>
+      <tr>
+        <td><span class="mono">7</span></td>
+        <td><span class="desc">Auth API</span></td>
+        <td><span class="mono">s3 g-red</span></td>
+        <td><span class="desc">~25% عرض × 100px ارتفاع</span></td>
+        <td><span class="badge badge-red">Red</span></td>
+      </tr>
+      <tr>
+        <td><span class="mono">8</span></td>
+        <td><span class="desc">John Sandoe Books</span></td>
+        <td><span class="mono">s3 g-green</span></td>
+        <td><span class="desc">~25% عرض × 100px ارتفاع</span></td>
+        <td><span class="badge badge-green">Green</span></td>
+      </tr>
+      <tr>
+        <td><span class="mono">9</span></td>
+        <td><span class="desc">Kasper Agency</span></td>
+        <td><span class="mono">s3 g-amber</span></td>
+        <td><span class="desc">~25% عرض × 100px ارتفاع</span></td>
+        <td><span class="badge badge-amber">Amber</span></td>
+      </tr>
+      <tr>
+        <td><span class="mono">10</span></td>
+        <td><span class="desc">File Manager</span></td>
+        <td><span class="mono">s3 g-red</span></td>
+        <td><span class="desc">~25% عرض × 100px ارتفاع</span></td>
+        <td><span class="badge badge-red">Red</span></td>
+      </tr>
+      <tr>
+        <td><span class="mono">11</span></td>
+        <td><span class="desc">Speakup Platform</span></td>
+        <td><span class="mono">s3 g-teal</span></td>
+        <td><span class="desc">~25% عرض × 100px ارتفاع</span></td>
+        <td><span class="badge badge-teal">Teal</span></td>
+      </tr>
+    </table>
+  </section>
+
+  <hr class="divider">
+
+  <!-- SECTION 7: CARD ANATOMY -->
+  <section class="section" id="card-anatomy">
+    <div class="section-header">
+      <div class="section-num"></div>
+      <div>
+        <h2>تشريح الكارد — طبقة بطبقة</h2>
+        <p>كل كارد يتكون من 5 طبقات متراكبة</p>
+      </div>
+    </div>
+
+    <div class="callout callout-blue">
+      <div class="callout-icon">🗂️</div>
+      <div class="callout-body">
+        كل كارد هو <strong>position: relative</strong> يحتوي على طبقات بـ <strong>position: absolute</strong>. الترتيب من الأسفل للأعلى: الخلفية → Glow → الأيقونة → النوع → المحتوى الثابت → الـ Overlay → الشريط.
+      </div>
+    </div>
+
+    <div class="code-block">
+      <div class="code-header">
+        <div class="code-dots"><span class="d1"></span><span class="d2"></span><span class="d3"></span></div>
+        <div class="code-lang">HTML — بنية الكارد الكاملة</div>
+      </div>
+<pre><span class="kw">&lt;div</span> <span class="prop">class</span>=<span class="str">"card s7 r2 g-blue"</span> <span class="prop">data-c</span>=<span class="str">"web"</span><span class="kw">&gt;</span>
+
+  <span class="cmt">&lt;!-- طبقة 1: توهج الخلفية (يظهر عند hover) --&gt;</span>
+  <span class="kw">&lt;div</span> <span class="prop">class</span>=<span class="str">"card-glow"</span><span class="kw">&gt;&lt;/div&gt;</span>
+
+  <span class="cmt">&lt;!-- طبقة 2: أيقونة نوع المشروع (أعلى اليمين) --&gt;</span>
+  <span class="kw">&lt;div</span> <span class="prop">class</span>=<span class="str">"card-icon-wrap blue"</span><span class="kw">&gt;</span>
+    <span class="kw">&lt;i</span> <span class="prop">class</span>=<span class="str">"ti ti-layout-dashboard"</span><span class="kw">&gt;&lt;/i&gt;</span>
+  <span class="kw">&lt;/div&gt;</span>
+
+  <span class="cmt">&lt;!-- طبقة 3: نص نوع المشروع (أعلى اليسار) --&gt;</span>
+  <span class="kw">&lt;div</span> <span class="prop">class</span>=<span class="str">"card-type"</span><span class="kw">&gt;</span>Web App<span class="kw">&lt;/div&gt;</span>
+
+  <span class="cmt">&lt;!-- طبقة 4: عنوان + وصف قصير (أسفل الكارد - دائم) --&gt;</span>
+  <span class="kw">&lt;div</span> <span class="prop">class</span>=<span class="str">"card-body"</span><span class="kw">&gt;</span>
+    <span class="kw">&lt;div</span> <span class="prop">class</span>=<span class="str">"card-title"</span><span class="kw">&gt;</span>IMA Management Dashboard<span class="kw">&lt;/div&gt;</span>
+    <span class="kw">&lt;div</span> <span class="prop">class</span>=<span class="str">"card-meta"</span><span class="kw">&gt;</span>Full-stack admin · Charts<span class="kw">&lt;/div&gt;</span>
+  <span class="kw">&lt;/div&gt;</span>
+
+  <span class="cmt">&lt;!-- طبقة 5: Overlay كامل (يظهر عند hover) --&gt;</span>
+  <span class="kw">&lt;div</span> <span class="prop">class</span>=<span class="str">"card-overlay"</span><span class="kw">&gt;</span>
+    <span class="kw">&lt;div</span> <span class="prop">class</span>=<span class="str">"ov-title"</span><span class="kw">&gt;</span>IMA Management Dashboard<span class="kw">&lt;/div&gt;</span>
+    <span class="kw">&lt;div</span> <span class="prop">class</span>=<span class="str">"ov-desc"</span><span class="kw">&gt;</span>وصف مفصل للمشروع...<span class="kw">&lt;/div&gt;</span>
+    <span class="kw">&lt;div</span> <span class="prop">class</span>=<span class="str">"ov-tags"</span><span class="kw">&gt;</span>
+      <span class="kw">&lt;span</span> <span class="prop">class</span>=<span class="str">"ot blue"</span><span class="kw">&gt;</span>React<span class="kw">&lt;/span&gt;</span>
+      <span class="kw">&lt;span</span> <span class="prop">class</span>=<span class="str">"ot teal"</span><span class="kw">&gt;</span>TailwindCSS<span class="kw">&lt;/span&gt;</span>
+    <span class="kw">&lt;/div&gt;</span>
+  <span class="kw">&lt;/div&gt;</span>
+
+  <span class="cmt">&lt;!-- طبقة 6: شريط اللون أسفل الكارد --&gt;</span>
+  <span class="kw">&lt;div</span> <span class="prop">class</span>=<span class="str">"card-bar bar-blue"</span><span class="kw">&gt;&lt;/div&gt;</span>
+
+<span class="kw">&lt;/div&gt;</span></pre>
+    </div>
+
+    <p style="font-size:.82rem;color:var(--text2);margin:1.5rem 0 .5rem;font-weight:700">CSS كل طبقة:</p>
+
+    <div class="code-block">
+      <div class="code-header">
+        <div class="code-dots"><span class="d1"></span><span class="d2"></span><span class="d3"></span></div>
+        <div class="code-lang">CSS — طبقات الكارد</div>
+      </div>
+<pre><span class="cmt">/* الكارد الأساسي */</span>
+<span class="sel">.card</span> {
+  <span class="prop">border-radius</span>: <span class="val">14px</span>;
+  <span class="prop">overflow</span>: <span class="val">hidden</span>;      <span class="cmt">/* يقص ما يخرج */</span>
+  <span class="prop">border</span>: <span class="val">1px solid #151515</span>;
+  <span class="prop">cursor</span>: <span class="val">pointer</span>;
+  <span class="prop">position</span>: <span class="val">relative</span>;  <span class="cmt">/* أساس الطبقات */</span>
+  <span class="prop">transition</span>: <span class="val">border-color .25s, transform .25s</span>;
+  <span class="prop">background</span>: <span class="val">#0e0e0e</span>;
+}
+<span class="sel">.card:hover</span> {
+  <span class="prop">border-color</span>: <span class="val">#3B82F6</span>;
+  <span class="prop">transform</span>: <span class="val">translateY(-2px)</span>; <span class="cmt">/* يرتفع 2px */</span>
+}
+
+<span class="cmt">/* طبقة Glow — خلف كل شيء */</span>
+<span class="sel">.card-glow</span> {
+  <span class="prop">position</span>: <span class="val">absolute</span>;
+  <span class="prop">inset</span>: <span class="val">0</span>;  <span class="cmt">/* top:0 right:0 bottom:0 left:0 */</span>
+  <span class="prop">opacity</span>: <span class="val">0</span>;
+  <span class="prop">transition</span>: <span class="val">opacity .3s</span>;
+  <span class="prop">pointer-events</span>: <span class="val">none</span>; <span class="cmt">/* لا يمسك clicks */</span>
+  <span class="prop">background</span>: <span class="val">radial-gradient(
+    circle at 30% 30%,
+    rgba(59,130,246,.07) 0%,
+    transparent 70%
+  )</span>;
+}
+<span class="sel">.card:hover .card-glow</span> { <span class="prop">opacity</span>: <span class="val">1</span> }
+
+<span class="cmt">/* أيقونة النوع — أعلى اليمين */</span>
+<span class="sel">.card-icon-wrap</span> {
+  <span class="prop">position</span>: <span class="val">absolute</span>;
+  <span class="prop">top</span>: <span class="val">8px</span>; <span class="prop">right</span>: <span class="val">10px</span>;
+  <span class="prop">width</span>: <span class="val">28px</span>; <span class="prop">height</span>: <span class="val">28px</span>;
+  <span class="prop">border-radius</span>: <span class="val">8px</span>;
+  <span class="prop">display</span>: <span class="val">flex</span>;
+  <span class="prop">align-items</span>: <span class="val">center</span>;
+  <span class="prop">justify-content</span>: <span class="val">center</span>;
+  <span class="prop">border</span>: <span class="val">1px solid</span>;
+}
+<span class="sel">.card-icon-wrap.blue</span> {
+  <span class="prop">background</span>: <span class="val">#0c1e3a</span>;
+  <span class="prop">border-color</span>: <span class="val">#1a3a5c</span>;
+  <span class="prop">color</span>: <span class="val">#378ADD</span>;
+}
+
+<span class="cmt">/* نوع المشروع — أعلى اليسار */</span>
+<span class="sel">.card-type</span> {
+  <span class="prop">position</span>: <span class="val">absolute</span>;
+  <span class="prop">top</span>: <span class="val">10px</span>; <span class="prop">left</span>: <span class="val">12px</span>;
+  <span class="prop">font-size</span>: <span class="val">.55rem</span>;
+  <span class="prop">text-transform</span>: <span class="val">uppercase</span>;
+  <span class="prop">letter-spacing</span>: <span class="val">.1em</span>;
+  <span class="prop">opacity</span>: <span class="val">.4</span>;
+  <span class="prop">color</span>: <span class="val">#fff</span>;
+}
+
+<span class="cmt">/* المحتوى الثابت — أسفل الكارد دائماً */</span>
+<span class="sel">.card-body</span> {
+  <span class="prop">position</span>: <span class="val">absolute</span>;
+  <span class="prop">bottom</span>: <span class="val">0</span>; <span class="prop">left</span>: <span class="val">0</span>; <span class="prop">right</span>: <span class="val">0</span>;
+  <span class="prop">padding</span>: <span class="val">10px 12px</span>;
+  <span class="prop">background</span>: <span class="val">linear-gradient(
+    to top,
+    rgba(0,0,0,.9) 0%,
+    transparent 100%
+  )</span>;
+}
+
+<span class="cmt">/* Overlay كامل — يظهر عند hover */</span>
+<span class="sel">.card-overlay</span> {
+  <span class="prop">position</span>: <span class="val">absolute</span>;
+  <span class="prop">inset</span>: <span class="val">0</span>;
+  <span class="prop">background</span>: <span class="val">rgba(8,8,8,.93)</span>;
+  <span class="prop">border-radius</span>: <span class="val">13px</span>;
+  <span class="prop">opacity</span>: <span class="val">0</span>;              <span class="cmt">/* مخفي افتراضياً */</span>
+  <span class="prop">transition</span>: <span class="val">opacity .25s</span>;
+  <span class="prop">display</span>: <span class="val">flex</span>;
+  <span class="prop">flex-direction</span>: <span class="val">column</span>;
+  <span class="prop">justify-content</span>: <span class="val">center</span>;
+  <span class="prop">padding</span>: <span class="val">12px</span>;
+  <span class="prop">gap</span>: <span class="val">6px</span>;
+}
+<span class="sel">.card:hover .card-overlay</span> { <span class="prop">opacity</span>: <span class="val">1</span> }
+
+<span class="cmt">/* الشريط الملون الأسفل */</span>
+<span class="sel">.card-bar</span> {
+  <span class="prop">position</span>: <span class="val">absolute</span>;
+  <span class="prop">bottom</span>: <span class="val">0</span>; <span class="prop">left</span>: <span class="val">0</span>; <span class="prop">right</span>: <span class="val">0</span>;
+  <span class="prop">height</span>: <span class="val">2px</span>;
+  <span class="prop">border-radius</span>: <span class="val">0 0 13px 13px</span>;
+  <span class="prop">opacity</span>: <span class="val">0</span>;
+  <span class="prop">transition</span>: <span class="val">opacity .3s</span>;
+}
+<span class="sel">.card:hover .card-bar</span> { <span class="prop">opacity</span>: <span class="val">1</span> }
+<span class="sel">.bar-blue</span> { <span class="prop">background</span>: <span class="val">#3B82F6</span> }</pre>
+    </div>
+  </section>
+
+  <!-- SECTION 8: CARD STATES -->
+  <section class="section" id="card-states">
+    <div class="section-header">
+      <div class="section-num"></div>
+      <div>
+        <h2>حالات الكارد الثلاث</h2>
+        <p>Default → Hover → Hidden (بعد الفلترة)</p>
+      </div>
+    </div>
+
+    <div class="hover-demo">
+      <div class="hd-card">
+        <div class="hd-label">Default State</div>
+        <div class="hd-title">IMA Dashboard</div>
+        <div style="font-size:.65rem;color:var(--text3);margin-top:4px">Full-stack admin · Charts</div>
+      </div>
+      <div class="hd-card hover-state">
+        <div class="hd-label">Hover State</div>
+        <div class="hd-title">IMA Dashboard</div>
+        <div class="hd-desc">Comprehensive admin panel with real-time analytics and reporting suite.</div>
+        <div class="hd-tags">
+          <span class="hd-tag">React</span>
+          <span class="hd-tag">Redux</span>
+          <span class="hd-tag">Chart.js</span>
+        </div>
+        <div class="hd-bar"></div>
+      </div>
+    </div>
+
+    <table class="info-table">
+      <tr><th>الحالة</th><th>ما يحدث</th><th>CSS المسؤول</th></tr>
+      <tr>
+        <td><span class="badge badge-blue">Default</span></td>
+        <td><span class="desc">يظهر العنوان والـ Meta فقط، الحدود رمادية داكنة</span></td>
+        <td><span class="mono">.card-body visible, .card-overlay { opacity: 0 }</span></td>
+      </tr>
+      <tr>
+        <td><span class="badge badge-green">Hover</span></td>
+        <td><span class="desc">يرتفع الكارد 2px، الحدود تصبح زرقاء، الـ Overlay يظهر مع التقنيات</span></td>
+        <td><span class="mono">.card:hover → border-color, transform, .card-overlay { opacity: 1 }</span></td>
+      </tr>
+      <tr>
+        <td><span class="badge badge-red">Hidden</span></td>
+        <td><span class="desc">عند الضغط على فلتر لا يشمل هذا المشروع يختفي</span></td>
+        <td><span class="mono">.hidden { display: none !important }</span></td>
+      </tr>
+    </table>
+  </section>
+
+  <!-- SECTION 9: CARD TYPES -->
+  <section class="section" id="card-types">
+    <div class="section-header">
+      <div class="section-num"></div>
+      <div>
+        <h2>أنواع الكاردات حسب الفئة</h2>
+        <p>كيف يرتبط اللون بالفئة</p>
+      </div>
+    </div>
+
+    <div class="card-preview">
+      <div class="cp-card">
+        <div class="cp-icon"><i class="ti ti-layout-dashboard" aria-hidden="true"></i></div>
+        <div class="cp-title">Web App</div>
+        <div class="cp-sub">g-blue · icon-wrap.blue</div>
+      </div>
+      <div class="cp-card green">
+        <div class="cp-icon green"><i class="ti ti-device-mobile" aria-hidden="true"></i></div>
+        <div class="cp-title">Mobile App</div>
+        <div class="cp-sub">g-green · icon-wrap.green</div>
+      </div>
+      <div class="cp-card amber">
+        <div class="cp-icon amber"><i class="ti ti-database" aria-hidden="true"></i></div>
+        <div class="cp-title">Back-End</div>
+        <div class="cp-sub">g-amber · icon-wrap.amber</div>
+      </div>
+    </div>
+
+    <table class="info-table">
+      <tr><th>الفئة</th><th>كلاس الكارد</th><th>كلاس الأيقونة</th><th>كلاس الـ Tags</th><th>data-c</th></tr>
+      <tr>
+        <td><span class="badge badge-blue">Web App</span></td>
+        <td><span class="mono">g-blue</span></td>
+        <td><span class="mono">icon-wrap.blue</span></td>
+        <td><span class="mono">ot.blue</span></td>
+        <td><span class="mono">data-c="web"</span></td>
+      </tr>
+      <tr>
+        <td><span class="badge badge-green">Mobile</span></td>
+        <td><span class="mono">g-green</span></td>
+        <td><span class="mono">icon-wrap.green</span></td>
+        <td><span class="mono">ot.teal</span></td>
+        <td><span class="mono">data-c="mobile"</span></td>
+      </tr>
+      <tr>
+        <td><span class="badge badge-amber">Back-End</span></td>
+        <td><span class="mono">g-amber</span></td>
+        <td><span class="mono">icon-wrap.amber</span></td>
+        <td><span class="mono">ot.amber</span></td>
+        <td><span class="mono">data-c="backend"</span></td>
+      </tr>
+      <tr>
+        <td><span class="badge badge-red">Desktop</span></td>
+        <td><span class="mono">g-red</span></td>
+        <td><span class="mono">icon-wrap.red</span></td>
+        <td><span class="mono">ot.red</span></td>
+        <td><span class="mono">data-c="desktop"</span></td>
+      </tr>
+      <tr>
+        <td><span class="badge badge-teal">Front-End</span></td>
+        <td><span class="mono">g-teal</span></td>
+        <td><span class="mono">icon-wrap.teal</span></td>
+        <td><span class="mono">ot.teal</span></td>
+        <td><span class="mono">data-c="frontend"</span></td>
+      </tr>
+    </table>
+  </section>
+
+  <hr class="divider">
+
+  <!-- SECTION 10: FILTERS -->
+  <section class="section" id="filters">
+    <div class="section-header">
+      <div class="section-num"></div>
+      <div>
+        <h2>نظام الفلاتر</h2>
+        <p>JavaScript يربط الأزرار بالكاردات</p>
+      </div>
+    </div>
+
+    <p style="font-size:.82rem;color:var(--text2);margin-bottom:1rem">شكل الفلاتر في الواجهة:</p>
+    <div class="filter-demo">
+      <button class="fd-btn active">ALL <span style="opacity:.6;font-size:.65rem">10</span></button>
+      <button class="fd-btn">Web App</button>
+      <button class="fd-btn">Mobile</button>
+      <button class="fd-btn">Desktop</button>
+      <button class="fd-btn">Back-End</button>
+      <button class="fd-btn">Front-End</button>
+    </div>
+
+    <div class="code-block">
+      <div class="code-header">
+        <div class="code-dots"><span class="d1"></span><span class="d2"></span><span class="d3"></span></div>
+        <div class="code-lang">HTML — Filter Buttons</div>
+      </div>
+<pre><span class="kw">&lt;div</span> <span class="prop">class</span>=<span class="str">"filters"</span> <span class="prop">id</span>=<span class="str">"filters"</span><span class="kw">&gt;</span>
+  <span class="cmt">&lt;!-- data-f = القيمة التي ستقارن بـ data-c في الكارد --&gt;</span>
+  <span class="kw">&lt;button</span> <span class="prop">class</span>=<span class="str">"fb on"</span> <span class="prop">data-f</span>=<span class="str">"all"</span><span class="kw">&gt;</span>
+    ALL<span class="kw">&lt;span</span> <span class="prop">class</span>=<span class="str">"n"</span><span class="kw">&gt;</span>10<span class="kw">&lt;/span&gt;</span>
+  <span class="kw">&lt;/button&gt;</span>
+  <span class="kw">&lt;button</span> <span class="prop">class</span>=<span class="str">"fb"</span> <span class="prop">data-f</span>=<span class="str">"web"</span><span class="kw">&gt;</span>
+    Web App<span class="kw">&lt;span</span> <span class="prop">class</span>=<span class="str">"n"</span><span class="kw">&gt;</span>3<span class="kw">&lt;/span&gt;</span>
+  <span class="kw">&lt;/button&gt;</span>
+  <span class="cmt">&lt;!-- ... باقي الأزرار --&gt;</span>
+<span class="kw">&lt;/div&gt;</span></pre>
+    </div>
+
+    <div class="code-block">
+      <div class="code-header">
+        <div class="code-dots"><span class="d1"></span><span class="d2"></span><span class="d3"></span></div>
+        <div class="code-lang">JavaScript — Filter Logic</div>
+      </div>
+<pre><span class="kw">const</span> <span class="prop">fbs</span>   = document.querySelectorAll(<span class="str">'.fb'</span>);
+<span class="kw">const</span> <span class="prop">cards</span> = document.querySelectorAll(<span class="str">'.card'</span>);
+<span class="kw">const</span> <span class="prop">cnt</span>   = document.getElementById(<span class="str">'cnt'</span>);
+
+fbs.forEach(<span class="prop">btn</span> =&gt; {
+  btn.addEventListener(<span class="str">'click'</span>, () =&gt; {
+
+    <span class="cmt">// 1. أزل كلاس .on من جميع الأزرار</span>
+    fbs.forEach(<span class="prop">b</span> =&gt; b.classList.remove(<span class="str">'on'</span>));
+
+    <span class="cmt">// 2. أضف .on للزر المضغوط</span>
+    btn.classList.add(<span class="str">'on'</span>);
+
+    <span class="cmt">// 3. اقرأ قيمة الفلتر</span>
+    <span class="kw">const</span> <span class="prop">f</span> = btn.dataset.f;
+
+    <span class="cmt">// 4. مرر كل الكاردات</span>
+    <span class="kw">let</span> <span class="prop">v</span> = <span class="val">0</span>;
+    cards.forEach(<span class="prop">card</span> =&gt; {
+      <span class="cmt">// إذا "all" أو نوع الكارد يطابق الفلتر</span>
+      <span class="kw">const</span> <span class="prop">show</span> = f === <span class="str">'all'</span> || card.dataset.c === f;
+      card.classList.toggle(<span class="str">'hidden'</span>, !show);
+      <span class="kw">if</span> (show) v++;
+    });
+
+    <span class="cmt">// 5. حدّث العداد</span>
+    cnt.textContent = v;
+  });
+});</pre>
+    </div>
+
+    <div class="callout callout-green">
+      <div class="callout-icon">🔑</div>
+      <div class="callout-body">
+        <strong>العلاقة الأساسية:</strong> زر الفلتر يحمل <code style="color:var(--green);font-family:JetBrains Mono,monospace">data-f="web"</code>، والكارد يحمل <code style="color:var(--green);font-family:JetBrains Mono,monospace">data-c="web"</code>. عند الضغط على الزر، يقارن JS القيمتين ويُخفي أو يُظهر الكارد.
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 11: HEADER -->
+  <section class="section" id="header">
+    <div class="section-header">
+      <div class="section-num"></div>
+      <div>
+        <h2>الهيدر وشريط التقنيات</h2>
+        <p>أول ما يراه الزائر</p>
+      </div>
+    </div>
+
+    <div class="code-block">
+      <div class="code-header">
+        <div class="code-dots"><span class="d1"></span><span class="d2"></span><span class="d3"></span></div>
+        <div class="code-lang">CSS — Header Styles</div>
+      </div>
+<pre><span class="sel">.port-header</span> {
+  <span class="prop">text-align</span>: <span class="val">center</span>;
+  <span class="prop">margin-bottom</span>: <span class="val">1.8rem</span>;
+}
+
+<span class="cmt">/* الخط فوق العنوان الصغير */</span>
+<span class="sel">.ph-eyebrow</span> {
+  <span class="prop">font-size</span>: <span class="val">.7rem</span>;
+  <span class="prop">font-weight</span>: <span class="val">700</span>;
+  <span class="prop">color</span>: <span class="val">#3B82F6</span>;
+  <span class="prop">letter-spacing</span>: <span class="val">.2em</span>;
+  <span class="prop">text-transform</span>: <span class="val">uppercase</span>;
+}
+
+<span class="cmt">/* العنوان الرئيسي */</span>
+<span class="sel">.ph h1</span> {
+  <span class="prop">font-size</span>: <span class="val">1.9rem</span>;
+  <span class="prop">font-weight</span>: <span class="val">800</span>;
+  <span class="prop">letter-spacing</span>: <span class="val">-1px</span>;  <span class="cmt">/* ضغط الحروف */</span>
+}
+<span class="sel">.ph h1 em</span> { <span class="prop">color</span>: <span class="val">#3B82F6</span>; <span class="prop">font-style</span>: <span class="val">normal</span> }
+
+<span class="cmt">/* شريط التقنيات */</span>
+<span class="sel">.skill-strip</span> {
+  <span class="prop">display</span>: <span class="val">flex</span>;
+  <span class="prop">gap</span>: <span class="val">6px</span>;
+  <span class="prop">justify-content</span>: <span class="val">center</span>;
+  <span class="prop">flex-wrap</span>: <span class="val">wrap</span>;
+}
+<span class="sel">.sk</span> {
+  <span class="prop">font-size</span>: <span class="val">.65rem</span>;
+  <span class="prop">padding</span>: <span class="val">3px 10px</span>;
+  <span class="prop">border-radius</span>: <span class="val">999px</span>;
+  <span class="prop">border</span>: <span class="val">1px solid #1e1e1e</span>;
+}
+<span class="sel">.sk.react</span> { <span class="prop">color</span>: <span class="val">#378ADD</span>; <span class="prop">border-color</span>: <span class="val">#1a3a5c</span> }</pre>
+    </div>
+  </section>
+
+  <hr class="divider">
+
+  <!-- SECTION 12: FULL CODE -->
+  <section class="section" id="css-code">
+    <div class="section-header">
+      <div class="section-num"></div>
+      <div>
+        <h2>خطوات البناء من الصفر</h2>
+        <p>دليل تسلسلي خطوة بخطوة</p>
+      </div>
+    </div>
+
+    <ol class="steps">
+      <li>
+        <div class="step-num"></div>
+        <div class="step-body">
+          <div class="title">إعداد CSS Variables والخلفية</div>
+          <div class="desc">أول خطوة: ضع كل الألوان كـ CSS Variables في <code style="color:var(--blue);font-family:JetBrains Mono,monospace">:root</code>. ثم اضبط <code style="color:var(--blue)">background: #080808</code> على الـ wrapper الرئيسي.</div>
+        </div>
+      </li>
+      <li>
+        <div class="step-num"></div>
+        <div class="step-body">
+          <div class="title">بناء Grid Container</div>
+          <div class="desc">اكتب <code style="color:var(--blue);font-family:JetBrains Mono,monospace">display:grid; grid-template-columns:repeat(12,1fr); grid-auto-rows:100px; gap:8px</code>. هذه هي نواة التصميم كله.</div>
+        </div>
+      </li>
+      <li>
+        <div class="step-num"></div>
+        <div class="step-body">
+          <div class="title">إنشاء كلاسات s2 → s7 و r2 و r3</div>
+          <div class="desc">هذه الكلاسات تتحكم في حجم كل كارد. <code style="color:var(--blue);font-family:JetBrains Mono,monospace">.s7 { grid-column: span 7 }</code> — المشروع الرئيسي يأخذ 7 من 12.</div>
+        </div>
+      </li>
+      <li>
+        <div class="step-num"></div>
+        <div class="step-body">
+          <div class="title">بناء الكارد الأساسي بطبقاته</div>
+          <div class="desc">ابدأ بـ <code style="color:var(--blue);font-family:JetBrains Mono,monospace">position:relative; overflow:hidden</code> على الكارد. ثم أضف طبقة Glow، الأيقونة، النص الدائم، والـ Overlay المخفي.</div>
+        </div>
+      </li>
+      <li>
+        <div class="step-num"></div>
+        <div class="step-body">
+          <div class="title">إضافة تأثيرات Hover</div>
+          <div class="desc">على <code style="color:var(--blue);font-family:JetBrains Mono,monospace">.card:hover</code> أضف: تغيير لون الحدود، رفع الكارد 2px، وإظهار الـ Overlay بـ <code style="color:var(--blue)">opacity: 1</code>.</div>
+        </div>
+      </li>
+      <li>
+        <div class="step-num"></div>
+        <div class="step-body">
+          <div class="title">بناء نظام الفلاتر</div>
+          <div class="desc">أضف <code style="color:var(--blue);font-family:JetBrains Mono,monospace">data-c</code> على كل كارد و<code style="color:var(--blue)">data-f</code> على كل زر. كتابة JS يقارن القيمتين ويضيف/يزيل كلاس <code style="color:var(--blue)">.hidden</code>.</div>
+        </div>
+      </li>
+      <li>
+        <div class="step-num"></div>
+        <div class="step-body">
+          <div class="title">إضافة Responsive Design</div>
+          <div class="desc">في الشاشات الصغيرة (<code style="color:var(--blue);font-family:JetBrains Mono,monospace">max-width: 640px</code>) قلّص الشبكة لـ 2 أعمدة فقط واجعل كل الكاردات <code style="color:var(--blue)">span 2</code>.</div>
+        </div>
+      </li>
+    </ol>
+
+    <div class="callout callout-blue">
+      <div class="callout-icon">🎯</div>
+      <div class="callout-body">
+        <strong>الملخص النهائي:</strong> الفلسفة الكاملة هي — <strong>Bento Grid</strong> يعطي الحيوية البصرية، <strong>الطبقات</strong> تعطي العمق والتفاعل، <strong>الألوان المنضبطة</strong> تعطي الهوية، والـ <strong>JavaScript البسيط</strong> يعطي الوظيفة. كل عنصر له دور واضح.
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<script>
+const progress = document.getElementById('progress');
+window.addEventListener('scroll', () => {
+  const s = document.documentElement.scrollTop;
+  const h = document.documentElement.scrollHeight - window.innerHeight;
+  progress.style.width = (s / h * 100) + '%';
+});
+
+const navLinks = document.querySelectorAll('.nav-link');
+const sections = document.querySelectorAll('.section, .hero');
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      navLinks.forEach(l => l.classList.remove('active'));
+      const active = document.querySelector(`.nav-link[href="#${e.target.id}"]`);
+      if (active) active.classList.add('active');
+    }
+  });
+}, { threshold: 0.3 });
+sections.forEach(s => observer.observe(s));
+</script>
+</body>
+</html>

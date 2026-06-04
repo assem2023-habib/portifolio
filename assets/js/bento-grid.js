@@ -65,6 +65,11 @@
     var featLabel = lang === 'ar' ? 'المزايا' : 'Features';
     var viewText  = lang === 'ar' ? 'عرض التفاصيل ←' : 'View Details →';
 
+    var isDark = document.body.classList.contains('dark-mode');
+    var imgSrc = isDark
+      ? (project.image_dark || project.thumbnail_dark || project.image || project.thumbnail || '')
+      : (project.image || project.thumbnail || '');
+
     var tagsHtml = '';
     techs.slice(0, 8).forEach(function (t) {
       tagsHtml += '<span class="ot ' + c.key + '">' + t + '</span>';
@@ -77,6 +82,8 @@
 
     return ''
       + '<div class="' + cls + '" data-c="' + cat + '">'
+      + (imgSrc ? '  <img class="card-img" src="' + imgSrc + '" alt="' + title + '" loading="lazy">' : '')
+      + (imgSrc ? '  <div class="card-img-overlay"></div>' : '')
       + '  <div class="card-glow"></div>'
       + '  <div class="card-icon-wrap ' + c.key + '"><i class="bi ' + c.icon + '"></i></div>'
       + '  <div class="card-type">' + label + '</div>'

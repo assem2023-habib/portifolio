@@ -1,0 +1,682 @@
+/* ============================================================
+   CV 3D CUBOID — Standalone 3D Model for CV Details Page
+   Extracted from assem-cv-details-Cs.html
+   Colors use main site variables (--accent-color, etc.)
+   ============================================================ */
+
+/* ── Box Dimensions ── */
+.cv3d {
+  --box-w: 360px;
+  --box-h: 500px;
+  --box-d: 60px;
+}
+
+/* ── Scene ── */
+.cv3d-scene {
+  perspective: 1100px;
+  perspective-origin: 50% 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: none;
+}
+
+/* ── Rotating Wrapper ── */
+.cv3d-box {
+  width:  var(--box-w);
+  height: var(--box-h);
+  position: relative;
+  transform-style: preserve-3d;
+  animation: cv3dEntrance 1.2s cubic-bezier(.22,1,.36,1) both;
+  animation-delay: .3s;
+}
+.cv3d-box[data-js-active] { animation: none; }
+.cv3d-box.flipped { transform: perspective(1100px) rotateY(180deg) !important; animation: none !important; }
+.cv3d-box-transition { transition: transform .9s cubic-bezier(.175,.885,.32,1.1) !important; }
+
+/* ── All 6 Faces ── */
+.cv3d-face {
+  position: absolute;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  overflow: hidden;
+  border: 1px solid color-mix(in srgb, var(--default-color), transparent 90%);
+}
+
+/* ── FRONT ── */
+.cv3d-front {
+  width:  var(--box-w);
+  height: var(--box-h);
+  top: 0; left: 0;
+  transform: translateZ(calc(var(--box-d) / 2));
+  background: linear-gradient(160deg,
+    color-mix(in srgb, var(--surface-color), var(--accent-color) 8%) 0%,
+    color-mix(in srgb, var(--surface-color), black 3%) 60%,
+    var(--surface-color) 100%);
+  border-radius: 16px;
+  box-shadow:
+    0 0 0 1px color-mix(in srgb, var(--accent-color), transparent 80%),
+    0 32px 80px rgba(0,0,0,.5),
+    inset 0 1px 0 color-mix(in srgb, var(--default-color), transparent 93%);
+}
+
+/* ── BACK ── */
+.cv3d-back {
+  width:  var(--box-w);
+  height: var(--box-h);
+  top: 0; left: 0;
+  transform: rotateY(180deg) translateZ(calc(var(--box-d) / 2));
+  background: linear-gradient(160deg,
+    color-mix(in srgb, var(--surface-color), black 5%) 0%,
+    color-mix(in srgb, var(--surface-color), black 10%) 100%);
+  border-radius: 16px;
+  box-shadow: 0 0 0 1px color-mix(in srgb, var(--accent-color), transparent 85%);
+}
+
+/* ── RIGHT ── */
+.cv3d-side-right {
+  width:  var(--box-d);
+  height: var(--box-h);
+  top: 0;
+  left: calc(var(--box-w) + var(--box-d) / 2 * -1 + var(--box-d) / 2);
+  transform: rotateY(-90deg) translateZ(calc(var(--box-d) / -2));
+  background: linear-gradient(180deg,
+    color-mix(in srgb, var(--surface-color), var(--accent-color) 6%) 0%,
+    color-mix(in srgb, var(--surface-color), black 5%) 100%);
+  border: none;
+  border-left: 1px solid color-mix(in srgb, var(--accent-color), transparent 70%);
+  border-right: 1px solid color-mix(in srgb, var(--accent-color), transparent 90%);
+}
+
+/* ── LEFT ── */
+.cv3d-side-left {
+  width:  var(--box-d);
+  height: var(--box-h);
+  top: 0;
+  left: calc(var(--box-d) / -2);
+  transform: rotateY(90deg) translateZ(calc(var(--box-d) / -2));
+  background: linear-gradient(180deg,
+    color-mix(in srgb, var(--surface-color), black 3%) 0%,
+    color-mix(in srgb, var(--surface-color), black 8%) 100%);
+  border: none;
+  border-left: 1px solid color-mix(in srgb, var(--accent-color), transparent 90%);
+  border-right: 1px solid color-mix(in srgb, var(--accent-color), transparent 70%);
+}
+
+/* ── TOP ── */
+.cv3d-side-top {
+  width:  var(--box-w);
+  height: var(--box-d);
+  top:  calc(var(--box-d) / -2);
+  left: 0;
+  transform: rotateX(90deg) translateZ(calc(var(--box-d) / -2));
+  background: linear-gradient(90deg,
+    color-mix(in srgb, var(--surface-color), var(--accent-color) 10%) 0%,
+    color-mix(in srgb, var(--surface-color), black 3%) 50%,
+    color-mix(in srgb, var(--surface-color), var(--accent-color) 10%) 100%);
+  border: none;
+  border-top: 1px solid color-mix(in srgb, var(--accent-color), transparent 60%);
+}
+
+/* ── BOTTOM ── */
+.cv3d-side-bottom {
+  width:  var(--box-w);
+  height: var(--box-d);
+  top:  calc(var(--box-h) - var(--box-d) / 2);
+  left: 0;
+  transform: rotateX(-90deg) translateZ(calc(var(--box-d) / -2));
+  background: linear-gradient(90deg,
+    color-mix(in srgb, var(--surface-color), black 6%) 0%,
+    color-mix(in srgb, var(--surface-color), black 10%) 50%,
+    color-mix(in srgb, var(--surface-color), black 6%) 100%);
+  border: none;
+}
+
+/* ── Edge Glow Strips ── */
+.cv3d-side-right::after,
+.cv3d-side-left::after {
+  content: '';
+  position: absolute;
+  top: 15%; bottom: 15%;
+  width: 1px;
+  background: linear-gradient(to bottom, transparent, var(--accent-color), transparent);
+  opacity: .5;
+  animation: cv3dEdgePulse 3s ease-in-out infinite;
+}
+.cv3d-side-right::after { right: 0; }
+.cv3d-side-left::after  { left: 0; animation-delay: 1.5s; }
+
+/* ── Top Face Accent Line ── */
+.cv3d-side-top::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to right,
+    transparent 0%,
+    color-mix(in srgb, var(--accent-color), transparent 60%) 30%,
+    color-mix(in srgb, var(--accent-color), transparent 40%) 50%,
+    color-mix(in srgb, var(--accent-color), transparent 60%) 70%,
+    transparent 100%);
+  animation: cv3dTopGlow 3s ease-in-out infinite;
+}
+
+/* ── Front Face Content ── */
+.cv3d-front-inner {
+  position: relative;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.cv3d-noise {
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+  opacity: 0.4;
+  pointer-events: none;
+}
+
+.cv3d-glow {
+  position: absolute;
+  top: -60px; right: -40px;
+  width: 240px; height: 240px;
+  background: radial-gradient(circle, color-mix(in srgb, var(--accent-color), transparent 82%) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+/* ── Avatar ── */
+.cv3d-avatar {
+  width: 72px; height: 72px;
+  border-radius: 16px;
+  background: linear-gradient(135deg,
+    color-mix(in srgb, var(--surface-color), var(--accent-color) 20%) 0%,
+    color-mix(in srgb, var(--surface-color), var(--accent-color) 5%) 100%);
+  border: 2px solid color-mix(in srgb, var(--accent-color), transparent 70%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Syne', sans-serif;
+  font-size: 1.6rem;
+  font-weight: 800;
+  color: var(--accent-color);
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--accent-color), transparent 94%);
+}
+
+.cv3d-top {
+  padding: 2rem;
+  flex-shrink: 0;
+}
+
+.cv3d-name {
+  font-family: 'Syne', sans-serif;
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--default-color);
+  margin-top: .8rem;
+}
+
+.cv3d-role {
+  font-size: .75rem;
+  color: var(--accent-color);
+  margin-top: 3px;
+  font-weight: 500;
+}
+
+.cv3d-divider {
+  height: 1px;
+  background: linear-gradient(to right, color-mix(in srgb, var(--default-color), transparent 90%), transparent);
+  margin: 1.2rem 0;
+}
+
+/* ── Stats Grid ── */
+.cv3d-stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1px;
+  background: color-mix(in srgb, var(--default-color), transparent 94%);
+  border-radius: 10px;
+  overflow: hidden;
+}
+.cv3d-stat {
+  background: color-mix(in srgb, var(--surface-color), transparent 30%);
+  padding: .8rem .5rem;
+  text-align: center;
+}
+.cv3d-stat-n {
+  font-family: 'Syne', sans-serif;
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: var(--accent-color);
+}
+.cv3d-stat-l {
+  font-size: .58rem;
+  color: var(--default-color);
+  opacity: .5;
+  text-transform: uppercase;
+  letter-spacing: .08em;
+  margin-top: 2px;
+}
+
+/* ── Skills Pills ── */
+.cv3d-pills-wrap {
+  padding: 1rem 2rem;
+  flex: 1;
+}
+.cv3d-pills-label {
+  font-size: .6rem;
+  text-transform: uppercase;
+  letter-spacing: .15em;
+  color: var(--default-color);
+  opacity: .5;
+  margin-bottom: .6rem;
+  font-family: 'DM Mono', monospace;
+}
+.cv3d-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+}
+.cv3d-pill {
+  font-size: .62rem;
+  padding: 3px 10px;
+  border-radius: 999px;
+  border: 1px solid;
+  font-family: 'DM Mono', monospace;
+  font-weight: 500;
+}
+.cv3d-pill-accent {
+  background: color-mix(in srgb, var(--accent-color), transparent 88%);
+  color: var(--accent-color);
+  border-color: color-mix(in srgb, var(--accent-color), transparent 75%);
+}
+.cv3d-pill-cyan {
+  background: color-mix(in srgb, color-mix(in srgb, var(--accent-color), skyblue 30%), transparent 88%);
+  color: color-mix(in srgb, var(--accent-color), skyblue 30%);
+  border-color: color-mix(in srgb, color-mix(in srgb, var(--accent-color), skyblue 30%), transparent 75%);
+}
+.cv3d-pill-teal {
+  background: color-mix(in srgb, var(--accent-color), transparent 88%);
+  color: color-mix(in srgb, var(--accent-color), white 30%);
+  border-color: color-mix(in srgb, var(--accent-color), transparent 75%);
+}
+.cv3d-pill-amber {
+  background: color-mix(in srgb, #c8860a, transparent 88%);
+  color: #e8b84a;
+  border-color: color-mix(in srgb, #c8860a, transparent 75%);
+}
+.cv3d-pill-green {
+  background: color-mix(in srgb, #2a9d5c, transparent 88%);
+  color: #6ec49a;
+  border-color: color-mix(in srgb, #2a9d5c, transparent 75%);
+}
+.cv3d-pill-rose {
+  background: color-mix(in srgb, #c0392b, transparent 88%);
+  color: #f08080;
+  border-color: color-mix(in srgb, #c0392b, transparent 75%);
+}
+
+/* ── Flip Hint ── */
+.cv3d-flip-hint {
+  position: absolute;
+  bottom: 16px;
+  right: 16px;
+  font-size: .6rem;
+  color: var(--default-color);
+  opacity: .4;
+  font-family: 'DM Mono', monospace;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+.cv3d-flip-hint span {
+  width: 18px; height: 18px;
+  border: 1px solid;
+  border-color: var(--default-color);
+  opacity: .4;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: .55rem;
+}
+
+/* ── Front Flip Button ── */
+.cv3d-flip-btn {
+  position: absolute;
+  bottom: 16px;
+  left: 16px;
+  background: color-mix(in srgb, var(--default-color), transparent 95%);
+  border: 1px solid color-mix(in srgb, var(--default-color), transparent 88%);
+  color: var(--default-color);
+  font-size: .62rem;
+  padding: 5px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-family: 'DM Mono', monospace;
+  transition: all .2s;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  z-index: 5;
+}
+.cv3d-flip-btn:hover {
+  background: color-mix(in srgb, var(--accent-color), transparent 85%);
+  border-color: var(--accent-color);
+  color: var(--accent-color);
+}
+
+/* ── Back Face Content ── */
+.cv3d-back-header {
+  padding: 1.5rem 2rem 1rem;
+  border-bottom: 1px solid color-mix(in srgb, var(--default-color), transparent 94%);
+}
+.cv3d-back-label {
+  font-family: 'DM Mono', monospace;
+  font-size: .6rem;
+  color: var(--accent-color);
+  text-transform: uppercase;
+  letter-spacing: .2em;
+}
+.cv3d-back-title {
+  font-family: 'Syne', sans-serif;
+  font-size: 1rem;
+  font-weight: 700;
+  margin-top: 3px;
+  color: var(--default-color);
+}
+.cv3d-back-projects {
+  padding: 1rem 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  overflow-y: auto;
+  max-height: 380px;
+}
+.cv3d-back-project {
+  background: color-mix(in srgb, var(--default-color), transparent 97%);
+  border: 1px solid color-mix(in srgb, var(--default-color), transparent 94%);
+  border-radius: 10px;
+  padding: .8rem 1rem;
+  transition: all .2s;
+}
+.cv3d-back-project:hover {
+  border-color: color-mix(in srgb, var(--accent-color), transparent 70%);
+  background: color-mix(in srgb, var(--accent-color), transparent 95%);
+}
+.cv3d-proj-name {
+  font-size: .78rem;
+  font-weight: 600;
+  color: var(--default-color);
+  margin-bottom: 3px;
+}
+.cv3d-proj-desc {
+  font-size: .65rem;
+  color: var(--default-color);
+  opacity: .5;
+  line-height: 1.5;
+}
+.cv3d-proj-tag {
+  display: inline-flex;
+  margin-top: 5px;
+  font-size: .58rem;
+  padding: 2px 8px;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--accent-color), transparent 85%);
+  color: var(--accent-color);
+  border: 1px solid color-mix(in srgb, var(--accent-color), transparent 80%);
+  font-family: 'DM Mono', monospace;
+}
+
+/* ── Back Flip Button ── */
+.cv3d-back-btn {
+  position: absolute;
+  bottom: 16px;
+  left: 16px;
+  background: color-mix(in srgb, var(--default-color), transparent 95%);
+  border: 1px solid color-mix(in srgb, var(--default-color), transparent 88%);
+  color: var(--default-color);
+  font-size: .62rem;
+  padding: 5px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-family: 'DM Mono', monospace;
+  transition: all .2s;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  z-index: 5;
+}
+.cv3d-back-btn:hover {
+  background: color-mix(in srgb, var(--accent-color), transparent 85%);
+  border-color: var(--accent-color);
+  color: var(--accent-color);
+}
+
+/* ── Animations ── */
+@keyframes cv3dEntrance {
+  0%   { opacity:0; transform: perspective(1100px) rotateX(60deg) rotateY(-40deg) translateY(80px) scale(.85); }
+  60%  { opacity:1; }
+  100% { transform: perspective(1100px) rotateX(12deg) rotateY(-18deg) translateY(0) scale(1); }
+}
+
+@keyframes cv3dEdgePulse {
+  0%,100% { opacity: .4; }
+  50%     { opacity: 1; box-shadow: 0 0 8px var(--accent-color); }
+}
+
+@keyframes cv3dTopGlow {
+  0%,100% { opacity: .6; }
+  50%     { opacity: 1; }
+}
+
+@keyframes cv3dHintPulse {
+  0%,100% { opacity: .3; transform: rotateY(0deg); }
+  50%     { opacity: .8; transform: rotateY(25deg); }
+}
+
+/* ── Hero Section for CV Details Page ── */
+.cv3d-hero {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4rem 2rem;
+  perspective: 1200px;
+  position: relative;
+}
+.cv3d-hero-inner {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4rem;
+  align-items: center;
+  max-width: 1100px;
+  width: 100%;
+}
+
+/* ── Hero Text ── */
+.cv3d-text { position: relative; }
+.cv3d-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: 'DM Mono', monospace;
+  font-size: .65rem;
+  color: var(--accent-color);
+  letter-spacing: .2em;
+  text-transform: uppercase;
+  background: color-mix(in srgb, var(--accent-color), transparent 90%);
+  border: 1px solid color-mix(in srgb, var(--accent-color), transparent 80%);
+  padding: 5px 14px;
+  border-radius: 999px;
+  margin-bottom: 1.5rem;
+  animation: cv3dFadeUp .8s ease both;
+}
+.cv3d-tag::before {
+  content: '';
+  width: 6px; height: 6px;
+  background: var(--accent-color);
+  border-radius: 50%;
+  display: inline-block;
+  animation: cv3dPulse 2s infinite;
+}
+@keyframes cv3dPulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.4;transform:scale(1.5)} }
+
+.cv3d-name-display {
+  font-family: 'Syne', sans-serif;
+  font-size: clamp(2.4rem, 5vw, 4rem);
+  font-weight: 800;
+  line-height: 1.05;
+  letter-spacing: -2px;
+  animation: cv3dFadeUp .8s .1s ease both;
+}
+.cv3d-name-display .accent {
+  background: linear-gradient(135deg, var(--accent-color), color-mix(in srgb, var(--accent-color), skyblue 30%));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.cv3d-role-display {
+  font-size: 1rem;
+  color: var(--default-color);
+  opacity: .7;
+  margin-top: .8rem;
+  font-weight: 300;
+  letter-spacing: .05em;
+  animation: cv3dFadeUp .8s .2s ease both;
+}
+.cv3d-location {
+  font-family: 'DM Mono', monospace;
+  font-size: .72rem;
+  color: var(--default-color);
+  opacity: .45;
+  margin-top: .5rem;
+  animation: cv3dFadeUp .8s .25s ease both;
+}
+.cv3d-actions {
+  display: flex;
+  gap: 12px;
+  margin-top: 2rem;
+  animation: cv3dFadeUp .8s .35s ease both;
+}
+.cv3d-btn-primary {
+  background: var(--accent-color);
+  color: var(--contrast-color);
+  border: none;
+  padding: 10px 22px;
+  border-radius: 8px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: .82rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all .25s;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+}
+.cv3d-btn-primary:hover {
+  background: color-mix(in srgb, var(--accent-color), white 10%);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px color-mix(in srgb, var(--accent-color), transparent 65%);
+}
+.cv3d-btn-ghost {
+  background: transparent;
+  color: var(--default-color);
+  border: 1px solid color-mix(in srgb, var(--default-color), transparent 88%);
+  padding: 10px 22px;
+  border-radius: 8px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: .82rem;
+  cursor: pointer;
+  transition: all .25s;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+}
+.cv3d-btn-ghost:hover {
+  border-color: var(--accent-color);
+  color: var(--accent-color);
+}
+
+@keyframes cv3dFadeUp {
+  from { opacity:0; transform:translateY(20px); }
+  to { opacity:1; transform:translateY(0); }
+}
+
+/* ── Hero Text Lines Reveal ── */
+.cv3d-line-wrap {
+  overflow: hidden;
+  display: block;
+}
+.cv3d-line {
+  display: block;
+  animation: cv3dLineSlideUp .9s cubic-bezier(.22,1,.36,1) both;
+}
+.cv3d-line:nth-child(2) { animation-delay: .12s; }
+
+@keyframes cv3dLineSlideUp {
+  from { transform: translateY(110%); opacity: 0; }
+  to   { transform: translateY(0);    opacity: 1; }
+}
+
+/* ── Dark Mode ── */
+body.dark-mode .cv3d-front {
+  background: linear-gradient(160deg, color-mix(in srgb, #1a1a1a, var(--accent-color) 8%) 0%, #0d1520 60%, #0a1018 100%);
+  box-shadow: 0 0 0 1px color-mix(in srgb, var(--accent-color), transparent 80%), 0 32px 80px rgba(0,0,0,.7), inset 0 1px 0 color-mix(in srgb, var(--default-color), transparent 93%);
+}
+body.dark-mode .cv3d-back {
+  background: linear-gradient(160deg, #0c1828, #060e18);
+  box-shadow: 0 0 0 1px color-mix(in srgb, var(--accent-color), transparent 85%);
+}
+body.dark-mode .cv3d-side-right {
+  background: linear-gradient(180deg, color-mix(in srgb, #0a1018, var(--accent-color) 8%) 0%, #060e18 100%);
+}
+body.dark-mode .cv3d-side-left {
+  background: linear-gradient(180deg, color-mix(in srgb, #0a1828, var(--accent-color) 3%) 0%, #040c14 100%);
+}
+body.dark-mode .cv3d-side-top {
+  background: linear-gradient(90deg, color-mix(in srgb, #0a1828, var(--accent-color) 10%) 0%, #040c14 50%, color-mix(in srgb, #0a1828, var(--accent-color) 10%) 100%);
+}
+body.dark-mode .cv3d-side-bottom {
+  background: linear-gradient(90deg, #0d1520, #060c14, #0d1520);
+}
+body.dark-mode .cv3d-stat {
+  background: color-mix(in srgb, #1a1a1a, transparent 20%);
+}
+body.dark-mode .cv3d-avatar {
+  background: linear-gradient(135deg, #0a2240, #061830);
+  border-color: color-mix(in srgb, var(--accent-color), transparent 70%);
+}
+
+/* ── Responsive ── */
+@media (max-width: 768px) {
+  .cv3d-hero-inner {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+  .cv3d {
+    --box-w: 300px;
+    --box-h: 480px;
+    --box-d: 48px;
+  }
+  .cv3d-scene {
+    width:  var(--box-w);
+    height: var(--box-h);
+    margin: 0 auto;
+  }
+  .cv3d-hero {
+    padding: 2rem 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .cv3d {
+    --box-w: 280px;
+    --box-h: 440px;
+    --box-d: 42px;
+  }
+  .cv3d-name-display { font-size: 2rem; }
+}

@@ -110,6 +110,17 @@ function createCVCarouselElement(cv, i) {
       }
     }
 
+    // View details link
+    const detailsLink = cardClone.querySelector('#cv-details-link');
+    if (detailsLink) {
+      detailsLink.href = 'cv-details.html?id=' + cv.id;
+      const lang = currentCVLang || localStorage.getItem('portfolio_language') || 'en';
+      const textSpan = detailsLink.querySelector('.cv-details-text');
+      if (textSpan) {
+        textSpan.textContent = lang === 'ar' ? 'عرض التفاصيل' : 'View Details';
+      }
+    }
+
   // Back side
   cardClone.querySelector('.back-title').textContent = text.title;
   cardClone.querySelector('.back-num').textContent = (i + 1).toString().padStart(2, '0');

@@ -231,6 +231,32 @@ body.dark-mode .cv-carousel-card .cv-description {
   box-shadow: 0 6px 20px rgba(108, 99, 255, 0.25);
 }
 
+.cv-carousel-card .cv-details-link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  margin-top: 8px;
+  padding: 6px 12px;
+  font-size: 11px;
+  font-weight: 500;
+  border-radius: 8px;
+  color: rgba(255,255,255,0.45) !important;
+  text-decoration: none;
+  transition: all 0.25s;
+  font-family: var(--nav-font);
+}
+.cv-carousel-card .cv-details-link:hover {
+  color: var(--accent-color) !important;
+  background: color-mix(in srgb, var(--accent-color), transparent 90%);
+}
+body.dark-mode .cv-carousel-card .cv-details-link {
+  color: rgba(255,255,255,0.35) !important;
+}
+body.dark-mode .cv-carousel-card .cv-details-link:hover {
+  color: var(--accent-color) !important;
+}
+
 /* ── Back Side Improved ── */
 .cv-carousel-card .card-back {
   position: absolute;

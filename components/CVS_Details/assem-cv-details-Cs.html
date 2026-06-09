@@ -1,0 +1,2777 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Assem Adel Habib — Full Stack Developer</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+/* ===========================
+   ROOT & RESET
+=========================== */
+:root {
+  /* App brand accent — fixed, never changes */
+  --accent:        #0563bb;
+  --accent-light:  #1a7fd4;
+  --accent-dim:    rgba(5,99,187,0.14);
+  --accent-border: rgba(5,99,187,0.28);
+
+  /* Backgrounds — layered depth */
+  --void:    #1a1a1a;
+  --dark1:   #161616;
+  --dark2:   #1a1a1a;
+  --dark3:   #222222;
+  --surface: #2d2d2d;
+
+  /* Borders */
+  --border:  rgba(255,255,255,0.06);
+  --border2: rgba(255,255,255,0.11);
+
+  /* Typography */
+  --text:  #ffffff;
+  --text2: #b0b0b0;
+  --text3: #666666;
+
+  /* Accent aliases — everything "blue" maps to accent */
+  --blue:  #0563bb;
+  --blue2: #1a7fd4;
+
+  /* Secondary palette derived from accent */
+  --cyan:  #0e8fd4;
+  --teal:  #0a7abf;
+  --green: #2a9d5c;
+  --ember: #c8860a;
+  --rose:  #c0392b;
+
+  /* Glow helpers */
+  --glow-blue: rgba(5,99,187,0.13);
+  --glow-cyan: rgba(14,143,212,0.10);
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--void);
+  color: var(--text);
+  font-family: 'DM Sans', sans-serif;
+  overflow-x: hidden;
+  cursor: none;
+}
+
+/* ===========================
+   CUSTOM CURSOR
+=========================== */
+.cursor {
+  position: fixed;
+  width: 10px; height: 10px;
+  background: var(--blue);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9999;
+  transform: translate(-50%, -50%);
+  transition: transform 0.05s;
+  mix-blend-mode: screen;
+}
+.cursor-ring {
+  position: fixed;
+  width: 36px; height: 36px;
+  border: 1px solid rgba(5,99,187,0.5);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9998;
+  transform: translate(-50%, -50%);
+  transition: all 0.12s ease;
+}
+
+/* ===========================
+   PARTICLE CANVAS
+=========================== */
+#particles {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  opacity: 0.4;
+}
+
+/* ===========================
+   LAYOUT
+=========================== */
+.page {
+  position: relative;
+  z-index: 1;
+  min-height: 100vh;
+}
+
+/* ===========================
+   HERO — 3D CARD INTRO
+=========================== */
+.hero {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4rem 2rem;
+  perspective: 1200px;
+  position: relative;
+}
+
+.hero-inner {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4rem;
+  align-items: center;
+  max-width: 1100px;
+  width: 100%;
+}
+
+/* Left text */
+.hero-text { position: relative; }
+.hero-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: 'DM Mono', monospace;
+  font-size: .65rem;
+  color: var(--cyan);
+  letter-spacing: .2em;
+  text-transform: uppercase;
+  background: rgba(14,143,212,0.08);
+  border: 1px solid rgba(14,143,212,0.2);
+  padding: 5px 14px;
+  border-radius: 999px;
+  margin-bottom: 1.5rem;
+  animation: fadeUp .8s ease both;
+}
+.hero-tag::before {
+  content: '';
+  width: 6px; height: 6px;
+  background: var(--cyan);
+  border-radius: 50%;
+  animation: pulse 2s infinite;
+}
+@keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.4;transform:scale(1.5)} }
+
+.hero-name {
+  font-family: 'Syne', sans-serif;
+  font-size: clamp(2.4rem, 5vw, 4rem);
+  font-weight: 800;
+  line-height: 1.05;
+  letter-spacing: -2px;
+  animation: fadeUp .8s .1s ease both;
+}
+.hero-name .accent { 
+  background: linear-gradient(135deg, var(--blue), var(--cyan));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.hero-role {
+  font-size: 1rem;
+  color: var(--text2);
+  margin-top: .8rem;
+  font-weight: 300;
+  letter-spacing: .05em;
+  animation: fadeUp .8s .2s ease both;
+}
+.hero-location {
+  font-family: 'DM Mono', monospace;
+  font-size: .72rem;
+  color: var(--text3);
+  margin-top: .5rem;
+  animation: fadeUp .8s .25s ease both;
+}
+.hero-actions {
+  display: flex;
+  gap: 12px;
+  margin-top: 2rem;
+  animation: fadeUp .8s .35s ease both;
+}
+.btn-primary {
+  background: var(--blue);
+  color: #fff;
+  border: none;
+  padding: 10px 22px;
+  border-radius: 8px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: .82rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all .25s;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+}
+.btn-primary:hover { background: var(--blue2); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(5,99,187,0.35); }
+.btn-ghost {
+  background: transparent;
+  color: var(--text2);
+  border: 1px solid var(--border2);
+  padding: 10px 22px;
+  border-radius: 8px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: .82rem;
+  cursor: pointer;
+  transition: all .25s;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+}
+.btn-ghost:hover { border-color: var(--blue); color: var(--blue); }
+
+/* =============================================
+   HERO — TRUE 3D BOX OBJECT
+   A real cuboid with 6 faces, mouse-tracked tilt
+   W=360  H=500  D=60 (depth)
+============================================= */
+:root {
+  --box-w: 360px;
+  --box-h: 500px;
+  --box-d: 60px;   /* depth of the box */
+}
+
+.card-3d-scene {
+  perspective: 1100px;
+  perspective-origin: 50% 50%;
+  animation: fadeUp .8s .2s ease both;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: none;
+}
+
+/* The rotating wrapper — real size, transform-style:preserve-3d */
+.card-3d {
+  width:  var(--box-w);
+  height: var(--box-h);
+  position: relative;
+  transform-style: preserve-3d;
+  cursor: none;
+  animation: boxEntrance 1.2s .3s cubic-bezier(.22,1,.36,1) both;
+}
+.card-3d[data-js-active] { animation: none; }
+
+@keyframes boxEntrance {
+  0%   { opacity:0; transform: perspective(1100px) rotateX(60deg) rotateY(-40deg) translateY(80px) scale(.85); }
+  60%  { opacity:1; }
+  100% { transform: perspective(1100px) rotateX(12deg) rotateY(-18deg) translateY(0) scale(1); }
+}
+
+/* Flip state — keeps box look but rotates to back face */
+.card-3d.flipped { transform: perspective(1100px) rotateY(180deg) !important; animation: none !important; }
+.card-3d-transition { transition: transform .9s cubic-bezier(.175,.885,.32,1.1) !important; }
+
+/* ── All 6 faces share these ── */
+.card-face {
+  position: absolute;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  overflow: hidden;
+  border: 1px solid rgba(255,255,255,0.10);
+}
+
+/* ── FRONT ── */
+/* ══════════════════════════════════════════════
+   3D BOX — standard CSS cuboid technique
+   All 6 faces positioned via translateZ after
+   rotating into place. No transform-origin tricks.
+   Box centre = midpoint of card-3d container.
+══════════════════════════════════════════════ */
+
+/* shared: all faces are absolute, same size as card */
+.card-face {
+  position: absolute;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  border: 1px solid rgba(255,255,255,0.10);
+  overflow: hidden;
+}
+
+/* ── FRONT ── push forward by half-depth */
+.card-front {
+  width:  var(--box-w);
+  height: var(--box-h);
+  top: 0; left: 0;
+  transform: translateZ(calc(var(--box-d) / 2));
+  background: linear-gradient(160deg, #181f2e 0%, #0d1520 60%, #0a1018 100%);
+  border-radius: 16px;
+  box-shadow:
+    0 0 0 1px rgba(5,99,187,.2),
+    0 32px 80px rgba(0,0,0,.7),
+    inset 0 1px 0 rgba(255,255,255,.07);
+}
+
+/* ── BACK ── flip Y, push forward by half-depth (now goes backward) */
+.card-back {
+  width:  var(--box-w);
+  height: var(--box-h);
+  top: 0; left: 0;
+  transform: rotateY(180deg) translateZ(calc(var(--box-d) / 2));
+  background: linear-gradient(160deg, #0c1828, #060e18);
+  border-radius: 16px;
+  box-shadow: 0 0 0 1px rgba(14,143,212,.15);
+}
+
+/* ── RIGHT ──
+   The right face width = depth of box.
+   We place it at left = box-w (right edge of card).
+   Then rotate -90° around Y so it faces right.
+   Then push it back by half its own width (= d/2)
+   so it's centred on the right edge.
+── */
+.card-side-right {
+  width:  var(--box-d);
+  height: var(--box-h);
+  top: 0;
+  left: calc(var(--box-w) + var(--box-d) / 2 * -1 + var(--box-d) / 2);
+  transform: rotateY(-90deg) translateZ(calc(var(--box-d) / -2));
+  background: linear-gradient(180deg, #0e1e34 0%, #060e18 100%);
+  border: none;
+  border-left: 1px solid rgba(5,99,187,.3);
+  border-right: 1px solid rgba(5,99,187,.1);
+}
+
+/* ── LEFT ──
+   Place at left = -d/2 (centred on left edge of card).
+   Rotate +90° around Y so it faces left.
+   Push back by d/2.
+── */
+.card-side-left {
+  width:  var(--box-d);
+  height: var(--box-h);
+  top: 0;
+  left: calc(var(--box-d) / -2);
+  transform: rotateY(90deg) translateZ(calc(var(--box-d) / -2));
+  background: linear-gradient(180deg, #0a1828 0%, #040c14 100%);
+  border: none;
+  border-left: 1px solid rgba(5,99,187,.1);
+  border-right: 1px solid rgba(5,99,187,.3);
+}
+
+/* ── TOP ──
+   Place at top = -d/2 (centred on top edge of card).
+   Rotate +90° around X so it faces up.
+   Push back by d/2.
+── */
+.card-side-top {
+  width:  var(--box-w);
+  height: var(--box-d);
+  top:  calc(var(--box-d) / -2);
+  left: 0;
+  transform: rotateX(90deg) translateZ(calc(var(--box-d) / -2));
+  background: linear-gradient(90deg, #1a2a44, #0a1828, #1a2a44);
+  border: none;
+  border-top: 1px solid rgba(5,99,187,.4);
+}
+
+/* ── BOTTOM ──
+   Place at top = box-h - d/2 (centred on bottom edge).
+   Rotate -90° around X so it faces down.
+   Push back by d/2.
+── */
+.card-side-bottom {
+  width:  var(--box-w);
+  height: var(--box-d);
+  top:  calc(var(--box-h) - var(--box-d) / 2);
+  left: 0;
+  transform: rotateX(-90deg) translateZ(calc(var(--box-d) / -2));
+  background: linear-gradient(90deg, #0d1520, #060c14, #0d1520);
+  border: none;
+}
+
+/* ── Edge glow strips on sides ── */
+.card-side-right::after,
+.card-side-left::after {
+  content: '';
+  position: absolute;
+  top: 15%; bottom: 15%;
+  width: 1px;
+  background: linear-gradient(to bottom, transparent, rgba(5,99,187,.6), transparent);
+  animation: edgePulse 3s ease-in-out infinite;
+}
+.card-side-right::after { right: 0; }
+.card-side-left::after  { left: 0; animation-delay: 1.5s; }
+
+@keyframes edgePulse {
+  0%,100% { opacity: .4; }
+  50%     { opacity: 1;  box-shadow: 0 0 8px rgba(5,99,187,.8); }
+}
+
+/* ── Top face accent line ── */
+.card-side-top::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to right,
+    transparent 0%,
+    rgba(5,99,187,.4) 30%,
+    rgba(26,127,212,.6) 50%,
+    rgba(5,99,187,.4) 70%,
+    transparent 100%
+  );
+  animation: topGlow 3s ease-in-out infinite;
+}
+@keyframes topGlow {
+  0%,100% { opacity: .6; }
+  50%     { opacity: 1; }
+}
+
+/* Card Front Content */
+.cf-top {
+  padding: 2rem;
+  position: relative;
+}
+.cf-noise {
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+  opacity: 0.4;
+  pointer-events: none;
+}
+.cf-glow {
+  position: absolute;
+  top: -60px; right: -40px;
+  width: 240px; height: 240px;
+  background: radial-gradient(circle, rgba(5,99,187,0.18) 0%, transparent 70%);
+  pointer-events: none;
+}
+.cf-avatar {
+  width: 72px; height: 72px;
+  border-radius: 16px;
+  background: linear-gradient(135deg, #0a2240, #061830);
+  border: 2px solid rgba(5,99,187,0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Syne', sans-serif;
+  font-size: 1.6rem;
+  font-weight: 800;
+  color: var(--blue2);
+  position: relative;
+  margin-bottom: 1rem;
+  box-shadow: 0 0 0 4px rgba(5,99,187,0.06);
+}
+.cf-name {
+  font-family: 'Syne', sans-serif;
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--text);
+}
+.cf-title {
+  font-size: .75rem;
+  color: var(--blue2);
+  margin-top: 3px;
+  font-weight: 500;
+}
+.cf-divider {
+  height: 1px;
+  background: linear-gradient(to right, var(--border2), transparent);
+  margin: 1.2rem 0;
+}
+.cf-stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1px;
+  background: var(--border);
+  border-radius: 10px;
+  overflow: hidden;
+}
+.cf-stat {
+  background: rgba(255,255,255,0.03);
+  padding: .8rem .5rem;
+  text-align: center;
+}
+.cf-stat-n {
+  font-family: 'Syne', sans-serif;
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: var(--blue2);
+}
+.cf-stat-l {
+  font-size: .58rem;
+  color: var(--text3);
+  text-transform: uppercase;
+  letter-spacing: .08em;
+  margin-top: 2px;
+}
+.cf-skills {
+  padding: 1rem 2rem;
+}
+.cf-skills-label {
+  font-size: .6rem;
+  text-transform: uppercase;
+  letter-spacing: .15em;
+  color: var(--text3);
+  margin-bottom: .6rem;
+  font-family: 'DM Mono', monospace;
+}
+.cf-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+}
+.cf-pill {
+  font-size: .62rem;
+  padding: 3px 10px;
+  border-radius: 999px;
+  border: 1px solid;
+  font-family: 'DM Mono', monospace;
+  font-weight: 500;
+}
+.pill-blue { background: rgba(5,99,187,.1); color: var(--blue2); border-color: rgba(5,99,187,.25); }
+.pill-cyan { background: rgba(14,143,212,.1); color: #7ab8f0; border-color: rgba(14,143,212,.25); }
+.pill-teal { background: rgba(10,122,191,.1); color: #7ab8f0; border-color: rgba(10,122,191,.25); }
+.pill-amber { background: rgba(200,134,10,.1); color: #e8b84a; border-color: rgba(200,134,10,.25); }
+.pill-green { background: rgba(42,157,92,.1); color: #6ec49a; border-color: rgba(42,157,92,.25); }
+.pill-rose { background: rgba(192,57,43,.1); color: #f08080; border-color: rgba(192,57,43,.25); }
+
+.cf-flip-hint {
+  position: absolute;
+  bottom: 16px;
+  right: 16px;
+  font-size: .6rem;
+  color: var(--text3);
+  font-family: 'DM Mono', monospace;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+.cf-flip-hint span {
+  width: 18px; height: 18px;
+  border: 1px solid var(--text3);
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: .55rem;
+}
+
+/* Card Back */
+.cb-header {
+  padding: 1.5rem 2rem 1rem;
+  border-bottom: 1px solid var(--border);
+}
+.cb-label {
+  font-family: 'DM Mono', monospace;
+  font-size: .6rem;
+  color: var(--cyan);
+  text-transform: uppercase;
+  letter-spacing: .2em;
+}
+.cb-title {
+  font-family: 'Syne', sans-serif;
+  font-size: 1rem;
+  font-weight: 700;
+  margin-top: 3px;
+}
+.cb-projects {
+  padding: 1rem 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  overflow-y: auto;
+  max-height: 380px;
+}
+.cb-project {
+  background: rgba(255,255,255,0.03);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: .8rem 1rem;
+  transition: all .2s;
+}
+.cb-project:hover { border-color: rgba(14,143,212,0.3); background: rgba(14,143,212,0.04); }
+.cb-proj-name {
+  font-size: .78rem;
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: 3px;
+}
+.cb-proj-desc {
+  font-size: .65rem;
+  color: var(--text3);
+  line-height: 1.5;
+}
+.cb-proj-tag {
+  display: inline-flex;
+  margin-top: 5px;
+  font-size: .58rem;
+  padding: 2px 8px;
+  border-radius: 999px;
+  background: rgba(14,143,212,0.1);
+  color: #7ab8f0;
+  border: 1px solid rgba(14,143,212,0.2);
+  font-family: 'DM Mono', monospace;
+}
+.cb-flip-hint {
+  position: absolute;
+  bottom: 16px;
+  right: 16px;
+  font-size: .6rem;
+  color: var(--text3);
+  font-family: 'DM Mono', monospace;
+}
+
+/* Flip button */
+.flip-btn {
+  position: absolute;
+  bottom: 16px;
+  left: 16px;
+  background: rgba(255,255,255,0.05);
+  border: 1px solid var(--border2);
+  color: var(--text2);
+  font-size: .62rem;
+  padding: 5px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-family: 'DM Mono', monospace;
+  transition: all .2s;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+.flip-btn:hover { background: rgba(5,99,187,0.1); border-color: var(--blue); color: var(--blue); }
+
+@keyframes fadeUp {
+  from { opacity:0; transform:translateY(20px); }
+  to { opacity:1; transform:translateY(0); }
+}
+
+/* ===========================
+   NAV DOTS
+=========================== */
+.nav-dots {
+  position: fixed;
+  left: 2rem;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  z-index: 100;
+}
+.nav-dot {
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: var(--text3);
+  cursor: pointer;
+  transition: all .3s;
+  position: relative;
+}
+.nav-dot.active {
+  background: var(--blue);
+  box-shadow: 0 0 8px var(--blue);
+  transform: scale(1.4);
+}
+.nav-dot::after {
+  content: attr(data-label);
+  position: absolute;
+  left: 18px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: .62rem;
+  color: var(--text3);
+  font-family: 'DM Mono', monospace;
+  white-space: nowrap;
+  opacity: 0;
+  transition: opacity .2s;
+}
+.nav-dot:hover::after, .nav-dot.active::after { opacity: 1; color: var(--blue); }
+
+/* section styles defined above in CONTENT SECTIONS block */
+.section-title {
+  font-family: 'Syne', sans-serif;
+  font-size: 2.2rem;
+  font-weight: 700;
+  letter-spacing: -1px;
+  margin-bottom: 3rem;
+  line-height: 1.1;
+}
+.section-title .line {
+  display: block;
+  color: var(--text2);
+  font-size: 1.1rem;
+  font-weight: 400;
+  letter-spacing: 0;
+  margin-top: .3rem;
+}
+
+/* ===========================
+   EXPERIENCE — TIMELINE 3D
+=========================== */
+.timeline {
+  position: relative;
+  padding-right: 2rem;
+}
+.timeline::before {
+  content: '';
+  position: absolute;
+  right: 0;
+  top: 0; bottom: 0;
+  width: 1px;
+  background: linear-gradient(to bottom, transparent, var(--blue), transparent);
+}
+.tl-item {
+  position: relative;
+  padding: 0 2.5rem 3rem 0;
+  will-change: opacity, transform;
+}
+
+/* tl-points stagger — triggered when JS adds .visible */
+.tl-points li {
+  opacity: 0;
+  transform: translateX(-10px);
+  transition: opacity .5s ease, transform .5s ease;
+}
+.tl-item.visible .tl-points li:nth-child(1) { opacity:1; transform:none; transition-delay:.10s }
+.tl-item.visible .tl-points li:nth-child(2) { opacity:1; transform:none; transition-delay:.18s }
+.tl-item.visible .tl-points li:nth-child(3) { opacity:1; transform:none; transition-delay:.26s }
+.tl-item.visible .tl-points li:nth-child(4) { opacity:1; transform:none; transition-delay:.34s }
+.tl-item.visible .tl-points li:nth-child(5) { opacity:1; transform:none; transition-delay:.42s }
+.tl-item.visible .tl-points li:nth-child(6) { opacity:1; transform:none; transition-delay:.50s }
+.tl-dot {
+  position: absolute;
+  right: -6px;
+  top: 8px;
+  width: 12px; height: 12px;
+  border-radius: 50%;
+  background: var(--blue);
+  border: 2px solid var(--dark1);
+  box-shadow: 0 0 12px var(--blue);
+}
+.tl-date {
+  font-family: 'DM Mono', monospace;
+  font-size: .65rem;
+  color: var(--blue);
+  text-transform: uppercase;
+  letter-spacing: .1em;
+  margin-bottom: .5rem;
+}
+.tl-title {
+  font-family: 'Syne', sans-serif;
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: .2rem;
+}
+.tl-company {
+  font-size: .78rem;
+  color: var(--text2);
+  margin-bottom: .8rem;
+}
+.tl-points {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+.tl-points li {
+  font-size: .78rem;
+  color: var(--text3);
+  padding-right: 1rem;
+  position: relative;
+  line-height: 1.6;
+}
+.tl-points li::before {
+  content: '→';
+  position: absolute;
+  right: 0;
+  color: var(--blue);
+  font-size: .7rem;
+}
+
+/* ===========================
+   SKILLS — SLIDE IN FROM SIDES
+=========================== */
+.skills-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 16px;
+}
+
+.skill-card-slot {
+  overflow: hidden; /* clip the sliding card */
+}
+
+.skill-card {
+  background: var(--dark2);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 1.4rem;
+  transform-style: preserve-3d;
+  perspective: 600px;
+  cursor: default;
+  will-change: opacity, transform;
+  /* Start hidden — JS sets initial off-screen position */
+  opacity: 0;
+}
+
+/* Visible state after animation */
+.skill-card.card-visible {
+  opacity: 1;
+}
+
+.skill-card.card-visible:hover {
+  border-color: rgba(5,99,187,.35);
+}
+.sc-icon {
+  width: 40px; height: 40px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.1rem;
+  margin-bottom: 1rem;
+}
+.sc-icon.blue { background: rgba(5,99,187,.12); border: 1px solid rgba(5,99,187,.2); }
+.sc-icon.cyan { background: rgba(14,143,212,.12); border: 1px solid rgba(14,143,212,.2); }
+.sc-icon.teal { background: rgba(10,122,191,.12); border: 1px solid rgba(10,122,191,.2); }
+.sc-icon.amber { background: rgba(200,134,10,.12); border: 1px solid rgba(200,134,10,.2); }
+.sc-icon.green { background: rgba(42,157,92,.12); border: 1px solid rgba(42,157,92,.2); }
+.sc-icon.rose { background: rgba(192,57,43,.12); border: 1px solid rgba(192,57,43,.2); }
+.sc-title {
+  font-family: 'Syne', sans-serif;
+  font-size: .88rem;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: .8rem;
+}
+.sc-pills { display: flex; flex-wrap: wrap; gap: 5px; }
+
+/* ===========================
+   PROJECTS — 3D FLIP CARDS
+=========================== */
+/* ===============================
+   PROJECTS — redesigned card system
+   Each card has its own strong accent
+   that stands out against dark bg
+================================ */
+
+/* ── Per-card accent palette ── */
+/* p1: accent blue  (app brand)  */
+/* p2: cyan-azure               */
+/* p3: warm amber               */
+/* p4: emerald green            */
+:root {
+  --p1-base: #0563bb; --p1-light: #3a9fe8; --p1-dim: rgba(5,99,187,.18);  --p1-border: rgba(5,99,187,.40);
+  --p2-base: #0891b2; --p2-light: #38bdf8; --p2-dim: rgba(8,145,178,.18); --p2-border: rgba(8,145,178,.40);
+  --p3-base: #b45309; --p3-light: #f59e0b; --p3-dim: rgba(180,83,9,.18);  --p3-border: rgba(180,83,9,.40);
+  --p4-base: #047857; --p4-light: #10b981; --p4-dim: rgba(4,120,87,.18);  --p4-border: rgba(4,120,87,.40);
+}
+
+.projects-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 24px;
+}
+
+/* Scene wrapper — JS tilt lives here */
+.proj-scene {
+  height: 300px;
+  perspective: 1000px;
+  position: relative;
+}
+
+/* Reveal wrapper — JS animates THIS for entrance/exit */
+.proj-reveal-wrap {
+  position: absolute;
+  inset: 0;
+  /* NO transform-style, NO preserve-3d */
+}
+
+/* Flip container — ONLY element with preserve-3d */
+.proj-card {
+  position: absolute;
+  inset: 0;
+  transform-style: preserve-3d;
+  transition: transform .75s cubic-bezier(.175,.885,.32,1.15);
+  cursor: pointer;
+}
+
+.proj-card:hover {
+  transform: rotateY(180deg);
+  transition: transform .75s cubic-bezier(.175,.885,.32,1.15);
+}
+
+/* Shared face rules — both faces fill the card exactly */
+.proj-face {
+  position: absolute;
+  inset: 0;
+  border-radius: 18px;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  border: 1px solid rgba(255,255,255,0.10);
+  overflow: hidden;
+}
+
+/* ── FRONT face ── */
+.proj-front {
+  /* No padding — proj-front-content handles layout */
+  display: flex;
+  flex-direction: column;
+  /* position inherited from .proj-face (absolute) */
+}
+
+/* Glow orb top-right on front */
+.proj-front::before {
+  content: '';
+  position: absolute;
+  top: -40px; right: -40px;
+  width: 160px; height: 160px;
+  border-radius: 50%;
+  filter: blur(48px);
+  opacity: .55;
+  pointer-events: none;
+}
+
+/* ── BACK face ── */
+.proj-back {
+  transform: rotateY(180deg);
+  padding: 1.6rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: .5rem;
+}
+/* Subtle diagonal stripe texture on back */
+.proj-back::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(
+    -55deg,
+    transparent,
+    transparent 12px,
+    rgba(255,255,255,.018) 12px,
+    rgba(255,255,255,.018) 13px
+  );
+  pointer-events: none;
+  border-radius: 18px;
+}
+
+/* ── Large ghost number ── */
+.proj-number {
+  font-family: 'Syne', sans-serif;
+  font-size: 4.5rem;
+  font-weight: 800;
+  line-height: 1;
+  margin-bottom: auto;
+  letter-spacing: -3px;
+  /* colour set per-card via inline style */
+}
+
+/* ── Project name on front ── */
+.proj-name {
+  font-family: 'Syne', sans-serif;
+  font-size: 1.15rem;
+  font-weight: 800;
+  color: #ffffff;
+  margin-bottom: .25rem;
+  letter-spacing: -.3px;
+}
+.proj-stack {
+  font-size: .67rem;
+  font-family: 'DM Mono', monospace;
+  font-weight: 500;
+  opacity: .75;
+}
+
+/* Hover cue */
+.proj-hover-hint {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  margin-top: 1rem;
+  font-size: .6rem;
+  font-family: 'DM Mono', monospace;
+  color: rgba(255,255,255,.3);
+  letter-spacing: .05em;
+}
+.proj-hint-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 18px; height: 18px;
+  border-radius: 4px;
+  border: 1px solid rgba(255,255,255,.2);
+  font-size: .65rem;
+  animation: hintPulse 2.4s ease-in-out infinite;
+}
+@keyframes hintPulse {
+  0%,100% { opacity: .3; transform: rotateY(0deg);   }
+  50%      { opacity: .8; transform: rotateY(25deg);  }
+}
+
+/* Project image cover on front */
+.proj-img {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  border-radius: 17px;
+  transition: transform .5s ease, opacity .4s ease;
+}
+.proj-card:hover .proj-img { transform: scale(1.04); opacity: .15; }
+
+/* Dark overlay on image — always present, stronger on hover */
+.proj-img-overlay {
+  position: absolute;
+  inset: 0;
+  border-radius: 17px;
+  background: linear-gradient(
+    to top,
+    rgba(0,0,0,.92) 0%,
+    rgba(0,0,0,.55) 50%,
+    rgba(0,0,0,.20) 100%
+  );
+  transition: background .4s ease;
+}
+.proj-card:hover .proj-img-overlay {
+  background: rgba(0,0,0,.88);
+}
+
+/* Front content sits above image */
+.proj-front-content {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  padding: 1.6rem;
+  z-index: 1;
+}
+
+/* View project button on back */
+.proj-view-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  margin-top: .8rem;
+  padding: 8px 18px;
+  border-radius: 8px;
+  border: 1px solid;
+  font-size: .72rem;
+  font-family: 'DM Mono', monospace;
+  font-weight: 600;
+  text-decoration: none;
+  letter-spacing: .04em;
+  transition: all .25s;
+  cursor: pointer;
+  width: fit-content;
+}
+.proj-view-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(0,0,0,.4);
+}
+.proj-view-btn .btn-arrow {
+  transition: transform .25s;
+}
+.proj-view-btn:hover .btn-arrow { transform: translateX(4px); }
+
+/* Per-card button colours */
+.proj-card-1 .proj-view-btn { background: rgba(5,99,187,.18);  color: #7ab8f0; border-color: rgba(5,99,187,.45);   }
+.proj-card-1 .proj-view-btn:hover { background: rgba(5,99,187,.35); }
+.proj-card-2 .proj-view-btn { background: rgba(8,145,178,.18); color: #38bdf8; border-color: rgba(8,145,178,.45);  }
+.proj-card-2 .proj-view-btn:hover { background: rgba(8,145,178,.35); }
+.proj-card-3 .proj-view-btn { background: rgba(180,83,9,.18);  color: #fbbf24; border-color: rgba(180,83,9,.45);   }
+.proj-card-3 .proj-view-btn:hover { background: rgba(180,83,9,.35); }
+.proj-card-4 .proj-view-btn { background: rgba(4,120,87,.18);  color: #34d399; border-color: rgba(4,120,87,.45);   }
+.proj-card-4 .proj-view-btn:hover { background: rgba(4,120,87,.35); }
+
+/* Accent top-border line on front */
+.proj-front-bar {
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  border-radius: 18px 18px 0 0;
+  z-index: 2;
+}
+.proj-back-title {
+  font-family: 'Syne', sans-serif;
+  font-size: .95rem;
+  font-weight: 800;
+  letter-spacing: -.2px;
+  margin-bottom: .1rem;
+}
+.proj-back-desc {
+  font-size: .72rem;
+  color: rgba(255,255,255,.65);
+  line-height: 1.75;
+}
+.proj-tech-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  margin-top: .3rem;
+}
+.proj-tech {
+  font-size: .6rem;
+  padding: 3px 10px;
+  border-radius: 999px;
+  font-family: 'DM Mono', monospace;
+  font-weight: 600;
+  border: 1px solid;
+  letter-spacing: .04em;
+}
+
+/* ─────────────────────────────────────────
+   Per-card colour themes — BG is noticeably
+   different from the page void (#111111)
+───────────────────────────────────────── */
+
+/* Card 1 — Blue (brand) */
+.proj-card-1 .proj-front {
+  background: linear-gradient(145deg, #0d2144 0%, #091830 100%);
+}
+.proj-card-1 .proj-front::before { background: #0563bb; }
+.proj-card-1 .proj-front-bar     { background: linear-gradient(to right, #0563bb, #3a9fe8); }
+.proj-card-1 .proj-number        { color: rgba(58,159,232,.22); }
+.proj-card-1 .proj-stack         { color: #7ab8f0; }
+.proj-card-1 .proj-back {
+  background: linear-gradient(145deg, #0a1c38 0%, #061228 100%);
+}
+.proj-card-1 .proj-back-title    { color: #3a9fe8; }
+.proj-card-1 .proj-tech          { background: rgba(5,99,187,.18); color: #7ab8f0; border-color: rgba(5,99,187,.45); }
+
+/* Card 2 — Cyan / Azure */
+.proj-card-2 .proj-front {
+  background: linear-gradient(145deg, #0c2535 0%, #071820 100%);
+}
+.proj-card-2 .proj-front::before { background: #0891b2; }
+.proj-card-2 .proj-front-bar     { background: linear-gradient(to right, #0891b2, #38bdf8); }
+.proj-card-2 .proj-number        { color: rgba(56,189,248,.22); }
+.proj-card-2 .proj-stack         { color: #38bdf8; }
+.proj-card-2 .proj-back {
+  background: linear-gradient(145deg, #091e2c 0%, #05141e 100%);
+}
+.proj-card-2 .proj-back-title    { color: #38bdf8; }
+.proj-card-2 .proj-tech          { background: rgba(8,145,178,.18); color: #38bdf8; border-color: rgba(8,145,178,.45); }
+
+/* Card 3 — Amber */
+.proj-card-3 .proj-front {
+  background: linear-gradient(145deg, #2a1a04 0%, #1c1002 100%);
+}
+.proj-card-3 .proj-front::before { background: #b45309; }
+.proj-card-3 .proj-front-bar     { background: linear-gradient(to right, #b45309, #f59e0b); }
+.proj-card-3 .proj-number        { color: rgba(245,158,11,.22); }
+.proj-card-3 .proj-stack         { color: #f59e0b; }
+.proj-card-3 .proj-back {
+  background: linear-gradient(145deg, #221504 0%, #160e02 100%);
+}
+.proj-card-3 .proj-back-title    { color: #f59e0b; }
+.proj-card-3 .proj-tech          { background: rgba(180,83,9,.18); color: #fbbf24; border-color: rgba(180,83,9,.45); }
+
+/* Card 4 — Emerald */
+.proj-card-4 .proj-front {
+  background: linear-gradient(145deg, #062a1a 0%, #041a10 100%);
+}
+.proj-card-4 .proj-front::before { background: #047857; }
+.proj-card-4 .proj-front-bar     { background: linear-gradient(to right, #047857, #10b981); }
+.proj-card-4 .proj-number        { color: rgba(16,185,129,.22); }
+.proj-card-4 .proj-stack         { color: #34d399; }
+.proj-card-4 .proj-back {
+  background: linear-gradient(145deg, #052218 0%, #03160e 100%);
+}
+.proj-card-4 .proj-back-title    { color: #34d399; }
+.proj-card-4 .proj-tech          { background: rgba(4,120,87,.18); color: #34d399; border-color: rgba(4,120,87,.45); }
+
+/* Hover border glow on scene */
+.proj-scene:hover .proj-face {
+  border-color: rgba(255,255,255,.18);
+}
+
+/* ===========================
+   EDUCATION
+=========================== */
+.edu-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 16px;
+}
+.edu-card {
+  background: var(--dark2);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 1.5rem;
+  position: relative;
+  overflow: hidden;
+  will-change: opacity, transform;
+}
+.edu-card:hover {
+  border-color: var(--border2);
+  box-shadow: 0 12px 40px rgba(0,0,0,0.3);
+}
+.edu-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0;
+  right: 0;
+  height: 2px;
+}
+.edu-card.gold::before { background: linear-gradient(to right, var(--ember), #e8b84a); }
+.edu-card.blue::before { background: linear-gradient(to right, var(--blue), var(--cyan)); }
+.edu-degree {
+  font-family: 'Syne', sans-serif;
+  font-size: .95rem;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: .3rem;
+  line-height: 1.3;
+}
+.edu-uni {
+  font-size: .78rem;
+  color: var(--text2);
+  margin-bottom: .5rem;
+}
+.edu-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: .65rem;
+  padding: 3px 10px;
+  border-radius: 999px;
+  font-family: 'DM Mono', monospace;
+  font-weight: 500;
+}
+.badge-gold { background: rgba(200,134,10,.12); color: #e8b84a; border: 1px solid rgba(200,134,10,.25); }
+.badge-blue { background: rgba(5,99,187,.12); color: var(--blue2); border: 1px solid rgba(5,99,187,.25); }
+
+/* ===========================
+   CONTACT
+=========================== */
+.contact-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+.contact-item {
+  background: var(--dark2);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 1.2rem 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  text-decoration: none;
+  transition: all .3s;
+}
+.contact-item:hover {
+  border-color: var(--blue);
+  background: rgba(5,99,187,0.05);
+  transform: translateY(-2px);
+}
+.ci-icon {
+  width: 38px; height: 38px;
+  border-radius: 10px;
+  background: var(--blue-dim, rgba(5,99,187,0.1));
+  border: 1px solid rgba(5,99,187,0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1rem;
+  flex-shrink: 0;
+}
+.ci-label {
+  font-size: .62rem;
+  color: var(--text3);
+  text-transform: uppercase;
+  letter-spacing: .1em;
+  font-family: 'DM Mono', monospace;
+}
+.ci-value {
+  font-size: .78rem;
+  color: var(--text);
+  margin-top: 2px;
+  font-weight: 500;
+}
+
+/* ===========================
+   LANGUAGES BAR
+=========================== */
+.lang-bars { display: flex; flex-direction: column; gap: 1rem; }
+.lang-item {}
+.lang-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 6px;
+}
+.lang-name { font-size: .82rem; font-weight: 600; }
+.lang-level { font-size: .65rem; color: var(--text3); font-family: 'DM Mono', monospace; }
+.lang-track {
+  height: 4px;
+  background: var(--border);
+  border-radius: 999px;
+  overflow: hidden;
+}
+.lang-fill {
+  height: 100%;
+  border-radius: 999px;
+  width: 0;
+  transition: width 1.2s cubic-bezier(.4,0,.2,1);
+}
+.lang-fill.arabic { background: linear-gradient(to right, var(--blue), var(--cyan)); }
+.lang-fill.english { background: linear-gradient(to right, var(--teal), var(--green)); }
+
+/* ===========================
+   SCROLL PROGRESS
+=========================== */
+.scroll-progress {
+  position: fixed;
+  top: 0; left: 0;
+  height: 2px;
+  background: linear-gradient(to right, var(--blue), var(--cyan));
+  z-index: 9999;
+  width: 0;
+  transition: width .1s;
+}
+
+/* ===========================
+   SECTION DIVIDER — JS-animated
+=========================== */
+.divider {
+  height: 1px;
+  background: linear-gradient(to right, transparent, var(--border2), transparent);
+  margin: 0 2rem;
+  will-change: opacity, transform;
+}
+
+/* ===========================
+   HERO TEXT LINES REVEAL
+=========================== */
+.hero-line-wrap {
+  overflow: hidden;
+  display: block;
+}
+.hero-line {
+  display: block;
+  animation: lineSlideUp .9s cubic-bezier(.22,1,.36,1) both;
+}
+.hero-line:nth-child(2) { animation-delay: .12s; }
+
+@keyframes lineSlideUp {
+  from { transform: translateY(110%); opacity: 0; }
+  to   { transform: translateY(0);    opacity: 1; }
+}
+
+/* ===========================
+   CONTENT SECTIONS — STAGGER ENTRANCE
+=========================== */
+.section {
+  padding: 6rem 2rem;
+  max-width: 1100px;
+  margin: 0 auto;
+  position: relative;
+}
+
+/* Floating label on scroll */
+.section-tag {
+  font-family: 'DM Mono', monospace;
+  font-size: .62rem;
+  color: var(--blue);
+  text-transform: uppercase;
+  letter-spacing: .2em;
+  margin-bottom: .8rem;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.section-tag::before {
+  content: '';
+  display: block;
+  width: 24px; height: 1px;
+  background: var(--blue);
+  transition: width .5s ease;
+}
+.section-tag.tag-revealed::before { width: 40px; }
+
+/* tl-points stagger handled inside tl-item CSS block above */
+
+/* ===========================
+   AMBIENT GLOW BG
+=========================== */
+.ambient {
+  position: fixed;
+  pointer-events: none;
+  z-index: 0;
+}
+.ambient-1 {
+  top: -200px; right: -200px;
+  width: 600px; height: 600px;
+  background: radial-gradient(circle, rgba(5,99,187,0.06) 0%, transparent 70%);
+}
+.ambient-2 {
+  bottom: 20%; left: -200px;
+  width: 500px; height: 500px;
+  background: radial-gradient(circle, rgba(14,143,212,0.04) 0%, transparent 70%);
+}
+
+/* ===========================
+   RESPONSIVE
+=========================== */
+@media (max-width: 768px) {
+  .hero-inner {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+  /* Scale down box for mobile */
+  :root {
+    --box-w: 300px;
+    --box-h: 480px;
+    --box-d: 48px;
+  }
+  .card-3d-scene {
+    width:  var(--box-w);
+    height: var(--box-h);
+    margin: 0 auto;
+  }
+  .hero {
+    padding: 2rem 1rem;
+  }
+  .contact-grid { grid-template-columns: 1fr; }
+  .nav-dots { display: none; }
+  body { cursor: auto; }
+  .cursor, .cursor-ring { display: none; }
+}
+
+@media (max-width: 480px) {
+  :root {
+    --box-w: 280px;
+    --box-h: 440px;
+    --box-d: 42px;
+  }
+  .hero-name { font-size: 2rem; }
+}
+</style>
+</head>
+<body>
+
+<!-- Cursor -->
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<!-- Scroll progress -->
+<div class="scroll-progress" id="scrollProgress"></div>
+
+<!-- Ambient glows -->
+<div class="ambient ambient-1"></div>
+<div class="ambient ambient-2"></div>
+
+<!-- Particle canvas -->
+<canvas id="particles"></canvas>
+
+<!-- Nav dots -->
+<nav class="nav-dots" id="navDots">
+  <div class="nav-dot active" data-label="Home" data-target="hero"></div>
+  <div class="nav-dot" data-label="Skills" data-target="skills"></div>
+  <div class="nav-dot" data-label="Experience" data-target="experience"></div>
+  <div class="nav-dot" data-label="Projects" data-target="projects"></div>
+  <div class="nav-dot" data-label="Education" data-target="education"></div>
+  <div class="nav-dot" data-label="Contact" data-target="contact"></div>
+</nav>
+
+<div class="page">
+
+  <!-- ===========================
+       HERO
+  =========================== -->
+  <section class="hero" id="hero">
+    <div class="hero-inner">
+
+      <div class="hero-text">
+        <div class="hero-tag">Available for Work</div>
+        <h1 class="hero-name">
+          Assem<br><span class="accent">Adel Habib</span>
+        </h1>
+        <p class="hero-role">Full Stack Developer · Laravel · NestJS · Flutter</p>
+        <p class="hero-location">📍 Latakia – Jableh, Syria</p>
+        <div class="hero-actions">
+          <a href="#projects" class="btn-primary">View Projects ↓</a>
+          <a href="#contact" class="btn-ghost">Contact Me</a>
+        </div>
+      </div>
+
+      <!-- 3D Flip Card -->
+      <div class="card-3d-scene">
+        <div class="card-3d" id="mainCard">
+
+          <!-- SIDE FACES — make the box 3D -->
+          <div class="card-face card-side-top"></div>
+          <div class="card-face card-side-bottom"></div>
+          <div class="card-face card-side-right"></div>
+          <div class="card-face card-side-left"></div>
+
+          <!-- FRONT -->
+          <div class="card-face card-front">
+            <div class="cf-noise"></div>
+            <div class="cf-glow"></div>
+            <div class="cf-top">
+              <div class="cf-avatar">AH</div>
+              <div class="cf-name">Assem Adel Habib</div>
+              <div class="cf-title">Full Stack Developer</div>
+              <div class="cf-divider"></div>
+              <div class="cf-stats">
+                <div class="cf-stat">
+                  <div class="cf-stat-n">4+</div>
+                  <div class="cf-stat-l">Projects</div>
+                </div>
+                <div class="cf-stat">
+                  <div class="cf-stat-n">6+</div>
+                  <div class="cf-stat-l">Frameworks</div>
+                </div>
+                <div class="cf-stat">
+                  <div class="cf-stat-n">Full</div>
+                  <div class="cf-stat-l">Stack</div>
+                </div>
+              </div>
+            </div>
+            <div class="cf-skills">
+              <div class="cf-skills-label">Core Stack</div>
+              <div class="cf-pills">
+                <span class="cf-pill pill-blue">Laravel</span>
+                <span class="cf-pill pill-cyan">NestJS</span>
+                <span class="cf-pill pill-teal">Flutter</span>
+                <span class="cf-pill pill-amber">Node.js</span>
+                <span class="cf-pill pill-green">PostgreSQL</span>
+                <span class="cf-pill pill-rose">Redis</span>
+                <span class="cf-pill pill-blue">TypeScript</span>
+                <span class="cf-pill pill-cyan">PHP</span>
+              </div>
+            </div>
+            <button class="flip-btn">
+              ↻ Projects
+            </button>
+          </div>
+
+          <!-- BACK -->
+          <div class="card-face card-back">
+            <div class="cb-header">
+              <div class="cb-label">Featured Work</div>
+              <div class="cb-title">Projects</div>
+            </div>
+            <div class="cb-projects">
+              <div class="cb-project">
+                <div class="cb-proj-name">⚡ Shift Pay</div>
+                <div class="cb-proj-desc">Smart HR & Financial Management System. Payroll, attendance, inventory & dashboards.</div>
+                <span class="cb-proj-tag">Flutter · Backend</span>
+              </div>
+              <div class="cb-project">
+                <div class="cb-proj-name">🚀 Jeeb</div>
+                <div class="cb-proj-desc">Scalable Delivery Platform. Real-time tracking, wallet, loyalty & notifications.</div>
+                <span class="cb-proj-tag">NestJS · PostgreSQL</span>
+              </div>
+              <div class="cb-project">
+                <div class="cb-proj-name">🛒 Shahrazad</div>
+                <div class="cb-proj-desc">E-Commerce Platform with smart cart, order lifecycle & multi-role auth.</div>
+                <span class="cb-proj-tag">Node.js · MySQL</span>
+              </div>
+              <div class="cb-project">
+                <div class="cb-proj-name">📦 SmartShip</div>
+                <div class="cb-proj-desc">Parcel Delivery Management. Shipment tracking & workflow management.</div>
+                <span class="cb-proj-tag">Laravel · MySQL</span>
+              </div>
+            </div>
+            <button class="flip-btn" style="bottom:16px;left:16px;position:absolute">
+              ↻ Profile
+            </button>
+          </div>
+
+        </div><!-- end card-3d -->
+      </div>
+
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- ===========================
+       SKILLS
+  =========================== -->
+  <section class="section" id="skills">
+    <div class="section-tag">Technical Skills</div>
+    <div class="section-title">
+      What I Work With
+      <span class="line">Technologies & frameworks across the full stack</span>
+    </div>
+    <div class="skills-grid" id="skillsGrid">
+
+      <div class="skill-card-slot">
+      <div class="skill-card" data-skill-idx="0">
+        <div class="sc-icon blue">💻</div>
+        <div class="sc-title">Languages</div>
+        <div class="sc-pills">
+          <span class="cf-pill pill-blue">Dart</span>
+          <span class="cf-pill pill-amber">JavaScript</span>
+          <span class="cf-pill pill-cyan">TypeScript</span>
+          <span class="cf-pill pill-rose">PHP</span>
+        </div>
+      </div>
+      </div>
+
+      <div class="skill-card-slot">
+      <div class="skill-card" data-skill-idx="1">
+        <div class="sc-icon teal">📱</div>
+        <div class="sc-title">Mobile Development</div>
+        <div class="sc-pills">
+          <span class="cf-pill pill-teal">Flutter</span>
+          <span class="cf-pill pill-cyan">Responsive UI</span>
+          <span class="cf-pill pill-green">Material Design</span>
+          <span class="cf-pill pill-blue">Cross-Platform</span>
+        </div>
+      </div>
+      </div>
+
+      <div class="skill-card-slot">
+      <div class="skill-card" data-skill-idx="2">
+        <div class="sc-icon amber">🌐</div>
+        <div class="sc-title">Frontend</div>
+        <div class="sc-pills">
+          <span class="cf-pill pill-amber">HTML</span>
+          <span class="cf-pill pill-amber">CSS</span>
+          <span class="cf-pill pill-blue">Bootstrap</span>
+          <span class="cf-pill pill-cyan">Tailwind CSS</span>
+        </div>
+      </div>
+      </div>
+
+      <div class="skill-card-slot">
+      <div class="skill-card" data-skill-idx="3">
+        <div class="sc-icon cyan">⚙️</div>
+        <div class="sc-title">Backend & APIs</div>
+        <div class="sc-pills">
+          <span class="cf-pill pill-cyan">NestJS</span>
+          <span class="cf-pill pill-rose">Laravel</span>
+          <span class="cf-pill pill-amber">Node.js</span>
+          <span class="cf-pill pill-green">Express.js</span>
+          <span class="cf-pill pill-blue">RESTful APIs</span>
+          <span class="cf-pill pill-teal">Firebase</span>
+        </div>
+      </div>
+      </div>
+
+      <div class="skill-card-slot">
+      <div class="skill-card" data-skill-idx="4">
+        <div class="sc-icon green">🗄️</div>
+        <div class="sc-title">Databases</div>
+        <div class="sc-pills">
+          <span class="cf-pill pill-green">PostgreSQL</span>
+          <span class="cf-pill pill-blue">MySQL</span>
+          <span class="cf-pill pill-teal">SQLite</span>
+          <span class="cf-pill pill-rose">Redis</span>
+          <span class="cf-pill pill-amber">NoSQL</span>
+        </div>
+      </div>
+      </div>
+
+      <div class="skill-card-slot">
+      <div class="skill-card" data-skill-idx="5">
+        <div class="sc-icon rose">🛠️</div>
+        <div class="sc-title">Tools & Workflow</div>
+        <div class="sc-pills">
+          <span class="cf-pill pill-rose">Git</span>
+          <span class="cf-pill pill-amber">GitHub</span>
+          <span class="cf-pill pill-blue">Agile</span>
+          <span class="cf-pill pill-cyan">Jira</span>
+          <span class="cf-pill pill-green">Swagger</span>
+        </div>
+        </div>
+      </div>
+
+    </div>
+
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- ===========================
+       EXPERIENCE
+  =========================== -->
+  <section class="section" id="experience">
+    <div class="section-tag">Experience</div>
+    <div class="section-title">
+      Professional Journey
+      <span class="line">End-to-end product development</span>
+    </div>
+    <div class="timeline" id="timeline">
+      <div class="tl-item">
+        <div class="tl-dot"></div>
+        <div class="tl-date">Freelance · Remote</div>
+        <div class="tl-title">Full Stack Developer</div>
+        <div class="tl-company">Self-Employed · Laravel · NestJS · Flutter</div>
+        <ul class="tl-points">
+          <li>Developed end-to-end web and mobile applications using Laravel, NestJS, and Flutter</li>
+          <li>Designed and implemented RESTful APIs, authentication systems, and role-based access control</li>
+          <li>Built responsive UIs integrated with backend services and databases</li>
+          <li>Optimized database schemas using PostgreSQL, MySQL, SQLite, and Redis</li>
+          <li>Implemented real-time features, push notifications, and background job processing</li>
+          <li>Delivered complete solutions from requirements analysis through deployment and maintenance</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- ===========================
+       PROJECTS — 3D FLIP
+  =========================== -->
+  <section class="section" id="projects">
+    <div class="section-tag">Projects</div>
+    <div class="section-title">
+      Featured Work
+      <span class="line">Hover to reveal details</span>
+    </div>
+    <div class="projects-grid">
+
+      <!-- ── Card 1: Shift Pay — Blue ── -->
+      <div class="proj-scene">
+        <div class="proj-reveal-wrap">
+        <div class="proj-card proj-card-1">
+
+          <div class="proj-face proj-front">
+            <div class="proj-front-bar"></div>
+            <!-- Mockup image (placeholder gradient until real image added) -->
+            <div class="proj-img" style="background: linear-gradient(135deg,#0d2144 0%,#0563bb 60%,#091830 100%);">
+              <!-- Replace src with real screenshot: <img src="img/shiftpay.png"> -->
+            </div>
+            <div class="proj-img-overlay"></div>
+            <div class="proj-front-content">
+              <div class="proj-number">01</div>
+              <div style="margin-top:auto">
+                <div class="proj-name">Shift Pay</div>
+                <div class="proj-stack">Flutter · Backend Services · Dart</div>
+                <div class="proj-hover-hint">
+                  <span class="proj-hint-icon">⟳</span> Flip for details
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="proj-face proj-back">
+            <div class="proj-back-title">⚡ Smart HR & Financial System</div>
+            <div class="proj-back-desc">Full business management solution with payroll, attendance tracking, inventory management, and real-time analytics dashboards built on scalable architecture.</div>
+            <div class="proj-tech-pills">
+              <span class="proj-tech">Flutter</span>
+              <span class="proj-tech">Dart</span>
+              <span class="proj-tech">REST APIs</span>
+              <span class="proj-tech">Analytics</span>
+            </div>
+            <a href="#" class="proj-view-btn">
+              View Project <span class="btn-arrow">→</span>
+            </a>
+          </div>
+
+        </div>
+        </div><!-- /proj-reveal-wrap -->
+      </div>
+
+      <!-- ── Card 2: Jeeb — Cyan ── -->
+      <div class="proj-scene">
+        <div class="proj-reveal-wrap">
+        <div class="proj-card proj-card-2">
+
+          <div class="proj-face proj-front">
+            <div class="proj-front-bar"></div>
+            <div class="proj-img" style="background: linear-gradient(135deg,#0c2535 0%,#0891b2 60%,#071820 100%);">
+            </div>
+            <div class="proj-img-overlay"></div>
+            <div class="proj-front-content">
+              <div class="proj-number">02</div>
+              <div style="margin-top:auto">
+                <div class="proj-name">Jeeb</div>
+                <div class="proj-stack">NestJS · PostgreSQL · Redis</div>
+                <div class="proj-hover-hint">
+                  <span class="proj-hint-icon">⟳</span> Flip for details
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="proj-face proj-back">
+            <div class="proj-back-title">🚀 Delivery Platform</div>
+            <div class="proj-back-desc">Scalable delivery platform with real-time tracking, wallet management, loyalty systems, push notifications, and secure role-based access control.</div>
+            <div class="proj-tech-pills">
+              <span class="proj-tech">NestJS</span>
+              <span class="proj-tech">PostgreSQL</span>
+              <span class="proj-tech">Redis</span>
+              <span class="proj-tech">WebSockets</span>
+            </div>
+            <a href="#" class="proj-view-btn">
+              View Project <span class="btn-arrow">→</span>
+            </a>
+          </div>
+
+        </div>
+        </div><!-- /proj-reveal-wrap -->
+      </div>
+
+      <!-- ── Card 3: Shahrazad — Amber ── -->
+      <div class="proj-scene">
+        <div class="proj-reveal-wrap">
+        <div class="proj-card proj-card-3">
+
+          <div class="proj-face proj-front">
+            <div class="proj-front-bar"></div>
+            <div class="proj-img" style="background: linear-gradient(135deg,#2a1a04 0%,#b45309 60%,#1c1002 100%);">
+            </div>
+            <div class="proj-img-overlay"></div>
+            <div class="proj-front-content">
+              <div class="proj-number">03</div>
+              <div style="margin-top:auto">
+                <div class="proj-name">Shahrazad</div>
+                <div class="proj-stack">Node.js · Express · MySQL</div>
+                <div class="proj-hover-hint">
+                  <span class="proj-hint-icon">⟳</span> Flip for details
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="proj-face proj-back">
+            <div class="proj-back-title">🛒 E-Commerce Platform</div>
+            <div class="proj-back-desc">Scalable e-commerce with smart cart reservation, full order lifecycle management, coupon systems, multi-role auth, and automated background tasks.</div>
+            <div class="proj-tech-pills">
+              <span class="proj-tech">Node.js</span>
+              <span class="proj-tech">Express.js</span>
+              <span class="proj-tech">MySQL</span>
+              <span class="proj-tech">JWT Auth</span>
+            </div>
+            <a href="#" class="proj-view-btn">
+              View Project <span class="btn-arrow">→</span>
+            </a>
+          </div>
+
+        </div>
+        </div><!-- /proj-reveal-wrap -->
+      </div>
+
+      <!-- ── Card 4: SmartShip — Emerald ── -->
+      <div class="proj-scene">
+        <div class="proj-reveal-wrap">
+        <div class="proj-card proj-card-4">
+
+          <div class="proj-face proj-front">
+            <div class="proj-front-bar"></div>
+            <div class="proj-img" style="background: linear-gradient(135deg,#062a1a 0%,#047857 60%,#041a10 100%);">
+            </div>
+            <div class="proj-img-overlay"></div>
+            <div class="proj-front-content">
+              <div class="proj-number">04</div>
+              <div style="margin-top:auto">
+                <div class="proj-name">SmartShip</div>
+                <div class="proj-stack">Laravel · PHP · MySQL</div>
+                <div class="proj-hover-hint">
+                  <span class="proj-hint-icon">⟳</span> Flip for details
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="proj-face proj-back">
+            <div class="proj-back-title">📦 Parcel Delivery System</div>
+            <div class="proj-back-desc">Parcel delivery management with real-time shipment tracking, order workflow, role-based access control, and RESTful API backend for operational processes.</div>
+            <div class="proj-tech-pills">
+              <span class="proj-tech">Laravel</span>
+              <span class="proj-tech">MySQL</span>
+              <span class="proj-tech">RESTful API</span>
+              <span class="proj-tech">PHP</span>
+            </div>
+            <a href="#" class="proj-view-btn">
+              View Project <span class="btn-arrow">→</span>
+            </a>
+          </div>
+
+        </div>
+        </div><!-- /proj-reveal-wrap -->
+      </div>
+
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- ===========================
+       EDUCATION
+  =========================== -->
+  <section class="section" id="education">
+    <div class="section-tag">Education</div>
+    <div class="section-title">
+      Academic Background
+      <span class="line">Foundation of expertise</span>
+    </div>
+    <div class="edu-grid">
+      <div class="edu-card blue">
+        <div class="edu-degree">B.Sc. Informatics Engineering</div>
+        <div class="edu-uni">Software Engineering & Information Systems<br>Tishreen University · Latakia, Syria</div>
+        <span class="edu-badge badge-blue">🎓 Computer Science</span>
+      </div>
+      <div class="edu-card gold">
+        <div class="edu-degree">Industrial Technical Secondary School</div>
+        <div class="edu-uni">Computer Techniques<br>Syria</div>
+        <span class="edu-badge badge-gold">🥇 Ranked 1st — Governorate Level</span>
+      </div>
+    </div>
+
+    <!-- Languages -->
+    <div style="margin-top:3rem">
+      <div class="section-tag" style="margin-bottom:1.5rem">Languages</div>
+      <div class="lang-bars" id="langBars" style="max-width:480px">
+        <div class="lang-item">
+          <div class="lang-header">
+            <span class="lang-name">Arabic</span>
+            <span class="lang-level">Native</span>
+          </div>
+          <div class="lang-track"><div class="lang-fill arabic" data-width="100"></div></div>
+        </div>
+        <div class="lang-item">
+          <div class="lang-header">
+            <span class="lang-name">English</span>
+            <span class="lang-level">Intermediate · Professional</span>
+          </div>
+          <div class="lang-track"><div class="lang-fill english" data-width="65"></div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- ===========================
+       CONTACT
+  =========================== -->
+  <section class="section" id="contact">
+    <div class="section-tag">Contact</div>
+    <div class="section-title">
+      Get In Touch
+      <span class="line">Open to new opportunities</span>
+    </div>
+    <div class="contact-grid">
+      <a href="tel:+963994636381" class="contact-item">
+        <div class="ci-icon">📞</div>
+        <div>
+          <div class="ci-label">Phone</div>
+          <div class="ci-value">+963 994 636 381</div>
+        </div>
+      </a>
+      <a href="mailto:099assemhb@gmail.com" class="contact-item">
+        <div class="ci-icon">✉️</div>
+        <div>
+          <div class="ci-label">Email</div>
+          <div class="ci-value">099assemhb@gmail.com</div>
+        </div>
+      </a>
+      <a href="https://github.com/assem2023-habib" target="_blank" class="contact-item">
+        <div class="ci-icon">🐙</div>
+        <div>
+          <div class="ci-label">GitHub</div>
+          <div class="ci-value">assem2023-habib</div>
+        </div>
+      </a>
+      <a href="https://linkedin.com/in/assem-habib-5236a423b" target="_blank" class="contact-item">
+        <div class="ci-icon">💼</div>
+        <div>
+          <div class="ci-label">LinkedIn</div>
+          <div class="ci-value">assem-habib-5236a423b</div>
+        </div>
+      </a>
+    </div>
+
+    <!-- Footer -->
+    <div style="text-align:center;margin-top:4rem;padding-top:2rem;border-top:1px solid var(--border)">
+      <div style="font-family:'Syne',sans-serif;font-size:1.4rem;font-weight:700;margin-bottom:.3rem">
+        Assem Adel <span style="background:linear-gradient(135deg,var(--blue),var(--cyan));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">Habib</span>
+      </div>
+      <div style="font-size:.72rem;color:var(--text3);font-family:'DM Mono',monospace">Full Stack Developer · Laravel · NestJS · Flutter</div>
+    </div>
+  </section>
+
+</div><!-- end page -->
+
+<script>
+/* ===========================
+   PARTICLES
+=========================== */
+const canvas = document.getElementById('particles');
+const ctx = canvas.getContext('2d');
+let W, H, particles = [];
+
+function resize() {
+  W = canvas.width = window.innerWidth;
+  H = canvas.height = window.innerHeight;
+}
+resize();
+window.addEventListener('resize', resize);
+
+class Particle {
+  constructor() { this.reset(); }
+  reset() {
+    this.x = Math.random() * W;
+    this.y = Math.random() * H;
+    this.size = Math.random() * 1.5 + 0.3;
+    this.speedX = (Math.random() - 0.5) * 0.3;
+    this.speedY = (Math.random() - 0.5) * 0.3;
+    this.opacity = Math.random() * 0.5 + 0.1;
+    this.color = Math.random() > 0.5 ? '59,130,246' : '6,182,212';
+  }
+  update() {
+    this.x += this.speedX;
+    this.y += this.speedY;
+    if (this.x < 0 || this.x > W || this.y < 0 || this.y > H) this.reset();
+  }
+  draw() {
+    ctx.beginPath();
+    ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+    ctx.fillStyle = `rgba(${this.color},${this.opacity})`;
+    ctx.fill();
+  }
+}
+
+for (let i = 0; i < 80; i++) particles.push(new Particle());
+
+function animParticles() {
+  ctx.clearRect(0, 0, W, H);
+  particles.forEach(p => { p.update(); p.draw(); });
+  // Draw connections
+  particles.forEach((a, i) => {
+    particles.slice(i+1).forEach(b => {
+      const d = Math.hypot(a.x - b.x, a.y - b.y);
+      if (d < 100) {
+        ctx.beginPath();
+        ctx.moveTo(a.x, a.y);
+        ctx.lineTo(b.x, b.y);
+        ctx.strokeStyle = `rgba(5,99,187,${0.04 * (1 - d/100)})`;
+        ctx.lineWidth = 0.5;
+        ctx.stroke();
+      }
+    });
+  });
+  requestAnimationFrame(animParticles);
+}
+animParticles();
+
+/* ===========================
+   CURSOR
+=========================== */
+const cursor = document.getElementById('cursor');
+const ring = document.getElementById('cursorRing');
+let mx = 0, my = 0, rx = 0, ry = 0;
+document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; });
+function animCursor() {
+  cursor.style.left = mx + 'px';
+  cursor.style.top = my + 'px';
+  rx += (mx - rx) * 0.15;
+  ry += (my - ry) * 0.15;
+  ring.style.left = rx + 'px';
+  ring.style.top = ry + 'px';
+  requestAnimationFrame(animCursor);
+}
+animCursor();
+document.querySelectorAll('a,button,.proj-card,.card-3d,.flip-btn').forEach(el => {
+  el.addEventListener('mouseenter', () => ring.style.transform = 'translate(-50%,-50%) scale(1.8)');
+  el.addEventListener('mouseleave', () => ring.style.transform = 'translate(-50%,-50%) scale(1)');
+});
+
+/* ===========================
+   SCROLL PROGRESS
+=========================== */
+/* scroll handled by unified handler below */
+
+/* ===========================
+   NAV DOTS
+=========================== */
+function updateNavDots() {
+  const sections = ['hero','skills','experience','projects','education','contact'];
+  const dots = document.querySelectorAll('.nav-dot');
+  sections.forEach((id, i) => {
+    const el = document.getElementById(id);
+    if (!el) return;
+    const r = el.getBoundingClientRect();
+    if (r.top <= window.innerHeight/2 && r.bottom > window.innerHeight/2) {
+      dots.forEach(d => d.classList.remove('active'));
+      dots[i].classList.add('active');
+    }
+  });
+}
+document.querySelectorAll('.nav-dot').forEach(dot => {
+  dot.addEventListener('click', () => {
+    document.getElementById(dot.dataset.target)?.scrollIntoView({ behavior: 'smooth' });
+  });
+});
+
+/* ==============================================
+   BI-DIRECTIONAL SCROLL REVEAL SYSTEM
+   • Elements hide with REVERSE animation on scroll-up
+   • Re-animate fresh on scroll-down
+============================================== */
+
+// ── REGISTRY: every animated element gets tracked ──
+// Each entry: { el, type, index, state: 'hidden'|'visible' }
+const registry = [];
+
+// ── ELEMENT DEFINITIONS ──
+// type → { hiddenStyle, visibleStyle, outStyle (scroll-up exit) }
+const animDefs = {
+  'section-tag': {
+    hidden:  { opacity:'0', transform:'translateX(-24px)' },
+    visible: { opacity:'1', transform:'translateX(0)',
+               transition:'opacity .55s ease, transform .55s cubic-bezier(.22,1,.36,1)' },
+    out:     { opacity:'0', transform:'translateX(16px)',
+               transition:'opacity .35s ease, transform .35s ease' }
+  },
+  'section-title': {
+    hidden:  { opacity:'0', transform:'translateY(32px)' },
+    visible: { opacity:'1', transform:'translateY(0)',
+               transition:'opacity .75s cubic-bezier(.22,1,.36,1), transform .75s cubic-bezier(.22,1,.36,1)' },
+    out:     { opacity:'0', transform:'translateY(-20px)',
+               transition:'opacity .4s ease, transform .4s ease' }
+  },
+  /* skill-card: Stack→Explode */
+  'tl-item': {
+    hidden:  { opacity:'0', transform:'translateX(-36px) rotateY(-10deg)' },
+    visible: { opacity:'1', transform:'translateX(0) rotateY(0)',
+               transition:'opacity .8s cubic-bezier(.22,1,.36,1), transform .8s cubic-bezier(.22,1,.36,1)' },
+    out:     { opacity:'0', transform:'translateX(20px) rotateY(6deg)',
+               transition:'opacity .35s ease, transform .35s ease' }
+  },
+  'edu-card': {
+    hidden:  { opacity:'0', transform:'scale(.93) rotateX(-8deg)' },
+    visible: { opacity:'1', transform:'scale(1) rotateX(0)',
+               transition:'opacity .65s cubic-bezier(.175,.885,.32,1.2), transform .7s cubic-bezier(.175,.885,.32,1.2)' },
+    out:     { opacity:'0', transform:'scale(.96) rotateX(5deg)',
+               transition:'opacity .3s ease, transform .3s ease' }
+  },
+  'proj-scene': {
+    /* Animate only opacity + translateY — NO rotateX/scale so flip stays clean */
+    hidden:  { opacity:'0', transform:'translateY(60px)', filter:'blur(3px)' },
+    visible: { opacity:'1', transform:'translateY(0)',    filter:'blur(0px)',
+               transition:'opacity .85s cubic-bezier(.22,1,.36,1), transform .9s cubic-bezier(.22,1,.36,1), filter .55s ease' },
+    out:     { opacity:'0', transform:'translateY(-28px)', filter:'blur(2px)',
+               transition:'opacity .38s ease, transform .42s ease, filter .28s ease' }
+  },
+  'contact-item': {
+    hidden:  (i) => ({ opacity:'0', transform:`translateX(${i%2===0?-32:32}px)` }),
+    visible: { opacity:'1', transform:'translateX(0)',
+               transition:'opacity .6s cubic-bezier(.22,1,.36,1), transform .6s cubic-bezier(.22,1,.36,1)' },
+    out:     (i) => ({ opacity:'0', transform:`translateX(${i%2===0?16:-16}px)`,
+               transition:'opacity .3s ease, transform .3s ease' })
+  },
+  'divider': {
+    hidden:  { opacity:'0', transform:'scaleX(0)', transformOrigin:'left' },
+    visible: { opacity:'1', transform:'scaleX(1)', transformOrigin:'left',
+               transition:'opacity .7s ease, transform .7s cubic-bezier(.22,1,.36,1)' },
+    out:     { opacity:'0', transform:'scaleX(0)', transformOrigin:'right',
+               transition:'opacity .3s ease, transform .4s ease' }
+  },
+  'lang-item': {
+    hidden:  { opacity:'0', transform:'translateX(-20px)' },
+    visible: { opacity:'1', transform:'translateX(0)',
+               transition:'opacity .6s ease, transform .6s cubic-bezier(.22,1,.36,1)' },
+    out:     { opacity:'0', transform:'translateX(12px)',
+               transition:'opacity .3s ease, transform .3s ease' }
+  }
+};
+
+// ── APPLY STYLE HELPER ──
+function applyStyle(el, styles) {
+  Object.assign(el.style, styles);
+}
+
+// ── BUILD REGISTRY on load ──
+function buildRegistry() {
+  const groups = [
+    { sel: '.section-tag',    type: 'section-tag'   },
+    { sel: '.section-title',  type: 'section-title' },
+    /* skill-card → Stack→Explode system (below) */
+    { sel: '.tl-item',        type: 'tl-item'       },
+    { sel: '.edu-card',       type: 'edu-card'      },
+    { sel: '.proj-reveal-wrap', type: 'proj-scene'    },
+    { sel: '.contact-item',   type: 'contact-item'  },
+    { sel: '.divider',        type: 'divider'       },
+    { sel: '.lang-item',      type: 'lang-item'     },
+  ];
+  groups.forEach(({ sel, type }) => {
+    document.querySelectorAll(sel).forEach((el, i) => {
+      const def = animDefs[type];
+      const hiddenStyles = typeof def.hidden === 'function' ? def.hidden(i) : def.hidden;
+      applyStyle(el, hiddenStyles);
+      el.style.willChange = 'opacity, transform';
+      registry.push({ el, type, index: i, state: 'hidden' });
+    });
+  });
+}
+
+// ── STAGGER DELAYS per type ──
+const staggerDelay = {
+  /* skill-card: Stack→Explode */
+  'edu-card':      80,
+  'proj-scene':   110,
+  'contact-item':  70,
+  'tl-item':      120,
+  'section-tag':    0,
+  'section-title': 80,
+  'divider':        0,
+  'lang-item':     60,
+};
+
+// ── ENTER: animate element IN ──
+function enterEl(entry) {
+  if (entry.state === 'visible') return;
+  entry.state = 'visible';
+  const def = animDefs[entry.type];
+  const delay = (staggerDelay[entry.type] || 0) * entry.index;
+
+  setTimeout(() => {
+    const visStyles = { ...def.visible };
+    // inject stagger delay into every transition segment
+    if (visStyles.transition && delay > 0) {
+      visStyles.transition = visStyles.transition
+        .split(',')
+        .map(t => t.trim() + ` ${delay}ms`)
+        .join(', ');
+    }
+    applyStyle(entry.el, visStyles);
+
+    // tl-item: also set .visible so CSS li stagger fires
+    if (entry.type === 'tl-item') {
+      setTimeout(() => entry.el.classList.add('visible'), delay + 100);
+    }
+
+    // lang bar special — animate fill width
+    if (entry.type === 'lang-item') {
+      const fill = entry.el.querySelector('.lang-fill');
+      if (fill && !fill.dataset.animated) {
+        fill.dataset.animated = '1';
+        setTimeout(() => {
+          fill.style.transition = 'width 1.4s cubic-bezier(.22,1,.36,1)';
+          fill.style.width = fill.dataset.width + '%';
+        }, 300 + delay);
+      }
+    }
+  }, 16);
+}
+
+// ── EXIT: animate element OUT (reverse direction-aware) ──
+function exitEl(entry, direction = 'up') {
+  if (entry.state === 'hidden') return;
+  entry.state = 'hidden';
+  const def = animDefs[entry.type];
+
+  let outStyles;
+  if (direction === 'down') {
+    // Element went below viewport on scroll-up → use hidden state (bottom entrance)
+    outStyles = typeof def.hidden === 'function' ? def.hidden(entry.index) : { ...def.hidden };
+    // Add a quick transition for the exit
+    outStyles.transition = 'opacity .35s ease, transform .4s cubic-bezier(.55,0,1,.45)';
+  } else {
+    // Element scrolled above viewport → use out state (reversed exit)
+    outStyles = typeof def.out === 'function' ? def.out(entry.index) : { ...def.out };
+  }
+
+  applyStyle(entry.el, outStyles);
+
+  // tl-item: remove .visible so CSS li items hide too
+  if (entry.type === 'tl-item') {
+    entry.el.classList.remove('visible');
+  }
+
+  // lang bar reset on scroll-up
+  if (entry.type === 'lang-item') {
+    const fill = entry.el.querySelector('.lang-fill');
+    if (fill) {
+      fill.dataset.animated = '';
+      fill.style.transition = 'width .4s ease';
+      fill.style.width = '0';
+    }
+  }
+}
+
+// ── SCAN: check each element's viewport position ──
+const ENTER_THRESHOLD = 0.88; // enter when top < 88% of vh
+const BUFFER = 60;             // px buffer before declaring hidden
+
+function scanElements() {
+  const vh = window.innerHeight;
+  registry.forEach(entry => {
+    const r = entry.el.getBoundingClientRect();
+
+    // IN VIEW: top above 88% of screen AND bottom still visible
+    const inView  = r.top < vh * ENTER_THRESHOLD && r.bottom > 0;
+
+    // ABOVE viewport: scrolled completely past the top
+    const aboveVP = r.bottom < -BUFFER;
+
+    // BELOW viewport: completely below the fold (for scroll-up reset)
+    const belowVP = r.top > vh + BUFFER;
+
+    if (inView   && entry.state === 'hidden')  enterEl(entry);
+    if (aboveVP  && entry.state === 'visible') exitEl(entry, 'up');
+    if (belowVP  && entry.state === 'visible') exitEl(entry, 'down');
+  });
+}
+
+// Init
+buildRegistry();
+setTimeout(scanElements, 400);
+
+/* ==============================================
+   GLOBAL MOUSE → CARD TILT
+   Card follows mouse from ANYWHERE on the page
+   Sharp angles, dramatic depth
+============================================== */
+const mainCard = document.getElementById('mainCard');
+let targetTiltX = 0, targetTiltY = 0;
+let interpX = 0, interpY = 0;
+let isFlipped = false;
+let mouseX = window.innerWidth / 2;
+let mouseY = window.innerHeight / 2;
+
+// Track mouse GLOBALLY
+document.addEventListener('mousemove', e => {
+  mouseX = e.clientX;
+  mouseY = e.clientY;
+});
+
+// rAF loop — smooth lerp toward target every frame
+let jsActive = false;
+function animCardTilt() {
+  if (!isFlipped) {
+    // Disable CSS float animation on first JS frame
+    if (!jsActive) {
+      jsActive = true;
+      mainCard.setAttribute('data-js-active', '1');
+    }
+    const rect = mainCard.getBoundingClientRect();
+    const cardCX = rect.left + rect.width  / 2;
+    const cardCY = rect.top  + rect.height / 2;
+
+    // Normalise relative to VIEWPORT (so distance from card matters less)
+    const dx = (mouseX - cardCX) / window.innerWidth;   // -0.5 … +0.5
+    const dy = (mouseY - cardCY) / window.innerHeight;   // -0.5 … +0.5
+
+    // Sharpness amplifier — higher = more dramatic at close range
+    // Falls off with distance but stays responsive even far away
+    const dist   = Math.sqrt(dx*dx + dy*dy);
+    const sharp  = 1.8 / (1 + dist * 2.2);          // near: ~1.8, far: ~0.4
+    const minAmp = 0.35;                              // minimum responsiveness
+    const amp    = minAmp + sharp * (1 - minAmp);
+
+    // Max angles: ±38° Y  ±28° X  — noticeably sharper
+    targetTiltY =  dx * 38 * amp;
+    targetTiltX = -dy * 28 * amp;
+
+    // Fast lerp = snappier tracking (0.09 instead of 0.06)
+    interpX += (targetTiltX - interpX) * 0.09;
+    interpY += (targetTiltY - interpY) * 0.09;
+
+    // Scroll depth: card leans forward + shrinks as page scrolls
+    const scrollY    = window.scrollY;
+    const heroH      = document.getElementById('hero').offsetHeight;
+    const scrollRatio = Math.min(1, scrollY / heroH);
+    const diveX      =  scrollRatio * 18;   // leans forward
+    const diveY      =  scrollRatio * 8;    // slight right lean
+    const sinkY      = -scrollRatio * 40;   // rises upward
+    const shrink     =  1 - scrollRatio * 0.06;
+
+    mainCard.style.animation = 'none';
+
+    // Only update transform if NOT in the middle of a flip transition
+    if (!mainCard.classList.contains('card-3d-transition')) {
+      // Stronger angles so the box depth/sides are visible
+      mainCard.style.transform = `
+        perspective(1100px)
+        rotateX(${interpX + diveX}deg)
+        rotateY(${interpY + diveY}deg)
+        translateY(${sinkY}px)
+        scale(${shrink})
+      `;
+    }
+
+    // Glow reacts to tilt intensity
+    const glowEl = document.querySelector('.cf-glow');
+    if (glowEl) {
+      const intensity = Math.min(1, dist * 2);
+      glowEl.style.opacity = (1 - scrollRatio) * (0.7 + intensity * 0.3);
+      glowEl.style.transform = `translate(${-interpY * 0.5}px, ${-interpX * 0.3}px)`;
+    }
+  }
+  requestAnimationFrame(animCardTilt);
+}
+animCardTilt();
+
+// Flip button — transition class controls CSS animation
+document.querySelectorAll('.flip-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    mainCard.classList.add('card-3d-transition');
+    isFlipped = !mainCard.classList.contains('flipped');
+    mainCard.classList.toggle('flipped');
+    setTimeout(() => {
+      mainCard.classList.remove('card-3d-transition');
+      if (!isFlipped) { targetTiltX=0; targetTiltY=0; interpX=0; interpY=0; }
+    }, 950);
+  });
+});
+
+/* ==============================================
+   DRAG TO ROTATE — 3D Box
+   Click+drag spins the box freely.
+   On release: momentum + slow decay back to
+   mouse-tracking mode.
+============================================== */
+(function initDrag() {
+
+  const scene = document.querySelector('.card-3d-scene');
+
+  // Accumulated drag rotation (on top of mouse tilt)
+  let dragRotX = 0, dragRotY = 0;
+
+  // Drag state
+  let dragging   = false;
+  let dragStartX = 0, dragStartY = 0;
+  let dragLastX  = 0, dragLastY  = 0;
+
+  // Velocity for inertia
+  let velX = 0, velY = 0;
+
+  // Whether drag mode is active (overrides mouse tilt)
+  let dragMode   = false;
+  let dragDecay  = false; // inertia phase
+
+  // Sensitivity
+  const DRAG_SENS = 0.45;   // degrees per pixel
+  const INERTIA   = 0.92;   // velocity decay per frame
+  const SNAP_SPEED = 0.04;  // how fast it snaps back to mouse tilt
+
+  // Change cursor on card scene
+  scene.style.cursor = 'grab';
+
+  /* ── Pointer Down ── */
+  function onDown(e) {
+    if (isFlipped) return;
+    dragging  = true;
+    dragMode  = true;
+    dragDecay = false;
+    velX = velY = 0;
+
+    dragStartX = dragLastX = e.type === 'touchstart' ? e.touches[0].clientX : e.clientX;
+    dragStartY = dragLastY = e.type === 'touchstart' ? e.touches[0].clientY : e.clientY;
+
+    scene.style.cursor = 'grabbing';
+    mainCard.style.transition = 'none';
+
+    e.preventDefault();
+  }
+
+  /* ── Pointer Move ── */
+  function onMove(e) {
+    if (!dragging) return;
+    const cx = e.type === 'touchmove' ? e.touches[0].clientX : e.clientX;
+    const cy = e.type === 'touchmove' ? e.touches[0].clientY : e.clientY;
+
+    const dx = cx - dragLastX;
+    const dy = cy - dragLastY;
+
+    // Accumulate velocity
+    velY = dx * DRAG_SENS;
+    velX = -dy * DRAG_SENS;
+
+    // Apply to accumulated drag rotation
+    dragRotY += dx * DRAG_SENS;
+    dragRotX -= dy * DRAG_SENS;
+
+    // Clamp X rotation so it doesn't flip upside down
+    dragRotX = Math.max(-75, Math.min(75, dragRotX));
+
+    dragLastX = cx;
+    dragLastY = cy;
+
+    e.preventDefault();
+  }
+
+  /* ── Pointer Up ── */
+  function onUp(e) {
+    if (!dragging) return;
+    dragging  = false;
+    dragDecay = true;         // start inertia
+    scene.style.cursor = 'grab';
+  }
+
+  // Attach events
+  scene.addEventListener('mousedown',  onDown,  { passive: false });
+  scene.addEventListener('touchstart', onDown,  { passive: false });
+  document.addEventListener('mousemove', onMove, { passive: false });
+  document.addEventListener('touchmove', onMove, { passive: false });
+  document.addEventListener('mouseup',  onUp);
+  document.addEventListener('touchend', onUp);
+
+  /* ── Drag rAF loop — blends drag rotation with mouse tilt ── */
+  function dragLoop() {
+
+    if (!isFlipped) {
+
+      if (dragMode) {
+        if (!dragging && dragDecay) {
+          // Inertia: keep spinning, decay velocity
+          velX *= INERTIA;
+          velY *= INERTIA;
+          dragRotX += velX;
+          dragRotY += velY;
+          dragRotX = Math.max(-75, Math.min(75, dragRotX));
+
+          if (Math.abs(velX) + Math.abs(velY) < 0.08) {
+            dragDecay = false;
+          }
+        }
+
+        if (!dragging && !dragDecay) {
+          // Snap drag rotation back toward 0 so mouse-tilt can take over
+          dragRotX *= (1 - SNAP_SPEED);
+          dragRotY *= (1 - SNAP_SPEED);
+
+          if (Math.abs(dragRotX) < 0.3 && Math.abs(dragRotY) < 0.3) {
+            dragRotX = 0;
+            dragRotY = 0;
+            dragMode = false;  // ← fully hand back to mouse-tilt
+          }
+        }
+      }
+
+      if (!mainCard.classList.contains('card-3d-transition')) {
+        const scrollY     = window.scrollY;
+        const heroH       = document.getElementById('hero').offsetHeight;
+        const scrollRatio = Math.min(1, scrollY / heroH);
+        const diveX       = scrollRatio * 18;
+        const diveY       = scrollRatio * 8;
+        const sinkY       = -scrollRatio * 40;
+        const shrink      = 1 - scrollRatio * 0.06;
+
+        // When in drag mode: use accumulated drag rotation + interp
+        // When in mouse mode: use interp only (dragRot = 0)
+        const totalX = (dragMode ? dragRotX : 0) + interpX + diveX;
+        const totalY = (dragMode ? dragRotY : 0) + interpY + diveY;
+
+        mainCard.style.transform = `
+          perspective(1100px)
+          rotateX(${totalX}deg)
+          rotateY(${totalY}deg)
+          translateY(${sinkY}px)
+          scale(${shrink})
+        `;
+
+        // Glow reacts to tilt
+        const dist   = Math.sqrt(((interpX)/28)**2 + ((interpY)/38)**2);
+        const glowEl = document.querySelector('.cf-glow');
+        if (glowEl) {
+          glowEl.style.opacity = (1 - scrollRatio) * (0.7 + dist * 0.3);
+          glowEl.style.transform = `translate(${-interpY * 0.5}px, ${-interpX * 0.3}px)`;
+        }
+      }
+    }
+
+    requestAnimationFrame(dragLoop);
+  }
+  dragLoop();
+
+  // Visual hint on the card scene
+  const hint = document.createElement('div');
+  hint.style.cssText = `
+    position:absolute; bottom:12px; right:12px;
+    font-size:.58rem; font-family:'DM Mono',monospace;
+    color:rgba(255,255,255,.2); pointer-events:none;
+    display:flex; align-items:center; gap:5px;
+    z-index:10;
+  `;
+  hint.innerHTML = `<span style="font-size:.8rem">⠿</span> Drag to rotate`;
+  scene.style.position = 'relative';
+  scene.appendChild(hint);
+  // Fade hint out after 4s
+  setTimeout(() => { hint.style.transition = 'opacity 1s'; hint.style.opacity = '0'; }, 4000);
+
+})();
+
+/* ==============================================
+   SCROLL EVENT — unified handler
+============================================== */
+let lastScrollY = window.scrollY;
+window.addEventListener('scroll', () => {
+  const s = document.documentElement.scrollTop;
+  const h = document.documentElement.scrollHeight - window.innerHeight;
+  document.getElementById('scrollProgress').style.width = (s/h*100) + '%';
+  updateNavDots();
+  scanElements();
+  lastScrollY = s;
+}, { passive: true });
+
+/* ==============================================
+   SKILLS — STACK → EXPLODE SYSTEM
+   Phase 1 (hidden):  all cards stacked in centre
+   Phase 2 (trigger): each card flies to its grid slot
+   Phase 3 (out):     cards collapse back to stack
+============================================== */
+(function initSkillSlide() {
+
+  const grid  = document.getElementById('skillsGrid');
+  const cards = Array.from(grid.querySelectorAll('.skill-card'));
+  let   fired = false;
+
+  /* ── Determine each card's column position ──────────────────────
+     After layout, cards are measured via getBoundingClientRect.
+     Cards whose centre is left of the grid centre → slide from left.
+     Cards whose centre is right of the grid centre → slide from right.
+  ──────────────────────────────────────────────────────────────── */
+
+  function getDirection(card) {
+    const gridRect = grid.getBoundingClientRect();
+    const cardRect = card.getBoundingClientRect();
+    const cardCX   = cardRect.left + cardRect.width / 2;
+    const gridCX   = gridRect.left + gridRect.width  / 2;
+    return cardCX <= gridCX ? 'left' : 'right';
+  }
+
+  /* ── Set cards off-screen (before animation) ── */
+  function hideCards() {
+    cards.forEach(card => {
+      card.classList.remove('card-visible');
+      card.style.transition = 'none';
+      card.style.opacity    = '0';
+      card.style.transform  = 'translateX(0px)'; // will be set per direction
+    });
+  }
+
+  /* ── Slide each card in from its side ── */
+  function slideIn() {
+    if (fired) return;
+    fired = true;
+
+    cards.forEach((card, idx) => {
+      const dir    = getDirection(card);
+      const offset = dir === 'left' ? '-110vw' : '110vw';
+      const delay  = idx * 75;
+
+      // Set starting off-screen position instantly
+      card.style.transition = 'none';
+      card.style.opacity    = '1';
+      card.style.transform  = `translateX(${offset})`;
+
+      void card.offsetWidth; // force reflow
+
+      // Animate to final position
+      card.style.transition = [
+        `transform .75s ${delay}ms cubic-bezier(.22,1,.36,1)`,
+        `opacity   .4s  ${delay}ms ease`
+      ].join(', ');
+      card.style.transform  = 'translateX(0)';
+
+      // After animation: add class, attach tilt
+      setTimeout(() => {
+        card.classList.add('card-visible');
+        card.style.transition = '';
+        card.style.transform  = '';
+        attachTilt(card);
+      }, delay + 780);
+    });
+  }
+
+  /* ── Slide each card back out to its side ── */
+  function slideOut() {
+    if (!fired) return;
+    fired = false;
+
+    // Strip tilt listeners via clone
+    cards.forEach((card, idx) => {
+      const clone = card.cloneNode(true);
+      if (card.parentNode) card.parentNode.replaceChild(clone, card);
+      cards[idx] = clone;
+
+      const dir    = getDirection(clone);
+      const offset = dir === 'left' ? '-110vw' : '110vw';
+      const delay  = (cards.length - 1 - idx) * 50; // reverse stagger
+
+      clone.classList.remove('card-visible');
+      clone.style.transition = [
+        `transform .5s ${delay}ms cubic-bezier(.55,0,1,.45)`,
+        `opacity   .4s ${delay}ms ease`
+      ].join(', ');
+      clone.style.opacity   = '0';
+      clone.style.transform = `translateX(${offset})`;
+    });
+  }
+
+  /* ── Hover tilt (only when card-visible) ── */
+  function attachTilt(card) {
+    card.addEventListener('mousemove', function(e) {
+      if (!card.classList.contains('card-visible')) return;
+      const r = card.getBoundingClientRect();
+      const x = (e.clientX - r.left) / r.width  - 0.5;
+      const y = (e.clientY - r.top)  / r.height - 0.5;
+      card.style.transition = 'box-shadow .15s, border-color .2s';
+      card.style.transform  = `translateY(-7px) rotateX(${-y*14}deg) rotateY(${x*14}deg)`;
+      card.style.boxShadow  = `${-x*22}px ${-y*22}px 40px rgba(0,0,0,.35), 0 0 0 1px rgba(5,99,187,.3)`;
+    });
+    card.addEventListener('mouseleave', function() {
+      if (!card.classList.contains('card-visible')) return;
+      card.style.transition = 'transform .45s cubic-bezier(.22,1,.36,1), box-shadow .35s';
+      card.style.transform  = '';
+      card.style.boxShadow  = '';
+    });
+  }
+
+  /* ── IntersectionObserver ── */
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting && entry.intersectionRatio >= 0.1 && !fired) {
+        slideIn();
+      } else if (!entry.isIntersecting && fired) {
+        slideOut();
+      }
+    });
+  }, { threshold: [0, 0.1, 0.5] });
+
+  observer.observe(grid);
+
+  /* ── Initial hide on load ── */
+  hideCards();
+
+})();
+
+/* ==============================================
+   3D TILT — PROJECT CARDS
+   .proj-reveal-wrap handles reveal (JS registry)
+   .proj-card handles flip (CSS :hover) AND tilt (JS)
+   Key rule: when CSS :hover is active, JS must NOT
+   write any transform — the CSS rule wins cleanly.
+============================================== */
+document.querySelectorAll('.proj-scene').forEach(scene => {
+  const card = scene.querySelector('.proj-card');
+
+  scene.addEventListener('mousemove', e => {
+    // If card is in CSS :hover state → flip is happening → hands off
+    if (card.matches(':hover')) {
+      // Clear any leftover JS inline transform so CSS flip is clean
+      if (card.style.transform) card.style.transform = '';
+      return;
+    }
+    const r = scene.getBoundingClientRect();
+    const x = (e.clientX - r.left) / r.width  - 0.5;
+    const y = (e.clientY - r.top)  / r.height - 0.5;
+    // Gentle tilt — no rotateY so it can't interfere with flip axis
+    card.style.transition = 'none';
+    card.style.transform  = `rotateX(${-y * 8}deg) rotateY(${x * 8}deg)`;
+  });
+
+  scene.addEventListener('mouseleave', () => {
+    // Card leaving: clear inline transform → CSS takes back control
+    card.style.transition = 'transform .45s cubic-bezier(.22,1,.36,1)';
+    card.style.transform  = '';
+  });
+
+  // Also clear on mouseenter in case JS left stale transform
+  card.addEventListener('mouseenter', () => {
+    card.style.transition = '';
+    card.style.transform  = '';
+  });
+});
+</script>
+
+</body>
+</html>

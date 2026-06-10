@@ -321,62 +321,59 @@ body {
    Then push it back by half its own width (= d/2)
    so it's centred on the right edge.
 ── */
+/* ══════════════════════════════════════════════════
+   الطريقة الوحيدة الصحيحة لـ CSS Cuboid:
+   كل وجه جانبي يبدأ فوق الحافة المقابلة له بالضبط
+   ثم يُدار حول تلك الحافة ← لا حاجة لـ translateX
+══════════════════════════════════════════════════ */
+
+/* ── RIGHT ── يبدأ فوق الحافة اليمنى للكارد */
 .card-side-right {
   width:  var(--box-d);
   height: var(--box-h);
-  top: 0;
-  left: calc(var(--box-w) + var(--box-d) / 2 * -1 + var(--box-d) / 2);
-  transform: rotateY(-90deg) translateZ(calc(var(--box-d) / -2));
+  top:  0;
+  left: var(--box-w);        /* مباشرة عند الحافة اليمنى */
+  transform-origin: left center;
+  transform: rotateY(90deg); /* يدور للخارج حول الحافة اليمنى */
   background: linear-gradient(180deg, #0e1e34 0%, #060e18 100%);
   border: none;
-  border-left: 1px solid rgba(5,99,187,.3);
-  border-right: 1px solid rgba(5,99,187,.1);
+  border-left: 1px solid rgba(5,99,187,.35);
 }
 
-/* ── LEFT ──
-   Place at left = -d/2 (centred on left edge of card).
-   Rotate +90° around Y so it faces left.
-   Push back by d/2.
-── */
+/* ── LEFT ── يبدأ على يسار الكارد بعرض الوجه كاملاً */
 .card-side-left {
   width:  var(--box-d);
   height: var(--box-h);
-  top: 0;
-  left: calc(var(--box-d) / -2);
-  transform: rotateY(90deg) translateZ(calc(var(--box-d) / -2));
+  top:  0;
+  left: calc(var(--box-d) * -1); /* خلف الحافة اليسرى */
+  transform-origin: right center;
+  transform: rotateY(-90deg);    /* يدور للخارج حول الحافة اليسرى */
   background: linear-gradient(180deg, #0a1828 0%, #040c14 100%);
   border: none;
-  border-left: 1px solid rgba(5,99,187,.1);
-  border-right: 1px solid rgba(5,99,187,.3);
+  border-right: 1px solid rgba(5,99,187,.35);
 }
 
-/* ── TOP ──
-   Place at top = -d/2 (centred on top edge of card).
-   Rotate +90° around X so it faces up.
-   Push back by d/2.
-── */
+/* ── TOP ── يبدأ فوق الكارد بارتفاع الوجه كاملاً */
 .card-side-top {
   width:  var(--box-w);
   height: var(--box-d);
-  top:  calc(var(--box-d) / -2);
+  top:  calc(var(--box-d) * -1); /* فوق الحافة العلوية */
   left: 0;
-  transform: rotateX(90deg) translateZ(calc(var(--box-d) / -2));
+  transform-origin: center bottom;
+  transform: rotateX(90deg);      /* يدور للخارج حول الحافة العلوية */
   background: linear-gradient(90deg, #1a2a44, #0a1828, #1a2a44);
   border: none;
-  border-top: 1px solid rgba(5,99,187,.4);
+  border-bottom: 1px solid rgba(5,99,187,.4);
 }
 
-/* ── BOTTOM ──
-   Place at top = box-h - d/2 (centred on bottom edge).
-   Rotate -90° around X so it faces down.
-   Push back by d/2.
-── */
+/* ── BOTTOM ── يبدأ أسفل الكارد مباشرة */
 .card-side-bottom {
   width:  var(--box-w);
   height: var(--box-d);
-  top:  calc(var(--box-h) - var(--box-d) / 2);
+  top:  var(--box-h);  /* مباشرة عند الحافة السفلية */
   left: 0;
-  transform: rotateX(-90deg) translateZ(calc(var(--box-d) / -2));
+  transform-origin: center top;
+  transform: rotateX(-90deg);    /* يدور للخارج حول الحافة السفلية */
   background: linear-gradient(90deg, #0d1520, #060c14, #0d1520);
   border: none;
 }
@@ -1457,10 +1454,459 @@ body {
 <div class="ambient ambient-1"></div>
 <div class="ambient ambient-2"></div>
 
+<!-- ============================================================
+     SPLASH SCREEN — Terminal Compile → Shatter Reveal
+============================================================ -->
+<div id="splash">
+
+  <!-- شظايا الـ shatter — يتم توليدها بـ JS -->
+  <div id="splash-shards"></div>
+
+  <!-- المحتوى المركزي -->
+  <div id="splash-content">
+
+    <!-- اسم الشخص بخط terminal -->
+    <div id="splash-terminal">
+      <span id="splash-prefix" class="sp-prefix">~/portfolio $</span>
+      <span id="splash-typed"></span>
+      <span id="splash-cursor" class="sp-cursor">▋</span>
+    </div>
+
+    <!-- شريط الـ compile -->
+    <div id="splash-compile">
+      <div id="splash-compile-label">
+        <span id="splash-compile-step">Initializing...</span>
+        <span id="splash-compile-pct">0%</span>
+      </div>
+      <div id="splash-bar-track">
+        <div id="splash-bar-fill"></div>
+        <div id="splash-bar-glow"></div>
+      </div>
+      <div id="splash-logs"></div>
+    </div>
+
+  </div>
+
+</div><!-- /#splash -->
+
+<style>
+/* ── SPLASH CONTAINER ── */
+#splash {
+  position: fixed;
+  inset: 0;
+  z-index: 9000;
+  background: #020408;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+#splash.hidden { display: none; }
+
+/* ── TERMINAL NAME ── */
+#splash-terminal {
+  font-family: 'JetBrains Mono', 'Courier New', monospace;
+  font-size: clamp(1rem, 3vw, 1.6rem);
+  color: #e0e0e0;
+  margin-bottom: 2.5rem;
+  display: flex;
+  align-items: center;
+  gap: .5rem;
+  white-space: nowrap;
+}
+.sp-prefix { color: #0563bb; font-weight: 600; opacity: .7; }
+#splash-typed { color: #fff; font-weight: 700; letter-spacing: .04em; }
+.sp-cursor {
+  color: #0563bb;
+  animation: cur-blink .65s step-end infinite;
+  font-size: 1.1em;
+}
+@keyframes cur-blink { 0%,100%{opacity:1} 50%{opacity:0} }
+
+/* ── COMPILE BLOCK ── */
+#splash-compile {
+  width: min(480px, 88vw);
+  opacity: 0;
+  transform: translateY(12px);
+  transition: opacity .4s ease, transform .4s ease;
+}
+#splash-compile.show { opacity: 1; transform: translateY(0); }
+
+#splash-compile-label {
+  display: flex;
+  justify-content: space-between;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: .68rem;
+  color: #555;
+  margin-bottom: .5rem;
+}
+#splash-compile-step { color: #0e8fd4; }
+#splash-compile-pct  { color: #0563bb; font-weight: 700; }
+
+#splash-bar-track {
+  height: 3px;
+  background: rgba(255,255,255,.06);
+  border-radius: 999px;
+  overflow: visible;
+  position: relative;
+  margin-bottom: .9rem;
+}
+#splash-bar-fill {
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(to right, #0563bb, #0e8fd4);
+  border-radius: 999px;
+  transition: width .12s ease;
+  position: relative;
+}
+#splash-bar-glow {
+  position: absolute;
+  right: 0; top: 50%;
+  transform: translate(50%, -50%);
+  width: 10px; height: 10px;
+  border-radius: 50%;
+  background: #38bdf8;
+  box-shadow: 0 0 12px 4px rgba(56,189,248,.7);
+  opacity: 0;
+  transition: opacity .2s;
+}
+#splash-bar-fill.active + #splash-bar-glow { opacity: 1; }
+
+#splash-logs {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  min-height: 60px;
+}
+.sp-log {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: .62rem;
+  color: #333;
+  opacity: 0;
+  transform: translateX(-6px);
+  animation: log-in .25s ease forwards;
+}
+.sp-log.ok  { color: #2a9d5c; }
+.sp-log.err { color: #c0392b; }
+.sp-log.inf { color: #0563bb; }
+@keyframes log-in {
+  to { opacity: 1; transform: translateX(0); }
+}
+
+/* ── SHATTER FRAGMENTS ── */
+#splash-shards {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+.shard {
+  position: absolute;
+  background: #020408;
+  will-change: transform, opacity;
+}
+
+/* ── PAGE fades in under shards ── */
+#splash {
+  transition: none;
+}
+#splash.revealing {
+  pointer-events: none;
+}
+#splash.revealing #splash-content {
+  animation: splash-content-out .35s cubic-bezier(.4,0,1,1) forwards;
+}
+@keyframes splash-content-out {
+  0%   { opacity:1; transform: scale(1); filter: blur(0); }
+  100% { opacity:0; transform: scale(1.06); filter: blur(6px); }
+}
+
+/* Page slides in from behind */
+.page-reveal {
+  animation: page-in .9s .1s cubic-bezier(.22,1,.36,1) both;
+}
+@keyframes page-in {
+  from { opacity:0; transform: translateY(18px); }
+  to   { opacity:1; transform: translateY(0); }
+}
+</style>
+
+<script>
+/* ============================================================
+   SPLASH — Terminal Compile + Shatter Reveal
+   Runs BEFORE everything else, blocks page interaction.
+   On complete: shards fly outward → page fades in.
+============================================================ */
+(function initSplash() {
+
+  const splash   = document.getElementById('splash');
+  const typed    = document.getElementById('splash-typed');
+  const compile  = document.getElementById('splash-compile');
+  const barFill  = document.getElementById('splash-bar-fill');
+  const barGlow  = document.getElementById('splash-bar-glow');
+  const stepEl   = document.getElementById('splash-compile-step');
+  const pctEl    = document.getElementById('splash-compile-pct');
+  const logsEl   = document.getElementById('splash-logs');
+  const shardsEl = document.getElementById('splash-shards');
+
+  /* ── 1. Type name ── */
+  const NAME  = 'Assem Adel Habib';
+  const DELAY = 70; // ms per character
+
+  function typeName() {
+    return new Promise(resolve => {
+      let i = 0;
+      const iv = setInterval(() => {
+        typed.textContent = NAME.slice(0, ++i);
+        if (i === NAME.length) {
+          clearInterval(iv);
+          setTimeout(resolve, 500);
+        }
+      }, DELAY);
+    });
+  }
+
+  /* ── 2. Compile progress ── */
+  const STEPS = [
+    { pct: 8,  label: 'Loading assets...',        log: '✓ fonts loaded',         cls: 'ok'  },
+    { pct: 22, label: 'Building CSS 3D engine...', log: '✓ transform-style: preserve-3d', cls: 'ok' },
+    { pct: 38, label: 'Compiling animations...',   log: '✓ 6 rAF loops initialized', cls: 'ok' },
+    { pct: 54, label: 'Initializing particles...', log: '✓ 80 particles spawned',  cls: 'ok'  },
+    { pct: 67, label: 'Building 3D cuboid...',     log: '✓ 6 faces aligned',        cls: 'ok'  },
+    { pct: 79, label: 'Attaching event handlers...', log: '✓ drag system ready',   cls: 'ok'  },
+    { pct: 91, label: 'Running final checks...',   log: '⚠ manifest.json: 403',    cls: 'err' },
+    { pct: 96, label: 'Patching...',               log: '✓ fallback applied',       cls: 'inf' },
+    { pct:100, label: 'Ready.',                    log: '✓ portfolio compiled successfully', cls: 'ok' },
+  ];
+
+  let currentPct = 0;
+
+  function addLog(text, cls) {
+    const el = document.createElement('div');
+    el.className = `sp-log ${cls}`;
+    el.textContent = text;
+    logsEl.appendChild(el);
+    // Keep max 4 logs visible
+    while (logsEl.children.length > 4) logsEl.removeChild(logsEl.firstChild);
+  }
+
+  function runCompile() {
+    return new Promise(resolve => {
+      compile.classList.add('show');
+
+      let stepIdx = 0;
+
+      function nextStep() {
+        if (stepIdx >= STEPS.length) { resolve(); return; }
+        const s = STEPS[stepIdx++];
+
+        // Animate bar smoothly to target pct
+        const target = s.pct;
+        const startPct = currentPct;
+        const duration = 320 + Math.random() * 200;
+        const startTime = performance.now();
+
+        function animBar(now) {
+          const t = Math.min(1, (now - startTime) / duration);
+          const ease = 1 - Math.pow(1 - t, 3);
+          currentPct = startPct + (target - startPct) * ease;
+          barFill.style.width = currentPct + '%';
+          barFill.classList.add('active');
+          pctEl.textContent = Math.round(currentPct) + '%';
+
+          if (t < 1) {
+            requestAnimationFrame(animBar);
+          } else {
+            currentPct = target;
+            stepEl.textContent = s.label;
+            addLog(s.log, s.cls);
+            const pause = 180 + Math.random() * 220;
+            setTimeout(nextStep, pause);
+          }
+        }
+        requestAnimationFrame(animBar);
+      }
+
+      nextStep();
+    });
+  }
+
+  /* ── 3. Shatter effect ── */
+  /* ── 3. Physics-based Shatter ── */
+  function buildShards() {
+    const W = window.innerWidth;
+    const H = window.innerHeight;
+    // More columns near centre, fewer at edges — organic feel
+    const COLS = 9, ROWS = 11;
+    const cw = W / COLS, ch = H / ROWS;
+    const frags = [];
+    const cx0 = W / 2, cy0 = H / 2;
+
+    for (let r = 0; r < ROWS; r++) {
+      for (let c = 0; c < COLS; c++) {
+        const x = c * cw, y = r * ch;
+
+        // Jagged edges — bigger jitter for inner shards
+        const distC = Math.sqrt((x+cw/2-cx0)**2 + (y+ch/2-cy0)**2);
+        const jAmt  = 14 + (1 - distC / Math.sqrt(cx0**2+cy0**2)) * 12;
+        const jitter = () => (Math.random() - .5) * jAmt;
+
+        const pts = [
+          [x + jitter(),      y + jitter()     ],
+          [x + cw + jitter(), y + jitter()     ],
+          [x + cw + jitter(), y + ch + jitter()],
+          [x + jitter(),      y + ch + jitter()],
+        ];
+
+        const scx = x + cw / 2, scy = y + ch / 2;
+        const dx  = scx - cx0,  dy  = scy - cy0;
+        const dist = Math.sqrt(dx*dx + dy*dy) || 1;
+
+        // Velocity: outward from centre + small random offset
+        const baseSpeed = 3.5 + Math.random() * 2.8;
+        const vx = (dx / dist) * baseSpeed + (Math.random()-.5) * 1.2;
+        const vy = (dy / dist) * baseSpeed + (Math.random()-.5) * 1.2;
+
+        frags.push({
+          el: null, pts, x, y, cw, ch, scx, scy,
+          // physics state
+          px: 0, py: 0,          // translation offset
+          vx, vy,
+          gravity: 0.18 + Math.random() * 0.14,
+          spin: (Math.random() - .5) * 5.5,   // deg/frame
+          angle: 0,
+          scaleV: -0.004 - Math.random() * 0.006, // scale velocity
+          scale: 1,
+          opacity: 1,
+          opacityV: -(0.012 + Math.random() * 0.016),
+          // stagger: inner shards start first
+          delay: (1 - distC / Math.sqrt(cx0**2+cy0**2)) * 120 + Math.random() * 60,
+          started: false,
+          done: false,
+        });
+      }
+    }
+    return frags;
+  }
+
+  function shatter() {
+    return new Promise(resolve => {
+      splash.classList.add('revealing');
+      const frags = buildShards();
+      let allDone = false;
+      const startTime = performance.now();
+
+      // Build DOM for all shards
+      frags.forEach(f => {
+        const el = document.createElement('div');
+        el.className = 'shard';
+        const clipPts = f.pts.map(([px, py]) =>
+          `${(px - f.x).toFixed(1)}px ${(py - f.y).toFixed(1)}px`
+        ).join(', ');
+        el.style.cssText =
+          `left:${f.x}px;top:${f.y}px;` +
+          `width:${f.cw+24}px;height:${f.ch+24}px;` +
+          `clip-path:polygon(${clipPts});`;
+        shardsEl.appendChild(el);
+        f.el = el;
+      });
+
+      function physicsLoop(now) {
+        if (allDone) return;
+        const elapsed = now - startTime;
+        let remaining = 0;
+
+        frags.forEach(f => {
+          if (f.done) return;
+          if (elapsed < f.delay) { remaining++; return; }
+
+          f.started = true;
+
+          // Apply physics
+          f.vy    += f.gravity;           // gravity pulls down
+          f.px    += f.vx;
+          f.py    += f.vy;
+          f.angle += f.spin;
+          f.scale += f.scaleV;
+          f.scale  = Math.max(0.01, f.scale);
+          f.opacity += f.opacityV;
+
+          // Drag — air resistance
+          f.vx *= 0.97;
+          f.vy *= 0.97;
+          f.spin *= 0.985;
+
+          f.el.style.transform =
+            `translate(${f.px.toFixed(2)}px, ${f.py.toFixed(2)}px)` +
+            ` rotate(${f.angle.toFixed(2)}deg)` +
+            ` scale(${f.scale.toFixed(4)})`;
+          f.el.style.opacity = Math.max(0, f.opacity).toFixed(3);
+
+          if (f.opacity <= 0 || f.scale <= 0.01) {
+            f.done = true;
+            f.el.style.display = 'none';
+          } else {
+            remaining++;
+          }
+        });
+
+        if (remaining === 0) {
+          allDone = true;
+          resolve();
+        } else {
+          requestAnimationFrame(physicsLoop);
+        }
+      }
+
+      requestAnimationFrame(physicsLoop);
+    });
+  }
+
+  /* ── 4. Sequence ── */
+  async function run() {
+    document.body.style.overflow = 'hidden';
+
+    await typeName();
+    await runCompile();
+
+    // Pulse the bar at 100%
+    await new Promise(r => setTimeout(r, 350));
+
+    // Flash effect before shatter
+    const flash = document.createElement('div');
+    flash.style.cssText =
+      'position:absolute;inset:0;background:#0563bb;' +
+      'opacity:0;pointer-events:none;transition:opacity .12s ease;z-index:2;';
+    splash.appendChild(flash);
+    requestAnimationFrame(() => {
+      flash.style.opacity = '0.18';
+      setTimeout(() => { flash.style.opacity = '0'; }, 120);
+    });
+
+    await new Promise(r => setTimeout(r, 180));
+
+    // Run shatter physics
+    await shatter();
+
+    // Smooth final fade of splash
+    splash.style.transition = 'opacity .25s ease';
+    splash.style.opacity = '0';
+    await new Promise(r => setTimeout(r, 260));
+
+    splash.classList.add('hidden');
+    document.body.style.overflow = '';
+
+    // Animate page content in
+    const page = document.querySelector('.page');
+    if (page) page.classList.add('page-reveal');
+  }
+
+  run();
+
+})();
+</script>
+
 <!-- Particle canvas -->
 <canvas id="particles"></canvas>
-
-<!-- Nav dots -->
 <nav class="nav-dots" id="navDots">
   <div class="nav-dot active" data-label="Home" data-target="hero"></div>
   <div class="nav-dot" data-label="Skills" data-target="skills"></div>
@@ -2325,6 +2771,7 @@ let interpX = 0, interpY = 0;
 let isFlipped = false;
 let mouseX = window.innerWidth / 2;
 let mouseY = window.innerHeight / 2;
+let dragMode = false; // shared between animCardTilt and dragLoop
 
 // Track mouse GLOBALLY
 document.addEventListener('mousemove', e => {
@@ -2375,9 +2822,8 @@ function animCardTilt() {
 
     mainCard.style.animation = 'none';
 
-    // Only update transform if NOT in the middle of a flip transition
-    if (!mainCard.classList.contains('card-3d-transition')) {
-      // Stronger angles so the box depth/sides are visible
+    // dragLoop owns the transform when dragging — skip here
+    if (!dragMode && !mainCard.classList.contains('card-3d-transition')) {
       mainCard.style.transform = `
         perspective(1100px)
         rotateX(${interpX + diveX}deg)
@@ -2387,7 +2833,7 @@ function animCardTilt() {
       `;
     }
 
-    // Glow reacts to tilt intensity
+    // Glow reacts to tilt
     const glowEl = document.querySelector('.cf-glow');
     if (glowEl) {
       const intensity = Math.min(1, dist * 2);
@@ -2433,8 +2879,9 @@ document.querySelectorAll('.flip-btn').forEach(btn => {
   // Velocity for inertia
   let velX = 0, velY = 0;
 
-  // Whether drag mode is active (overrides mouse tilt)
-  let dragMode   = false;
+  // dragMode hoisted to outer scope so animCardTilt can read it
+  // (re-assigned here to same outer var)
+  dragMode  = false;
   let dragDecay  = false; // inertia phase
 
   // Sensitivity

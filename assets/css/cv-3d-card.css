@@ -1,6 +1,6 @@
 /* ============================================================
    CV 3D CUBOID — Standalone 3D Model for CV Details Page
-   Extracted from assem-cv-details-Cs.html
+   Extracted from assem-cv-3d.html (transform-origin approach)
    Colors use main site variables (--accent-color, etc.)
    ============================================================ */
 
@@ -75,58 +75,72 @@
   box-shadow: 0 0 0 1px color-mix(in srgb, var(--accent-color), transparent 85%);
 }
 
-/* ── RIGHT ── */
+/* ── RIGHT ──
+   يبدأ فوق الحافة اليمنى، origin = left center،
+   يُدار ليواجه اليمين ← يمتد في العمق (Z).
+── */
 .cv3d-side-right {
   width:  var(--box-d);
   height: var(--box-h);
   top: 0;
-  left: calc(var(--box-w) + var(--box-d) / 2 * -1 + var(--box-d) / 2);
-  transform: rotateY(-90deg) translateZ(calc(var(--box-d) / -2));
+  left: var(--box-w);
+  transform-origin: left center;
+  transform: rotateY(90deg);
   background: linear-gradient(180deg,
     color-mix(in srgb, var(--surface-color), var(--accent-color) 6%) 0%,
     color-mix(in srgb, var(--surface-color), black 5%) 100%);
   border: none;
-  border-left: 1px solid color-mix(in srgb, var(--accent-color), transparent 70%);
-  border-right: 1px solid color-mix(in srgb, var(--accent-color), transparent 90%);
+  border-left: 1px solid color-mix(in srgb, var(--accent-color), transparent 65%);
 }
 
-/* ── LEFT ── */
+/* ── LEFT ──
+   يبدأ خلف الحافة اليسرى بعرضه، origin = right center،
+   يُدار ليواجه اليسار ← يمتد في العمق (Z).
+── */
 .cv3d-side-left {
   width:  var(--box-d);
   height: var(--box-h);
   top: 0;
-  left: calc(var(--box-d) / -2);
-  transform: rotateY(90deg) translateZ(calc(var(--box-d) / -2));
+  left: calc(var(--box-d) * -1);
+  transform-origin: right center;
+  transform: rotateY(-90deg);
   background: linear-gradient(180deg,
     color-mix(in srgb, var(--surface-color), black 3%) 0%,
     color-mix(in srgb, var(--surface-color), black 8%) 100%);
   border: none;
-  border-left: 1px solid color-mix(in srgb, var(--accent-color), transparent 90%);
-  border-right: 1px solid color-mix(in srgb, var(--accent-color), transparent 70%);
+  border-right: 1px solid color-mix(in srgb, var(--accent-color), transparent 65%);
 }
 
-/* ── TOP ── */
+/* ── TOP ──
+   يبدأ فوق الحافة العلوية بارتفاعه، origin = center bottom،
+   يُدار ليواجه الأعلى ← يمتد في العمق (Z).
+── */
 .cv3d-side-top {
   width:  var(--box-w);
   height: var(--box-d);
-  top:  calc(var(--box-d) / -2);
+  top:  calc(var(--box-d) * -1);
   left: 0;
-  transform: rotateX(90deg) translateZ(calc(var(--box-d) / -2));
+  transform-origin: center bottom;
+  transform: rotateX(90deg);
   background: linear-gradient(90deg,
     color-mix(in srgb, var(--surface-color), var(--accent-color) 10%) 0%,
     color-mix(in srgb, var(--surface-color), black 3%) 50%,
     color-mix(in srgb, var(--surface-color), var(--accent-color) 10%) 100%);
   border: none;
-  border-top: 1px solid color-mix(in srgb, var(--accent-color), transparent 60%);
+  border-bottom: 1px solid color-mix(in srgb, var(--accent-color), transparent 60%);
 }
 
-/* ── BOTTOM ── */
+/* ── BOTTOM ──
+   يبدأ أسفل الكارد مباشرة، origin = center top،
+   يُدار ليواجه الأسفل ← يمتد في العمق (Z).
+── */
 .cv3d-side-bottom {
   width:  var(--box-w);
   height: var(--box-d);
-  top:  calc(var(--box-h) - var(--box-d) / 2);
+  top:  var(--box-h);
   left: 0;
-  transform: rotateX(-90deg) translateZ(calc(var(--box-d) / -2));
+  transform-origin: center top;
+  transform: rotateX(-90deg);
   background: linear-gradient(90deg,
     color-mix(in srgb, var(--surface-color), black 6%) 0%,
     color-mix(in srgb, var(--surface-color), black 10%) 50%,

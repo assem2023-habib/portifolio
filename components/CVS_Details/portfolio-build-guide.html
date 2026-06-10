@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>دليل بناء بورتفوليو Assem — من الصفر للاحتراف</title>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#080808;--bg2:#0e0e0e;--bg3:#141414;--surface:#1a1a1a;
+  --border:rgba(255,255,255,.07);--border2:rgba(255,255,255,.13);
+  --blue:#0563bb;--blue2:#1a7fd4;--cyan:#0e8fd4;
+  --text:#f0f0f0;--text2:#888;--text3:#444;
+  --green:#2a9d5c;--amber:#c8860a;--rose:#c0392b;
+  --r:12px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:'IBM Plex Sans Arabic',sans-serif;font-size:15px;line-height:1.8;direction:rtl}
+
+/* ── PROGRESS ── */
+#prog{position:fixed;top:0;left:0;right:0;height:2px;background:linear-gradient(to right,var(--blue),var(--cyan));z-index:999;width:0;transition:width .1s}
+
+/* ── SIDEBAR ── */
+.sidebar{position:fixed;right:0;top:0;bottom:0;width:230px;background:var(--bg2);border-left:1px solid var(--border);padding:1.5rem 1rem;overflow-y:auto;z-index:100}
+.sb-logo{font-size:.65rem;font-weight:700;color:var(--blue);letter-spacing:.2em;text-transform:uppercase;padding-bottom:1rem;border-bottom:1px solid var(--border);margin-bottom:1rem}
+.sb-sec{font-size:.58rem;text-transform:uppercase;letter-spacing:.15em;color:var(--text3);margin:1.2rem 0 .4rem;font-weight:700}
+.sb-link{display:flex;align-items:center;gap:7px;padding:5px 8px;border-radius:8px;color:var(--text2);text-decoration:none;font-size:.75rem;transition:all .2s;margin-bottom:1px}
+.sb-link:hover,.sb-link.active{background:rgba(5,99,187,.12);color:var(--blue)}
+.sb-dot{width:5px;height:5px;border-radius:50%;background:var(--border2);flex-shrink:0}
+.sb-link.active .sb-dot{background:var(--blue)}
+
+/* ── MAIN ── */
+.main{margin-right:230px;padding:3rem 3.5rem 6rem;max-width:820px}
+
+/* ── HERO ── */
+.hero{padding:4rem 0 5rem;border-bottom:1px solid var(--border);margin-bottom:4rem}
+.hero-badge{display:inline-flex;align-items:center;gap:6px;font-size:.65rem;font-weight:700;color:var(--blue);letter-spacing:.18em;text-transform:uppercase;background:rgba(5,99,187,.1);border:1px solid rgba(5,99,187,.25);padding:4px 12px;border-radius:999px;margin-bottom:1.2rem}
+.hero h1{font-size:2.8rem;font-weight:700;line-height:1.1;letter-spacing:-1.5px;margin-bottom:.8rem}
+.hero h1 em{color:var(--blue);font-style:normal}
+.hero p{font-size:.95rem;color:var(--text2);max-width:520px;line-height:1.9}
+.hero-stats{display:flex;gap:2rem;margin-top:2rem}
+.hs{text-align:right}
+.hs-n{font-size:1.8rem;font-weight:700;color:var(--blue);line-height:1}
+.hs-l{font-size:.65rem;color:var(--text3);text-transform:uppercase;letter-spacing:.1em;margin-top:2px}
+
+/* ── SECTIONS ── */
+.section{margin-bottom:5rem;scroll-margin-top:2rem}
+.sec-label{font-size:.62rem;font-family:'JetBrains Mono',monospace;color:var(--blue);text-transform:uppercase;letter-spacing:.2em;display:flex;align-items:center;gap:8px;margin-bottom:.7rem}
+.sec-label::before{content:'';display:block;width:20px;height:1px;background:var(--blue);transition:width .4s}
+.section:hover .sec-label::before{width:36px}
+.sec-title{font-size:1.6rem;font-weight:700;letter-spacing:-.5px;margin-bottom:.4rem}
+.sec-sub{font-size:.82rem;color:var(--text2);margin-bottom:2rem;line-height:1.7}
+
+/* ── CARDS ── */
+.card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);padding:1.4rem;margin-bottom:.8rem;transition:border-color .2s}
+.card:hover{border-color:var(--border2)}
+.card-title{font-size:.88rem;font-weight:700;margin-bottom:.4rem;display:flex;align-items:center;gap:8px}
+.card-text{font-size:.8rem;color:var(--text2);line-height:1.8}
+
+/* ── CODE ── */
+.code-wrap{background:#030303;border:1px solid var(--border);border-radius:var(--r);overflow:hidden;margin:1rem 0;direction:ltr}
+.code-top{display:flex;align-items:center;justify-content:space-between;padding:8px 14px;background:var(--bg3);border-bottom:1px solid var(--border)}
+.code-lang{font-size:.6rem;font-family:'JetBrains Mono',monospace;color:var(--blue);font-weight:600;text-transform:uppercase;letter-spacing:.1em}
+.code-dots{display:flex;gap:4px}
+.code-dots span{width:9px;height:9px;border-radius:50%}
+.d1{background:#2a0a0a}.d2{background:#2a2a0a}.d3{background:#0a2a0a}
+pre{padding:1.2rem 1.4rem;overflow-x:auto;font-family:'JetBrains Mono',monospace;font-size:.73rem;line-height:1.85;color:#ccc}
+.kw{color:#569cd6}.str{color:#ce9178}.prop{color:#9cdcfe}.val{color:#b5cea8}.cmt{color:#6a9955}.sel{color:#d7ba7d}.fn{color:#dcdcaa}
+
+/* ── TABLE ── */
+.tbl{width:100%;border-collapse:collapse;margin:1rem 0;font-size:.78rem;direction:rtl}
+.tbl th{padding:9px 12px;background:var(--bg3);color:var(--text2);font-weight:700;text-align:right;font-size:.68rem;text-transform:uppercase;letter-spacing:.07em;border-bottom:2px solid var(--border2)}
+.tbl td{padding:9px 12px;border-bottom:1px solid var(--border);color:var(--text2);vertical-align:top}
+.tbl tr:hover td{background:rgba(255,255,255,.015)}
+.mono{font-family:'JetBrains Mono',monospace;font-size:.7rem;color:var(--blue)}
+.dim{font-size:.73rem;color:var(--text3)}
+
+/* ── BADGES ── */
+.badge{font-size:.6rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;padding:2px 8px;border-radius:999px;border:1px solid}
+.b-blue{background:rgba(5,99,187,.12);color:var(--blue2);border-color:rgba(5,99,187,.25)}
+.b-green{background:rgba(42,157,92,.12);color:#6ec49a;border-color:rgba(42,157,92,.25)}
+.b-amber{background:rgba(200,134,10,.12);color:#e8b84a;border-color:rgba(200,134,10,.25)}
+.b-rose{background:rgba(192,57,43,.12);color:#f08080;border-color:rgba(192,57,43,.25)}
+.b-cyan{background:rgba(14,143,212,.12);color:#38bdf8;border-color:rgba(14,143,212,.25)}
+
+/* ── STEPS ── */
+.steps{list-style:none;counter-reset:step}
+.step{counter-increment:step;display:flex;gap:14px;padding:1rem 0;border-bottom:1px solid var(--border)}
+.step:last-child{border:none}
+.step-n{width:30px;height:30px;border-radius:50%;background:rgba(5,99,187,.12);border:1px solid rgba(5,99,187,.25);display:flex;align-items:center;justify-content:center;font-size:.7rem;font-weight:700;color:var(--blue);font-family:'JetBrains Mono',monospace;flex-shrink:0}
+.step-n::before{content:counter(step,'0')}
+.step-b .t{font-weight:700;font-size:.85rem;margin-bottom:.25rem}
+.step-b .d{font-size:.78rem;color:var(--text2);line-height:1.7}
+
+/* ── CALLOUT ── */
+.callout{border-radius:var(--r);padding:1rem 1.2rem;margin:1rem 0;border:1px solid;display:flex;gap:10px}
+.ca-blue{background:rgba(5,99,187,.08);border-color:rgba(5,99,187,.2)}
+.ca-amber{background:rgba(200,134,10,.08);border-color:rgba(200,134,10,.2)}
+.ca-green{background:rgba(42,157,92,.08);border-color:rgba(42,157,92,.2)}
+.ca-rose{background:rgba(192,57,43,.08);border-color:rgba(192,57,43,.2)}
+.ca-icon{font-size:.95rem;flex-shrink:0;margin-top:2px}
+.ca-body{font-size:.78rem;color:var(--text2);line-height:1.75}
+.ca-body strong{color:var(--text);font-weight:700}
+
+/* ── DIVIDER ── */
+hr.div{border:none;border-top:1px solid var(--border);margin:3.5rem 0}
+
+/* ── PROMPT BOX ── */
+.prompt-box{background:#020202;border:1px solid rgba(5,99,187,.3);border-radius:var(--r);overflow:hidden;margin:1.2rem 0;direction:ltr}
+.prompt-top{display:flex;align-items:center;justify-content:space-between;padding:10px 16px;background:rgba(5,99,187,.08);border-bottom:1px solid rgba(5,99,187,.2)}
+.prompt-label{font-size:.6rem;font-family:'JetBrains Mono',monospace;color:var(--blue);font-weight:700;letter-spacing:.12em;text-transform:uppercase;display:flex;align-items:center;gap:6px}
+.prompt-label::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--blue);animation:blink 2s infinite}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.3}}
+.copy-btn{font-size:.62rem;font-family:'JetBrains Mono',monospace;color:var(--text3);background:transparent;border:1px solid var(--border2);padding:3px 10px;border-radius:5px;cursor:pointer;transition:all .2s}
+.copy-btn:hover{border-color:var(--blue);color:var(--blue)}
+.prompt-body{padding:1.2rem 1.4rem;font-family:'JetBrains Mono',monospace;font-size:.72rem;line-height:1.9;color:#bbb;direction:ltr;white-space:pre-wrap}
+
+/* ── ARCH DIAGRAM ── */
+.arch{display:flex;flex-direction:column;gap:4px;margin:1.2rem 0;direction:ltr}
+.arch-row{display:flex;align-items:center;gap:6px;padding:8px 12px;border-radius:8px;border:1px solid var(--border);background:var(--bg2)}
+.arch-row.hl{border-color:rgba(5,99,187,.3);background:rgba(5,99,187,.06)}
+.arch-row.hl2{border-color:rgba(14,143,212,.3);background:rgba(14,143,212,.06)}
+.arch-row.hl3{border-color:rgba(200,134,10,.3);background:rgba(200,134,10,.06)}
+.arch-icon{font-size:1rem;flex-shrink:0}
+.arch-name{font-family:'JetBrains Mono',monospace;font-size:.72rem;font-weight:600;color:var(--text);width:180px;flex-shrink:0}
+.arch-desc{font-size:.72rem;color:var(--text2)}
+.arch-arrow{color:var(--text3);margin:0 4px;font-size:.8rem}
+
+/* ── RESPONSIVE ── */
+@media(max-width:860px){.sidebar{display:none}.main{margin-right:0;padding:2rem 1.5rem}}
+</style>
+</head>
+<body>
+
+<div id="prog"></div>
+
+<!-- SIDEBAR -->
+<nav class="sidebar">
+  <div class="sb-logo">Build Guide</div>
+
+  <div class="sb-sec">المقدمة</div>
+  <a href="#intro" class="sb-link active"><span class="sb-dot"></span>نظرة عامة</a>
+  <a href="#stack" class="sb-link"><span class="sb-dot"></span>التقنيات المستخدمة</a>
+  <a href="#arch" class="sb-link"><span class="sb-dot"></span>هيكل الصفحة</a>
+
+  <div class="sb-sec">البناء خطوة بخطوة</div>
+  <a href="#step1" class="sb-link"><span class="sb-dot"></span>١ — الهيكل والألوان</a>
+  <a href="#step2" class="sb-link"><span class="sb-dot"></span>٢ — المجسم 3D</a>
+  <a href="#step3" class="sb-link"><span class="sb-dot"></span>٣ — نظام الـ Tilt</a>
+  <a href="#step4" class="sb-link"><span class="sb-dot"></span>٤ — Drag to Rotate</a>
+  <a href="#step5" class="sb-link"><span class="sb-dot"></span>٥ — مشاريع الـ Flip</a>
+  <a href="#step6" class="sb-link"><span class="sb-dot"></span>٦ — Skills Slide</a>
+  <a href="#step7" class="sb-link"><span class="sb-dot"></span>٧ — Reveal System</a>
+
+  <div class="sb-sec">الـ Prompts</div>
+  <a href="#prompt-ai" class="sb-link"><span class="sb-dot"></span>Prompt للـ AI</a>
+  <a href="#prompt-human" class="sb-link"><span class="sb-dot"></span>للمطور البشري</a>
+</nav>
+
+<!-- MAIN -->
+<main class="main">
+
+<!-- HERO -->
+<div class="hero" id="intro">
+  <div class="hero-badge">📐 دليل تقني شامل</div>
+  <h1>كيف تبني بورتفوليو<br><em>Assem Adel Habib</em></h1>
+  <p>شرح تفصيلي ممل من أول سطر CSS حتى آخر event listener — مع prompts جاهزة لأي AI ومطور بشري.</p>
+  <div class="hero-stats">
+    <div class="hs"><div class="hs-n">7</div><div class="hs-l">خطوات</div></div>
+    <div class="hs"><div class="hs-n">6</div><div class="hs-l">أنظمة JS</div></div>
+    <div class="hs"><div class="hs-n">2700+</div><div class="hs-l">سطر كود</div></div>
+    <div class="hs"><div class="hs-n">0</div><div class="hs-l">مكتبات خارجية</div></div>
+  </div>
+</div>
+
+<!-- STACK -->
+<section class="section" id="stack">
+  <div class="sec-label">التقنيات</div>
+  <div class="sec-title">ما الذي بُني بماذا؟</div>
+  <div class="sec-sub">الصفحة كاملة بـ HTML + CSS + Vanilla JS — لا React، لا Vue، لا مكتبات خارجية.</div>
+
+  <table class="tbl">
+    <tr><th>التقنية</th><th>الاستخدام</th><th>السبب</th></tr>
+    <tr><td><span class="mono">CSS 3D transforms</span></td><td class="dim">المجسم، flip cards، tilt</td><td class="dim">أسرع من Three.js للأشكال البسيطة</td></tr>
+    <tr><td><span class="mono">requestAnimationFrame</span></td><td class="dim">Tilt + Drag + Lerp</td><td class="dim">60fps ناعم بدون setTimeout</td></tr>
+    <tr><td><span class="mono">IntersectionObserver</span></td><td class="dim">Reveal + Skills slide</td><td class="dim">أفضل من scroll events للأداء</td></tr>
+    <tr><td><span class="mono">CSS Variables</span></td><td class="dim">نظام الألوان + أبعاد المجسم</td><td class="dim">تغيير الـ theme بسطر واحد</td></tr>
+    <tr><td><span class="mono">Canvas API</span></td><td class="dim">جسيمات الخلفية</td><td class="dim">80 particle بخطوط ربط</td></tr>
+    <tr><td><span class="mono">Google Fonts</span></td><td class="dim">Syne + DM Sans + DM Mono</td><td class="dim">الخطوط الوحيدة الخارجية</td></tr>
+  </table>
+</section>
+
+<!-- ARCH -->
+<section class="section" id="arch">
+  <div class="sec-label">الهيكل</div>
+  <div class="sec-title">بنية الصفحة من الأعلى للأسفل</div>
+  <div class="sec-sub">6 أقسام رئيسية + 3 أنظمة عالمية تعمل على الصفحة كلها.</div>
+
+  <div class="arch">
+    <div class="arch-row hl"><span class="arch-icon">🌌</span><span class="arch-name">Particles Canvas</span><span class="arch-desc">خلفية جسيمات — position:fixed، z-index:0</span></div>
+    <div class="arch-row hl"><span class="arch-icon">🖱️</span><span class="arch-name">Custom Cursor</span><span class="arch-desc">cursor + ring يتبعان الماوس بـ lerp</span></div>
+    <div class="arch-row hl"><span class="arch-icon">📊</span><span class="arch-name">Scroll Progress Bar</span><span class="arch-desc">شريط أعلى الصفحة يتتبع scroll%</span></div>
+    <div style="height:8px"></div>
+    <div class="arch-row hl2"><span class="arch-icon">🏠</span><span class="arch-name">Hero Section</span><span class="arch-desc">نص يسار + المجسم 3D يمين (CSS Grid 1fr 1fr)</span></div>
+    <div class="arch-row"><span class="arch-icon">💡</span><span class="arch-name">Skills Section</span><span class="arch-desc">6 cards تنزلق من أطراف الشاشة عند الوصول</span></div>
+    <div class="arch-row"><span class="arch-icon">💼</span><span class="arch-name">Experience Section</span><span class="arch-desc">Timeline بـ reveal animation من اليمين</span></div>
+    <div class="arch-row"><span class="arch-icon">🚀</span><span class="arch-name">Projects Section</span><span class="arch-desc">4 flip cards بصور + زر View Project</span></div>
+    <div class="arch-row"><span class="arch-icon">🎓</span><span class="arch-name">Education Section</span><span class="arch-desc">Cards مع language bars متحركة</span></div>
+    <div class="arch-row"><span class="arch-icon">📞</span><span class="arch-name">Contact Section</span><span class="arch-desc">4 links تدخل من الجانبين</span></div>
+  </div>
+</section>
+
+<hr class="div">
+
+<!-- STEP 1 -->
+<section class="section" id="step1">
+  <div class="sec-label">الخطوة الأولى</div>
+  <div class="sec-title">الهيكل الأساسي ونظام الألوان</div>
+  <div class="sec-sub">أول ما تكتبه — قبل أي تصميم.</div>
+
+  <div class="card">
+    <div class="card-title">🎨 CSS Variables — نظام الألوان</div>
+    <div class="card-text">كل الألوان تُعرَّف مرة واحدة في <code style="color:var(--blue);font-family:JetBrains Mono,monospace">:root</code>. لتغيير الـ theme كله تغير 3 قيم فقط.</div>
+  </div>
+
+  <div class="code-wrap">
+    <div class="code-top"><div class="code-dots"><span class="d1"></span><span class="d2"></span><span class="d3"></span></div><div class="code-lang">CSS — :root</div></div>
+<pre><span class="sel">:root</span> {
+  <span class="cmt">/* ── ألوان التطبيق الأصلية ── */</span>
+  <span class="prop">--accent</span>:  <span class="val">#0563bb</span>;   <span class="cmt">/* اللون الرئيسي — ثابت دائماً */</span>
+  <span class="prop">--bg</span>:       <span class="val">#080808</span>;   <span class="cmt">/* الخلفية الأعمق */</span>
+  <span class="prop">--surface</span>:  <span class="val">#1a1a1a</span>;   <span class="cmt">/* سطح الكاردات */</span>
+  <span class="prop">--text</span>:     <span class="val">#ffffff</span>;
+  <span class="prop">--text2</span>:    <span class="val">#b0b0b0</span>;
+
+  <span class="cmt">/* ── أبعاد المجسم 3D ── */</span>
+  <span class="prop">--box-w</span>: <span class="val">360px</span>;
+  <span class="prop">--box-h</span>: <span class="val">500px</span>;
+  <span class="prop">--box-d</span>: <span class="val">60px</span>;   <span class="cmt">/* العمق — هذا يتحكم بسُمك الحواف */</span>
+}
+
+<span class="cmt">/* موبايل: الـ variables تتغير فقط */</span>
+<span class="sel">@media (max-width: 768px)</span> {
+  <span class="sel">:root</span> {
+    <span class="prop">--box-w</span>: <span class="val">300px</span>;
+    <span class="prop">--box-h</span>: <span class="val">480px</span>;
+    <span class="prop">--box-d</span>: <span class="val">48px</span>;
+  }
+}</pre>
+  </div>
+</section>
+
+<!-- STEP 2 -->
+<section class="section" id="step2">
+  <div class="sec-label">الخطوة الثانية</div>
+  <div class="sec-title">المجسم 3D — CSS Cuboid</div>
+  <div class="sec-sub">مستطيل حقيقي بـ 6 وجوه. لا Three.js، لا Canvas — فقط CSS transforms.</div>
+
+  <div class="callout ca-blue">
+    <div class="ca-icon">📐</div>
+    <div class="ca-body"><strong>المبدأ الرياضي:</strong> كل الوجوه الستة تبعد <code style="color:var(--blue2)">d/2</code> عن مركز المجسم. الوجه الأمامي عند <code style="color:var(--blue2)">z=0</code>، الحواف تُحرَّك للخلف بـ <code style="color:var(--blue2)">translateZ(-d/2)</code> بعد الدوران.</div>
+  </div>
+
+  <table class="tbl">
+    <tr><th>الوجه</th><th>Transform</th><th>الملاحظة</th></tr>
+    <tr><td><span class="badge b-blue">Front</span></td><td><span class="mono">translateZ(+d/2)</span></td><td class="dim">يبرز للأمام من المركز</td></tr>
+    <tr><td><span class="badge b-cyan">Back</span></td><td><span class="mono">rotateY(180°) translateZ(+d/2)</span></td><td class="dim">مقلوب ومدفوع للخلف</td></tr>
+    <tr><td><span class="badge b-green">Right</span></td><td><span class="mono">translateX(w) rotateY(-90°) translateZ(-d/2)</span></td><td class="dim">origin: left center</td></tr>
+    <tr><td><span class="badge b-amber">Left</span></td><td><span class="mono">rotateY(90°) translateZ(-d/2)</span></td><td class="dim">origin: left center</td></tr>
+    <tr><td><span class="badge b-rose">Top</span></td><td><span class="mono">rotateX(90°) translateZ(-d/2)</span></td><td class="dim">origin: center top</td></tr>
+    <tr><td><span class="badge b-cyan">Bottom</span></td><td><span class="mono">translateY(h) rotateX(-90°) translateZ(-d/2)</span></td><td class="dim">origin: center top</td></tr>
+  </table>
+
+  <div class="callout ca-amber">
+    <div class="ca-icon">⚠️</div>
+    <div class="ca-body"><strong>القاعدة الذهبية:</strong> <code style="color:var(--amber)">translateZ</code> دائماً يأتي <strong>بعد</strong> الـ rotate — لأن بعد الدوران يتغير اتجاه المحور Z للعنصر. قبله → يتحرك في الفضاء العالمي. بعده → يتحرك في فضاء العنصر المحلي.</div>
+  </div>
+
+  <div class="code-wrap">
+    <div class="code-top"><div class="code-dots"><span class="d1"></span><span class="d2"></span><span class="d3"></span></div><div class="code-lang">CSS — 6 Faces</div></div>
+<pre><span class="cmt">/* الوجه الأمامي */</span>
+<span class="sel">.card-front</span> {
+  <span class="prop">width</span>: <span class="val">var(--box-w)</span>; <span class="prop">height</span>: <span class="val">var(--box-h)</span>;
+  <span class="prop">top</span>: <span class="val">0</span>; <span class="prop">left</span>: <span class="val">0</span>;
+  <span class="prop">transform</span>: <span class="fn">translateZ</span>(<span class="fn">calc</span>(<span class="val">var(--box-d)</span> / 2));
+}
+
+<span class="cmt">/* الحافة اليمنى */</span>
+<span class="sel">.card-side-right</span> {
+  <span class="prop">width</span>: <span class="val">var(--box-d)</span>; <span class="prop">height</span>: <span class="val">var(--box-h)</span>;
+  <span class="prop">top</span>: <span class="val">0</span>; <span class="prop">left</span>: <span class="val">calc(var(--box-w) + var(--box-d)/2 * -1 + var(--box-d)/2)</span>;
+  <span class="prop">transform-origin</span>: <span class="val">left center</span>;
+  <span class="prop">transform</span>: <span class="fn">translateX</span>(<span class="val">var(--box-w)</span>) <span class="fn">rotateY</span>(-90deg) <span class="fn">translateZ</span>(<span class="fn">calc</span>(<span class="val">var(--box-d)</span> / -2));
+}</pre>
+  </div>
+</section>
+
+<!-- STEP 3 -->
+<section class="section" id="step3">
+  <div class="sec-label">الخطوة الثالثة</div>
+  <div class="sec-title">نظام الـ Tilt — الماوس يقود المجسم</div>
+  <div class="sec-sub">المجسم يتتبع الماوس من أي مكان على الصفحة بـ lerp ناعم.</div>
+
+  <div class="code-wrap">
+    <div class="code-top"><div class="code-dots"><span class="d1"></span><span class="d2"></span><span class="d3"></span></div><div class="code-lang">JavaScript — Global Mouse Tilt</div></div>
+<pre><span class="cmt">// 1. تتبع الماوس عالمياً</span>
+<span class="kw">let</span> <span class="prop">mouseX</span> = window.innerWidth / 2;
+<span class="kw">let</span> <span class="prop">mouseY</span> = window.innerHeight / 2;
+document.<span class="fn">addEventListener</span>(<span class="str">'mousemove'</span>, e => {
+  mouseX = e.clientX; mouseY = e.clientY;
+});
+
+<span class="cmt">// 2. حلقة rAF — تحسب الـ tilt كل frame</span>
+<span class="kw">let</span> <span class="prop">interpX</span> = 0, <span class="prop">interpY</span> = 0;
+<span class="kw">let</span> <span class="prop">targetX</span> = 0, <span class="prop">targetY</span> = 0;
+
+<span class="kw">function</span> <span class="fn">animTilt</span>() {
+  <span class="kw">const</span> rect = card.<span class="fn">getBoundingClientRect</span>();
+  <span class="kw">const</span> dx = (mouseX - rect.left - rect.width/2) / window.innerWidth;
+  <span class="kw">const</span> dy = (mouseY - rect.top - rect.height/2) / window.innerHeight;
+
+  <span class="cmt">// Sharpness: أقوى قريباً، أضعف بعيداً — لكن لا يتوقف</span>
+  <span class="kw">const</span> sharp = 1.8 / (1 + <span class="fn">Math.sqrt</span>(dx*dx+dy*dy) * 2.2);
+  <span class="kw">const</span> amp = 0.35 + sharp * 0.65;
+
+  targetY =  dx * 38 * amp;  <span class="cmt">// ±38° أفقياً</span>
+  targetX = -dy * 28 * amp;  <span class="cmt">// ±28° عمودياً</span>
+
+  <span class="cmt">// Lerp: 9% من المسافة كل frame = ناعم جداً</span>
+  interpX += (targetX - interpX) * 0.09;
+  interpY += (targetY - interpY) * 0.09;
+
+  card.style.transform = `
+    perspective(1100px)
+    rotateX(${interpX}deg)
+    rotateY(${interpY}deg)
+  `;
+  <span class="fn">requestAnimationFrame</span>(animTilt);
+}
+<span class="fn">animTilt</span>();</pre>
+  </div>
+</section>
+
+<!-- STEP 4 -->
+<section class="section" id="step4">
+  <div class="sec-label">الخطوة الرابعة</div>
+  <div class="sec-title">Drag to Rotate — السحب يدور المجسم</div>
+  <div class="sec-sub">ضغط + سحب = دوران حر. الإفلات = inertia ثم snap-back للـ tilt mode.</div>
+
+  <div class="callout ca-blue">
+    <div class="ca-icon">🔑</div>
+    <div class="ca-body"><strong>المشكلة الكبيرة المحلولة:</strong> <code style="color:var(--blue2)">dragMode</code> يجب أن يكون في الـ outer scope حتى تستطيع <code style="color:var(--blue2)">animCardTilt</code> قراءته. إذا كان داخل IIFE فقط → لن تتوقف عن الكتابة على الـ transform.</div>
+  </div>
+
+  <ol class="steps">
+    <li class="step"><div class="step-n"></div><div class="step-b"><div class="t">mousedown → dragMode = true</div><div class="d">نسجل نقطة البداية ونوقف الـ tilt</div></div></li>
+    <li class="step"><div class="step-n"></div><div class="step-b"><div class="t">mousemove → نحسب dx/dy ونجمعها في dragRotX/Y</div><div class="d">الـ velocity يُحدَّث كل frame للـ inertia لاحقاً</div></div></li>
+    <li class="step"><div class="step-n"></div><div class="step-b"><div class="t">mouseup → dragDecay = true</div><div class="d">Inertia تبدأ: velocity * 0.92 كل frame</div></div></li>
+    <li class="step"><div class="step-n"></div><div class="step-b"><div class="t">velocity &lt; 0.08 → snap-back</div><div class="d">dragRotX *= (1 - 0.04) حتى &lt; 0.3° → dragMode = false → tilt يعود</div></div></li>
+  </ol>
+</section>
+
+<!-- STEP 5 -->
+<section class="section" id="step5">
+  <div class="sec-label">الخطوة الخامسة</div>
+  <div class="sec-title">Projects Flip Cards — 3 طبقات</div>
+  <div class="sec-sub">كل كارد مشروع = proj-scene → proj-reveal-wrap → proj-card. كل طبقة مسؤولة عن شيء.</div>
+
+  <div class="arch">
+    <div class="arch-row hl"><span class="arch-icon">📦</span><span class="arch-name">.proj-scene</span><span class="arch-desc">perspective container فقط — لا transform، لا preserve-3d</span></div>
+    <div class="arch-row hl2"><span class="arch-icon">✨</span><span class="arch-name">.proj-reveal-wrap</span><span class="arch-desc">الـ reveal animation (translateY + blur عند scroll)</span></div>
+    <div class="arch-row hl3"><span class="arch-icon">🔄</span><span class="arch-name">.proj-card</span><span class="arch-desc">preserve-3d + CSS hover flip = rotateY(180deg)</span></div>
+    <div class="arch-row"><span class="arch-icon">🖼️</span><span class="arch-name">.proj-face.proj-front/back</span><span class="arch-desc">backface-visibility: hidden — يُخفي الوجه غير المرئي</span></div>
+  </div>
+
+  <div class="callout ca-rose">
+    <div class="ca-icon">🐛</div>
+    <div class="ca-body"><strong>الخطأ الكلاسيكي:</strong> إذا وضعت <code style="color:#f08080">preserve-3d</code> على الـ scene أو الـ wrap → الـ back face سيظهر أسفل الكارد عند الـ hover. الحل: <code style="color:#f08080">preserve-3d</code> على <code style="color:#f08080">.proj-card</code> فقط وليس أي parent آخر.</div>
+  </div>
+</section>
+
+<!-- STEP 6 -->
+<section class="section" id="step6">
+  <div class="sec-label">الخطوة السادسة</div>
+  <div class="sec-title">Skills Slide — الإزاحة من الأطراف</div>
+  <div class="sec-sub">كل كارد skill يطير من الجهة التي هو فيها عند الوصول للـ section.</div>
+
+  <div class="code-wrap">
+    <div class="code-top"><div class="code-dots"><span class="d1"></span><span class="d2"></span><span class="d3"></span></div><div class="code-lang">JS — getDirection + slideIn</div></div>
+<pre><span class="kw">function</span> <span class="fn">getDirection</span>(card) {
+  <span class="kw">const</span> gridCX = grid.<span class="fn">getBoundingClientRect</span>().left + grid.offsetWidth/2;
+  <span class="kw">const</span> cardCX = card.<span class="fn">getBoundingClientRect</span>().left + card.offsetWidth/2;
+  <span class="kw">return</span> cardCX &lt;= gridCX ? <span class="str">'left'</span> : <span class="str">'right'</span>;
+}
+
+<span class="kw">function</span> <span class="fn">slideIn</span>() {
+  cards.<span class="fn">forEach</span>((card, idx) => {
+    <span class="kw">const</span> offset = <span class="fn">getDirection</span>(card) === <span class="str">'left'</span> ? <span class="str">'-110vw'</span> : <span class="str">'110vw'</span>;
+    <span class="kw">const</span> delay = idx * 75; <span class="cmt">// stagger 75ms</span>
+
+    card.style.transform = `translateX(${offset})`;
+    <span class="fn">void</span> card.offsetWidth; <span class="cmt">// reflow</span>
+
+    card.style.transition = `
+      transform .75s ${delay}ms cubic-bezier(.22,1,.36,1)
+    `;
+    card.style.transform = <span class="str">'translateX(0)'</span>;
+  });
+}</pre>
+  </div>
+</section>
+
+<!-- STEP 7 -->
+<section class="section" id="step7">
+  <div class="sec-label">الخطوة السابعة</div>
+  <div class="sec-title">Bi-directional Reveal — يختفي عكساً</div>
+  <div class="sec-sub">كل عنصر له 3 حالات: hidden (أسفل) / visible (مكانه) / out (أعلى). يعيد الـ animation عند كل scroll.</div>
+
+  <div class="code-wrap">
+    <div class="code-top"><div class="code-dots"><span class="d1"></span><span class="d2"></span><span class="d3"></span></div><div class="code-lang">JS — Registry System</div></div>
+<pre><span class="kw">const</span> animDefs = {
+  <span class="str">'section-title'</span>: {
+    hidden:  { opacity:<span class="str">'0'</span>, transform:<span class="str">'translateY(32px)'</span> },
+    visible: { opacity:<span class="str">'1'</span>, transform:<span class="str">'translateY(0)'</span>,
+               transition:<span class="str">'opacity .75s ease, transform .75s ease'</span> },
+    out:     { opacity:<span class="str">'0'</span>, transform:<span class="str">'translateY(-20px)'</span>,
+               transition:<span class="str">'opacity .4s ease, transform .4s ease'</span> }
+  }
+  <span class="cmt">// ... باقي العناصر</span>
+};
+
+<span class="kw">function</span> <span class="fn">scanElements</span>() {
+  registry.<span class="fn">forEach</span>(entry => {
+    <span class="kw">const</span> r = entry.el.<span class="fn">getBoundingClientRect</span>();
+    <span class="kw">const</span> inView  = r.top &lt; vh * 0.88 &amp;&amp; r.bottom &gt; 0;
+    <span class="kw">const</span> aboveVP = r.bottom &lt; -60;  <span class="cmt">// فوق الشاشة</span>
+    <span class="kw">const</span> belowVP = r.top &gt; vh + 60;  <span class="cmt">// أسفل الشاشة</span>
+
+    <span class="kw">if</span> (inView)  <span class="fn">enterEl</span>(entry);
+    <span class="kw">if</span> (aboveVP) <span class="fn">exitEl</span>(entry, <span class="str">'up'</span>);   <span class="cmt">// خرج للأعلى</span>
+    <span class="kw">if</span> (belowVP) <span class="fn">exitEl</span>(entry, <span class="str">'down'</span>); <span class="cmt">// خرج للأسفل</span>
+  });
+}</pre>
+  </div>
+</section>
+
+<hr class="div">
+
+<!-- PROMPT FOR AI -->
+<section class="section" id="prompt-ai">
+  <div class="sec-label">للذكاء الاصطناعي</div>
+  <div class="sec-title">Prompt جاهز لأي AI</div>
+  <div class="sec-sub">انسخ هذا الـ prompt وأعطه لأي AI (GPT-4، Claude، Gemini، أي شيء) وسيبني نفس الصفحة.</div>
+
+  <div class="callout ca-green">
+    <div class="ca-icon">🤖</div>
+    <div class="ca-body"><strong>ملاحظة للـ AI:</strong> هذا الـ prompt مكتوب بدقة تامة. لا تختصر، لا تستخدم مكتبات خارجية، اتبع كل التفصيل. إذا لم تفهم جزءاً — اسأل قبل أن تبدأ.</div>
+  </div>
+
+  <div class="prompt-box">
+    <div class="prompt-top">
+      <div class="prompt-label">AI PROMPT — COPY & USE</div>
+      <button class="copy-btn" onclick="copyPrompt('p1')">Copy</button>
+    </div>
+    <div class="prompt-body" id="p1">Build a single-page portfolio website in pure HTML + CSS + Vanilla JavaScript (no frameworks, no external libraries except Google Fonts). The portfolio is for a Full Stack Developer named [YOUR NAME].
+
+TECHNICAL REQUIREMENTS:
+1. CSS Custom Properties (variables) for ALL colors and the 3D box dimensions
+2. A true CSS 3D cuboid (6 faces) as the hero card — NOT a flat card
+3. Global mouse-tracking tilt on the 3D box using requestAnimationFrame + lerp (interpolation factor 0.09)
+4. Drag-to-rotate on the 3D box with inertia (velocity decay 0.92) and snap-back to mouse-tilt mode
+5. Bi-directional scroll reveal: elements animate IN when scrolled to, and animate OUT in REVERSE when scrolled away
+6. Skills section: 6 cards that slide in from screen edges (left cards from left, right cards from right) via IntersectionObserver
+7. Project flip cards: 3-layer structure (scene > reveal-wrap > card) where CSS :hover triggers rotateY(180deg) flip
+
+3D BOX GEOMETRY RULES (critical — do not deviate):
+- .card-3d has real width/height equal to --box-w and --box-h
+- Front face: translateZ(+d/2)
+- Back face: rotateY(180deg) translateZ(+d/2)  
+- Right side: translateX(box-w) rotateY(-90deg) translateZ(-d/2), transform-origin: left center
+- Left side: rotateY(90deg) translateZ(-d/2), transform-origin: left center
+- Top: rotateX(90deg) translateZ(-d/2), transform-origin: center top
+- Bottom: translateY(box-h) rotateX(-90deg) translateZ(-d/2), transform-origin: center top
+
+DRAG SYSTEM:
+- dragMode variable must be in OUTER scope (not inside any IIFE) so animCardTilt() can read it
+- animCardTilt() skips writing transform when dragMode === true
+- dragLoop() rAF handles transform when dragMode === true
+- On mouseup: start inertia → velocity decay → when speed < 0.08, start snap-back → dragRotX *= 0.96 each frame → when |dragRotX| + |dragRotY| < 0.3: dragMode = false
+
+REVEAL SYSTEM:
+- Build a registry array of {el, type, state:'hidden'|'visible'} for all animated elements
+- Each type has: hidden styles, visible styles with transition, out styles (reverse direction)
+- scanElements() on scroll: if inView → enterEl(), if aboveVP → exitEl('up'), if belowVP → exitEl('down')
+- exitEl receives direction: 'up' uses out styles, 'down' resets to hidden styles
+
+COLOR SYSTEM (use these exact values):
+- Accent: #0563bb (never changes)
+- Background: #080808, #0e0e0e, #1a1a1a, #2d2d2d
+- Text: #ffffff, #b0b0b0, #666666
+- Secondary: cyan #0e8fd4, green #2a9d5c, amber #c8860a, rose #c0392b
+
+OUTPUT: One complete .html file, all CSS in <style>, all JS in <script> at bottom. No comments saying "add your content here" — include real placeholder content.</div>
+  </div>
+
+  <div class="prompt-box" style="margin-top:1.5rem">
+    <div class="prompt-top">
+      <div class="prompt-label">QUICK PROMPT — للإصلاح السريع</div>
+      <button class="copy-btn" onclick="copyPrompt('p2')">Copy</button>
+    </div>
+    <div class="prompt-body" id="p2">I have a CSS 3D cuboid portfolio card. The side faces don't align flush with the front face — there's a visible gap. Fix the CSS transforms using this rule:
+
+All 6 faces must use this pattern:
+- Front: top:0; left:0; transform: translateZ(+d/2)
+- Back: top:0; left:0; transform: rotateY(180deg) translateZ(+d/2)
+- Right: top:0; left:[right-edge-position]; transform-origin: left center; transform: translateX(box-w) rotateY(-90deg) translateZ(-d/2)
+- Left: top:0; left:[left-position]; transform-origin: left center; transform: rotateY(90deg) translateZ(-d/2)
+- Top: top:[top-edge]; left:0; transform-origin: center top; transform: rotateX(90deg) translateZ(-d/2)
+- Bottom: top:[bottom-edge]; left:0; transform-origin: center top; transform: translateY(box-h) rotateX(-90deg) translateZ(-d/2)
+
+The key rule: translateZ always comes AFTER the rotate, using the element's local Z axis after rotation.</div>
+  </div>
+</section>
+
+<!-- PROMPT FOR HUMANS -->
+<section class="section" id="prompt-human">
+  <div class="sec-label">للمطور البشري</div>
+  <div class="sec-title">دليل المطور — بلغة بشرية</div>
+  <div class="sec-sub">إذا كنت ستبني هذا بنفسك، هذا ما تحتاج أن تفهمه قبل أي شيء.</div>
+
+  <div class="card">
+    <div class="card-title">🧠 المفاهيم التي يجب فهمها أولاً</div>
+    <div class="card-text">قبل أن تبدأ الكتابة، تأكد من فهم: CSS transform-style:preserve-3d، backface-visibility، requestAnimationFrame، linear interpolation (lerp)، وIntersectionObserver API.</div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">🪤 الأخطاء الشائعة التي ستقع فيها</div>
+    <div class="card-text">
+      <ol style="padding-right:1.2rem;line-height:2.2">
+        <li>تضع <code style="color:var(--blue);font-family:JetBrains Mono,monospace">preserve-3d</code> على كل عنصر — لا، فقط على العنصر الذي يدور</li>
+        <li>تكتب <code style="color:var(--blue);font-family:JetBrains Mono,monospace">rotateY(90deg) translateZ(x)</code> بدل <code style="color:var(--blue);font-family:JetBrains Mono,monospace">translateX(w) rotateY(90deg) translateZ(x)</code> للحافة اليمنى</li>
+        <li>تضع متغير الـ drag داخل IIFE فلا تستطيع دالة أخرى قراءته</li>
+        <li>تستخدم <code style="color:var(--blue);font-family:JetBrains Mono,monospace">overflow:hidden</code> على الـ flip card parent فيُخفي الوجه الخلفي</li>
+        <li>تنسى <code style="color:var(--blue);font-family:JetBrains Mono,monospace">void card.offsetWidth</code> (reflow) قبل تطبيق transition جديدة</li>
+      </ol>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">📋 Checklist قبل Deployment</div>
+    <div class="card-text">
+      <ul style="padding-right:1.2rem;line-height:2.2">
+        <li>اختبر على موبايل — CSS variables تتغير تلقائياً</li>
+        <li>تحقق أن <code style="color:var(--blue);font-family:JetBrains Mono,monospace">dragMode</code> في الـ outer scope</li>
+        <li>تأكد أن <code style="color:var(--blue);font-family:JetBrains Mono,monospace">.proj-card:hover</code> ليس له <code style="color:var(--blue);font-family:JetBrains Mono,monospace">!important</code> يتعارض مع الـ JS</li>
+        <li>الـ IntersectionObserver threshold يجب أن يكون <code style="color:var(--blue);font-family:JetBrains Mono,monospace">[0, 0.1]</code> وليس <code style="color:var(--blue);font-family:JetBrains Mono,monospace">0.5</code> فقط</li>
+        <li>اختبر الـ reveal عند scroll up وتأكد أنه يعيد الـ animation</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<div style="text-align:center;padding-top:3rem;border-top:1px solid var(--border)">
+  <div style="font-size:1.2rem;font-weight:700;margin-bottom:.3rem">
+    Assem Adel <span style="color:var(--blue)">Habib</span> — Portfolio Build Guide
+  </div>
+  <div style="font-size:.7rem;color:var(--text3);font-family:'JetBrains Mono',monospace">
+    Built with: HTML · CSS · Vanilla JS · 0 frameworks
+  </div>
+</div>
+
+</main>
+
+<script>
+// Progress
+window.addEventListener('scroll',()=>{
+  const s=document.documentElement.scrollTop;
+  const h=document.documentElement.scrollHeight-window.innerHeight;
+  document.getElementById('prog').style.width=(s/h*100)+'%';
+  updateNav();
+});
+
+// Nav
+function updateNav(){
+  const sections=['intro','stack','arch','step1','step2','step3','step4','step5','step6','step7','prompt-ai','prompt-human'];
+  const links=document.querySelectorAll('.sb-link');
+  const vh=window.innerHeight;
+  sections.forEach((id,i)=>{
+    const el=document.getElementById(id);
+    if(!el)return;
+    const r=el.getBoundingClientRect();
+    if(r.top<=vh*0.5&&r.bottom>0){
+      links.forEach(l=>l.classList.remove('active'));
+      if(links[i])links[i].classList.add('active');
+    }
+  });
+}
+document.querySelectorAll('.sb-link').forEach(l=>{
+  l.addEventListener('click',e=>{
+    e.preventDefault();
+    const t=l.getAttribute('href').replace('#','');
+    document.getElementById(t)?.scrollIntoView({behavior:'smooth'});
+  });
+});
+
+// Copy
+function copyPrompt(id){
+  const text=document.getElementById(id).textContent;
+  navigator.clipboard.writeText(text).then(()=>{
+    const btn=event.target;
+    btn.textContent='Copied!';
+    btn.style.color='var(--green)';
+    setTimeout(()=>{btn.textContent='Copy';btn.style.color='';},2000);
+  });
+}
+</script>
+</body>
+</html>

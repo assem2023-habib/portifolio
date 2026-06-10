@@ -1,6 +1,6 @@
 /**
  * CV 3D Cuboid — mouse tilt, drag-to-rotate, flip, scroll-responsive
- * Extracted from assem-cv-details-Cs.html
+ * Extracted from assem-cv-3d.html (transform-origin approach)
  */
 (function () {
   'use strict';
@@ -204,8 +204,15 @@
 
       /* ── Drag hint ── */
       var hint = document.createElement('div');
-      hint.className = 'cv3d-drag-hint';
+      hint.style.cssText = [
+        'position:absolute; bottom:12px; right:12px',
+        'font-size:.58rem; font-family:DM Mono,monospace',
+        'color:rgba(255,255,255,.2); pointer-events:none',
+        'display:flex; align-items:center; gap:5px',
+        'z-index:10'
+      ].join(';');
       hint.innerHTML = '<span style="font-size:.8rem">⠿</span> Drag to rotate';
+      self.dragScene.style.position = 'relative';
       self.dragScene.appendChild(hint);
       setTimeout(function () {
         hint.style.transition = 'opacity 1s';

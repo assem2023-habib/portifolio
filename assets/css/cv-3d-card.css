@@ -680,3 +680,420 @@ body.dark-mode .cv3d-avatar {
   }
   .cv3d-name-display { font-size: 2rem; }
 }
+
+/* ============================================================
+   CV DETAILS — Content Sections below the 3D Cuboid
+   ============================================================ */
+
+.cv3d-content {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 2rem 6rem;
+}
+
+/* ── Section Header ── */
+.cv3d-sec {
+  margin-bottom: 4rem;
+}
+.cv3d-sec-tag {
+  font-family: 'DM Mono', monospace;
+  font-size: .62rem;
+  color: var(--accent-color);
+  text-transform: uppercase;
+  letter-spacing: .2em;
+  margin-bottom: .8rem;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.cv3d-sec-tag::before {
+  content: '';
+  display: block;
+  width: 24px; height: 1px;
+  background: var(--accent-color);
+}
+.cv3d-sec-title {
+  font-family: 'Syne', sans-serif;
+  font-size: 2.2rem;
+  font-weight: 700;
+  letter-spacing: -1px;
+  margin-bottom: 2rem;
+  line-height: 1.1;
+}
+
+/* ── Contact Bar ── */
+.cv3d-contact-bar {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 12px;
+  margin-bottom: 3rem;
+}
+.cv3d-contact-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: .8rem 1rem;
+  background: color-mix(in srgb, var(--surface-color), black 1%);
+  border: 1px solid color-mix(in srgb, var(--default-color), transparent 92%);
+  border-radius: 10px;
+  text-decoration: none;
+  color: var(--default-color);
+  font-size: .78rem;
+  transition: all .25s;
+}
+.cv3d-contact-item:hover {
+  border-color: var(--accent-color);
+  background: color-mix(in srgb, var(--accent-color), transparent 95%);
+  transform: translateY(-2px);
+}
+.cv3d-contact-icon {
+  width: 32px; height: 32px;
+  border-radius: 8px;
+  background: color-mix(in srgb, var(--accent-color), transparent 88%);
+  border: 1px solid color-mix(in srgb, var(--accent-color), transparent 80%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  font-size: .85rem;
+}
+.cv3d-contact-text {
+  font-size: .72rem;
+  opacity: .7;
+  word-break: break-all;
+}
+body.dark-mode .cv3d-contact-item {
+  background: color-mix(in srgb, #1a1a1a, transparent 20%);
+  border-color: rgba(255,255,255,.06);
+}
+
+/* ── Summary ── */
+.cv3d-summary {
+  font-size: .92rem;
+  line-height: 1.8;
+  color: var(--default-color);
+  opacity: .8;
+  max-width: 800px;
+}
+
+/* ── Skills Grid ── */
+.cv3d-skills-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 16px;
+}
+.cv3d-skill-card {
+  background: color-mix(in srgb, var(--surface-color), black 1%);
+  border: 1px solid color-mix(in srgb, var(--default-color), transparent 92%);
+  border-radius: 14px;
+  padding: 1.4rem;
+  transition: border-color .25s, transform .25s;
+}
+.cv3d-skill-card:hover {
+  border-color: color-mix(in srgb, var(--accent-color), transparent 65%);
+  transform: translateY(-2px);
+}
+.cv3d-skill-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: .8rem;
+}
+.cv3d-skill-icon {
+  width: 36px; height: 36px;
+  border-radius: 10px;
+  background: color-mix(in srgb, var(--accent-color), transparent 88%);
+  border: 1px solid color-mix(in srgb, var(--accent-color), transparent 80%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  font-size: .9rem;
+}
+.cv3d-skill-cat {
+  font-family: 'Syne', sans-serif;
+  font-size: .82rem;
+  font-weight: 700;
+  color: var(--default-color);
+}
+.cv3d-skill-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+}
+body.dark-mode .cv3d-skill-card {
+  background: color-mix(in srgb, #1a1a1a, transparent 20%);
+  border-color: rgba(255,255,255,.06);
+}
+
+/* ── Experience Timeline ── */
+.cv3d-timeline {
+  position: relative;
+  padding-left: 2rem;
+}
+.cv3d-timeline::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0; bottom: 0;
+  width: 1px;
+  background: linear-gradient(to bottom, transparent, var(--accent-color), transparent);
+}
+.cv3d-tl-item {
+  position: relative;
+  padding: 0 0 2.5rem 2rem;
+}
+.cv3d-tl-dot {
+  position: absolute;
+  left: -6px;
+  top: 6px;
+  width: 12px; height: 12px;
+  border-radius: 50%;
+  background: var(--accent-color);
+  border: 2px solid var(--background-color);
+  box-shadow: 0 0 12px var(--accent-color);
+}
+.cv3d-tl-company {
+  font-family: 'DM Mono', monospace;
+  font-size: .65rem;
+  color: var(--accent-color);
+  text-transform: uppercase;
+  letter-spacing: .1em;
+  margin-bottom: .3rem;
+}
+.cv3d-tl-title {
+  font-family: 'Syne', sans-serif;
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--default-color);
+  margin-bottom: .6rem;
+}
+.cv3d-tl-points {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.cv3d-tl-points li {
+  font-size: .78rem;
+  color: var(--default-color);
+  opacity: .6;
+  padding-left: 1rem;
+  position: relative;
+  line-height: 1.6;
+}
+.cv3d-tl-points li::before {
+  content: '›';
+  position: absolute;
+  left: 0;
+  color: var(--accent-color);
+  font-weight: 700;
+}
+
+/* ── Projects ── */
+.cv3d-projects-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 20px;
+}
+.cv3d-proj-card {
+  background: color-mix(in srgb, var(--surface-color), black 1%);
+  border: 1px solid color-mix(in srgb, var(--default-color), transparent 92%);
+  border-radius: 14px;
+  padding: 1.5rem;
+  transition: border-color .25s, transform .25s;
+}
+.cv3d-proj-card:hover {
+  border-color: color-mix(in srgb, var(--accent-color), transparent 65%);
+  transform: translateY(-2px);
+}
+.cv3d-proj-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 8px;
+  margin-bottom: .6rem;
+}
+.cv3d-proj-name {
+  font-family: 'Syne', sans-serif;
+  font-size: .95rem;
+  font-weight: 700;
+  color: var(--default-color);
+}
+.cv3d-proj-desc {
+  font-size: .78rem;
+  color: var(--default-color);
+  opacity: .55;
+  margin-bottom: .5rem;
+  font-style: italic;
+}
+.cv3d-proj-points {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+.cv3d-proj-points li {
+  font-size: .72rem;
+  color: var(--default-color);
+  opacity: .6;
+  padding-left: 1rem;
+  position: relative;
+  line-height: 1.5;
+}
+.cv3d-proj-points li::before {
+  content: '→';
+  position: absolute;
+  left: 0;
+  color: var(--accent-color);
+  font-size: .65rem;
+}
+body.dark-mode .cv3d-proj-card {
+  background: color-mix(in srgb, #1a1a1a, transparent 20%);
+  border-color: rgba(255,255,255,.06);
+}
+
+/* ── Education ── */
+.cv3d-edu-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 16px;
+}
+.cv3d-edu-card {
+  background: color-mix(in srgb, var(--surface-color), black 1%);
+  border: 1px solid color-mix(in srgb, var(--default-color), transparent 92%);
+  border-radius: 14px;
+  padding: 1.5rem;
+  position: relative;
+  overflow: hidden;
+}
+.cv3d-edu-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(to right, var(--accent-color), color-mix(in srgb, var(--accent-color), skyblue 20%));
+}
+.cv3d-edu-degree {
+  font-family: 'Syne', sans-serif;
+  font-size: .9rem;
+  font-weight: 700;
+  color: var(--default-color);
+  margin-bottom: .3rem;
+}
+.cv3d-edu-uni {
+  font-size: .75rem;
+  color: var(--default-color);
+  opacity: .55;
+  margin-bottom: .5rem;
+}
+.cv3d-edu-rank {
+  display: inline-flex;
+  font-size: .62rem;
+  padding: 3px 10px;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--accent-color), transparent 88%);
+  color: var(--accent-color);
+  border: 1px solid color-mix(in srgb, var(--accent-color), transparent 75%);
+  font-family: 'DM Mono', monospace;
+}
+body.dark-mode .cv3d-edu-card {
+  background: color-mix(in srgb, #1a1a1a, transparent 20%);
+  border-color: rgba(255,255,255,.06);
+}
+
+/* ── Languages ── */
+.cv3d-lang-wrap {
+  max-width: 480px;
+}
+.cv3d-lang-item {
+  margin-bottom: 1rem;
+}
+.cv3d-lang-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 6px;
+}
+.cv3d-lang-name {
+  font-size: .82rem;
+  font-weight: 600;
+  color: var(--default-color);
+}
+.cv3d-lang-level {
+  font-size: .65rem;
+  color: var(--default-color);
+  opacity: .45;
+  font-family: 'DM Mono', monospace;
+}
+.cv3d-lang-track {
+  height: 4px;
+  background: color-mix(in srgb, var(--default-color), transparent 92%);
+  border-radius: 999px;
+  overflow: hidden;
+}
+.cv3d-lang-fill {
+  height: 100%;
+  border-radius: 999px;
+  width: 0;
+  background: linear-gradient(to right, var(--accent-color), color-mix(in srgb, var(--accent-color), skyblue 30%));
+  transition: width 1.2s cubic-bezier(.4,0,.2,1);
+}
+body.dark-mode .cv3d-lang-track {
+  background: rgba(255,255,255,.06);
+}
+
+/* ── CV Download Button (in content) ── */
+.cv3d-downloads {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-top: 1rem;
+}
+.cv3d-dl-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 10px 22px;
+  border-radius: 8px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: .82rem;
+  font-weight: 500;
+  text-decoration: none;
+  transition: all .25s;
+}
+.cv3d-dl-btn-pdf {
+  background: color-mix(in srgb, var(--accent-color), transparent 85%);
+  color: var(--accent-color);
+  border: 1px solid color-mix(in srgb, var(--accent-color), transparent 70%);
+}
+.cv3d-dl-btn-pdf:hover {
+  background: var(--accent-color);
+  color: var(--contrast-color);
+  transform: translateY(-2px);
+}
+.cv3d-dl-btn-docx {
+  background: color-mix(in srgb, #2a9d5c, transparent 85%);
+  color: #2a9d5c;
+  border: 1px solid color-mix(in srgb, #2a9d5c, transparent 70%);
+}
+.cv3d-dl-btn-docx:hover {
+  background: #2a9d5c;
+  color: #fff;
+  transform: translateY(-2px);
+}
+
+/* ── Responsive for content sections ── */
+@media (max-width: 768px) {
+  .cv3d-content {
+    padding: 0 1rem 3rem;
+  }
+  .cv3d-sec-title { font-size: 1.6rem; }
+  .cv3d-contact-bar { grid-template-columns: 1fr 1fr; }
+  .cv3d-projects-grid { grid-template-columns: 1fr; }
+}
+@media (max-width: 480px) {
+  .cv3d-contact-bar { grid-template-columns: 1fr; }
+  .cv3d-skills-grid { grid-template-columns: 1fr; }
+}

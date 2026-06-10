@@ -1,30 +1,189 @@
 {
   "cvs": [
     {
-      "id": "nestjs",
-      "title": "NestJS Developer CV",
-      "titleAr": "سيرة ذاتية - مطور NestJS",
-      "specialization": "Backend Development",
-      "specializationAr": "تطوير Backend",
-      "files": {
-        "pdf": "assets/cvs/Back-End NestJs/Assem_habib_CV_NESTJS.pdf",
-        "docx": "assets/cvs/Back-End NestJs/Assem_habib_CV_NESTJS.docx"
-      },
-      "description": "Backend Developer with expertise in NestJS, Node.js, Express, and databases. Experienced in building scalable APIs and microservices architecture.",
-      "descriptionAr": "مطور Backend بخبرة في NestJS و Node.js و Express وقواعد البيانات. خبير في بناء APIs قابلة للتوسع وهندسة الخدمات المصغرة."
-    },
-    {
       "id": "laravel",
       "title": "Laravel Developer CV",
       "titleAr": "سيرة ذاتية - مطور Laravel",
       "specialization": "Backend Development",
       "specializationAr": "تطوير Backend",
+      "role": "Laravel Developer | PHP Backend Developer | Full Stack Web Developer",
+      "roleAr": "مطور Laravel | مطور PHP Backend | مطور ويب متكامل",
+      "name": "Assem Adel Habib",
+      "location": "Latakia – Jableh, Syria",
+      "phone": "+963 994 636 381",
+      "email": "099assemhb@gmail.com",
+      "github": "assem2023-habib",
+      "linkedin": "assem-habib-5236a423b",
+      "portfolio": "assem2023-habib/portifolio",
+      "summary": "Laravel Developer with strong experience in building scalable web applications using PHP and Laravel framework. Skilled in developing RESTful APIs, authentication systems, and database-driven applications with MySQL. Experienced in designing clean and maintainable backend architectures for real-world projects including e-commerce and management systems. Passionate about writing clean code, solving complex problems, and delivering efficient and reliable web solutions. Strong ability to work in team environments and continuously improve technical skills.",
+      "summaryAr": "مطور Laravel بخبرة قوية في بناء تطبيقات ويب قابلة للتوسع باستخدام PHP وإطار Laravel. ماهر في تطوير RESTful API وأنظمة المصادقة والتطبيقات المعتمدة على قواعد البيانات باستخدام MySQL. لديه خبرة في تصميم بنى خلفية نظيفة وقابلة للصيانة لمشاريع حقيقية تشمل التجارة الإلكترونية وأنظمة الإدارة.",
+      "technologies": ["Laravel", "PHP", "MySQL", "JavaScript", "Bootstrap", "Tailwind", "Git", "RESTful API"],
+      "experience": [
+        {
+          "title": "Freelance Laravel Developer",
+          "company": "Remote",
+          "points": [
+            "Developed web applications and RESTful APIs using Laravel and PHP.",
+            "Built authentication systems, role-based access control, and database-driven solutions.",
+            "Designed and maintained MySQL databases and backend workflows.",
+            "Delivered client-focused solutions from development to deployment."
+          ]
+        }
+      ],
+      "skills": {
+        "Programming": ["PHP", "JavaScript"],
+        "Backend": ["Laravel", "RESTful APIs", "MVC Architecture", "Authentication", "Eloquent ORM", "API Development"],
+        "Databases": ["MySQL"],
+        "Frontend": ["HTML", "CSS", "Bootstrap", "Tailwind"],
+        "Tools & Workflow": ["Git", "GitHub", "GitLab", "Agile", "Jira", "Swagger/OpenAPI"]
+      },
+      "projects": [
+        {
+          "name": "SmartShip",
+          "type": "final_year",
+          "description": "Parcel Delivery Management System",
+          "points": [
+            "Developed a parcel delivery management system using Laravel and REST APIs.",
+            "Implemented shipment tracking, order management, and role-based access control.",
+            "Built real-time parcel status tracking and workflow management features."
+          ]
+        },
+        {
+          "name": "StitchHub",
+          "type": "ecommerce",
+          "description": "Tailoring E-Commerce Platform",
+          "points": [
+            "Developed an e-commerce platform using Laravel and Blade.",
+            "Implemented product management, shopping cart, billing, and user management modules.",
+            "Built an admin dashboard with CRUD operations and multilingual support."
+          ]
+        },
+        {
+          "name": "BeautyHub",
+          "type": "service",
+          "description": "Service Management System",
+          "points": [
+            "Developed a backend service management system using API-driven architecture concepts.",
+            "Implemented authentication, user management, and appointment handling features.",
+            "Designed modular backend structure to support integration with frontend applications."
+          ]
+        },
+        {
+          "name": "CutOptimizer",
+          "type": "freelance",
+          "description": "Optimization Tool",
+          "points": [
+            "Developed an optimization tool to reduce material waste using algorithmic logic.",
+            "Built a simple interface for data input and processing.",
+            "Implemented export functionality for generating reports in Excel and PDF formats.",
+            "Delivered the project independently from development to deployment."
+          ]
+        }
+      ],
+      "education": [
+        {
+          "degree": "B.Sc. in Informatics Engineering",
+          "field": "Software Engineering & Information Systems",
+          "university": "Tishreen University",
+          "location": "Latakia, Syria"
+        },
+        {
+          "degree": "Industrial Technical Secondary School",
+          "field": "Computer Techniques",
+          "rank": "Ranked 1st at the Governorate Level"
+        }
+      ],
+      "languages": [
+        { "language": "Arabic", "level": "Native", "percentage": 100 },
+        { "language": "English", "level": "Intermediate (professional terminology proficiency)", "percentage": 65 }
+      ],
       "files": {
         "pdf": "assets/cvs/Back-End Laravel/Assem_habib_CV_Laravel.pdf",
         "docx": "assets/cvs/Back-End Laravel/Assem_habib_CV_Laravel.docx"
+      }
+    },
+    {
+      "id": "nestjs",
+      "title": "NestJS Developer CV",
+      "titleAr": "سيرة ذاتية - مطور NestJS",
+      "specialization": "Backend Development",
+      "specializationAr": "تطوير Backend",
+      "role": "Backend Developer | Node.js | NestJS",
+      "roleAr": "مطور Backend | Node.js | NestJS",
+      "name": "Assem Adel Habib",
+      "location": "Latakia – Jableh, Syria",
+      "phone": "+963 994 636 381",
+      "email": "099assemhb@gmail.com",
+      "github": "assem2023-habib",
+      "linkedin": "assem-habib-5236a423b",
+      "portfolio": "assem2023-habib/portifolio",
+      "summary": "Backend Developer specializing in Node.js and NestJS, with hands-on experience building scalable backend systems and RESTful APIs for real-world applications. Skilled in designing modular, secure, and maintainable architectures using PostgreSQL, Redis, and modern backend development practices. Experienced in implementing authentication, business workflows, real-time features, and third-party integrations. Passionate about clean code, system design, and building reliable backend solutions that deliver strong user and business value.",
+      "summaryAr": "مطور Backend متخصص في Node.js و NestJS، مع خبرة عملية في بناء أنظمة خلفية قابلة للتوسع و RESTful APIs للتطبيقات الحقيقية. ماهر في تصميم بنى معيارية وآمنة وقابلة للصيانة باستخدام PostgreSQL و Redis وممارسات التطوير الحديثة.",
+      "technologies": ["NestJS", "Node.js", "TypeScript", "PostgreSQL", "Redis", "Express.js", "JavaScript", "TypeORM", "Socket.io"],
+      "experience": [
+        {
+          "title": "Freelance Full Stack / Backend Developer",
+          "company": "Independent Projects – Remote | 2025 - Present",
+          "points": [
+            "Developed scalable backend systems using NestJS, Express.js, PostgreSQL, and Redis.",
+            "Implemented authentication, RBAC, business workflows, and RESTful APIs.",
+            "Built e-commerce and delivery platform modules including orders, payments, and notifications.",
+            "Developed background jobs, scheduled tasks, and real-time features.",
+            "Delivered projects independently from design to deployment."
+          ]
+        }
+      ],
+      "skills": {
+        "Programming": ["JavaScript", "TypeScript", "PHP", "Python", "C++", "Dart"],
+        "Backend": ["Node.js", "NestJS", "Express.js", "Laravel", "RESTful APIs"],
+        "Databases": ["PostgreSQL", "MySQL", "Redis", "SQL", "NoSQL"],
+        "Frontend": ["HTML", "CSS", "Bootstrap", "Tailwind CSS", "Flutter"],
+        "Tools & Workflow": ["Git", "GitHub", "GitLab", "Agile", "Jira", "Swagger/OpenAPI"]
       },
-      "description": "Backend Developer with expertise in Laravel, PHP, MySQL, and databases. Experienced in building robust web applications and RESTful APIs.",
-      "descriptionAr": "مطور Backend بخبرة في Laravel و PHP و MySQL وقواعد البيانات. خبير في بناء تطبيقات الويب القوية و RESTful APIs."
+      "projects": [
+        {
+          "name": "Jeeb",
+          "type": "in_progress",
+          "description": "Delivery Platform Backend",
+          "points": [
+            "Built and maintained a scalable backend for a multi-service delivery platform using NestJS, PostgreSQL, and Redis.",
+            "Developed core business modules including authentication, orders, wallet, payments, loyalty, and real-time tracking.",
+            "Designed a modular backend architecture with secure role-based access, background job processing, and API-driven integrations."
+          ]
+        },
+        {
+          "name": "Shehrezad",
+          "type": "ecommerce",
+          "description": "E-commerce Backend System",
+          "points": [
+            "Developed a scalable e-commerce backend system using Node.js, Express.js, and MySQL.",
+            "Implemented core backend features including smart cart reservation, order lifecycle management, coupon logic, and multi-role authentication.",
+            "Built integrations for push notifications, image/file handling, and automated background tasks.",
+            "Designed backend workflows for inventory handling, customer orders, payment methods, and administrative control."
+          ]
+        }
+      ],
+      "education": [
+        {
+          "degree": "B.Sc. in Informatics Engineering",
+          "field": "Software Engineering & Information Systems",
+          "university": "Tishreen University",
+          "location": "Latakia, Syria"
+        },
+        {
+          "degree": "Industrial Technical Secondary School",
+          "field": "Computer Techniques",
+          "rank": "Ranked 1st at the Governorate Level"
+        }
+      ],
+      "languages": [
+        { "language": "Arabic", "level": "Native", "percentage": 100 },
+        { "language": "English", "level": "Intermediate (professional terminology proficiency)", "percentage": 65 }
+      ],
+      "files": {
+        "pdf": "assets/cvs/Back-End NestJs/Assem_habib_CV_NESTJS.pdf",
+        "docx": "assets/cvs/Back-End NestJs/Assem_habib_CV_NESTJS.docx"
+      }
     },
     {
       "id": "flutter",
@@ -32,12 +191,93 @@
       "titleAr": "سيرة ذاتية - مطور Flutter",
       "specialization": "Mobile Development",
       "specializationAr": "تطوير تطبيقات الهاتف",
+      "role": "Flutter Developer | Mobile App Developer",
+      "roleAr": "مطور Flutter | مطور تطبيقات جوال",
+      "name": "Assem Adel Habib",
+      "location": "Latakia – Jableh, Syria",
+      "phone": "+963 994 636 381",
+      "email": "099assemhb@gmail.com",
+      "github": "assem2023-habib",
+      "linkedin": "assem-habib-5236a423b",
+      "portfolio": "assem2023-habib/portifolio",
+      "summary": "Flutter Developer specialized in building scalable, high-performance, and production-ready mobile applications using Flutter and Dart. Experienced in designing modern application architectures using Clean Architecture, Feature-First structure, Riverpod, and Provider. Developed real-world business applications including financial management systems, optimization platforms, reporting systems, and advanced dashboard interfaces. Skilled in RESTful API integration, Firebase services, offline storage, responsive UI design, performance optimization, and interactive data visualization. Passionate about building maintainable, visually polished, and user-centered mobile applications that deliver strong business value.",
+      "summaryAr": "مطور Flutter متخصص في بناء تطبيقات جوال قابلة للتوسع وعالية الأداء باستخدام Flutter و Dart. لديه خبرة في تصميم بنى تطبيقات حديثة باستخدام Clean Architecture و Feature-First structure و Riverpod و Provider.",
+      "technologies": ["Flutter", "Dart", "Riverpod", "Provider", "Drift", "Firebase", "RESTful API", "Clean Architecture", "Git"],
+      "experience": [
+        {
+          "title": "Freelance Flutter Developer",
+          "company": "2025 – Present",
+          "points": [
+            "Developed and maintained mobile applications using Flutter and Dart.",
+            "Designed scalable architectures using Clean Architecture and Riverpod.",
+            "Integrated REST APIs, Firebase services, local databases, and reporting systems.",
+            "Delivered business-focused applications including finance, HR, and optimization platforms."
+          ]
+        }
+      ],
+      "skills": {
+        "Programming Languages": ["Dart", "JavaScript", "TypeScript", "PHP", "Python", "C++", "SQL"],
+        "Mobile Development": ["Flutter", "Responsive UI", "Adaptive Layouts", "Material Design", "Cross-Platform Development"],
+        "Architecture & State Management": ["Clean Architecture", "Feature-First Architecture", "Riverpod", "Provider", "Async State Management"],
+        "Backend & APIs": ["RESTful APIs", "Firebase", "Node.js", "NestJS", "Express.js", "Laravel"],
+        "Databases & Storage": ["Drift (Moor)", "SQLite", "SharedPreferences", "PostgreSQL", "MySQL", "Redis", "SQL", "NoSQL"],
+        "UI/UX & Visualization": ["Glassmorphism UI", "Custom Widgets", "Animations", "Interactive Dashboards", "fl_chart"],
+        "Reports & File Handling": ["Excel Processing", "PDF Generation", "File Import/Export Systems"],
+        "Tools & Workflow": ["Git", "GitHub", "GitLab", "Agile", "Jira", "Swagger/OpenAPI"]
+      },
+      "projects": [
+        {
+          "name": "Shift Pay",
+          "type": "mobile",
+          "description": "Smart HR & Financial Management System",
+          "points": [
+            "Developed a Flutter application for payroll, attendance, inventory, and financial management.",
+            "Implemented voice-command processing, PDF reporting, analytics dashboards, and interactive charts.",
+            "Built using Clean Architecture, Cubit, Drift, and scalable modular architecture."
+          ]
+        },
+        {
+          "name": "Sajadi",
+          "type": "mobile",
+          "description": "Cut Optimizer Mobile",
+          "points": [
+            "Developed a Flutter application for carpet and fabric cutting optimization.",
+            "Implemented Excel/PDF processing, analytics dashboards, and statistical visualizations.",
+            "Built responsive Arabic RTL interfaces with optimized performance and modular architecture."
+          ]
+        },
+        {
+          "name": "Mizaneyati Pro",
+          "type": "mobile",
+          "description": "Personal Finance Management System",
+          "points": [
+            "Developed a personal finance application with budgeting, transaction management, and analytics.",
+            "Implemented interactive charts, reusable UI components, and responsive layouts.",
+            "Built using Flutter, Riverpod, Drift, and Clean Architecture."
+          ]
+        }
+      ],
+      "education": [
+        {
+          "degree": "B.Sc. in Informatics Engineering",
+          "field": "Software Engineering & Information Systems",
+          "university": "Tishreen University",
+          "location": "Latakia, Syria"
+        },
+        {
+          "degree": "Industrial Technical Secondary School",
+          "field": "Computer Techniques",
+          "rank": "Ranked 1st at the Governorate Level"
+        }
+      ],
+      "languages": [
+        { "language": "Arabic", "level": "Native", "percentage": 100 },
+        { "language": "English", "level": "Intermediate (professional terminology proficiency)", "percentage": 65 }
+      ],
       "files": {
         "pdf": "assets/cvs/Front-End Flutter/Assem_habib_CV_Flutter.pdf",
         "docx": "assets/cvs/Front-End Flutter/Assem_habib_CV_Flutter.docx"
-      },
-      "description": "Mobile Developer with expertise in Flutter, Dart, Bloc, Clean Architecture, and cross-platform development. Experienced in building offline-first mobile applications with modern UI.",
-      "descriptionAr": "مطور تطبيقات هواتف بخبرة في Flutter و Dart و Bloc و Clean Architecture. خبير في بناء تطبيقات موبايل تعمل بدون إنترنت بواجهات حديثة."
+      }
     },
     {
       "id": "fullstack",
@@ -45,17 +285,111 @@
       "titleAr": "سيرة ذاتية - مطور Full-Stack",
       "specialization": "Full-Stack Development",
       "specializationAr": "تطوير Full-Stack",
+      "role": "Full Stack Developer | Laravel | NestJS | Flutter",
+      "roleAr": "مطور Full Stack | Laravel | NestJS | Flutter",
+      "name": "Assem Adel Habib",
+      "location": "Latakia – Jableh, Syria",
+      "phone": "+963 994 636 381",
+      "email": "099assemhb@gmail.com",
+      "github": "assem2023-habib",
+      "linkedin": "assem-habib-5236a423b",
+      "portfolio": "assem2023-habib/portifolio",
+      "summary": "Full Stack Developer experienced in building end-to-end web and mobile applications. Skilled in backend development using Laravel, Node.js, and NestJS, and frontend/mobile development using Flutter, HTML, CSS, and JavaScript. Experienced in designing scalable architectures, RESTful APIs, authentication systems, database design, and modern user interfaces. Passionate about delivering complete software solutions from concept to deployment.",
+      "summaryAr": "مطور Full Stack بخبرة في بناء تطبيقات ويب وجوال متكاملة. ماهر في تطوير الواجهات الخلفية باستخدام Laravel و Node.js و NestJS، وتطوير الواجهات الأمامية والجوال باستخدام Flutter و HTML و CSS و JavaScript.",
+      "technologies": ["Laravel", "NestJS", "Flutter", "Node.js", "PHP", "TypeScript", "PostgreSQL", "MySQL", "Redis", "Git"],
+      "experience": [
+        {
+          "title": "Freelance Full Stack Developer",
+          "company": "Remote",
+          "points": [
+            "Developed end-to-end web and mobile applications using Laravel, NestJS, and Flutter.",
+            "Designed and implemented RESTful APIs, authentication systems, role-based access control, and business workflows.",
+            "Built responsive user interfaces and integrated them with backend services and databases.",
+            "Developed and optimized database schemas using PostgreSQL, MySQL, SQLite, and Redis.",
+            "Implemented real-time features, push notifications, reporting systems, and background job processing.",
+            "Delivered complete software solutions independently, from requirements analysis and system design to deployment and maintenance."
+          ]
+        }
+      ],
+      "skills": {
+        "Programming Languages": ["Dart", "JavaScript", "TypeScript", "PHP"],
+        "Mobile Development": ["Flutter", "Responsive UI", "Adaptive Layouts", "Material Design", "Cross-Platform Development"],
+        "Frontend": ["HTML", "CSS", "Bootstrap", "Tailwind CSS"],
+        "Backend & APIs": ["RESTful APIs", "Firebase", "Node.js", "NestJS", "Express.js", "Laravel"],
+        "Databases & Storage": ["Drift (Moor)", "SQLite", "SharedPreferences", "PostgreSQL", "MySQL", "Redis", "SQL", "NoSQL"],
+        "UI/UX & Visualization": ["Glassmorphism UI", "Custom Widgets", "Animations", "Interactive Dashboards", "fl_chart"],
+        "Reports & File Handling": ["Excel Processing", "PDF Generation", "File Import/Export Systems"],
+        "Tools & Workflow": ["Git", "GitHub", "GitLab", "Agile", "Jira", "Swagger/OpenAPI"]
+      },
+      "projects": [
+        {
+          "name": "Shift Pay",
+          "type": "mobile",
+          "description": "Smart HR & Financial Management System",
+          "points": [
+            "Developed a full business management solution using Flutter and modern backend services.",
+            "Implemented payroll, attendance, inventory, and reporting systems.",
+            "Designed scalable architecture and analytics dashboards."
+          ]
+        },
+        {
+          "name": "Jeeb",
+          "type": "backend",
+          "description": "Delivery Platform",
+          "points": [
+            "Developed scalable backend services using NestJS, PostgreSQL, and Redis.",
+            "Built modules for authentication, orders, wallet management, loyalty systems, and payments.",
+            "Implemented real-time tracking, notifications, and background job processing."
+          ]
+        },
+        {
+          "name": "Shahrazad",
+          "type": "ecommerce",
+          "description": "E-Commerce Platform",
+          "points": [
+            "Developed a scalable e-commerce platform using Node.js, Express.js, and MySQL.",
+            "Implemented smart cart reservation, order lifecycle management, coupon systems, and multi-role authentication.",
+            "Built integrations for notifications, file management, and automated background tasks."
+          ]
+        },
+        {
+          "name": "SmartShip",
+          "type": "final_year",
+          "description": "Parcel Delivery Management System",
+          "points": [
+            "Developed a parcel delivery management system using Laravel and MySQL.",
+            "Implemented shipment tracking, order management, and role-based access control.",
+            "Built real-time parcel status tracking and delivery workflow management features."
+          ]
+        }
+      ],
+      "education": [
+        {
+          "degree": "B.Sc. in Informatics Engineering",
+          "field": "Software Engineering & Information Systems",
+          "university": "Tishreen University",
+          "location": "Latakia, Syria"
+        },
+        {
+          "degree": "Industrial Technical Secondary School",
+          "field": "Computer Techniques",
+          "rank": "Ranked 1st at the Governorate Level"
+        }
+      ],
+      "languages": [
+        { "language": "Arabic", "level": "Native", "percentage": 100 },
+        { "language": "English", "level": "Intermediate (professional terminology proficiency)", "percentage": 65 }
+      ],
       "files": {
         "pdf": "assets/cvs/FullStack-Developer/Assem_habib_CV_FullStack.pdf",
         "docx": "assets/cvs/FullStack-Developer/Assem_habib_CV_FullStack.docx"
-      },
-      "description": "Full-Stack Developer with expertise in multiple frameworks including Laravel, NestJS, and Flutter. Experienced in building complete web and mobile applications with modern technologies.",
-      "descriptionAr": "مطور Full-Stack بخبرة في عدة أطر عمل تشمل Laravel و NestJS و Flutter. خبير في بناء تطبيقات ويب وهاتف كاملة بأحدث التقنيات."
+      }
     }
   ],
   "metadata": {
-    "version": "1.0.0",
+    "version": "2.0.0",
     "createdAt": "2026-04-23",
+    "updatedAt": "2026-06-10",
     "author": "Assem Adel Habib",
     "contact": "099assemhb@gmail.com",
     "totalCVs": 4

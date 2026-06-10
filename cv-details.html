@@ -30,13 +30,8 @@
   <link href="assets/css/cv-3d-card.css" rel="stylesheet">
 
   <style>
-    /* Minimal overrides for CV details page */
-    .cv3d-hero {
-      background: var(--background-color);
-    }
-    body.dark-mode .cv3d-hero {
-      background: var(--background-color);
-    }
+    .cv3d-hero { background: var(--background-color); }
+    body.dark-mode .cv3d-hero { background: var(--background-color); }
   </style>
 </head>
 
@@ -59,17 +54,16 @@
     <section class="cv3d-hero" id="cv3dHero">
       <div class="cv3d-hero-inner">
 
-        <!-- Left Text -->
         <div class="cv3d-text">
           <div class="cv3d-tag">Professional Resume</div>
-          <h1 class="cv3d-name-display">
-            Assem<br><span class="accent" id="cvNameDisplay">Adel Habib</span>
+          <h1 class="cv3d-name-display" id="heroNameDisplay">
+            Assem<br><span class="accent">Adel Habib</span>
           </h1>
-          <p class="cv3d-role-display" id="cvRoleDisplay">Full Stack Developer</p>
-          <p class="cv3d-location">📍 Latakia – Jableh, Syria</p>
+          <p class="cv3d-role-display" id="heroRoleDisplay">Developer</p>
+          <p class="cv3d-location" id="heroLocation">📍 Latakia – Jableh, Syria</p>
           <div class="cv3d-actions">
             <a href="index.html#resume" class="cv3d-btn-primary">Back to Resumes ↓</a>
-            <a href="#downloads" class="cv3d-btn-ghost">Download CV</a>
+            <a href="#cvSummary" class="cv3d-btn-ghost">View Full CV</a>
           </div>
         </div>
 
@@ -94,73 +88,120 @@
                   <div class="cv3d-divider"></div>
                   <div class="cv3d-stats" id="cvStats">
                     <div class="cv3d-stat">
-                      <div class="cv3d-stat-n">4+</div>
-                      <div class="cv3d-stat-l">Projects</div>
+                      <div class="cv3d-stat-n" id="statN1">4+</div>
+                      <div class="cv3d-stat-l" id="statL1">Projects</div>
                     </div>
                     <div class="cv3d-stat">
-                      <div class="cv3d-stat-n">6+</div>
-                      <div class="cv3d-stat-l">Frameworks</div>
+                      <div class="cv3d-stat-n" id="statN2">6+</div>
+                      <div class="cv3d-stat-l" id="statL2">Frameworks</div>
                     </div>
                     <div class="cv3d-stat">
-                      <div class="cv3d-stat-n">Full</div>
-                      <div class="cv3d-stat-l">Stack</div>
+                      <div class="cv3d-stat-n" id="statN3">Full</div>
+                      <div class="cv3d-stat-l" id="statL3">Stack</div>
                     </div>
                   </div>
                 </div>
                 <div class="cv3d-pills-wrap">
                   <div class="cv3d-pills-label">Core Stack</div>
-                  <div class="cv3d-pills" id="cvPills">
-                    <span class="cv3d-pill cv3d-pill-accent">Laravel</span>
-                    <span class="cv3d-pill cv3d-pill-cyan">NestJS</span>
-                    <span class="cv3d-pill cv3d-pill-teal">Flutter</span>
-                    <span class="cv3d-pill cv3d-pill-amber">Node.js</span>
-                    <span class="cv3d-pill cv3d-pill-green">PostgreSQL</span>
-                    <span class="cv3d-pill cv3d-pill-rose">Redis</span>
-                  </div>
+                  <div class="cv3d-pills" id="cvPills"></div>
                 </div>
                 <button class="cv3d-flip-btn">↻ Details</button>
               </div>
-              <div class="cv3d-flip-hint">
-                <span>↻</span> Flip
-              </div>
+              <div class="cv3d-flip-hint"><span>↻</span> Flip</div>
             </div>
 
             <!-- BACK -->
             <div class="cv3d-face cv3d-back">
               <div class="cv3d-back-header">
-                <div class="cv3d-back-label">Download</div>
-                <div class="cv3d-back-title" id="cvBackTitle">Resume Files</div>
+                <div class="cv3d-back-label">Downloads</div>
+                <div class="cv3d-back-title">Resume Files</div>
               </div>
               <div class="cv3d-back-projects" id="cvDownloadSection">
                 <div class="cv3d-back-project">
                   <div class="cv3d-proj-name">📄 PDF Version</div>
-                  <div class="cv3d-proj-desc">Full resume in PDF format, ready for printing and emailing.</div>
+                  <div class="cv3d-proj-desc">Full resume in PDF format, ready for printing.</div>
                   <a href="#" class="cv3d-proj-tag" id="cvPdfLink" target="_blank">Download PDF →</a>
                 </div>
                 <div class="cv3d-back-project">
                   <div class="cv3d-proj-name">📝 DOCX Version</div>
-                  <div class="cv3d-proj-desc">Editable Word document, perfect for customization.</div>
+                  <div class="cv3d-proj-desc">Editable Word document for customization.</div>
                   <a href="#" class="cv3d-proj-tag" id="cvDocxLink" target="_blank">Download DOCX →</a>
                 </div>
               </div>
               <button class="cv3d-back-btn">↻ Profile</button>
             </div>
 
-          </div><!-- end cv3d-box -->
-        </div><!-- end cv3d-scene -->
+          </div>
+        </div>
 
       </div>
     </section>
+
+    <!-- ============================================================
+         CV DETAILS CONTENT
+    ============================================================ -->
+    <div class="cv3d-content">
+
+      <!-- Contact Bar -->
+      <div class="cv3d-contact-bar" id="cvContactBar"></div>
+
+      <!-- Summary -->
+      <div class="cv3d-sec" id="cvSummary">
+        <div class="cv3d-sec-tag">About</div>
+        <div class="cv3d-sec-title">Professional Summary</div>
+        <div class="cv3d-summary" id="cvSummaryText"></div>
+      </div>
+
+      <!-- Skills -->
+      <div class="cv3d-sec" id="cvSkillsSec">
+        <div class="cv3d-sec-tag">Expertise</div>
+        <div class="cv3d-sec-title">Technical Skills</div>
+        <div class="cv3d-skills-grid" id="cvSkillsGrid"></div>
+      </div>
+
+      <!-- Experience -->
+      <div class="cv3d-sec" id="cvExperienceSec">
+        <div class="cv3d-sec-tag">Career</div>
+        <div class="cv3d-sec-title">Experience</div>
+        <div class="cv3d-timeline" id="cvTimeline"></div>
+      </div>
+
+      <!-- Projects -->
+      <div class="cv3d-sec" id="cvProjectsSec">
+        <div class="cv3d-sec-tag">Work</div>
+        <div class="cv3d-sec-title">Projects</div>
+        <div class="cv3d-projects-grid" id="cvProjectsGrid"></div>
+      </div>
+
+      <!-- Education -->
+      <div class="cv3d-sec" id="cvEducationSec">
+        <div class="cv3d-sec-tag">Education</div>
+        <div class="cv3d-sec-title">Academic Background</div>
+        <div class="cv3d-edu-grid" id="cvEduGrid"></div>
+      </div>
+
+      <!-- Languages -->
+      <div class="cv3d-sec" id="cvLangSec">
+        <div class="cv3d-sec-tag">Languages</div>
+        <div class="cv3d-sec-title">Language Proficiency</div>
+        <div class="cv3d-lang-wrap" id="cvLangWrap"></div>
+      </div>
+
+      <!-- Downloads -->
+      <div class="cv3d-sec" id="cvDownloadSec">
+        <div class="cv3d-sec-tag">Download</div>
+        <div class="cv3d-sec-title">Get My Resume</div>
+        <div class="cv3d-downloads" id="cvDownloadBtns"></div>
+      </div>
+
+    </div>
 
   </main>
 
   <footer id="footer" class="footer position-relative light-background">
     <div class="container">
       <h3 class="sitename">Assem Adel Habib</h3>
-      <p>
-        Software engineer specializing in building modern applications and
-        innovative software solutions using the latest technologies
-      </p>
+      <p>Software engineer specializing in building modern applications and innovative software solutions using the latest technologies</p>
       <div class="social-links d-flex justify-content-center">
         <a href="https://github.com/assem2023-habib" target="_blank"><i class="bi bi-github"></i></a>
         <a href="https://linkedin.com/in/assem-habib-5236a423b" target="_blank"><i class="bi bi-linkedin"></i></a>
@@ -168,197 +209,247 @@
     </div>
   </footer>
 
-  <!-- Scroll Top -->
-  <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center">
-    <i class="bi bi-arrow-up-short"></i>
-  </a>
-
-  <!-- Preloader -->
+  <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
   <div id="preloader"></div>
 
-  <!-- Vendor JS Files -->
+  <!-- Scripts -->
   <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
   <script src="assets/vendor/aos/aos.js"></script>
-
-  <!-- Data Loader -->
   <script src="assets/js/data-loader.js"></script>
   <script src="assets/js/cv-loader.js"></script>
-
-  <!-- CV 3D Card JS -->
   <script src="assets/js/cv-3d-card.js"></script>
-
-  <!-- Main JS File -->
   <script src="assets/js/main.js"></script>
 
-  <!-- Page Initialization -->
   <script>
     (function () {
       'use strict';
 
-      var cvId = null;
-
-      /* ── Get CV id from URL ── */
       function getParam(name) {
-        var params = new URLSearchParams(window.location.search);
-        return params.get(name);
+        return new URLSearchParams(window.location.search).get(name);
       }
 
-      /* ── Derive pills from CV id ── */
-      function getPills(id) {
+      /* ── Pill color classes ── */
+      var pillClasses = [
+        'cv3d-pill-accent', 'cv3d-pill-cyan', 'cv3d-pill-teal',
+        'cv3d-pill-amber', 'cv3d-pill-green', 'cv3d-pill-rose'
+      ];
+
+      /* ── Contact icon map ── */
+      function contactIcon(key) {
         var map = {
-          laravel: [
-            { text: 'Laravel', cls: 'cv3d-pill-rose' },
-            { text: 'PHP', cls: 'cv3d-pill-accent' },
-            { text: 'MySQL', cls: 'cv3d-pill-accent' },
-            { text: 'Filament', cls: 'cv3d-pill-cyan' },
-            { text: 'Livewire', cls: 'cv3d-pill-teal' },
-            { text: 'Redis', cls: 'cv3d-pill-rose' }
-          ],
-          nestjs: [
-            { text: 'NestJS', cls: 'cv3d-pill-rose' },
-            { text: 'TypeScript', cls: 'cv3d-pill-accent' },
-            { text: 'PostgreSQL', cls: 'cv3d-pill-accent' },
-            { text: 'Redis', cls: 'cv3d-pill-rose' },
-            { text: 'TypeORM', cls: 'cv3d-pill-cyan' },
-            { text: 'Socket.io', cls: 'cv3d-pill-teal' }
-          ],
-          flutter: [
-            { text: 'Flutter', cls: 'cv3d-pill-cyan' },
-            { text: 'Dart', cls: 'cv3d-pill-accent' },
-            { text: 'Firebase', cls: 'cv3d-pill-amber' },
-            { text: 'Drift', cls: 'cv3d-pill-green' },
-            { text: 'Bloc/Cubit', cls: 'cv3d-pill-teal' },
-            { text: 'Clean Arch', cls: 'cv3d-pill-rose' }
-          ],
-          fullstack: [
-            { text: 'Laravel', cls: 'cv3d-pill-rose' },
-            { text: 'NestJS', cls: 'cv3d-pill-rose' },
-            { text: 'Flutter', cls: 'cv3d-pill-cyan' },
-            { text: 'PostgreSQL', cls: 'cv3d-pill-accent' },
-            { text: 'MySQL', cls: 'cv3d-pill-accent' },
-            { text: 'Redis', cls: 'cv3d-pill-rose' }
-          ]
+          phone: 'bi bi-telephone',
+          email: 'bi bi-envelope',
+          github: 'bi bi-github',
+          linkedin: 'bi bi-linkedin',
+          portfolio: 'bi bi-globe2'
         };
-        return map[id] || map.laravel;
+        return map[key] || 'bi bi-link-45deg';
       }
 
-      /* ── Get avatar initials ── */
-      function getInitials(cv) {
-        var title = cv.title || '';
-        var parts = title.split(' ');
-        if (parts.length >= 3) {
-          return parts[0][0] + parts[1][0] + parts[2][0];
-        }
-        return 'AH';
-      }
+      /* ── Contact display ── */
+      var contactMap = {
+        phone: { label: 'Phone', idx: 0 },
+        email: { label: 'Email', idx: 1 },
+        github: { label: 'GitHub', idx: 2 },
+        linkedin: { label: 'LinkedIn', idx: 3 },
+        portfolio: { label: 'Portfolio', idx: 4 }
+      };
 
-      /* ── Get stat label ── */
-      function getStat(id) {
-        var map = {
-          laravel:  { n: '3+', l: 'Projects' },
-          nestjs:   { n: '3+', l: 'Projects' },
-          flutter:  { n: '2+', l: 'Apps' },
-          fullstack: { n: '5+', l: 'Projects' }
-        };
-        return map[id] || { n: '4+', l: 'Projects' };
-      }
-
-      /* ── Populate the page ── */
       function populate(cv) {
         if (!cv) return;
-
         var lang = localStorage.getItem('portfolio_language') || 'en';
-        var title = lang === 'ar' ? (cv.titleAr || cv.title) : cv.title;
-        var spec = lang === 'ar' ? (cv.specializationAr || cv.specialization) : cv.specialization;
+        var isAr = lang === 'ar';
 
-        /* Nav */
-        var navTitle = document.getElementById('cvNavTitle');
-        if (navTitle) navTitle.textContent = title;
+        var title = isAr ? (cv.titleAr || cv.title) : cv.title;
+        var spec = isAr ? (cv.specializationAr || cv.specialization) : cv.specialization;
+        var role = isAr ? (cv.roleAr || cv.role) : cv.role;
+        var name = cv.name || 'Assem Adel Habib';
+        var location = cv.location || '';
 
-        /* Hero text */
-        var nameDisp = document.getElementById('cvNameDisplay');
-        if (nameDisp) nameDisp.textContent = spec;
+        /* ── Nav ── */
+        var navT = document.getElementById('cvNavTitle');
+        if (navT) navT.textContent = title;
 
-        var roleDisp = document.getElementById('cvRoleDisplay');
-        if (roleDisp) roleDisp.textContent = spec;
+        /* ── Hero text ── */
+        var nameDisp = document.getElementById('heroNameDisplay');
+        if (nameDisp) nameDisp.innerHTML = (name.split(' ')[0] || 'Assem') + '<br><span class="accent">' + (name.split(' ').slice(1).join(' ') || 'Adel Habib') + '</span>';
 
-        /* Card front */
-        var avatarEl = document.getElementById('cvAvatar');
-        if (avatarEl) avatarEl.textContent = getInitials(cv);
+        var roleD = document.getElementById('heroRoleDisplay');
+        if (roleD) roleD.textContent = role;
 
-        var cardName = document.getElementById('cvCardName');
-        if (cardName) cardName.textContent = title;
+        var loc = document.getElementById('heroLocation');
+        if (loc) loc.innerHTML = '📍 ' + location;
 
-        var cardRole = document.getElementById('cvCardRole');
-        if (cardRole) cardRole.textContent = spec;
+        /* ── Card front ── */
+        var av = document.getElementById('cvAvatar');
+        if (av) {
+          var initials = name.split(' ').map(function (s) { return s[0]; }).join('').slice(0, 3);
+          av.textContent = initials || 'AH';
+        }
+        var cn = document.getElementById('cvCardName');
+        if (cn) cn.textContent = title;
+        var cr = document.getElementById('cvCardRole');
+        if (cr) cr.textContent = spec;
 
-        /* Stats */
-        var stat = getStat(cv.id);
-        var statN = document.querySelector('#cvStats .cv3d-stat:first-child .cv3d-stat-n');
-        var statL = document.querySelector('#cvStats .cv3d-stat:first-child .cv3d-stat-l');
-        if (statN) statN.textContent = stat.n;
-        if (statL) statL.textContent = stat.l;
+        var avEl = document.querySelector('.cv3d-avatar');
+        if (avEl) avEl.style.display = 'flex';
 
-        /* Pills */
-        var pills = getPills(cv.id);
+        /* ── Stats ── */
+        var projCount = (cv.projects || []).length;
+        var skillCount = 0;
+        if (cv.skills) { Object.keys(cv.skills).forEach(function (k) { skillCount += cv.skills[k].length; }); }
+        var statLabels = isAr ? ['مشاريع', 'مهارات', spec.split(' ')[0] || spec] : ['Projects', 'Skills', spec.split(' ')[0] || spec];
+
+        var s1n = document.getElementById('statN1'); if (s1n) s1n.textContent = projCount + '+';
+        var s1l = document.getElementById('statL1'); if (s1l) s1l.textContent = statLabels[0];
+        var s2n = document.getElementById('statN2'); if (s2n) s2n.textContent = skillCount + '+';
+        var s2l = document.getElementById('statL2'); if (s2l) s2l.textContent = statLabels[1];
+        var s3n = document.getElementById('statN3');
+        if (s3n) s3n.textContent = spec.split(' ')[0];
+        var s3l = document.getElementById('statL3'); if (s3l) s3l.textContent = statLabels[2];
+
+        /* ── Pills ── */
+        var techs = cv.technologies || [];
         var pillsContainer = document.getElementById('cvPills');
         if (pillsContainer) {
           pillsContainer.innerHTML = '';
-          pills.forEach(function (p) {
+          techs.slice(0, 8).forEach(function (t, i) {
             var span = document.createElement('span');
-            span.className = 'cv3d-pill ' + p.cls;
-            span.textContent = p.text;
+            span.className = 'cv3d-pill ' + pillClasses[i % pillClasses.length];
+            span.textContent = t;
             pillsContainer.appendChild(span);
           });
         }
 
-        /* Card back */
-        var backTitle = document.getElementById('cvBackTitle');
-        if (backTitle) backTitle.textContent = title;
+        /* ── Stats for card back ── */
 
+        /* ── Download links (card back) ── */
         var pdfLink = document.getElementById('cvPdfLink');
-        if (pdfLink && cv.files && cv.files.pdf) {
-          pdfLink.href = cv.files.pdf;
+        if (pdfLink && cv.files && cv.files.pdf) { pdfLink.href = cv.files.pdf; }
+        var docxLink = document.getElementById('cvDocxLink');
+        if (docxLink && cv.files && cv.files.docx) { docxLink.href = cv.files.docx; }
+
+        /* ── Contact bar ── */
+        var contactBar = document.getElementById('cvContactBar');
+        if (contactBar) {
+          contactBar.innerHTML = '';
+          var contactItems = [
+            { key: 'phone', val: cv.phone, href: 'tel:' + cv.phone },
+            { key: 'email', val: cv.email, href: 'mailto:' + cv.email },
+            { key: 'github', val: cv.github, href: 'https://github.com/' + cv.github },
+            { key: 'linkedin', val: cv.linkedin, href: 'https://linkedin.com/in/' + cv.linkedin },
+            { key: 'portfolio', val: cv.portfolio, href: 'https://' + cv.portfolio }
+          ];
+          contactItems.forEach(function (item) {
+            if (!item.val) return;
+            var a = document.createElement('a');
+            a.href = item.href;
+            a.target = '_blank';
+            a.className = 'cv3d-contact-item';
+            a.innerHTML = '<div class="cv3d-contact-icon"><i class="' + contactIcon(item.key) + '"></i></div><div><div style="font-size:.62rem;opacity:.4;text-transform:uppercase;letter-spacing:.08em">' + (contactMap[item.key] ? contactMap[item.key].label : item.key) + '</div><div class="cv3d-contact-text">' + item.val + '</div></div>';
+            contactBar.appendChild(a);
+          });
         }
 
-        var docxLink = document.getElementById('cvDocxLink');
-        if (docxLink && cv.files && cv.files.docx) {
-          docxLink.href = cv.files.docx;
+        /* ── Summary ── */
+        var sum = document.getElementById('cvSummaryText');
+        if (sum) sum.textContent = cv.summary || '';
+
+        /* ── Skills ── */
+        var skillsGrid = document.getElementById('cvSkillsGrid');
+        if (skillsGrid) {
+          skillsGrid.innerHTML = '';
+          var skillIcons = ['💻', '⚙️', '🗄️', '🌐', '📱', '🛠️', '🎨', '📊'];
+          var iconIdx = 0;
+          if (cv.skills) {
+            Object.keys(cv.skills).forEach(function (cat) {
+              var items = cv.skills[cat];
+              var card = document.createElement('div');
+              card.className = 'cv3d-skill-card';
+              card.innerHTML = '<div class="cv3d-skill-header"><div class="cv3d-skill-icon">' + (skillIcons[iconIdx % skillIcons.length]) + '</div><div class="cv3d-skill-cat">' + cat + '</div></div><div class="cv3d-skill-pills">' + items.map(function (t) { return '<span class="cv3d-pill ' + pillClasses[iconIdx % pillClasses.length] + '">' + t + '</span>'; }).join('') + '</div>';
+              skillsGrid.appendChild(card);
+              iconIdx++;
+            });
+          }
+        }
+
+        /* ── Experience Timeline ── */
+        var timeline = document.getElementById('cvTimeline');
+        if (timeline) {
+          timeline.innerHTML = '';
+          (cv.experience || []).forEach(function (exp) {
+            var item = document.createElement('div');
+            item.className = 'cv3d-tl-item';
+            item.innerHTML = '<div class="cv3d-tl-dot"></div><div class="cv3d-tl-company">' + (exp.company || '') + '</div><div class="cv3d-tl-title">' + exp.title + '</div><ul class="cv3d-tl-points">' + (exp.points || []).map(function (p) { return '<li>' + p + '</li>'; }).join('') + '</ul>';
+            timeline.appendChild(item);
+          });
+        }
+
+        /* ── Projects ── */
+        var projGrid = document.getElementById('cvProjectsGrid');
+        if (projGrid) {
+          projGrid.innerHTML = '';
+          (cv.projects || []).forEach(function (p) {
+            var card = document.createElement('div');
+            card.className = 'cv3d-proj-card';
+            card.innerHTML = '<div class="cv3d-proj-head"><div class="cv3d-proj-name">' + p.name + '</div></div><div class="cv3d-proj-desc">' + p.description + '</div><ul class="cv3d-proj-points">' + (p.points || []).map(function (pt) { return '<li>' + pt + '</li>'; }).join('') + '</ul>';
+            projGrid.appendChild(card);
+          });
+        }
+
+        /* ── Education ── */
+        var eduGrid = document.getElementById('cvEduGrid');
+        if (eduGrid) {
+          eduGrid.innerHTML = '';
+          (cv.education || []).forEach(function (edu) {
+            var card = document.createElement('div');
+            card.className = 'cv3d-edu-card';
+            card.innerHTML = '<div class="cv3d-edu-degree">' + edu.degree + '</div>' + (edu.field ? '<div class="cv3d-edu-uni">' + edu.field + '</div>' : '') + '<div class="cv3d-edu-uni">' + (edu.university || '') + (edu.location ? ' — ' + edu.location : '') + '</div>' + (edu.rank ? '<div class="cv3d-edu-rank">' + edu.rank + '</div>' : '');
+            eduGrid.appendChild(card);
+          });
+        }
+
+        /* ── Languages ── */
+        var langWrap = document.getElementById('cvLangWrap');
+        if (langWrap) {
+          langWrap.innerHTML = '';
+          (cv.languages || []).forEach(function (l) {
+            var item = document.createElement('div');
+            item.className = 'cv3d-lang-item';
+            item.innerHTML = '<div class="cv3d-lang-header"><span class="cv3d-lang-name">' + l.language + '</span><span class="cv3d-lang-level">' + l.level + '</span></div><div class="cv3d-lang-track"><div class="cv3d-lang-fill" style="width:' + (l.percentage || 0) + '%"></div></div>';
+            langWrap.appendChild(item);
+          });
+        }
+
+        /* ── Download buttons (content section) ── */
+        var dlBtns = document.getElementById('cvDownloadBtns');
+        if (dlBtns) {
+          dlBtns.innerHTML = '';
+          if (cv.files) {
+            if (cv.files.pdf) {
+              dlBtns.innerHTML += '<a href="' + cv.files.pdf + '" download class="cv3d-dl-btn cv3d-dl-btn-pdf"><i class="bi bi-file-earmark-pdf"></i> ' + (isAr ? 'تحميل PDF' : 'Download PDF') + '</a>';
+            }
+            if (cv.files.docx) {
+              dlBtns.innerHTML += '<a href="' + cv.files.docx + '" download class="cv3d-dl-btn cv3d-dl-btn-docx"><i class="bi bi-file-earmark-word"></i> ' + (isAr ? 'تحميل Word' : 'Download DOCX') + '</a>';
+            }
+          }
         }
       }
 
-      /* ── Init ── */
       async function init() {
-        cvId = getParam('id');
+        var cvId = getParam('id');
         if (!cvId) {
           document.getElementById('cvNavTitle').textContent = 'CV not found';
           return;
         }
-
-        /* Load CV data */
-        if (window.CVLoader) {
-          await CVLoader.loadCVsData();
-        } else if (window.DataLoader) {
-          /* Fallback: use data-loader */
-        }
-
-        var cv = null;
-        if (window.CVLoader) {
-          cv = CVLoader.getCVById(cvId);
-        }
-
+        if (window.CVLoader) await CVLoader.loadCVsData();
+        var cv = window.CVLoader ? CVLoader.getCVById(cvId) : null;
         if (!cv) {
-          var nav = document.getElementById('cvNavTitle');
-          if (nav) nav.textContent = 'CV not found: ' + cvId;
+          document.getElementById('cvNavTitle').textContent = 'CV not found: ' + cvId;
           return;
         }
-
         populate(cv);
-
-        /* Init 3D card */
-        if (window.CV3DCard) {
-          CV3DCard.init('cv3dScene');
-        }
+        if (window.CV3DCard) CV3DCard.init('cv3dScene');
       }
 
       if (document.readyState === 'loading') {

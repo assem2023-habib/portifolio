@@ -366,6 +366,9 @@ function positionServiceCards() {
     ? -serviceCarouselState.dragDelta * 0.45
     : serviceCarouselState.tiltAngle;
 
+  const MAX_VISIBLE = 4;
+  const cardScales = [];
+
   cards.forEach((card, i) => {
     const relAngle = ((i - serviceCarouselState.currentIndex) * angleStep + serviceCarouselState.dragDelta) % 360;
     const rad      = relAngle * Math.PI / 180;
@@ -389,6 +392,15 @@ function positionServiceCards() {
     card.style.opacity    = opacity;
     card.style.filter     = isActive ? 'none' : `blur(${(1 - scale) * 2}px)`;
     card.classList.toggle('active', isActive);
+
+    cardScales.push({ el: card, scale });
+  });
+
+  // إظهار أقرب 4 بطاقات فقط، إخفاء الباقي
+  cardScales.sort((a, b) => b.scale - a.scale);
+  cardScales.forEach((entry, i) => {
+    entry.el.style.visibility = i < MAX_VISIBLE ? '' : 'hidden';
+    entry.el.style.pointerEvents = i < MAX_VISIBLE ? '' : 'none';
   });
 
   if (dotsEl) {

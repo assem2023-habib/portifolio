@@ -967,6 +967,11 @@ body.dark-mode section.section {
   animation: bubblePop 0.45s cubic-bezier(0.36, 0.07, 0.19, 0.97) forwards;
 }
 
+/* ── Pause marquee on hover ── */
+.skills-marquee-track:hover {
+  animation-play-state: paused;
+}
+
 /* ── Marquee Hover Effect ── */
 .skills-marquee-item:hover {
   transform: translateY(-6px) scale(1.08);

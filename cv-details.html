@@ -39,6 +39,33 @@
 </head>
 
 <body class="cv-details-page">
+
+<!-- Cursor -->
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<!-- Scroll progress -->
+<div class="scroll-progress" id="scrollProgress"></div>
+
+<!-- Ambient glows -->
+<div class="ambient ambient-1"></div>
+<div class="ambient ambient-2"></div>
+
+<!-- Particle canvas -->
+<canvas id="particles"></canvas>
+
+<!-- Nav dots -->
+<nav class="nav-dots" id="navDots">
+  <div class="nav-dot active" data-label="Home" data-target="cv3dHero"></div>
+  <div class="nav-dot" data-label="About" data-target="cvSummary"></div>
+  <div class="nav-dot" data-label="Skills" data-target="cvSkillsSec"></div>
+  <div class="nav-dot" data-label="Experience" data-target="cvExperienceSec"></div>
+  <div class="nav-dot" data-label="Projects" data-target="cvProjectsSec"></div>
+  <div class="nav-dot" data-label="Education" data-target="cvEducationSec"></div>
+  <div class="nav-dot" data-label="Languages" data-target="cvLangSec"></div>
+  <div class="nav-dot" data-label="Downloads" data-target="cvDownloadSec"></div>
+</nav>
+
 <!-- Splash Screen -->
 <div id="splash">
   <div id="splash-shards"></div>
@@ -248,6 +275,7 @@
   <script src="assets/js/data-loader.js"></script>
   <script src="assets/js/cv-loader.js"></script>
   <script src="assets/js/cv-3d-card.js"></script>
+  <script src="assets/js/cv-details-effects.js"></script>
   <script src="assets/js/main.js"></script>
 
   <script>
@@ -394,10 +422,14 @@
           if (cv.skills) {
             Object.keys(cv.skills).forEach(function (cat) {
               var items = cv.skills[cat];
+              var slot = document.createElement('div');
+              slot.className = 'skill-card-slot';
+              slot.style.overflow = 'hidden';
               var card = document.createElement('div');
               card.className = 'cv3d-skill-card';
               card.innerHTML = '<div class="cv3d-skill-header"><div class="cv3d-skill-icon">' + (skillIcons[iconIdx % skillIcons.length]) + '</div><div class="cv3d-skill-cat">' + cat + '</div></div><div class="cv3d-skill-pills">' + items.map(function (t) { return '<span class="cv3d-pill ' + pillClasses[iconIdx % pillClasses.length] + '">' + t + '</span>'; }).join('') + '</div>';
-              skillsGrid.appendChild(card);
+              slot.appendChild(card);
+              skillsGrid.appendChild(slot);
               iconIdx++;
             });
           }
@@ -419,11 +451,35 @@
         var projGrid = document.getElementById('cvProjectsGrid');
         if (projGrid) {
           projGrid.innerHTML = '';
-          (cv.projects || []).forEach(function (p) {
-            var card = document.createElement('div');
-            card.className = 'cv3d-proj-card';
-            card.innerHTML = '<div class="cv3d-proj-head"><div class="cv3d-proj-name">' + p.name + '</div></div><div class="cv3d-proj-desc">' + p.description + '</div><ul class="cv3d-proj-points">' + (p.points || []).map(function (pt) { return '<li>' + pt + '</li>'; }).join('') + '</ul>';
-            projGrid.appendChild(card);
+          (cv.projects || []).forEach(function (p, idx) {
+            var themeIdx = (idx % 4) + 1;
+            var num = (idx + 1).toString().padStart(2, '0');
+            var scene = document.createElement('div');
+            scene.className = 'proj-scene';
+            scene.innerHTML = 
+              '<div class="proj-reveal-wrap">' +
+                '<div class="proj-card proj-card-' + themeIdx + '">' +
+                  '<div class="proj-front-bar"></div>' +
+                  '<div class="proj-face proj-front">' +
+                    '<div class="proj-front-content">' +
+                      '<div class="proj-name">' + p.name + '</div>' +
+                      '<div class="proj-stack">' + (p.description || '') + '</div>' +
+                      '<div class="proj-hover-hint">' +
+                        '<span class="proj-hint-icon">↻</span> Hover details' +
+                      '</div>' +
+                    '</div>' +
+                  '</div>' +
+                  '<div class="proj-face proj-back">' +
+                    '<div class="proj-number">' + num + '</div>' +
+                    '<div class="proj-back-title">' + p.name + '</div>' +
+                    '<div class="proj-back-desc">' + p.description + '</div>' +
+                    '<ul class="proj-points-list">' +
+                      (p.points || []).map(function (pt) { return '<li>' + pt + '</li>'; }).join('') +
+                    '</ul>' +
+                  '</div>' +
+                '</div>' +
+              '</div>';
+            projGrid.appendChild(scene);
           });
         }
 
@@ -446,7 +502,7 @@
           (cv.languages || []).forEach(function (l) {
             var item = document.createElement('div');
             item.className = 'cv3d-lang-item';
-            item.innerHTML = '<div class="cv3d-lang-header"><span class="cv3d-lang-name">' + l.language + '</span><span class="cv3d-lang-level">' + l.level + '</span></div><div class="cv3d-lang-track"><div class="cv3d-lang-fill" style="width:' + (l.percentage || 0) + '%"></div></div>';
+            item.innerHTML = '<div class="cv3d-lang-header"><span class="cv3d-lang-name">' + l.language + '</span><span class="cv3d-lang-level">' + l.level + '</span></div><div class="cv3d-lang-track"><div class="cv3d-lang-fill" style="width: 0px" data-target-width="' + (l.percentage || 0) + '%"></div></div>';
             langWrap.appendChild(item);
           });
         }
@@ -480,6 +536,7 @@
         }
         populate(cv);
         if (window.CV3DCard) CV3DCard.init('cv3dScene');
+        if (window.CVDetailsEffects) window.CVDetailsEffects.init();
       }
 
       if (document.readyState === 'loading') {

@@ -85,7 +85,7 @@
   top: 0;
   left: var(--box-w);
   transform-origin: left center;
-  transform: translateZ(calc(var(--box-d) / 2)) rotateY(90deg);
+  transform: rotateY(90deg);
   background: linear-gradient(180deg,
     color-mix(in srgb, var(--surface-color), var(--accent-color) 6%) 0%,
     color-mix(in srgb, var(--surface-color), black 5%) 100%);
@@ -103,7 +103,7 @@
   top: 0;
   left: calc(var(--box-d) * -1);
   transform-origin: right center;
-  transform: translateZ(calc(var(--box-d) / 2)) rotateY(-90deg);
+  transform: rotateY(-90deg);
   background: linear-gradient(180deg,
     color-mix(in srgb, var(--surface-color), black 3%) 0%,
     color-mix(in srgb, var(--surface-color), black 8%) 100%);
@@ -121,7 +121,7 @@
   top:  calc(var(--box-d) * -1);
   left: 0;
   transform-origin: center bottom;
-  transform: translateZ(calc(var(--box-d) / 2)) rotateX(90deg);
+  transform: rotateX(90deg);
   background: linear-gradient(90deg,
     color-mix(in srgb, var(--surface-color), var(--accent-color) 10%) 0%,
     color-mix(in srgb, var(--surface-color), black 3%) 50%,
@@ -140,7 +140,7 @@
   top:  var(--box-h);
   left: 0;
   transform-origin: center top;
-  transform: translateZ(calc(var(--box-d) / 2)) rotateX(-90deg);
+  transform: rotateX(-90deg);
   background: linear-gradient(90deg,
     color-mix(in srgb, var(--surface-color), black 6%) 0%,
     color-mix(in srgb, var(--surface-color), black 10%) 50%,

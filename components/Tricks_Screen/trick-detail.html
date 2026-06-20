@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Velocity-driven glitch text on hover — Trick Detail</title>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --background-color:#1a1a1a;
+  --heading-color:#ffffff;
+  --violet:#8b5cf6;
+  --violet-dim:rgba(139,92,246,0.10);
+  --violet-line:rgba(139,92,246,0.25);
+  --red:#ef4444;
+  --emerald:#10b981;
+  --cyan:#0dcaf0;
+  --orange:#f59e0b;
+  --pink:#ec4899;
+  --blue:#3b82f6;
+  --code-bg:#0e0e11;
+  --border-soft:rgba(255,255,255,0.12);
+  --surface:#1f1f1f;
+  --accent:var(--violet); /* this trick's category color, set dynamically in real usage */
+}
+body{background:var(--background-color);color:#fff;font-family:'Inter',system-ui,-apple-system,sans-serif;-webkit-font-smoothing:antialiased;line-height:1.7;}
+a{color:inherit;}
+
+/* ── TOP BAR ── */
+.topbar{
+  position:sticky;top:0;z-index:50;
+  background:rgba(26,26,26,0.92);backdrop-filter:blur(14px);
+  border-bottom:1px solid var(--border-soft);
+  padding:16px 28px;display:flex;align-items:center;gap:18px;
+}
+.back-link{display:flex;align-items:center;gap:7px;font-size:13px;font-weight:500;color:rgba(255,255,255,0.55);text-decoration:none;transition:color .2s;}
+.back-link:hover{color:#fff;}
+.back-link svg{width:15px;height:15px;}
+.topbar-crumb{font-size:12.5px;color:rgba(255,255,255,0.30);margin-right:auto;}
+.topbar-crumb span{color:rgba(255,255,255,0.6);}
+.copy-link-btn{
+  display:flex;align-items:center;gap:7px;font-family:inherit;font-size:12.5px;font-weight:500;
+  padding:8px 16px;border-radius:8px;border:1px solid var(--border-soft);
+  background:transparent;color:rgba(255,255,255,0.6);cursor:pointer;transition:all .2s;
+}
+.copy-link-btn:hover{border-color:var(--violet-line);color:#fff;}
+.copy-link-btn svg{width:13px;height:13px;}
+
+/* ── HERO ── */
+.detail-hero{
+  max-width:880px;margin:0 auto;padding:56px 28px 40px;
+  border-bottom:1px solid var(--border-soft);
+}
+.hero-badge{
+  display:inline-flex;align-items:center;gap:8px;
+  font-size:11.5px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;
+  padding:6px 15px 6px 11px;border-radius:20px;margin-bottom:22px;
+  background:color-mix(in srgb, var(--accent) 14%, transparent);
+  border:1px solid color-mix(in srgb, var(--accent) 38%, transparent);
+  color:color-mix(in srgb, var(--accent) 88%, white);
+}
+.hero-badge .dot{width:7px;height:7px;border-radius:50%;background:var(--accent);box-shadow:0 0 8px var(--accent);}
+.hero-title{font-size:clamp(28px,4vw,42px);font-weight:800;letter-spacing:-.015em;line-height:1.15;margin-bottom:18px;}
+.hero-summary{font-size:16px;color:rgba(255,255,255,0.62);max-width:680px;margin-bottom:26px;}
+.hero-meta{display:flex;align-items:center;gap:22px;flex-wrap:wrap;}
+.meta-pill{display:flex;align-items:center;gap:7px;font-size:12.5px;color:rgba(255,255,255,0.45);}
+.meta-pill svg{width:14px;height:14px;}
+.hero-tags{display:flex;flex-wrap:wrap;gap:7px;margin-top:20px;}
+.hero-tag{
+  font-size:11.5px;font-weight:500;padding:5px 13px;border-radius:7px;
+  background:rgba(255,255,255,0.05);
+  border:1px solid color-mix(in srgb, var(--accent) 30%, transparent);
+  color:rgba(255,255,255,0.70);
+}
+
+/* ── BODY LAYOUT ── */
+.detail-body{max-width:880px;margin:0 auto;padding:48px 28px 100px;}
+
+.block{margin-bottom:48px;}
+.block-label{
+  display:flex;align-items:center;gap:11px;
+  font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.26em;text-transform:uppercase;
+  color:var(--accent);opacity:.8;margin-bottom:16px;
+}
+.block-label .num{
+  width:24px;height:24px;border-radius:6px;
+  background:color-mix(in srgb, var(--accent) 16%, transparent);
+  border:1px solid color-mix(in srgb, var(--accent) 35%, transparent);
+  display:flex;align-items:center;justify-content:center;
+  font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--accent);
+}
+.block-title{font-size:22px;font-weight:700;margin-bottom:14px;letter-spacing:-.01em;}
+.block p{font-size:14.5px;color:rgba(255,255,255,0.62);margin-bottom:14px;}
+.block p:last-child{margin-bottom:0;}
+.block strong{color:#fff;}
+
+/* ── BEFORE / AFTER ── */
+.ba-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:8px;}
+@media(max-width:680px){.ba-grid{grid-template-columns:1fr;}}
+.ba-card{border-radius:12px;overflow:hidden;border:1px solid var(--border-soft);}
+.ba-head{
+  display:flex;align-items:center;gap:8px;padding:11px 16px;
+  font-size:12px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;
+}
+.ba-before .ba-head{background:rgba(239,68,68,0.10);color:var(--red);}
+.ba-after .ba-head{background:rgba(16,185,129,0.10);color:var(--emerald);}
+.ba-head svg{width:14px;height:14px;}
+.ba-body{background:var(--code-bg);padding:16px 18px;}
+.ba-body pre{font-family:'JetBrains Mono',monospace;font-size:12px;line-height:1.65;color:rgba(255,255,255,0.78);overflow-x:auto;}
+.ba-body .k{color:#8b5cf6;}
+.ba-body .s{color:#f59e0b;}
+.ba-body .c{color:rgba(255,255,255,0.30);font-style:italic;}
+.ba-body .bad{color:var(--red);}
+.ba-body .good{color:var(--emerald);}
+.ba-note{padding:10px 16px;font-size:11.5px;color:rgba(255,255,255,0.45);border-top:1px solid rgba(255,255,255,0.06);}
+
+/* ── CODE BLOCKS ── */
+.code-example{margin-bottom:22px;}
+.code-example:last-child{margin-bottom:0;}
+.code-example-title{font-size:13.5px;font-weight:600;color:rgba(255,255,255,0.75);margin-bottom:10px;display:flex;align-items:center;gap:8px;}
+.code-example-title .step-num{
+  font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--accent);
+  background:color-mix(in srgb, var(--accent) 14%, transparent);
+  width:18px;height:18px;border-radius:5px;display:flex;align-items:center;justify-content:center;
+}
+.code-block{background:var(--code-bg);border:1px solid rgba(255,255,255,0.08);border-radius:10px;overflow:hidden;}
+.code-block-head{display:flex;align-items:center;justify-content:space-between;padding:9px 14px;border-bottom:1px solid rgba(255,255,255,0.06);background:rgba(255,255,255,0.02);}
+.code-block-lang{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,0.35);}
+.copy-btn{display:flex;align-items:center;gap:5px;font-family:inherit;font-size:11px;font-weight:500;color:rgba(255,255,255,0.40);background:none;border:none;cursor:pointer;padding:2px 4px;border-radius:4px;transition:color .15s;}
+.copy-btn:hover{color:var(--accent);}
+.copy-btn svg{width:12px;height:12px;}
+.copy-btn.copied{color:var(--emerald);}
+.code-block pre{padding:16px 18px;overflow-x:auto;font-family:'JetBrains Mono',monospace;font-size:12.5px;line-height:1.7;color:rgba(255,255,255,0.82);}
+.code-block .k{color:#8b5cf6;}
+.code-block .fn{color:#0dcaf0;}
+.code-block .s{color:#f59e0b;}
+.code-block .c{color:rgba(255,255,255,0.30);font-style:italic;}
+.code-block .nm{color:#c17aff;}
+
+/* ── CALLOUT ── */
+.callout{
+  display:flex;gap:13px;padding:16px 18px;border-radius:10px;margin:18px 0;
+  background:rgba(245,158,11,0.06);border:1px solid rgba(245,158,11,0.20);
+}
+.callout .ic{font-size:16px;flex-shrink:0;}
+.callout p{font-size:13px;color:rgba(255,255,255,0.65);margin:0;}
+.callout p strong{color:#f59e0b;}
+
+/* ── RESOURCES ── */
+.resource-list{display:flex;flex-direction:column;gap:10px;}
+.resource-item{
+  display:flex;align-items:center;gap:12px;padding:13px 16px;border-radius:10px;
+  background:var(--surface);border:1px solid var(--border-soft);
+  transition:border-color .2s;text-decoration:none;
+}
+.resource-item:hover{border-color:var(--violet-line);}
+.resource-icon{
+  width:34px;height:34px;border-radius:8px;flex-shrink:0;
+  background:color-mix(in srgb, var(--accent) 14%, transparent);
+  display:flex;align-items:center;justify-content:center;color:var(--accent);
+}
+.resource-icon svg{width:15px;height:15px;}
+.resource-text{flex:1;}
+.resource-title{font-size:13.5px;font-weight:600;color:#fff;}
+.resource-sub{font-size:11.5px;color:rgba(255,255,255,0.40);}
+.resource-arrow{width:14px;height:14px;color:rgba(255,255,255,0.3);flex-shrink:0;}
+
+/* ── RELATED TRICKS ── */
+.related-section{
+  border-top:1px solid var(--border-soft);
+  background:#161618;
+  padding:56px 28px 80px;
+}
+.related-inner{max-width:880px;margin:0 auto;}
+.related-title{font-size:21px;font-weight:700;margin-bottom:6px;}
+.related-sub{font-size:13.5px;color:rgba(255,255,255,0.45);margin-bottom:26px;}
+.related-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;}
+@media(max-width:760px){.related-grid{grid-template-columns:1fr;}}
+.related-card{
+  background:linear-gradient(165deg,#222224 0%,#1a1a1c 100%);
+  border:1px solid var(--border-soft);border-radius:12px;padding:18px 17px;
+  text-decoration:none;display:block;position:relative;overflow:hidden;
+  transition:transform .2s,border-color .2s;
+}
+.related-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--r-accent,var(--violet));}
+.related-card:hover{transform:translateY(-4px);border-color:color-mix(in srgb, var(--r-accent,var(--violet)) 40%, var(--border-soft));}
+.r-violet{--r-accent:var(--violet);}
+.r-cyan{--r-accent:var(--cyan);}
+.r-emerald{--r-accent:var(--emerald);}
+.r-blue{--r-accent:var(--blue);}
+.related-card-badge{font-size:10px;font-weight:600;letter-spacing:.05em;text-transform:uppercase;color:var(--r-accent,var(--violet));margin-bottom:9px;}
+.related-card-title{font-size:13.5px;font-weight:600;color:#fff;line-height:1.45;}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <a href="tricks-all.html" class="back-link">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+    All tricks
+  </a>
+  <span class="topbar-crumb">Tricks &amp; Solutions / <span>Frontend</span></span>
+  <button class="copy-link-btn" id="copyLinkBtn">
+    <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M6 10a3 3 0 010-4l2-2a3 3 0 014 4l-1 1"/><path d="M10 6a3 3 0 010 4l-2 2a3 3 0 01-4-4l1-1"/></svg>
+    Copy link
+  </button>
+</div>
+
+<header class="detail-hero">
+  <span class="hero-badge"><span class="dot"></span>Frontend</span>
+  <h1 class="hero-title">Velocity-driven glitch text on hover</h1>
+  <p class="hero-summary">A per-character glitch animation where corruption intensity, slice count, and recovery easing all scale with how fast the mouse enters the element — instead of playing one fixed effect every time.</p>
+
+  <div class="hero-meta">
+    <span class="meta-pill">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+      4 min read
+    </span>
+    <span class="meta-pill">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
+      Updated Jun 12, 2024
+    </span>
+    <span class="meta-pill">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+      Intermediate
+    </span>
+  </div>
+
+  <div class="hero-tags">
+    <span class="hero-tag">CSS</span>
+    <span class="hero-tag">Vanilla JS</span>
+    <span class="hero-tag">Animation</span>
+    <span class="hero-tag">requestAnimationFrame</span>
+  </div>
+</header>
+
+<div class="detail-body">
+
+  <!-- PROBLEM -->
+  <div class="block">
+    <div class="block-label"><span class="num">1</span>The Problem</div>
+    <h2 class="block-title">A fixed glitch effect feels robotic</h2>
+    <p>Most glitch-on-hover effects play the exact same animation regardless of how the user interacted with the element. A slow, deliberate mouse movement triggers the same chaotic RGB-split-and-shatter sequence as a fast swipe across the screen — there's no relationship between the user's gesture and the visual response.</p>
+    <p>This breaks the illusion the effect is trying to sell. A glitch is supposed to feel like <strong>data corruption caused by interference</strong> — and interference should scale with the force of whatever caused it. A gentle hover producing a full violent shatter reads as disconnected from the interaction, not premium.</p>
+  </div>
+
+  <!-- SOLUTION -->
+  <div class="block">
+    <div class="block-label"><span class="num">2</span>The Solution</div>
+    <h2 class="block-title">Map mouse velocity to a single intensity value</h2>
+    <p>Track the mouse's velocity with exponential smoothing, normalize it into a 0–1 <code style="font-family:'JetBrains Mono',monospace;background:var(--code-bg);padding:1px 6px;border-radius:3px;color:var(--violet);">intensity</code> value, and derive <strong>every other parameter</strong> — slice count, RGB offset, particle count, recovery duration, even which easing curve to use — from that single number.</p>
+    <p>This turns one physical measurement into a coordinated system: a slow approach produces a few large, soft slices and a quick fade-out. A fast swipe produces dozens of thin slices, visible RGB splitting, flying pixel fragments, and an elastic spring-back recovery.</p>
+
+    <div class="callout">
+      <div class="ic">◈</div>
+      <p><strong>Key idea:</strong> don't hardcode separate "light" and "heavy" animation variants. Derive everything from one continuous variable so the transition between intensities is smooth, not a hard switch.</p>
+    </div>
+  </div>
+
+  <!-- CODE EXAMPLES -->
+  <div class="block">
+    <div class="block-label"><span class="num">3</span>Implementation</div>
+    <h2 class="block-title">Three steps to build it</h2>
+
+    <div class="code-example">
+      <div class="code-example-title"><span class="step-num">a</span>Track and smooth mouse velocity</div>
+      <div class="code-block">
+        <div class="code-block-head">
+          <span class="code-block-lang">JavaScript</span>
+          <button class="copy-btn" onclick="copyCode(this)">
+            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3"><rect x="5" y="5" width="8" height="9" rx="1"/><path d="M3 11V3a1 1 0 011-1h6"/></svg>Copy
+          </button>
+        </div>
+        <pre><span class="k">let</span> smoothVX = <span class="nm">0</span>;
+<span class="k">let</span> lastMX = <span class="nm">0</span>, lastT = <span class="nm">0</span>;
+
+window.<span class="fn">addEventListener</span>(<span class="s">'mousemove'</span>, e => {
+  <span class="k">const</span> now = performance.<span class="fn">now</span>();
+  <span class="k">const</span> dt = Math.<span class="fn">max</span>(now - lastT, <span class="nm">1</span>);
+  <span class="k">const</span> rawVX = (e.clientX - lastMX) / dt * <span class="nm">16</span>;
+  smoothVX = <span class="fn">lerp</span>(smoothVX, rawVX, <span class="nm">0.40</span>); <span class="c">// exponential smoothing</span>
+  lastMX = e.clientX; lastT = now;
+});</pre>
+      </div>
+    </div>
+
+    <div class="code-example">
+      <div class="code-example-title"><span class="step-num">b</span>Convert speed into a 0–1 intensity value</div>
+      <div class="code-block">
+        <div class="code-block-head">
+          <span class="code-block-lang">JavaScript</span>
+          <button class="copy-btn" onclick="copyCode(this)">
+            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3"><rect x="5" y="5" width="8" height="9" rx="1"/><path d="M3 11V3a1 1 0 011-1h6"/></svg>Copy
+          </button>
+        </div>
+        <pre><span class="k">function</span> <span class="fn">getIntensity</span>() {
+  <span class="k">const</span> speed = Math.<span class="fn">sqrt</span>(smoothVX ** <span class="nm">2</span> + smoothVY ** <span class="nm">2</span>);
+  <span class="c">// 1.5 = dead zone (ignores tiny jitter), 26.5 = speed that maps to full intensity</span>
+  <span class="k">return</span> <span class="fn">clamp</span>((speed - <span class="nm">1.5</span>) / <span class="nm">26.5</span>, <span class="nm">0</span>, <span class="nm">1</span>);
+}</pre>
+      </div>
+    </div>
+
+    <div class="code-example">
+      <div class="code-example-title"><span class="step-num">c</span>Derive every visual parameter from intensity</div>
+      <div class="code-block">
+        <div class="code-block-head">
+          <span class="code-block-lang">JavaScript</span>
+          <button class="copy-btn" onclick="copyCode(this)">
+            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3"><rect x="5" y="5" width="8" height="9" rx="1"/><path d="M3 11V3a1 1 0 011-1h6"/></svg>Copy
+          </button>
+        </div>
+        <pre><span class="k">const</span> intensity = <span class="fn">getIntensity</span>();
+
+<span class="k">const</span> sliceCount   = Math.<span class="fn">round</span>(<span class="fn">lerp</span>(<span class="nm">8</span>,  <span class="nm">50</span>,  intensity));
+<span class="k">const</span> maxShift     = <span class="fn">lerp</span>(<span class="nm">3</span>,  <span class="nm">42</span>,  intensity);
+<span class="k">const</span> rgbOpacity   = <span class="fn">lerp</span>(<span class="nm">0.08</span>, <span class="nm">0.50</span>, intensity);
+<span class="k">const</span> recoveryMs   = <span class="fn">lerp</span>(<span class="nm">80</span>, <span class="nm">320</span>, intensity);
+<span class="k">const</span> easing       = intensity < <span class="nm">0.4</span> ? easeOutCubic
+                : intensity < <span class="nm">0.75</span> ? easeOutQuint
+                : elasticOut; <span class="c">// spring overshoot only at high speed</span></pre>
+      </div>
+    </div>
+  </div>
+
+  <!-- BEFORE / AFTER -->
+  <div class="block">
+    <div class="block-label"><span class="num">4</span>Before / After</div>
+    <h2 class="block-title">Fixed timing vs. velocity-derived timing</h2>
+    <p>The structural difference is small in code, but the perceived quality difference is large — the second version makes the element feel physically responsive.</p>
+
+    <div class="ba-grid">
+      <div class="ba-card ba-before">
+        <div class="ba-head">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M15 9l-6 6M9 9l6 6"/></svg>
+          Before
+        </div>
+        <div class="ba-body">
+          <pre>el.<span class="fn">addEventListener</span>(<span class="s">'mouseenter'</span>, () => {
+  <span class="c">// same animation every single time</span>
+  <span class="fn">runGlitch</span>({
+    slices: <span class="bad">24</span>,
+    shift: <span class="bad">20</span>,
+    duration: <span class="bad">300</span>
+  });
+});</pre>
+        </div>
+        <div class="ba-note">Identical result for a slow drift or a fast flick — no gesture awareness.</div>
+      </div>
+
+      <div class="ba-card ba-after">
+        <div class="ba-head">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>
+          After
+        </div>
+        <div class="ba-body">
+          <pre>el.<span class="fn">addEventListener</span>(<span class="s">'mouseenter'</span>, () => {
+  <span class="k">const</span> i = <span class="fn">getIntensity</span>();
+  <span class="fn">runGlitch</span>({
+    slices: <span class="good">lerp(8,50,i)</span>,
+    shift: <span class="good">lerp(3,42,i)</span>,
+    duration: <span class="good">lerp(80,320,i)</span>
+  });
+});</pre>
+        </div>
+        <div class="ba-note">Every parameter scales continuously with how the user actually moved.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- RESOURCES -->
+  <div class="block">
+    <div class="block-label"><span class="num">5</span>Resources</div>
+    <h2 class="block-title">Related reading</h2>
+    <div class="resource-list">
+      <a class="resource-item" href="#">
+        <div class="resource-icon"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4"><circle cx="8" cy="8" r="6"/><path d="M8 5v3l2 1"/></svg></div>
+        <div class="resource-text">
+          <div class="resource-title">MDN — requestAnimationFrame()</div>
+          <div class="resource-sub">developer.mozilla.org</div>
+        </div>
+        <svg class="resource-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M7 7h10v10"/></svg>
+      </a>
+      <a class="resource-item" href="#">
+        <div class="resource-icon"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M2 8a6 6 0 1112 0A6 6 0 012 8z"/><path d="M5 8h6M8 5v6"/></svg></div>
+        <div class="resource-text">
+          <div class="resource-title">Easing functions cheat sheet</div>
+          <div class="resource-sub">easings.net</div>
+        </div>
+        <svg class="resource-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M7 7h10v10"/></svg>
+      </a>
+    </div>
+  </div>
+
+</div>
+
+<!-- RELATED TRICKS -->
+<section class="related-section">
+  <div class="related-inner">
+    <h3 class="related-title">Related tricks</h3>
+    <p class="related-sub">Other animation and performance notes you might find useful</p>
+    <div class="related-grid">
+      <a class="related-card r-orange" style="--r-accent:#f59e0b" href="trick-detail.html?id=3d-tilt-inertia">
+        <div class="related-card-badge">Frontend</div>
+        <div class="related-card-title">3D tilt card with inertia on release</div>
+      </a>
+      <a class="related-card r-violet" href="trick-detail.html?id=intersection-observer-debounce">
+        <div class="related-card-badge">Frontend</div>
+        <div class="related-card-title">Debounce IntersectionObserver callbacks</div>
+      </a>
+      <a class="related-card r-cyan" style="--r-accent:#0dcaf0" href="trick-detail.html?id=will-change-layout-shift">
+        <div class="related-card-badge">Frontend</div>
+        <div class="related-card-title">Avoid layout shift with will-change</div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<script>
+function copyCode(btn){
+  const code=btn.closest('.code-block').querySelector('pre').textContent;
+  navigator.clipboard.writeText(code).catch(()=>{});
+  const orig=btn.innerHTML;
+  btn.classList.add('copied');
+  btn.innerHTML='<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 8l4 4 6-8"/></svg> Copied';
+  setTimeout(()=>{btn.classList.remove('copied');btn.innerHTML=orig;},1500);
+}
+document.getElementById('copyLinkBtn').addEventListener('click',function(){
+  navigator.clipboard.writeText(window.location.href).catch(()=>{});
+  const orig=this.innerHTML;
+  this.innerHTML='<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 8l4 4 6-8"/></svg> Copied';
+  setTimeout(()=>{this.innerHTML=orig;},1500);
+});
+</script>
+</body>
+</html>

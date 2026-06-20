@@ -1,0 +1,31 @@
+{
+  "id": "tilt-card-inertia",
+  "cat": "frontend",
+  "color": "item-orange",
+  "hasCode": false,
+  "date": "2024-04-28",
+  "difficulty": "intermediate",
+  "title": "3D tilt card with inertia on release",
+  "titleAr": "بطاقة 3D مائلة مع قصور ذاتي عند التحرير",
+  "desc": "Track rotation velocity each frame, then on pointerup let the card keep spinning briefly with exponential decay instead of snapping flat.",
+  "descAr": "تتبع سرعة الدوران كل إطار، وعند رفع المؤشر دع البطاقة تستمر في الدوران للحظة مع توهين أسي بدلاً من العودة الفورية.",
+  "tags": ["CSS 3D", "RAF"],
+  "problem": "Most 3D tilt implementations snap back to flat immediately on pointer release. This feels robotic and misses a chance for tactile, physical feedback. Users expect inertia from a physical 3D surface.",
+  "problemAr": "معظم تطبيقات 3D tilt تعود فوراً إلى الوضع المسطح عند رفع المؤشر. هذا يبدو آلياً ويفوّت فرصة لرد فعل فيزيائي ملموس. يتوقع المستخدمون قصوراً ذاتياً من سطح 3D فيزيائي.",
+  "solution": "On pointermove, compute delta-rotation per frame, store in a velocity vector. On pointerup, continue applying that velocity each frame multiplied by a friction coefficient (e.g. 0.95). Stop when velocity drops below a threshold. The card coasts to rest naturally.",
+  "solutionAr": "في pointermove، احسب فرق الدوران لكل إطار وخزنه في متجه سرعة. عند pointerup، استمر في تطبيق تلك السرعة كل إطار مضروبة بمعامل احتكاك (مثال 0.95). توقف عندما تنخفض السرعة عن حد معين. تتوقف البطاقة بشكل طبيعي.",
+  "code": null,
+  "codeSteps": [],
+  "before": {
+    "desc": "On pointerup, rotation snapped instantly to 0,0,0. No sense of weight or physical presence.",
+    "descAr": "عند pointerup، يعود الدوران فوراً إلى 0,0,0. بدون أي إحساس بالوزن أو الوجود الفيزيائي."
+  },
+  "after": {
+    "desc": "Card continues spinning with exponential decay on release. Tap it gently and it coasts; flick it hard and it drifts dramatically before settling.",
+    "descAr": "تواصل البطاقة الدوران بتوهين أسي عند التحرير. المسها برفق تنزلق، ارمها بقوة تنجرف بشكل كبير قبل أن تستقر."
+  },
+  "resources": [
+    { "label": "CSS 3D transforms", "url": "https://developer.mozilla.org/en-US/docs/Web/CSS/transform-function/rotateX" },
+    { "label": "Infinite Games: Exponential decay", "url": "https://www.youtube.com/watch?v=GIk5YyPB-oA" }
+  ]
+}

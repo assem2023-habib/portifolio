@@ -1,0 +1,50 @@
+{
+  "id": "flutter-animation-controller",
+  "cat": "mobile",
+  "color": "item-emerald",
+  "hasCode": true,
+  "date": "2024-02-28",
+  "difficulty": "beginner",
+  "title": "Disposing AnimationController leaks",
+  "titleAr": "تسريب AnimationController وطريقة التخلص منه",
+  "desc": "Every AnimationController must be disposed in the State.dispose() method, or the ticker keeps running after the widget is removed from the tree.",
+  "descAr": "كل AnimationController يجب التخلص منه في State.dispose()، وإلا سيستمر المؤقت بعد إزالة الـ widget من الشجرة.",
+  "tags": ["Flutter", "Dart"],
+  "problem": "Missing dispose() on an AnimationController means the underlying Ticker continues firing after the widget is gone. This causes a 'Ticker disposed' error or silent CPU usage in the background. The widget leaks memory and the user experiences jank from phantom tickers.",
+  "problemAr": "نقص dispose() في AnimationController يعني أن Ticker الأساسي يستمر في العمل بعد اختفاء الـ widget. هذا يسبب خطأ 'Ticker disposed' أو استخدام CPU صامت في الخلفية. يتسرب الـ widget للذاكرة ويعاني المستخدم من هزات بسبب tickers الوهمية.",
+  "solution": "Override dispose() in any State that owns an AnimationController and call controller.dispose(). For multiple controllers, call dispose() on each. Using AutomaticKeepAliveClientMixin does not exempt you — you must still manually dispose.",
+  "solutionAr": "تجاوز dispose() في أي State يملك AnimationController واستدعِ controller.dispose(). لعدة متحكمات، استدعِ dispose() لكل منهم. استخدام AutomaticKeepAliveClientMixin لا يعفيك — يجب أن تتخلص يدوياً.",
+  "code": {
+    "lang": "Dart",
+    "html": "<span class=\"k\">@override</span>\n<span class=\"k\">void</span> dispose() {\n  _controller.dispose();\n  <span class=\"k\">super</span>.dispose();\n}"
+  },
+  "codeSteps": [
+    {
+      "step": 1,
+      "label": "Declare controller",
+      "html": "late AnimationController _controller;"
+    },
+    {
+      "step": 2,
+      "label": "Init in initState",
+      "html": "_controller = AnimationController(\n  vsync: <span class=\"k\">this</span>,\n  duration: Duration(milliseconds: 300),\n);"
+    },
+    {
+      "step": 3,
+      "label": "Dispose in dispose",
+      "html": "<span class=\"k\">@override</span>\n<span class=\"k\">void</span> dispose() {\n  _controller.dispose();\n  <span class=\"k\">super</span>.dispose();\n}"
+    }
+  ],
+  "before": {
+    "desc": "Missing dispose() on 8 animation controllers in a page. After navigating away, background CPU stayed at 12% constant from orphaned tickers. Memory grew 4MB per page visit.",
+    "descAr": "نقص dispose() في 8 متحكمات حركة في صفحة. بعد الانتقال بعيداً، بقيت CPU في الخلفية عند 12% ثابتة من tickers اليتيمة. نمت الذاكرة 4MB لكل زيارة."
+  },
+  "after": {
+    "desc": "All controllers disposed in dispose(). Zero background CPU after navigation. Memory stable across page visits.",
+    "descAr": "جميع المتحكمات تم التخلص منها في dispose(). صفر CPU في الخلفية بعد التنقل. ذاكرة مستقرة عبر زيارات الصفحة."
+  },
+  "resources": [
+    { "label": "Flutter: Animation and Ticker", "url": "https://api.flutter.dev/flutter/animation/AnimationController-class.html" },
+    { "label": "Flutter: dispose lifecycle", "url": "https://api.flutter.dev/flutter/widgets/State/dispose.html" }
+  ]
+}

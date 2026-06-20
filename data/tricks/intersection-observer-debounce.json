@@ -1,0 +1,31 @@
+{
+  "id": "intersection-observer-debounce",
+  "cat": "frontend",
+  "color": "item-pink",
+  "hasCode": false,
+  "date": "2024-03-10",
+  "difficulty": "intermediate",
+  "title": "Debounce IntersectionObserver callbacks",
+  "titleAr": "إبطاء استدعاءات IntersectionObserver",
+  "desc": "When animating many scroll-reveal elements, batch observer callbacks with requestAnimationFrame instead of triggering style writes per entry.",
+  "descAr": "عند تحريك عناصر scroll-reveal كثيرة، جمع استدعاءات observer بـ requestAnimationFrame بدلاً من تشغيل كتابات الأنماط لكل عنصر.",
+  "tags": ["Observer", "Scroll"],
+  "problem": "IntersectionObserver fires for each element as soon as it enters the viewport. With 30+ reveal elements on a page, triggering 30 style mutations synchronously causes layout thrash, dropped frames, and visible jank during scrolling.",
+  "problemAr": "IntersectionObserver يشتعل لكل عنصر فور دخوله viewport. مع 30+ عنصر reveal على الصفحة، تشغيل 30 تحويلة نمط متزامنة يسبب layout thrash وسقوط إطارات وهزات مرئية أثناء التمرير.",
+  "solution": "Collect observer entries in a Set during the callback, then schedule a single rAF flush. In the rAF callback, iterate the set, apply all class/style changes, then clear the set. This batches all DOM writes into one frame and avoids redundant work.",
+  "solutionAr": "اجمع entries من observer في Set أثناء الاستدعاء، ثم جدول flush واحد بـ rAF. في استدعاء rAF، كرّر على الـ set، طبّق كل تغييرات class/style، ثم امسح الـ set. هذا يجمع كل كتابات DOM في إطار واحد ويتجنب العمل المكرر.",
+  "code": null,
+  "codeSteps": [],
+  "before": {
+    "desc": "30 individual observer callbacks triggered synchronously during scroll, each writing style/class. ~15ms of style recalc per flush, visible frame drops.",
+    "descAr": "30 استدعاء observer فردي يتم تشغيلهم بشكل متزامن أثناء التمرير، كل يكتب style/class. ~15ms إعادة حساب نمط لكل flush، سقوط إطارات مرئي."
+  },
+  "after": {
+    "desc": "All entries batched into a single rAF. One style recalc per scroll frame (~0.5ms). Smooth 60fps scroll regardless of element count.",
+    "descAr": "كل entries مجمعة في rAF واحد. إعادة حساب نمط واحدة لكل إطار تمرير (~0.5ms). تمرير سلس 60fps بغض النظر عن عدد العناصر."
+  },
+  "resources": [
+    { "label": "MDN: IntersectionObserver", "url": "https://developer.mozilla.org/en-US/docs/Web/API/IntersectionObserver" },
+    { "label": "rAF + Observer pattern", "url": "https://developers.google.com/web/fundamentals/performance/rendering" }
+  ]
+}

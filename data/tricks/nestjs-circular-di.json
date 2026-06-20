@@ -1,0 +1,45 @@
+{
+  "id": "nestjs-circular-di",
+  "cat": "backend",
+  "color": "item-blue",
+  "hasCode": true,
+  "date": "2024-05-10",
+  "difficulty": "intermediate",
+  "title": "NestJS circular dependency injection",
+  "titleAr": "حقن التبعية الدائرية في NestJS",
+  "desc": "Use forwardRef when two services depend on each other directly. Otherwise restructure with a shared module to break the cycle.",
+  "descAr": "استخدم forwardRef عندما يعتمد كل من خدمتين على الأخرى مباشرة. أو أعد الهيكلة باستخدام وحدة مشتركة لكسر الدورة.",
+  "tags": ["NestJS", "TypeScript", "DI"],
+  "problem": "Two services injecting each other directly causes NestJS to throw 'Cannot resolve dependency' at startup because the DI container cannot construct a circular object graph. Common with AuthService and UserService where each needs the other's methods.",
+  "problemAr": "خدمتان تحقنان بعضهما مباشرة يسبب خطأ 'Cannot resolve dependency' في NestJS عند بدء التشغيل لأن حاوية DI لا يمكنها بناء رسم بياني دائري للكائنات. شائع مع AuthService و UserService حيث تحتاج كل منهما لطرق الأخرى.",
+  "solution": "Apply @Inject(forwardRef(() => ServiceName)) on one side of the circular dependency. NestJS lazy-resolves the forwardRef token after the module is fully initialised. Better yet, extract the shared logic into a third module to eliminate the cycle entirely.",
+  "solutionAr": "طبّق @Inject(forwardRef(() => ServiceName)) على جانب واحد من التبعية الدائرية. يحلها NestJS بشكل متأخر بعد أن يتم تهيئة الوحدة بالكامل. والأفضل استخراج المنطق المشترك إلى وحدة ثالثة لإزالة الدورة بالكامل.",
+  "code": {
+    "lang": "TypeScript",
+    "html": "<span class=\"k\">@Injectable</span>()\n<span class=\"k\">export class</span> AuthService {\n  <span class=\"k\">constructor</span>(\n    <span class=\"k\">@Inject</span>(forwardRef(() => UsersService))\n    <span class=\"k\">private</span> users: UsersService,\n  ) {}\n}"
+  },
+  "codeSteps": [
+    {
+      "step": 1,
+      "label": "Use forwardRef injection",
+      "html": "<span class=\"k\">@Inject</span>(forwardRef(() => UsersService))\n<span class=\"k\">private</span> users: UsersService;"
+    },
+    {
+      "step": 2,
+      "label": "Module registration",
+      "html": "<span class=\"k\">@Module</span>({\n  providers: [AuthService, UsersService],\n  exports: [AuthService, UsersService],\n})\n<span class=\"k\">export class</span> AuthModule {}"
+    }
+  ],
+  "before": {
+    "desc": "Direct injection on both sides. NestJS DI throws: 'Nest can't resolve dependencies of AuthService (?, UsersService).'",
+    "descAr": "حقن مباشر من كلا الجانبين. DI في NestJS يرمي خطأ: 'Nest can't resolve dependencies of AuthService (?, UsersService).'"
+  },
+  "after": {
+    "desc": "One side uses forwardRef, the other injects normally. Both services initialise correctly and can call each other's methods.",
+    "descAr": "جانب واحد يستخدم forwardRef والآخر يحقن بشكل طبيعي. تعمل كلتا الخدمتين بشكل صحيح ويمكن لكل منهما استدعاء طرق الأخرى."
+  },
+  "resources": [
+    { "label": "NestJS: Circular dependency", "url": "https://docs.nestjs.com/fundamentals/circular-dependency" },
+    { "label": "NestJS: Module reference", "url": "https://docs.nestjs.com/modules" }
+  ]
+}

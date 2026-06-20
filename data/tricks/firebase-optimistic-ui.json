@@ -1,0 +1,31 @@
+{
+  "id": "firebase-optimistic-ui",
+  "cat": "mobile",
+  "color": "item-emerald",
+  "hasCode": false,
+  "date": "2024-04-02",
+  "difficulty": "intermediate",
+  "title": "Firebase Realtime DB optimistic UI updates",
+  "titleAr": "تحديثات Firebase المتفائلة لواجهة المستخدم",
+  "desc": "Update local widget state immediately on user action, then sync to Firebase in the background. Roll back only if the write actually fails.",
+  "descAr": "حدّث حالة الواجهة محلياً فوراً عند action المستخدم، ثم زامن مع Firebase في الخلفية. ارجع فقط إذا فشلت الكتابة فعلاً.",
+  "tags": ["Firebase", "Flutter"],
+  "problem": "Waiting for Firebase write confirmation before updating the UI adds 100-500ms latency on every user action. On slower networks the UI feels sluggish and unresponsive, especially for toggles, likes, and reordering.",
+  "problemAr": "انتظار تأكيد كتابة Firebase قبل تحديث الواجهة يضيف 100-500ms تأخير على كل إجراء. على الشبكات البطيئة تشعر الواجهة بالبطء وعدم الاستجابة، خاصة في التبديلات والإعجابات وإعادة الترتيب.",
+  "solution": "Apply the change to the local model and rebuild the widget immediately, then write to Firebase asynchronously. Listen for failure and revert only if the write errors. For offline resilience buffer writes and replay on reconnect.",
+  "solutionAr": "طبّق التغيير على النموذج المحلي وأعد بناء الواجهة فوراً، ثم اكتب إلى Firebase بشكل غير متزامن. استمع للفشل وارجع فقط إذا أخطأت الكتابة. للمرونة في وضع عدم الاتصال، خزّن الكتابات مؤقتاً وأعد تشغيلها عند إعادة الاتصال.",
+  "code": null,
+  "codeSteps": [],
+  "before": {
+    "desc": "Every like/toggle waited for Firebase round-trip. 200-400ms delay per action, on 3G up to 800ms. UI felt sluggish on every interaction.",
+    "descAr": "كل إعجاب/تبديل ينتظر رحلة Firebase ذهاباً وإياباً. 200-400ms تأخير لكل إجراء، على 3G يصل إلى 800ms. شعور بالبطء في كل تفاعل."
+  },
+  "after": {
+    "desc": "Toggle flips instantly in the UI. Firebase syncs in the background. On rare write failure the toggle reverts with a brief shake animation signalling the rollback.",
+    "descAr": "يتغير التبديل فوراً في الواجهة. Firebase يزامن في الخلفية. في حالة فشل كتابة نادر يتراجع التبديل مع حركة اهتزاز قصيرة تشير إلى التراجع."
+  },
+  "resources": [
+    { "label": "Firebase: Write data", "url": "https://firebase.google.com/docs/database/flutter/read-and-write" },
+    { "label": "Flutter: Optimistic UI pattern", "url": "https://flutter.dev/docs/development/data-and-backend/state-mgmt/optimistic" }
+  ]
+}

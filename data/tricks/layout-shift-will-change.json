@@ -1,0 +1,31 @@
+{
+  "id": "layout-shift-will-change",
+  "cat": "frontend",
+  "color": "item-pink",
+  "hasCode": false,
+  "date": "2024-05-18",
+  "difficulty": "beginner",
+  "title": "Avoid layout shift with will-change",
+  "titleAr": "تجنب تغيير التخطيط باستخدام will-change",
+  "desc": "Apply will-change:transform only while an element is actively animating, then remove it after. Keeping it permanently can bloat GPU memory.",
+  "descAr": "طبّق will-change:transform فقط أثناء الحركة الفعلية للعنصر، ثم أزله بعدها. تركه دائماً يستهلك ذاكرة GPU بلا فائدة.",
+  "tags": ["Performance", "CSS"],
+  "problem": "Overusing will-change on dozens of elements simultaneously forces the browser to allocate GPU layers for each one, consuming memory and potentially causing repaints on every frame even when nothing is animating. Layout shifts happen when composite layers change dimensions.",
+  "problemAr": "الإفراط في استخدام will-change على عشرات العناصر في وقت واحد يجبر المتصفح على تخصيص طبقات GPU لكل منها، مما يستهلك الذاكرة وقد يسبب repaints في كل إطار حتى عند عدم وجود حركة.",
+  "solution": "Apply will-change: transform via JS just before the animation starts (e.g. pointerenter / RAF loop start) and remove it in the onfinish / promise.then. For scroll-based animations use IntersectionObserver to toggle will-change only for visible elements.",
+  "solutionAr": "طبّق will-change: transform عبر JS قبل بدء الحركة مباشرة (pointerenter / بداية RAF loop) وأزله في onfinish / promise.then. للحركات القائمة على التمرير استخدم IntersectionObserver لتبديل will-change فقط للعناصر المرئية.",
+  "code": null,
+  "codeSteps": [],
+  "before": {
+    "desc": "will-change set permanently in CSS on every card. Browser allocated GPU layers for all 50+ cards, causing ~120MB extra GPU memory and visible jank on scroll.",
+    "descAr": "will-change مثبت بشكل دائم في CSS على كل بطاقة. خصص المتصفح طبقات GPU لـ 50+ بطاقة، مما تسبب في ~120MB ذاكرة GPU إضافية وهزات مرئية عند التمرير."
+  },
+  "after": {
+    "desc": "will-change applied only during hover/scroll animation and removed immediately after. GPU memory dropped to baseline, scroll jank eliminated.",
+    "descAr": "will-change طُبق فقط أثناء حركة hover/scroll وأزيل فوراً. انخفضت ذاكرة GPU إلى المستوى الأساسي، وزالت هزات التمرير."
+  },
+  "resources": [
+    { "label": "MDN: will-change", "url": "https://developer.mozilla.org/en-US/docs/Web/CSS/will-change" },
+    { "label": "CSS Triggers", "url": "https://csstriggers.com/" }
+  ]
+}

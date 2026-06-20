@@ -1,0 +1,45 @@
+{
+  "id": "flutter-streambuilder",
+  "cat": "mobile",
+  "color": "item-emerald",
+  "hasCode": true,
+  "date": "2024-05-30",
+  "difficulty": "beginner",
+  "title": "Flutter StreamBuilder rebuilding entire list",
+  "titleAr": "Flutter StreamBuilder إعادة بناء القائمة بالكامل",
+  "desc": "Wrap each list item with a ValueKey tied to a stable id so Flutter diffs correctly instead of rebuilding the whole list on every snapshot.",
+  "descAr": "لف كل عنصر في القائمة بـ ValueKey مرتبط بمعرف ثابت ليتمكن Flutter من المقارنة بشكل صحيح بدلاً من إعادة بناء القائمة كاملة عند كل تحديث.",
+  "tags": ["Flutter", "Firebase"],
+  "problem": "Using StreamBuilder with Firebase Firestore, every snapshot caused the entire ListView to rebuild. Each item lost its scroll position, animation controller, and expansion state because Flutter's diff algorithm had no stable key to match old vs new children.",
+  "problemAr": "استخدام StreamBuilder مع Firebase Firestore، كل snapshot كان يسبب إعادة بناء كاملة لـ ListView. كل عنصر يفقد موضع التمرير وحالة المتحكم بالـ animation وحالة التوسع لأن خوارزمية diff لـ Flutter ليس لديها مفتاح ثابت لمطابقة العناصر القديمة مع الجديدة.",
+  "solution": "Assign a ValueKey(item.id) to every list item widget. Flutter's Element tree uses keys to match old and new Widget instances, so adding one item no longer recreates all siblings. Scroll position and state are preserved across snapshot changes.",
+  "solutionAr": "خصص ValueKey(item.id) لكل عنصر في القائمة. شجرة Element في Flutter تستخدم المفاتيح لمطابقة Widgets القديمة مع الجديدة، لذا إضافة عنصر واحد لم يعد يعيد بناء كل العناصر الشقيقة. يتم الحفاظ على موضع التمرير والحالة عبر تغييرات snapshot.",
+  "code": {
+    "lang": "Dart",
+    "html": "<span class=\"k\">const</span> key = ValueKey(item.id); <span class=\"c\">// stable key</span>"
+  },
+  "codeSteps": [
+    {
+      "step": 1,
+      "label": "Before",
+      "html": "children: snap.data!.docs\n    .map((d) => MyItem(data: d))\n    .toList()"
+    },
+    {
+      "step": 2,
+      "label": "After",
+      "html": "children: snap.data!.docs\n    .map((d) => MyItem(key: ValueKey(d.id), data: d))\n    .toList()"
+    }
+  ],
+  "before": {
+    "desc": "Entire ListView rebuilt on each Firestore snapshot, losing states, animation controllers, and scroll offsets across all visible items.",
+    "descAr": "إعادة بناء كاملة لـ ListView عند كل snapshot من Firestore، مما يفقد حالات ومتحكمات الرسوم المتحركة وأماكن التمرير في جميع العناصر المرئية."
+  },
+  "after": {
+    "desc": "Only the added/removed widget is rebuilt. Scroll position and item-interal state (expansion, animations) survive across snapshots.",
+    "descAr": "فقط widget المضاف أو المحذوف يُعاد بناؤه. يبقى موضع التمرير والحالة الداخلية للعنصر (التوسع، الحركات) كما هي."
+  },
+  "resources": [
+    { "label": "Flutter Keys docs", "url": "https://docs.flutter.dev/development/ui/widgets-intro#keys" },
+    { "label": "Medium: Understanding Flutter keys", "url": "https://medium.com/flutter-community/understanding-flutter-keys-40525c2cb42a" }
+  ]
+}

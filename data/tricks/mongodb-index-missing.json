@@ -1,0 +1,50 @@
+{
+  "id": "mongodb-index-missing",
+  "cat": "backend",
+  "color": "item-cyan",
+  "hasCode": true,
+  "date": "2024-04-15",
+  "difficulty": "beginner",
+  "title": "MongoDB index missing on filtered field",
+  "titleAr": "فهرس MongoDB مفقود على حقل التصفية",
+  "desc": "Queries filtering by a non-indexed field force a full collection scan. Add a single-field index for any property used in frequent where clauses.",
+  "descAr": "استعلامات التصفية بحقل غير مفهرس تجبر على مسح المجموعة كاملة. أضف فهرساً لحقل واحد لكل خاصية تُستخدم في شروط where المتكررة.",
+  "tags": ["MongoDB", "Performance"],
+  "problem": "A query like .find({ status: 'active' }) on a 1M-document collection without an index on 'status' triggers a COLLSCAN (collection scan). Response times degrade from ~2ms with index to >500ms without as the collection grows.",
+  "problemAr": "استعلام مثل .find({ status: 'active' }) على مجموعة مليون وثيقة بدون فهرس على 'status' يسبب COLLSCAN (مسح المجموعة). يزداد وقت الاستجابة من ~2ms مع الفهرس إلى >500ms بدونه مع نمو المجموعة.",
+  "solution": "Run db.collection.createIndex({ status: 1 }) in the shell or ensureIndex in code (Mongoose, native driver). For compound filters create a compound index matching the query shape. Use explain() to verify IXSCAN vs COLLSCAN.",
+  "solutionAr": "نفذ db.collection.createIndex({ status: 1 }) في shell أو ensureIndex في الكود (Mongoose, native driver). للمرشحات المركبة أنشئ فهرساً مركباً يطابق شكل الاستعلام. استخدم explain() للتحقق من IXSCAN مقابل COLLSCAN.",
+  "code": {
+    "lang": "JavaScript",
+    "html": "<span class=\"c\">// MongoDB shell</span>\ndb.collection.createIndex({ status: <span class=\"m\">1</span> });\n\n<span class=\"c\">// Mongoose (model definition)</span>\norderSchema.index({ status: <span class=\"m\">1</span> });"
+  },
+  "codeSteps": [
+    {
+      "step": 1,
+      "label": "Create index",
+      "html": "db.collection.createIndex({ status: 1 });"
+    },
+    {
+      "step": 2,
+      "label": "Verify with explain",
+      "html": "db.collection.find({ status: 'active' }).explain('executionStats');\n<span class=\"c\">// Look for \"stage\": \"IXSCAN\"</span>"
+    },
+    {
+      "step": 3,
+      "label": "Mongoose schema",
+      "html": "orderSchema.index({ status: 1 });"
+    }
+  ],
+  "before": {
+    "desc": "COLLSCAN on every query. API latency grew linearly with collection size. A single background job polling statuses caused CPU spikes every few seconds.",
+    "descAr": "COLLSCAN في كل استعلام. نما زمن استجابة API خطياً مع حجم المجموعة. وظيفة خلفية واحدة تسأل عن الحالة تسببت في قفزات CPU كل بضع ثوانٍ."
+  },
+  "after": {
+    "desc": "IXSCAN — query hits 2–5ms consistently regardless of collection size. CPU dropped by 60% under the same workload.",
+    "descAr": "IXSCAN — الاستعلام يصل إلى 2-5ms باستمرار بغض النظر عن حجم المجموعة. انخفضت CPU بنسبة 60% تحت نفس الحمل."
+  },
+  "resources": [
+    { "label": "MongoDB createIndex", "url": "https://www.mongodb.com/docs/manual/reference/method/db.collection.createIndex/" },
+    { "label": "Mongoose indexes", "url": "https://mongoosejs.com/docs/guide.html#indexes" }
+  ]
+}

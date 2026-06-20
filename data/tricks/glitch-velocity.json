@@ -1,0 +1,50 @@
+{
+  "id": "glitch-velocity",
+  "cat": "frontend",
+  "color": "item-violet",
+  "hasCode": true,
+  "date": "2024-06-12",
+  "difficulty": "intermediate",
+  "title": "Velocity-driven glitch text on hover",
+  "titleAr": "تأثير Glitch مرتبط بسرعة الماوس",
+  "desc": "Map smoothed mouse speed to a 0-1 intensity value, then drive slice count, RGB offset, and recovery easing from that single number.",
+  "descAr": "تحويل سرعة الماوس إلى قيمة شدة 0-1 لتحديد عدد الشرائح وإزاحة RGB وسرعة الاستعادة من رقم واحد.",
+  "tags": ["CSS", "Vanilla JS", "Animation"],
+  "problem": "Traditional glitch effects use random values or time-based jitter, which feels disconnected from user interaction. The glitch animates at the same intensity regardless of how fast the cursor moves, making it feel like a canned effect.",
+  "problemAr": "تأثيرات glitch التقليدية تستخدم قيماً عشوائية أو ارتجاجاً زمنياً، مما يجعلها منفصلة عن تفاعل المستخدم. يتحرك الـ glitch بنفس الشدة بغض النظر عن سرعة المؤشر.",
+  "solution": "Track cursor velocity via requestAnimationFrame, smooth it with a low-pass filter, then use exponential easing to map velocity to glitch intensity. At low velocity the text is pristine; a fast swipe tears it apart proportionally.",
+  "solutionAr": "تتبع سرعة المؤشر عبر requestAnimationFrame، قم بتمليسها بمرشح تردد منخفض، ثم استخدم easing أسي لتحويل السرعة إلى شدة glitch. عند السرعة المنخفضة النص نظيف، وعند السرعة العالية يتمزق proportionally.",
+  "code": {
+    "lang": "JavaScript",
+    "html": "<span class=\"k\">const</span> vel = Math.hypot(dx, dy);\n<span class=\"k\">const</span> speed = lerp(prev, vel, <span class=\"m\">0.15</span>);\n<span class=\"k\">const</span> i = clamp((speed<span class=\"o\">-</span><span class=\"m\">1.5</span>)<span class=\"o\">/</span><span class=\"m\">26.5</span>, <span class=\"m\">0</span>, <span class=\"m\">1</span>);\n<span class=\"c\">// i drives slices, RGB offset & recovery</span>"
+  },
+  "codeSteps": [
+    {
+      "step": 1,
+      "label": "Track velocity",
+      "html": "<span class=\"k\">const</span> vel = Math.hypot(dx, dy);\n<span class=\"k\">const</span> speed = lerp(prev, vel, <span class=\"m\">0.15</span>);"
+    },
+    {
+      "step": 2,
+      "label": "Normalise intensity",
+      "html": "<span class=\"k\">const</span> i = clamp((speed<span class=\"o\">-</span><span class=\"m\">1.5</span>)<span class=\"o\">/</span><span class=\"m\">26.5</span>, <span class=\"m\">0</span>, <span class=\"m\">1</span>);"
+    },
+    {
+      "step": 3,
+      "label": "Drive effect",
+      "html": "<span class=\"c\">// i drives slices, RGB offset & recovery</span>"
+    }
+  ],
+  "before": {
+    "desc": "Glitch intensity was either constant or purely random, creating a disconnect between user intent and visual feedback.",
+    "descAr": "شدة glitch كانت إما ثابتة أو عشوائية بحتة، مما خلق انفصالاً بين نية المستخدم والتغذية البصرية."
+  },
+  "after": {
+    "desc": "A fast swipe across the text tears it apart with proportional intensity. Slow movement keeps it readable, giving a natural physical feel.",
+    "descAr": "مسحة سريعة عبر النص تمزقه بشدة متناسبة. الحركة البطيئة تحافظ على readability، مما يعطي إحساساً فيزيائياً طبيعياً."
+  },
+  "resources": [
+    { "label": "MDN: requestAnimationFrame", "url": "https://developer.mozilla.org/en-US/docs/Web/API/window/requestAnimationFrame" },
+    { "label": "CSS-Tricks: Glitch Effect", "url": "https://css-tricks.com/glitch-effect-text-images-svg/" }
+  ]
+}

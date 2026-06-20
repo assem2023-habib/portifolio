@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <title>Tricks - Assem Adel Habib</title>
+  <meta content="" name="description">
+  <meta content="" name="keywords">
+
+  <!-- Favicons -->
+  <link href="assets/img/favicon.png" rel="icon">
+  <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com" rel="preconnect">
+  <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Raleway:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Vendor CSS Files -->
+  <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+  <link href="assets/vendor/aos/aos.css" rel="stylesheet">
+  <link href="assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
+  <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+
+  <!-- Main CSS File -->
+  <link href="assets/css/main.css" rel="stylesheet">
+
+  <!-- Splash Screen CSS -->
+  <link href="assets/css/splash-screen.css" rel="stylesheet">
+
+  <!-- Tricks Archive CSS -->
+  <link href="assets/css/tricks-all.css" rel="stylesheet">
+</head>
+
+<body class="tricks-page">
+<!-- Splash Screen -->
+<div id="splash">
+  <div id="splash-shards"></div>
+  <div id="splash-content">
+    <div id="splash-terminal">
+      <span id="splash-prefix" class="sp-prefix">~/portfolio $</span>
+      <span id="splash-typed"></span>
+      <span id="splash-cursor" class="sp-cursor">▋</span>
+    </div>
+    <div id="splash-compile">
+      <div id="splash-compile-label">
+        <span id="splash-compile-step">Initializing...</span>
+        <span id="splash-compile-pct">0%</span>
+      </div>
+      <div id="splash-bar-track">
+        <div id="splash-bar-fill"></div>
+        <div id="splash-bar-glow"></div>
+      </div>
+      <div id="splash-logs"></div>
+    </div>
+  </div>
+</div>
+  <div class="page">
+
+  <main class="main">
+
+    <!-- Page Title -->
+    <div class="page-title" data-aos="fade">
+      <div class="container">
+        <nav class="breadcrumbs">
+          <ol>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="index.html#tricks">Tricks</a></li>
+            <li class="current">All Tricks</li>
+          </ol>
+        </nav>
+        <h1>All Tricks</h1>
+      </div>
+    </div>
+
+    <!-- Tricks Archive Section -->
+    <section id="tricks-all" class="section">
+      <div class="container">
+        <div class="tricks-all-header">
+          <p>Short, focused solutions to specific problems — code snippets, patterns, and gotchas across frontend, backend, and mobile.</p>
+        </div>
+
+        <div class="tricks-controls">
+          <div class="tricks-filters">
+            <button class="filter-btn active" data-filter="all">All</button>
+            <button class="filter-btn" data-filter="frontend">Frontend</button>
+            <button class="filter-btn" data-filter="backend">Backend</button>
+            <button class="filter-btn" data-filter="mobile">Mobile</button>
+          </div>
+          <div class="tricks-search">
+            <svg class="search-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5">
+              <circle cx="6.5" cy="6.5" r="4.5"/>
+              <path d="M10 10l4 4"/>
+            </svg>
+            <input type="text" id="tricksSearchInput" placeholder="Search tricks..." autocomplete="off">
+          </div>
+        </div>
+
+        <div class="tricks-grid" id="tricksGrid">
+          <div class="tricks-empty">Loading tricks...</div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Footer -->
+  <footer id="footer" class="footer position-relative light-background">
+    <div class="container">
+      <h3>Assem Adel Habib</h3>
+      <p>Full-stack developer sharing concise solutions to real problems.</p>
+      <div class="social-links d-flex justify-content-center">
+        <a href=""><i class="bi bi-twitter-x"></i></a>
+        <a href=""><i class="bi bi-facebook"></i></a>
+        <a href=""><i class="bi bi-instagram"></i></a>
+        <a href=""><i class="bi bi-linkedin"></i></a>
+      </div>
+      <div class="copyright">
+        <span>Copyright</span> <strong class="px-1">Assem Adel Habib</strong> <span>All Rights Reserved</span>
+      </div>
+    </div>
+  </footer>
+
+</div><!-- /.page -->
+
+  <!-- Splash Screen JS -->
+  <script src="assets/js/splash-screen.js"></script>
+  <script>SplashScreen.init({ name: 'Assem Adel Habib' });</script>
+
+  <!-- Vendor JS Files -->
+  <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="assets/vendor/php-email-form/validate.js"></script>
+  <script src="assets/vendor/aos/aos.js"></script>
+  <script src="assets/vendor/typed.js/typed.umd.js"></script>
+  <script src="assets/vendor/purecounter/purecounter_vanilla.js"></script>
+  <script src="assets/vendor/waypoints/noframework.waypoints.js"></script>
+  <script src="assets/vendor/glightbox/js/glightbox.min.js"></script>
+  <script src="assets/vendor/imagesloaded/imagesloaded.pkgd.min.js"></script>
+  <script src="assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
+  <script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
+
+  <!-- Main JS File -->
+  <script src="assets/js/data-loader.js"></script>
+  <script src="assets/js/main.js"></script>
+
+  <!-- Tricks Archive JS -->
+  <script>
+  (function() {
+    'use strict';
+
+    const LABELS = {
+      frontend: 'Frontend',
+      backend: 'Backend',
+      mobile: 'Mobile'
+    };
+
+    let tricksData = [];
+    const grid = document.getElementById('tricksGrid');
+    const searchInput = document.getElementById('tricksSearchInput');
+    let currentFilter = 'all';
+
+    function cardHTML(d) {
+      var codeBlock = '';
+      if (d.code) {
+        codeBlock = '<div class="trick-grid-code">' +
+          '<div class="trick-grid-code-head">' +
+            '<span class="trick-grid-code-lang">' + d.code.lang + '</span>' +
+          '</div>' +
+          '<pre>' + d.code.html + '</pre>' +
+        '</div>';
+      }
+      var tagsHtml = '';
+      for (var i = 0; i < d.tags.length; i++) {
+        tagsHtml += '<span class="trick-grid-tag">' + d.tags[i] + '</span>';
+      }
+      return '<div class="trick-card-inner">' +
+        '<span class="trick-grid-badge"><span class="dot"></span>' + LABELS[d.cat] + '</span>' +
+        '<h3 class="trick-grid-title">' + d.title + '</h3>' +
+        codeBlock +
+        '<p class="trick-grid-desc">' + d.desc + '</p>' +
+        '<div class="trick-grid-tags">' + tagsHtml + '</div>' +
+        '<div class="trick-grid-date">' + d.date + '</div>' +
+      '</div>';
+    }
+
+    function buildGrid(data) {
+      grid.innerHTML = '';
+      if (!data.length) {
+        grid.innerHTML = '<div class="tricks-empty">No tricks found for this filter.</div>';
+        return;
+      }
+      for (var i = 0; i < data.length; i++) {
+        var d = data[i];
+        var wrap = document.createElement('a');
+        wrap.className = 'trick-card-wrap ' + d.color;
+        wrap.href = 'trick-detail.html?id=' + d.id;
+        wrap.innerHTML = cardHTML(d);
+        wrap.style.setProperty('--border-angle', '0deg');
+        grid.appendChild(wrap);
+
+        setTimeout((function(el) {
+          return function() { el.classList.add('trick-visible'); };
+        })(wrap), i * 60);
+      }
+    }
+
+    function filterAndSearch() {
+      var query = searchInput.value.toLowerCase().trim();
+      var filtered = [];
+      for (var i = 0; i < tricksData.length; i++) {
+        var d = tricksData[i];
+        if (currentFilter !== 'all' && d.cat !== currentFilter) continue;
+        if (query) {
+          var inTitle = d.title.toLowerCase().indexOf(query) !== -1;
+          var inDesc = d.desc.toLowerCase().indexOf(query) !== -1;
+          var inTags = false;
+          for (var t = 0; t < d.tags.length; t++) {
+            if (d.tags[t].toLowerCase().indexOf(query) !== -1) { inTags = true; break; }
+          }
+          if (!inTitle && !inDesc && !inTags) continue;
+        }
+        filtered.push(d);
+      }
+      buildGrid(filtered);
+    }
+
+    var filterBtns = document.querySelectorAll('.tricks-filters .filter-btn');
+    for (var f = 0; f < filterBtns.length; f++) {
+      (function(btn) {
+        btn.addEventListener('click', function() {
+          for (var b = 0; b < filterBtns.length; b++) {
+            filterBtns[b].classList.remove('active');
+          }
+          btn.classList.add('active');
+          currentFilter = btn.dataset.filter;
+          filterAndSearch();
+        });
+      })(filterBtns[f]);
+    }
+
+    searchInput.addEventListener('input', filterAndSearch);
+
+    var xhr = new XMLHttpRequest();
+    xhr.open('GET', 'data/tricks.json', true);
+    xhr.onload = function() {
+      if (xhr.status === 200) {
+        var json = JSON.parse(xhr.responseText);
+        tricksData = json.tricks || [];
+        filterAndSearch();
+      } else {
+        grid.innerHTML = '<div class="tricks-empty">Failed to load tricks data.</div>';
+      }
+    };
+    xhr.onerror = function() {
+      grid.innerHTML = '<div class="tricks-empty">Failed to load tricks data.</div>';
+    };
+    xhr.send();
+
+  })();
+  </script>
+
+</body>
+
+</html>

@@ -1,0 +1,86 @@
+{
+  "tricks": [
+    {
+      "id": "flutter-streambuilder",
+      "cat": "mobile",
+      "color": "item-emerald",
+      "title": "Flutter StreamBuilder rebuilding entire list",
+      "titleAr": "Flutter StreamBuilder إعادة بناء القائمة بالكامل",
+      "code": {
+        "lang": "Dart",
+        "html": "<span class=\"k\">const</span> key = ValueKey(item.id); <span class=\"c\">// stable key</span>"
+      },
+      "desc": "Wrap each list item with a ValueKey tied to a stable id so Flutter diffs correctly instead of rebuilding the whole list on every snapshot.",
+      "descAr": "لف كل عنصر في القائمة بـ ValueKey مرتبط بمعرف ثابت ليتمكن Flutter من المقارنة بشكل صحيح بدلاً من إعادة بناء القائمة كاملة عند كل تحديث.",
+      "tags": ["Flutter", "Firebase"]
+    },
+    {
+      "id": "glitch-velocity",
+      "cat": "frontend",
+      "color": "item-violet",
+      "title": "Velocity-driven glitch text on hover",
+      "titleAr": "تأثير Glitch مرتبط بسرعة الماوس",
+      "code": {
+        "lang": "JS",
+        "html": "<span class=\"k\">const</span> i = clamp((speed-<span class=\"s\">1.5</span>)/<span class=\"s\">26.5</span>,<span class=\"s\">0</span>,<span class=\"s\">1</span>);"
+      },
+      "desc": "Map smoothed mouse speed to a 0–1 intensity value, then drive slice count, RGB offset, and recovery easing from that single number.",
+      "descAr": "تحويل سرعة الماوس إلى قيمة شدة 0-1 لتحديد عدد الشرائح وإزاحة RGB وسرعة الاستعادة من رقم واحد.",
+      "tags": ["CSS", "Vanilla JS"]
+    },
+    {
+      "id": "layout-shift-will-change",
+      "cat": "frontend",
+      "color": "item-pink",
+      "title": "Avoid layout shift with will-change",
+      "titleAr": "تجنب تغيير التخطيط باستخدام will-change",
+      "code": null,
+      "desc": "Apply will-change:transform only while an element is actively animating, then remove it after. Keeping it permanently can bloat GPU memory.",
+      "descAr": "طبّق will-change:transform فقط أثناء الحركة الفعلية للعنصر، ثم أزله بعدها. تركه دائماً يستهلك ذاكرة GPU بلا فائدة.",
+      "tags": ["Performance", "CSS"]
+    },
+    {
+      "id": "nestjs-circular-di",
+      "cat": "backend",
+      "color": "item-blue",
+      "title": "NestJS circular dependency injection",
+      "titleAr": "حقن التبعية الدائرية في NestJS",
+      "code": {
+        "lang": "TypeScript",
+        "html": "<span class=\"k\">@Inject</span>(forwardRef(() =&gt; UsersService))"
+      },
+      "desc": "Use forwardRef when two services depend on each other directly. Otherwise restructure with a shared module to break the cycle.",
+      "descAr": "استخدم forwardRef عندما يعتمد كل من خدمتين على الأخرى مباشرة. أو أعد الهيكلة باستخدام وحدة مشتركة لكسر الدورة.",
+      "tags": ["NestJS", "DI"]
+    },
+    {
+      "id": "tilt-card-inertia",
+      "cat": "frontend",
+      "color": "item-orange",
+      "title": "3D tilt card with inertia on release",
+      "titleAr": "بطاقة 3D مائلة مع قصور ذاتي عند التحرير",
+      "code": null,
+      "desc": "Track rotation velocity each frame, then on pointerup let the card keep spinning briefly with exponential decay instead of snapping flat.",
+      "descAr": "تتبع سرعة الدوران كل إطار، وعند رفع المؤشر دع البطاقة تستمر في الدوران للحظة مع توهين أسي بدلاً من العودة الفورية.",
+      "tags": ["CSS 3D", "RAF"]
+    },
+    {
+      "id": "mongodb-index-missing",
+      "cat": "backend",
+      "color": "item-cyan",
+      "title": "MongoDB index missing on filtered field",
+      "titleAr": "فهرس MongoDB مفقود على حقل التصفية",
+      "code": {
+        "lang": "JS",
+        "html": "db.collection.createIndex({ status: <span class=\"s\">1</span> });"
+      },
+      "desc": "Queries filtering by a non-indexed field force a full collection scan. Add a single-field index for any property used in frequent where clauses.",
+      "descAr": "استعلامات التصفية بحقل غير مفهرس تجبر على مسح المجموعة كاملة. أضف فهرساً لحقل واحد لكل خاصية تُستخدم في شروط where المتكررة.",
+      "tags": ["MongoDB", "Performance"]
+    }
+  ],
+  "metadata": {
+    "version": "1.0.0",
+    "categories": ["frontend", "backend", "mobile"]
+  }
+}

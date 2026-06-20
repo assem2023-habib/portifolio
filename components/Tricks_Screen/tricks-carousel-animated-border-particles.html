@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Tricks &amp; Solutions — Animated Border + Particles</title>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --background-color:#1a1a1a;
+  --heading-color:#ffffff;
+  --violet:#8b5cf6;
+  --violet-dim:rgba(139,92,246,0.10);
+  --violet-line:rgba(139,92,246,0.25);
+  --red:#ef4444;
+  --emerald:#10b981;
+  --cyan:#0dcaf0;
+  --orange:#f59e0b;
+  --pink:#ec4899;
+  --blue:#3b82f6;
+  --code-bg:#111114;
+  --border-soft:rgba(255,255,255,0.12);
+}
+body{background:var(--background-color);color:#fff;font-family:'Inter',system-ui,-apple-system,sans-serif;-webkit-font-smoothing:antialiased;}
+#tricks{padding:90px 0;background:var(--background-color);overflow:hidden;}
+.container{max-width:1180px;margin:0 auto;padding:0 24px;}
+.section-title{text-align:center;margin-bottom:50px;}
+.section-title h2{font-size:34px;font-weight:700;color:var(--heading-color);margin-bottom:14px;position:relative;display:inline-block;}
+.section-title h2::after{content:'';position:absolute;left:50%;bottom:-10px;transform:translateX(-50%);width:50px;height:3px;background:var(--violet);border-radius:2px;}
+.section-title p{font-size:15px;color:rgba(255,255,255,0.55);max-width:480px;margin:18px auto 0;}
+.tricks-filters{display:flex;align-items:center;justify-content:center;gap:10px;flex-wrap:wrap;margin-bottom:48px;}
+.filter-btn{font-family:inherit;font-size:13px;font-weight:500;padding:9px 22px;border-radius:24px;border:1px solid var(--border-soft);background:transparent;color:rgba(255,255,255,0.65);cursor:pointer;transition:all .2s;}
+.filter-btn:hover{border-color:var(--violet-line);color:#fff;}
+.filter-btn.active{background:var(--violet);border-color:var(--violet);color:#fff;}
+.carousel-wrap{position:relative;padding:40px 0 50px;}
+.carousel-viewport{position:relative;height:470px;display:flex;align-items:center;justify-content:center;perspective:1500px;}
+.carousel-track{position:relative;width:100%;height:100%;display:flex;align-items:center;justify-content:center;}
+.carousel-card{position:absolute;width:372px;will-change:transform,opacity;transition:transform .55s cubic-bezier(.22,.9,.3,1),opacity .55s cubic-bezier(.22,.9,.3,1),filter .55s ease;cursor:pointer;}
+
+/* ════ ROTATING BORDER ════
+   conic-gradient rotated continuously via CSS custom property + @property,
+   masked so only a thin ring shows = animated border effect. */
+@property --border-angle{
+  syntax:'<angle>';
+  inherits:false;
+  initial-value:0deg;
+}
+.trick-card{
+  position:relative;
+  border-radius:16px;
+  padding:2px;
+  background:conic-gradient(from var(--border-angle),
+    color-mix(in srgb, var(--card-accent,#8b5cf6) 90%, transparent) 0%,
+    rgba(255,255,255,0.04) 18%,
+    rgba(255,255,255,0.02) 35%,
+    color-mix(in srgb, var(--card-accent,#8b5cf6) 70%, transparent) 55%,
+    rgba(255,255,255,0.03) 72%,
+    color-mix(in srgb, var(--card-accent,#8b5cf6) 90%, transparent) 100%);
+  transition:filter .5s ease;
+}
+.carousel-card.is-active .trick-card{
+  animation:rotateBorder 7s linear infinite;
+}
+@keyframes rotateBorder{
+  to{ --border-angle:360deg; }
+}
+
+.trick-card-inner{
+  position:relative;
+  background:radial-gradient(circle at 18% 0%, color-mix(in srgb, var(--card-accent,#8b5cf6) 14%, transparent) 0%, transparent 55%), linear-gradient(165deg, #272729 0%, #1c1c1e 100%);
+  border-radius:15px;padding:28px 26px 26px;display:flex;flex-direction:column;min-height:362px;overflow:hidden;
+}
+.trick-card-inner::before{
+  content:'';position:absolute;inset:0;pointer-events:none;z-index:0;
+  background-image:repeating-linear-gradient(135deg,rgba(255,255,255,0.015) 0px,rgba(255,255,255,0.015) 1px,transparent 1px,transparent 14px);
+  opacity:.5;
+}
+.trick-card-inner::after{
+  content:'';position:absolute;top:0;right:0;width:90px;height:90px;z-index:0;
+  background:radial-gradient(circle at 100% 0%, color-mix(in srgb, var(--card-accent,#8b5cf6) 30%, transparent) 0%, transparent 70%);
+  pointer-events:none;
+}
+
+/* ════ PARTICLE CANVAS — only meaningfully visible/animated on active card ════ */
+.particle-canvas{
+  position:absolute;inset:0;z-index:1;pointer-events:none;
+  border-radius:15px;
+}
+
+/* glow halo behind active card */
+.carousel-card::before{
+  content:'';position:absolute;inset:-30px;
+  background:radial-gradient(circle, color-mix(in srgb, var(--card-accent,#8b5cf6) 40%, transparent) 0%, transparent 68%);
+  z-index:-1;opacity:0;transition:opacity .5s ease;pointer-events:none;
+}
+.carousel-card.is-active::before{opacity:var(--glow-strength,0.55);}
+
+.item-violet{--card-accent:var(--violet);}
+.item-cyan{--card-accent:var(--cyan);}
+.item-emerald{--card-accent:var(--emerald);}
+.item-orange{--card-accent:var(--orange);}
+.item-pink{--card-accent:var(--pink);}
+.item-blue{--card-accent:var(--blue);}
+
+.carousel-card{--txt-fade:1;--chrome-fade:1;}
+.trick-card{opacity:var(--chrome-fade);}
+.trick-title,.trick-desc,.trick-tags,.trick-badge,.trick-code{position:relative;z-index:2;opacity:var(--txt-fade);transition:opacity .5s ease;}
+.b-item{opacity:0;transform:translateY(14px);transition:opacity .42s cubic-bezier(.22,.9,.3,1),transform .42s cubic-bezier(.22,.9,.3,1);}
+.carousel-card.is-active .b-item{opacity:1;transform:translateY(0);}
+.carousel-card.is-active .b-item[data-step="0"]{transition-delay:.05s;}
+.carousel-card.is-active .b-item[data-step="1"]{transition-delay:.16s;}
+.carousel-card.is-active .b-item[data-step="2"]{transition-delay:.27s;}
+.carousel-card.is-active .b-item[data-step="3"]{transition-delay:.38s;}
+.carousel-card.is-active .b-item[data-step="4"]{transition-delay:.49s;}
+.carousel-card.is-settled .b-item{transition:opacity .5s ease;transform:translateY(0);}
+
+.trick-badge{
+  display:inline-flex;align-items:center;gap:7px;
+  font-size:11px;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;
+  padding:5px 13px 5px 10px;border-radius:20px;margin-bottom:16px;width:fit-content;
+  background:color-mix(in srgb, var(--card-accent,#8b5cf6) 14%, transparent);
+  border:1px solid color-mix(in srgb, var(--card-accent,#8b5cf6) 38%, transparent);
+  color:color-mix(in srgb, var(--card-accent,#8b5cf6) 88%, white);
+}
+.trick-badge .dot{width:6px;height:6px;border-radius:50%;background:var(--card-accent,#8b5cf6);box-shadow:0 0 8px var(--card-accent,#8b5cf6);}
+.trick-title{font-size:18px;font-weight:700;color:var(--heading-color);margin-bottom:12px;line-height:1.35;letter-spacing:-0.01em;}
+.trick-desc{font-size:13.5px;line-height:1.75;color:rgba(255,255,255,0.62);margin-bottom:16px;}
+.trick-code{background:var(--code-bg);border:1px solid rgba(255,255,255,0.07);border-radius:9px;margin-bottom:16px;overflow:hidden;}
+.trick-code-head{display:flex;align-items:center;justify-content:space-between;padding:8px 12px;border-bottom:1px solid rgba(255,255,255,0.06);background:rgba(255,255,255,0.025);}
+.trick-code-lang{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:0.1em;text-transform:uppercase;color:rgba(255,255,255,0.35);}
+.copy-btn{display:flex;align-items:center;gap:5px;font-family:inherit;font-size:10.5px;font-weight:500;color:rgba(255,255,255,0.40);background:none;border:none;cursor:pointer;padding:2px 4px;border-radius:4px;transition:color .15s;}
+.copy-btn:hover{color:var(--card-accent,#8b5cf6);}
+.copy-btn svg{width:11px;height:11px;}
+.copy-btn.copied{color:var(--emerald);}
+.trick-code pre{padding:14px 16px;overflow-x:auto;font-family:'JetBrains Mono',monospace;font-size:12px;line-height:1.6;color:rgba(255,255,255,0.82);}
+.trick-code .k{color:#8b5cf6;}
+.trick-code .s{color:#f59e0b;}
+.trick-code .c{color:rgba(255,255,255,0.32);font-style:italic;}
+.trick-tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:auto;}
+.trick-tag{font-size:10.5px;font-weight:500;padding:4px 11px;border-radius:6px;background:rgba(255,255,255,0.05);border:1px solid color-mix(in srgb, var(--card-accent,#8b5cf6) 30%, transparent);color:rgba(255,255,255,0.70);}
+.carousel-controls{display:flex;align-items:center;justify-content:center;gap:24px;margin-top:34px;}
+.car-arrow{width:42px;height:42px;border-radius:50%;border:1px solid var(--border-soft);background:transparent;color:rgba(255,255,255,0.7);cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .2s;}
+.car-arrow:hover{border-color:var(--violet-line);background:var(--violet-dim);color:#fff;}
+.car-arrow svg{width:18px;height:18px;}
+.car-dots{display:flex;align-items:center;gap:8px;}
+.car-dot{width:7px;height:7px;border-radius:50%;background:rgba(255,255,255,0.18);border:none;cursor:pointer;transition:all .25s;padding:0;}
+.car-dot.active{background:var(--violet);width:22px;border-radius:4px;}
+.reveal-section{opacity:0;transform:translateX(60px);transition:opacity .7s cubic-bezier(.22,.9,.3,1),transform .7s cubic-bezier(.22,.9,.3,1);}
+.reveal-section.visible{opacity:1;transform:translateX(0);}
+
+@media (prefers-reduced-motion: reduce){
+  .carousel-card.is-active .trick-card{animation:none;}
+}
+</style>
+</head>
+<body>
+
+<section id="tricks">
+  <div class="container section-title">
+    <h2>⚡ Tricks &amp; Solutions</h2>
+    <p>Practical fixes, animation effects, and developer tips collected from real project work</p>
+  </div>
+
+  <div class="container reveal-section" id="revealBlock">
+    <div class="tricks-filters">
+      <button class="filter-btn active" data-filter="all">All</button>
+      <button class="filter-btn" data-filter="frontend">Frontend</button>
+      <button class="filter-btn" data-filter="backend">Backend</button>
+      <button class="filter-btn" data-filter="mobile">Mobile</button>
+    </div>
+
+    <div class="carousel-wrap">
+      <div class="carousel-viewport">
+        <div class="carousel-track" id="track"></div>
+      </div>
+      <div class="carousel-controls">
+        <button class="car-arrow" id="prevBtn" aria-label="Previous">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
+        </button>
+        <div class="car-dots" id="dots"></div>
+        <button class="car-arrow" id="nextBtn" aria-label="Next">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
+        </button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+(function(){
+const LABELS={frontend:'Frontend',backend:'Backend',mobile:'Mobile'};
+
+const ACCENT_HEX={
+  'item-violet':'#8b5cf6','item-cyan':'#0dcaf0','item-emerald':'#10b981',
+  'item-orange':'#f59e0b','item-pink':'#ec4899','item-blue':'#3b82f6'
+};
+
+const data=[
+  {cat:'mobile',color:'item-emerald',title:'Flutter StreamBuilder rebuilding entire list',
+   code:{lang:'Dart',html:'<span class="k">const</span> key = ValueKey(item.id); <span class="c">// stable key</span>'},
+   desc:'Wrap each list item with a ValueKey tied to a stable id so Flutter diffs correctly instead of rebuilding the whole list on every snapshot.',
+   tags:['Flutter','Firebase']},
+  {cat:'frontend',color:'item-violet',title:'Velocity-driven glitch text on hover',
+   code:{lang:'JS',html:'<span class="k">const</span> i = clamp((speed-<span class="s">1.5</span>)/<span class="s">26.5</span>,<span class="s">0</span>,<span class="s">1</span>);'},
+   desc:'Map smoothed mouse speed to a 0–1 intensity value, then drive slice count, RGB offset, and recovery easing from that single number.',
+   tags:['CSS','Vanilla JS']},
+  {cat:'frontend',color:'item-pink',title:'Avoid layout shift with will-change',
+   code:null,
+   desc:'Apply will-change:transform only while an element is actively animating, then remove it after. Keeping it permanently can bloat GPU memory.',
+   tags:['Performance','CSS']},
+  {cat:'backend',color:'item-blue',title:'NestJS circular dependency injection',
+   code:{lang:'TypeScript',html:'<span class="k">@Inject</span>(forwardRef(() =&gt; UsersService))'},
+   desc:'Use forwardRef when two services depend on each other directly. Otherwise restructure with a shared module to break the cycle.',
+   tags:['NestJS','DI']},
+  {cat:'frontend',color:'item-orange',title:'3D tilt card with inertia on release',
+   code:null,
+   desc:'Track rotation velocity each frame, then on pointerup let the card keep spinning briefly with exponential decay instead of snapping flat.',
+   tags:['CSS 3D','RAF']},
+  {cat:'backend',color:'item-cyan',title:'MongoDB index missing on filtered field',
+   code:{lang:'JS',html:'db.collection.createIndex({ status: <span class="s">1</span> });'},
+   desc:'Queries filtering by a non-indexed field force a full collection scan. Add a single-field index for any property used in frequent where clauses.',
+   tags:['MongoDB','Performance']},
+];
+
+function cardHTML(d){
+  const codeBlock = d.code ? `
+    <div class="trick-code b-item" data-step="2">
+      <div class="trick-code-head">
+        <span class="trick-code-lang">${d.code.lang}</span>
+        <button class="copy-btn" onclick="event.stopPropagation();copyCode(this)">
+          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3"><rect x="5" y="5" width="8" height="9" rx="1"/><path d="M3 11V3a1 1 0 011-1h6"/></svg>Copy
+        </button>
+      </div>
+      <pre>${d.code.html}</pre>
+    </div>` : '';
+  const descStep = d.code ? 3 : 2;
+  const tagsStep = d.code ? 4 : 3;
+
+  return `<div class="trick-card ${d.color}">
+    <canvas class="particle-canvas"></canvas>
+    <div class="trick-card-inner">
+      <span class="trick-badge b-item" data-step="0"><span class="dot"></span>${LABELS[d.cat]}</span>
+      <h3 class="trick-title b-item" data-step="1">${d.title}</h3>
+      ${codeBlock}
+      <p class="trick-desc b-item" data-step="${descStep}">${d.desc}</p>
+      <div class="trick-tags b-item" data-step="${tagsStep}">${d.tags.map(t=>`<span class="trick-tag">${t}</span>`).join('')}</div>
+    </div>
+  </div>`;
+}
+
+const track=document.getElementById('track');
+const dotsWrap=document.getElementById('dots');
+const viewport=document.querySelector('.carousel-viewport');
+let cards=[],visibleIdx=[],current=0,hasEnteredOnce=false;
+
+const particleSystems=new Map();
+
+function initParticles(cardEl,accentHex){
+  const canvas=cardEl.querySelector('.particle-canvas');
+  if(!canvas)return null;
+  const ctx=canvas.getContext('2d');
+  const dpr=window.devicePixelRatio||1;
+  function resize(){
+    const r=cardEl.getBoundingClientRect();
+    canvas.width=Math.ceil(r.width*dpr);
+    canvas.height=Math.ceil(r.height*dpr);
+    canvas.style.width=r.width+'px';
+    canvas.style.height=r.height+'px';
+  }
+  resize();
+  const N=22;
+  const particles=Array.from({length:N},()=>({
+    x:Math.random()*canvas.width,
+    y:Math.random()*canvas.height,
+    r:(Math.random()*1.3+0.5)*dpr,
+    baseAlpha:Math.random()*0.5+0.15,
+    phase:Math.random()*Math.PI*2,
+    speed:Math.random()*0.4+0.15,
+    vy:-(Math.random()*0.12+0.03)*dpr,
+    vx:(Math.random()-0.5)*0.05*dpr
+  }));
+  function hexToRgb(hex){
+    const v=hex.replace('#','');
+    return [parseInt(v.slice(0,2),16),parseInt(v.slice(2,4),16),parseInt(v.slice(4,6),16)];
+  }
+  const [r0,g0,b0]=hexToRgb(accentHex);
+  let raf=null,alive=false,t=0;
+  function tick(){
+    if(!alive)return;
+    t+=1;
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+    particles.forEach(p=>{
+      p.y+=p.vy;
+      p.x+=p.vx;
+      if(p.y<-4*dpr)p.y=canvas.height+4*dpr;
+      if(p.x<0)p.x=canvas.width;
+      if(p.x>canvas.width)p.x=0;
+      const tw=(Math.sin(t*0.02*p.speed+p.phase)+1)/2;
+      const alpha=p.baseAlpha*(0.35+0.65*tw);
+      ctx.beginPath();
+      ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
+      ctx.fillStyle=`rgba(${r0},${g0},${b0},${alpha.toFixed(3)})`;
+      ctx.shadowColor=`rgba(${r0},${g0},${b0},${(alpha*0.8).toFixed(3)})`;
+      ctx.shadowBlur=3*dpr;
+      ctx.fill();
+    });
+    raf=requestAnimationFrame(tick);
+  }
+  return {
+    start(){ if(alive)return; alive=true; resize(); tick(); },
+    stop(){ alive=false; if(raf)cancelAnimationFrame(raf); ctx.clearRect(0,0,canvas.width,canvas.height); },
+    resize
+  };
+}
+
+function buildCards(){
+  track.innerHTML='';cards=[];particleSystems.clear();
+  data.forEach((d)=>{
+    const el=document.createElement('div');
+    el.className='carousel-card';
+    el.dataset.cat=d.cat;
+    el.innerHTML=cardHTML(d);
+    track.appendChild(el);
+    cards.push(el);
+    const sys=initParticles(el,ACCENT_HEX[d.color]||'#8b5cf6');
+    if(sys)particleSystems.set(el,sys);
+  });
+  cards.forEach((c,i)=>{
+    c.addEventListener('click',()=>{
+      const vi=visibleIdx.indexOf(i);
+      if(vi>-1)goToVisible(vi);
+    });
+  });
+}
+
+function applyFilter(filter){
+  visibleIdx = data.map((d,i)=>({d,i})).filter(o=>filter==='all'||o.d.cat===filter).map(o=>o.i);
+  dotsWrap.innerHTML='';
+  visibleIdx.forEach((_,vi)=>{
+    const dot=document.createElement('button');
+    dot.className='car-dot';
+    dot.addEventListener('click',()=>goToVisible(vi));
+    dotsWrap.appendChild(dot);
+  });
+  current=0;hasEnteredOnce=false;
+  layout();
+  setTimeout(()=>{
+    cards[visibleIdx[current]].classList.add('is-active');
+    hasEnteredOnce=true;
+    layout();
+  },80);
+}
+
+function layout(){
+  const M=visibleIdx.length;
+  cards.forEach((c,i)=>{
+    const vi=visibleIdx.indexOf(i);
+    const sys=particleSystems.get(c);
+    if(vi===-1){
+      c.style.opacity=0;c.style.pointerEvents='none';
+      c.style.transform='translateX(0) scale(0.4)';c.style.zIndex=0;
+      c.classList.remove('is-active');
+      if(sys)sys.stop();
+      return;
+    }
+    let offset=vi-current;
+    if(offset>M/2)offset-=M;
+    if(offset<-M/2)offset+=M;
+    c.classList.remove('is-active');
+    let tx=0,scale=1,z=10,ry=0,blur=0,chromeFade=1,txtFade=1,opacity=1,glow=0;
+
+    if(offset===0){
+      tx=0;scale=1;z=30;ry=0;blur=0;chromeFade=1;txtFade=1;opacity=1;glow=0.55;
+      c.classList.add('is-active');
+      if(sys){ sys.resize(); sys.start(); }
+    }else if(offset===1){tx=305;scale=0.80;z=20;ry=-7;blur=0.5;chromeFade=0.85;txtFade=0.50;opacity=1;if(sys)sys.stop();}
+    else if(offset===-1){tx=-305;scale=0.80;z=20;ry=7;blur=0.5;chromeFade=0.85;txtFade=0.50;opacity=1;if(sys)sys.stop();}
+    else if(offset===2){tx=545;scale=0.64;z=5;ry=-12;blur=1.2;chromeFade=0.5;txtFade=0.20;opacity=1;if(sys)sys.stop();}
+    else if(offset===-2){tx=-545;scale=0.64;z=5;ry=12;blur=1.2;chromeFade=0.5;txtFade=0.20;opacity=1;if(sys)sys.stop();}
+    else{tx=offset>0?760:-760;scale=0.5;z=1;ry=0;blur=2;chromeFade=0;txtFade=0;opacity=0;if(sys)sys.stop();}
+
+    c.style.zIndex=z;
+    c.style.transform=`translateX(${tx}px) scale(${scale}) rotateY(${ry}deg)`;
+    c.style.filter=`blur(${blur}px)`;
+    c.style.opacity=opacity;
+    c.style.setProperty('--chrome-fade',chromeFade);
+    c.style.setProperty('--txt-fade',txtFade);
+    c.style.setProperty('--glow-strength',glow);
+    c.style.pointerEvents=Math.abs(offset)<=1?'auto':'none';
+    if(offset!==0 && hasEnteredOnce)c.classList.add('is-settled');
+  });
+  document.querySelectorAll('.car-dot').forEach((d,i)=>d.classList.toggle('active',i===current));
+}
+
+function goToVisible(vi){const M=visibleIdx.length;current=((vi%M)+M)%M;layout();}
+
+document.getElementById('prevBtn').addEventListener('click',()=>goToVisible(current-1));
+document.getElementById('nextBtn').addEventListener('click',()=>goToVisible(current+1));
+
+let startX=0,dragging=false;
+viewport.addEventListener('pointerdown',e=>{dragging=true;startX=e.clientX;});
+viewport.addEventListener('pointerup',e=>{if(!dragging)return;dragging=false;const dx=e.clientX-startX;if(dx>50)goToVisible(current-1);else if(dx<-50)goToVisible(current+1);});
+viewport.addEventListener('pointerleave',()=>{dragging=false;});
+
+document.querySelectorAll('.filter-btn').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));
+    btn.classList.add('active');
+    applyFilter(btn.dataset.filter);
+  });
+});
+
+window.copyCode=function(btn){
+  const code=btn.closest('.trick-code').querySelector('pre').textContent;
+  navigator.clipboard.writeText(code).catch(()=>{});
+  const orig=btn.innerHTML;
+  btn.classList.add('copied');
+  btn.innerHTML='<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 8l4 4 6-8"/></svg> Copied';
+  setTimeout(()=>{btn.classList.remove('copied');btn.innerHTML=orig;},1500);
+};
+
+buildCards();
+applyFilter('all');
+
+const revealBlock=document.getElementById('revealBlock');
+const obs=new IntersectionObserver((entries)=>{
+  entries.forEach(en=>{if(en.isIntersecting){revealBlock.classList.add('visible');obs.disconnect();}});
+},{threshold:0.25});
+obs.observe(revealBlock);
+
+window.addEventListener('resize',()=>{
+  particleSystems.forEach(sys=>sys.resize());
+});
+})();
+</script>
+</body>
+</html>

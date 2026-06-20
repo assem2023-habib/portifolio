@@ -39,6 +39,7 @@
     <link href="assets/css/main.css" rel="stylesheet" />
     <link href="assets/css/services-carousel.css" rel="stylesheet" />
     <link href="assets/css/splash-screen.css" rel="stylesheet" />
+    <link href="assets/css/tricks-carousel.css" rel="stylesheet" />
   </head>
 
   <body class="index-page">
@@ -120,6 +121,11 @@
           <li>
             <a href="#services"
               ><i class="bi bi-hdd-stack navicon"></i><span>Services</span></a
+            >
+          </li>
+          <li>
+            <a href="#tricks"
+              ><i class="bi bi-lightning navicon"></i><span>Tricks</span></a
             >
           </li>
           <!-- <li>
@@ -582,6 +588,38 @@ Software engineer specializing in building modern applications and
       </div>
       -->
 
+      <!-- Tricks Section -->
+      <section id="tricks" class="section">
+        <div class="container section-title">
+          <h2>⚡ Tricks &amp; Solutions</h2>
+          <p>Practical fixes, animation effects, and developer tips collected from real project work</p>
+        </div>
+
+        <div class="container reveal-section" id="revealBlock">
+          <div class="tricks-filters">
+            <button class="filter-btn active" data-filter="all">All</button>
+            <button class="filter-btn" data-filter="frontend">Frontend</button>
+            <button class="filter-btn" data-filter="backend">Backend</button>
+            <button class="filter-btn" data-filter="mobile">Mobile</button>
+          </div>
+
+          <div class="carousel-wrap">
+            <div class="carousel-viewport">
+              <div class="carousel-track" id="track"></div>
+            </div>
+            <div class="carousel-controls">
+              <button class="car-arrow" id="prevBtn" aria-label="Previous">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
+              </button>
+              <div class="car-dots" id="dots"></div>
+              <button class="car-arrow" id="nextBtn" aria-label="Next">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
+              </button>
+            </div>
+          </div>
+        </div>
+      </section><!-- End Tricks Section -->
+
       <!-- Contact Section -->
       <section id="contact" class="contact section">
         <!-- Section Title -->
@@ -753,6 +791,7 @@ Software engineer specializing in building modern applications and
     <!-- Splash Screen JS -->
     <script src="assets/js/splash-screen.js"></script>
     <script>SplashScreen.init({ name: 'Assem Adel Habib' });</script>
+    <script src="assets/js/tricks-carousel.js"></script>
 
     <!-- Vendor JS Files -->
     <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>

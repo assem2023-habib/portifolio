@@ -1,0 +1,635 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tricks Carousel — توثيق شامل</title>
+<style>
+:root{
+  --bg:#0d0d11;
+  --bg2:#13131a;
+  --bg3:#191921;
+  --surface:#1c1c26;
+  --violet:#8b5cf6;
+  --violet-dim:rgba(139,92,246,0.10);
+  --violet-line:rgba(139,92,246,0.28);
+  --red:#ef4444;
+  --emerald:#10b981;
+  --cyan:#0dcaf0;
+  --orange:#f59e0b;
+  --pink:#ec4899;
+  --blue:#3b82f6;
+  --white:#f4f3f7;
+  --dim:rgba(244,243,247,0.55);
+  --muted:rgba(244,243,247,0.30);
+  --code-bg:#0a0a0e;
+  --border:rgba(139,92,246,0.16);
+  --border2:rgba(139,92,246,0.30);
+  --sans:'Segoe UI',system-ui,-apple-system,sans-serif;
+  --mono:'Consolas','JetBrains Mono',monospace;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--white);font-family:var(--sans);line-height:1.7;-webkit-font-smoothing:antialiased;}
+::-webkit-scrollbar{width:5px}
+::-webkit-scrollbar-track{background:var(--bg)}
+::-webkit-scrollbar-thumb{background:var(--violet);opacity:.4;border-radius:3px}
+
+.shell{display:flex;min-height:100vh}
+.sidebar{
+  width:268px;flex-shrink:0;position:sticky;top:0;height:100vh;overflow-y:auto;
+  background:var(--bg2);border-left:1px solid var(--border);padding:30px 0;
+}
+.sb-logo{padding:0 24px 26px;border-bottom:1px solid var(--border);margin-bottom:18px;}
+.sb-tag{font-family:var(--mono);font-size:9px;letter-spacing:.3em;color:var(--violet);opacity:.6;text-transform:uppercase;margin-bottom:6px;}
+.sb-name{font-size:19px;font-weight:700;color:var(--white);}
+.sb-name span{color:var(--violet);}
+.nav-group{font-family:var(--mono);font-size:8.5px;letter-spacing:.32em;color:var(--violet);opacity:.45;text-transform:uppercase;padding:0 24px;margin:18px 0 6px;}
+.nav-link{display:block;padding:7px 24px;font-size:13px;color:var(--dim);text-decoration:none;border-right:2px solid transparent;transition:.15s;}
+.nav-link:hover{color:var(--white);background:rgba(139,92,246,0.05);}
+.nav-link.active{color:var(--violet);border-right-color:var(--violet);background:rgba(139,92,246,0.08);}
+
+.main{flex:1;min-width:0;padding:56px 64px;max-width:900px;}
+@media(max-width:900px){.sidebar{display:none}.main{padding:36px 22px}}
+
+.section{margin-bottom:74px;}
+.section + .section{padding-top:52px;border-top:1px solid var(--border);}
+
+.eyebrow{font-family:var(--mono);font-size:10px;letter-spacing:.34em;color:var(--violet);opacity:.65;text-transform:uppercase;display:flex;align-items:center;gap:12px;margin-bottom:14px;}
+.eyebrow::before{content:'';width:24px;height:1px;background:var(--violet);}
+h1.page-title{font-size:clamp(32px,4.4vw,48px);font-weight:800;line-height:1.1;letter-spacing:-.01em;margin-bottom:18px;}
+h1.page-title span{color:var(--violet);}
+.page-intro{font-size:15.5px;color:var(--dim);max-width:620px;margin-bottom:30px;}
+h2.sec-title{font-size:clamp(22px,2.8vw,30px);font-weight:800;color:var(--white);margin-bottom:14px;letter-spacing:-.01em;}
+h2.sec-title span{color:var(--violet);}
+.sec-desc{font-size:14.5px;color:var(--dim);max-width:660px;margin-bottom:24px;}
+h4{font-size:14px;font-weight:700;color:var(--white);margin:22px 0 8px;}
+p{font-size:14.5px;color:var(--dim);margin-bottom:13px;}
+strong{color:var(--white);}
+code{font-family:var(--mono);font-size:12.5px;background:var(--code-bg);border:1px solid var(--border);padding:1px 6px;border-radius:3px;color:var(--violet);}
+
+.layer-card{background:var(--surface);border:1px solid var(--border);border-radius:6px;margin-bottom:22px;overflow:hidden;}
+.layer-head{display:flex;align-items:center;gap:12px;padding:14px 20px;border-bottom:1px solid var(--border);background:rgba(139,92,246,0.04);}
+.layer-z{font-family:var(--mono);font-size:10px;letter-spacing:.16em;color:var(--violet);background:rgba(139,92,246,0.12);border:1px solid var(--border2);padding:3px 9px;border-radius:3px;flex-shrink:0;}
+.layer-name{font-weight:700;font-size:15px;color:var(--white);}
+.layer-tag{margin-right:auto;font-family:var(--mono);font-size:10px;color:var(--muted);letter-spacing:.1em;}
+.layer-body{padding:18px 20px;}
+.layer-body p{font-size:13.5px;margin-bottom:10px;}
+.layer-body p:last-child{margin-bottom:0}
+
+.code-wrap{background:var(--code-bg);border:1px solid var(--border);border-radius:6px;margin:18px 0;overflow:hidden;}
+.code-head{display:flex;align-items:center;justify-content:space-between;padding:8px 16px;border-bottom:1px solid var(--border);background:rgba(139,92,246,0.03);}
+.code-lang{font-family:var(--mono);font-size:9px;letter-spacing:.26em;color:var(--violet);opacity:.6;text-transform:uppercase;}
+pre{padding:18px;overflow-x:auto;font-family:var(--mono);font-size:12px;line-height:1.65;color:var(--dim);}
+.k{color:#8b5cf6}.fn{color:#0dcaf0}.s{color:#f59e0b}.c{color:rgba(244,243,247,0.28);font-style:italic}.nm{color:#c17aff}.p{color:rgba(244,243,247,0.55)}
+
+.formula{background:var(--bg3);border:1px solid var(--border);border-radius:5px;padding:16px 20px;margin:16px 0;font-family:var(--mono);font-size:12.5px;line-height:1.85;color:var(--dim);}
+.formula .v{color:#c17aff}.formula .val{color:var(--violet)}.formula .e{color:rgba(244,243,247,0.4)}
+
+table.spec{width:100%;border-collapse:collapse;margin:18px 0;font-size:12.5px;}
+table.spec th{font-family:var(--mono);font-size:9px;letter-spacing:.24em;text-transform:uppercase;color:var(--violet);opacity:.65;text-align:right;padding:8px 12px;border-bottom:1px solid var(--border2);background:rgba(139,92,246,0.03);}
+table.spec td{padding:9px 12px;text-align:right;border-bottom:1px solid var(--border);color:var(--dim);vertical-align:top;}
+table.spec tr:last-child td{border-bottom:none}
+
+.swatch-row{display:flex;flex-wrap:wrap;gap:10px;margin:18px 0;}
+.swatch{display:flex;align-items:center;gap:8px;background:var(--bg3);border:1px solid var(--border);border-radius:20px;padding:6px 14px 6px 6px;font-family:var(--mono);font-size:11px;color:var(--dim);}
+.sw-dot{width:16px;height:16px;border-radius:50%;flex-shrink:0;}
+
+.callout{display:flex;gap:13px;background:rgba(245,158,11,0.06);border:1px solid rgba(245,158,11,0.22);border-radius:6px;padding:15px 17px;margin:18px 0;}
+.callout .ic{font-size:17px;flex-shrink:0;}
+.callout p{font-size:13px;color:rgba(244,243,247,0.65);margin:0;}
+.callout p strong{color:#f59e0b;}
+.callout.info{background:rgba(13,202,240,0.06);border-color:rgba(13,202,240,0.22);}
+.callout.info p strong{color:#0dcaf0;}
+
+.flow{background:var(--code-bg);border:1px solid var(--border);border-radius:6px;padding:20px 22px;margin:18px 0;font-family:var(--mono);font-size:11.5px;line-height:1.9;color:rgba(244,243,247,0.5);overflow-x:auto;white-space:pre;}
+.flow .fh{color:var(--violet);font-weight:700}.flow .fa{color:rgba(244,243,247,0.28)}.flow .fd{color:#0dcaf0}.flow .fw{color:#f59e0b}
+
+.demo-card-visual{
+  background:linear-gradient(160deg,#272729 0%,#1c1c1e 100%);
+  border:1px solid var(--border2);border-radius:14px;
+  padding:24px 22px;max-width:340px;margin:20px 0;
+  position:relative;overflow:hidden;
+}
+.demo-badge{display:inline-flex;align-items:center;gap:6px;font-size:10px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;padding:4px 11px 4px 8px;border-radius:18px;background:rgba(139,92,246,0.14);border:1px solid rgba(139,92,246,0.35);color:#c4b5fd;margin-bottom:12px;}
+.demo-dot{width:5px;height:5px;border-radius:50%;background:var(--violet);box-shadow:0 0 6px var(--violet);}
+.demo-title{font-size:15px;font-weight:700;color:#fff;margin-bottom:8px;}
+.demo-desc{font-size:11.5px;color:rgba(244,243,247,0.55);line-height:1.6;}
+
+.divider{display:flex;align-items:center;gap:13px;margin:42px 0 36px;}
+.divider::before,.divider::after{content:'';flex:1;height:1px;background:linear-gradient(90deg,transparent,var(--border2),transparent);}
+.divider span{font-family:var(--mono);font-size:9px;letter-spacing:.28em;text-transform:uppercase;color:var(--violet);opacity:.4;white-space:nowrap;}
+
+.footer{margin-top:64px;padding:26px 0;border-top:1px solid var(--border);font-family:var(--mono);font-size:9.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;}
+</style>
+</head>
+<body>
+<div class="shell">
+
+<nav class="sidebar">
+  <div class="sb-logo">
+    <div class="sb-tag">Documentation</div>
+    <div class="sb-name">TRICKS<span>_</span>CAROUSEL</div>
+  </div>
+
+  <span class="nav-group">Overview</span>
+  <a class="nav-link active" href="#intro">مقدمة</a>
+  <a class="nav-link" href="#architecture">البنية العامة</a>
+
+  <span class="nav-group">طبقات البطاقة</span>
+  <a class="nav-link" href="#layer-border">الحد المتحرك</a>
+  <a class="nav-link" href="#layer-particles">الجسيمات المتلألئة</a>
+  <a class="nav-link" href="#layer-inner">الخلفية الداخلية</a>
+  <a class="nav-link" href="#layer-glow">التوهج الخلفي</a>
+  <a class="nav-link" href="#layer-content">المحتوى والـ Badge</a>
+
+  <span class="nav-group">الكاروسيل</span>
+  <a class="nav-link" href="#carousel-positions">مواضع البطاقات الخمسة</a>
+  <a class="nav-link" href="#carousel-fade">نظام التعتيم المنفصل</a>
+  <a class="nav-link" href="#carousel-filter">نظام الفلترة</a>
+
+  <span class="nav-group">البناء المتسلسل</span>
+  <a class="nav-link" href="#staggered">Stagger Reveal</a>
+  <a class="nav-link" href="#scroll-reveal">ظهور القسم بالسحب</a>
+
+  <span class="nav-group">أداء وتفاصيل</span>
+  <a class="nav-link" href="#performance">إدارة الأداء</a>
+  <a class="nav-link" href="#colors">نظام الألوان الكامل</a>
+</nav>
+
+<main class="main">
+
+<section class="section" id="intro">
+  <div class="eyebrow">Tricks &amp; Solutions — Final Build</div>
+  <h1 class="page-title">كاروسيل <span>Tricks</span><br>توثيق تقني شامل</h1>
+  <p class="page-intro">
+    شرح دقيق لكل طبقة بصرية وكل سطر منطق في القسم النهائي: من الحد المتحرك (conic-gradient) إلى نظام الجسيمات المرسوم بـ Canvas، مروراً بآلية الكاروسيل الخماسي الموضع، وحتى نظام البناء المتسلسل لمحتوى كل بطاقة.
+  </p>
+</section>
+
+<section class="section" id="architecture">
+  <div class="eyebrow">البنية</div>
+  <h2 class="sec-title">كيف تُبنى البطاقة <span>الواحدة</span>؟</h2>
+  <p class="sec-desc">كل بطاقة هي تكديس من 5 طبقات مستقلة فوق بعضها، كل طبقة لها مسؤولية واحدة فقط. فهم هذا التكديس هو مفتاح فهم كل التأثير.</p>
+
+  <div class="flow"><span class="fh">┌─ carousel-card (الحاوية الخارجية المتحركة) ────────────┐</span>
+<span class="fh">│</span>  position: absolute   <span class="fa">← الكاروسيل يحركها بـ translateX</span>      <span class="fh">│</span>
+<span class="fh">│</span>  ::before              <span class="fa">← Layer 0: التوهج الخلفي (glow halo)</span>  <span class="fh">│</span>
+<span class="fh">│</span>                                                          <span class="fh">│</span>
+<span class="fh">│</span>  <span class="fd">┌─ trick-card (الحد المتحرك) ──────────────────────┐</span>  <span class="fh">│</span>
+<span class="fh">│</span>  <span class="fd">│</span>  padding:2px + conic-gradient   <span class="fa">← Layer 1</span>     <span class="fd">│</span>  <span class="fh">│</span>
+<span class="fh">│</span>  <span class="fd">│</span>  animation: rotateBorder 7s     <span class="fa">← يدور باستمرار</span> <span class="fd">│</span>  <span class="fh">│</span>
+<span class="fh">│</span>  <span class="fd">│</span>                                                    <span class="fd">│</span>  <span class="fh">│</span>
+<span class="fh">│</span>  <span class="fd">│</span>  <span class="fw">┌─ canvas.particle-canvas ──────────────────┐</span>  <span class="fd">│</span>  <span class="fh">│</span>
+<span class="fh">│</span>  <span class="fd">│</span>  <span class="fw">│</span>  z-index:1                <span class="fa">← Layer 2</span>     <span class="fw">│</span>  <span class="fd">│</span>  <span class="fh">│</span>
+<span class="fh">│</span>  <span class="fd">│</span>  <span class="fw">│</span>  22 جسيمة، رسم كل فريم      <span class="fa">RAF</span>          <span class="fw">│</span>  <span class="fd">│</span>  <span class="fh">│</span>
+<span class="fh">│</span>  <span class="fd">│</span>  <span class="fw">└────────────────────────────────────────────┘</span>  <span class="fd">│</span>  <span class="fh">│</span>
+<span class="fh">│</span>  <span class="fd">│</span>                                                    <span class="fd">│</span>  <span class="fh">│</span>
+<span class="fh">│</span>  <span class="fd">│</span>  <span class="fw">┌─ trick-card-inner (الخلفية + المحتوى) ────┐</span>  <span class="fd">│</span>  <span class="fh">│</span>
+<span class="fh">│</span>  <span class="fd">│</span>  <span class="fw">│</span>  radial-gradient + linear     <span class="fa">Layer 3</span>  <span class="fw">│</span>  <span class="fd">│</span>  <span class="fh">│</span>
+<span class="fh">│</span>  <span class="fd">│</span>  <span class="fw">│</span>  badge → title → code → desc → tags        <span class="fw">│</span>  <span class="fd">│</span>  <span class="fh">│</span>
+<span class="fh">│</span>  <span class="fd">│</span>  <span class="fw">│</span>  <span class="fa">كل عنصر له data-step + delay خاص</span>        <span class="fw">│</span>  <span class="fd">│</span>  <span class="fh">│</span>
+<span class="fh">│</span>  <span class="fd">│</span>  <span class="fw">└────────────────────────────────────────────┘</span>  <span class="fd">│</span>  <span class="fh">│</span>
+<span class="fh">│</span>  <span class="fd">└────────────────────────────────────────────────────┘</span>  <span class="fh">│</span>
+<span class="fh">└──────────────────────────────────────────────────────────┘</span></div>
+
+  <p>الترتيب الزمني للظهور مهم بقدر الترتيب المكاني: التوهج والحد يبدآن فوراً عند وصول البطاقة للمركز، الجسيمات تبدأ رسمها في نفس اللحظة، وأخيراً محتوى البطاقة (badge, title, code, desc, tags) يظهر بترتيب متتالٍ بفجوات زمنية محسوبة بدقة — سنشرح كل واحدة من هذه في القسم الخاص بها.</p>
+</section>
+
+<!-- ═══════ LAYER 1: BORDER ═══════ -->
+<section class="section" id="layer-border">
+  <div class="eyebrow">طبقة 1</div>
+  <h2 class="sec-title">الحد المتحرك <span>(Animated Conic Border)</span></h2>
+  <p class="sec-desc">هذا التأثير لا يستخدم أي صورة أو SVG، بل تقنية CSS خام بالكامل تعتمد على دوران تدرّج مخروطي حول البطاقة بشكل متواصل.</p>
+
+  <div class="layer-card">
+    <div class="layer-head">
+      <span class="layer-z">Layer 1</span>
+      <span class="layer-name">Rotating Conic Gradient Border</span>
+      <span class="layer-tag">7s linear infinite</span>
+    </div>
+    <div class="layer-body">
+      <p><strong>المبدأ:</strong> نضع <code>padding:2px</code> على البطاقة الخارجية، ونملأ هذا الـ padding بتدرّج <code>conic-gradient</code> يدور حول نقطة المركز. الطبقة الداخلية (<code>trick-card-inner</code>) تغطي كل شيء إلا هذا الإطار الرقيق، فيظهر فقط كخط حدّ متوهج يدور.</p>
+      <p><strong>كيف يدور فعلياً:</strong> نستخدم <code>@property --border-angle</code> لتعريف متغيّر CSS من نوع <code>&lt;angle&gt;</code> قابل للأنيميشن (هذا أساسي — متغيرات CSS العادية لا يمكن أن تتحرك بـ keyframes، لكن مع <code>@property</code> يصبح المتصفح يعرف أنها زاوية حقيقية ويقدر يتحرك بسلاسة بينها).</p>
+
+      <div class="code-wrap">
+        <div class="code-head"><span class="code-lang">CSS — تعريف الزاوية القابلة للحركة</span></div>
+        <pre><span class="k">@property</span> --border-angle {
+  <span class="fn">syntax</span>: <span class="s">'&lt;angle&gt;'</span>;       <span class="c">/* يخبر المتصفح: هذا رقم زاوية حقيقي */</span>
+  <span class="fn">inherits</span>: <span class="nm">false</span>;
+  <span class="fn">initial-value</span>: <span class="nm">0deg</span>;
+}
+
+<span class="k">.trick-card</span> {
+  <span class="fn">padding</span>: <span class="nm">2px</span>;              <span class="c">/* سمك الحد المتحرك */</span>
+  <span class="fn">background</span>: <span class="fn">conic-gradient</span>(
+    <span class="k">from</span> var(--border-angle),  <span class="c">/* الزاوية التي تتحرك */</span>
+    color-mix(in srgb, var(--card-accent) <span class="nm">90%</span>, transparent) <span class="nm">0%</span>,
+    rgba(<span class="nm">255,255,255,0.04</span>) <span class="nm">18%</span>,
+    rgba(<span class="nm">255,255,255,0.02</span>) <span class="nm">35%</span>,
+    color-mix(in srgb, var(--card-accent) <span class="nm">70%</span>, transparent) <span class="nm">55%</span>,
+    rgba(<span class="nm">255,255,255,0.03</span>) <span class="nm">72%</span>,
+    color-mix(in srgb, var(--card-accent) <span class="nm">90%</span>, transparent) <span class="nm">100%</span>
+  );
+}
+
+<span class="k">.is-active .trick-card</span> {
+  <span class="fn">animation</span>: rotateBorder <span class="nm">7s</span> linear infinite;
+}
+<span class="k">@keyframes</span> rotateBorder {
+  <span class="k">to</span> { --border-angle: <span class="nm">360deg</span>; }   <span class="c">/* دورة كاملة كل 7 ثوان */</span>
+}</pre>
+      </div>
+
+      <h4>لماذا 6 نقاط توقف (color stops) في التدرّج؟</h4>
+      <p>لو استخدمنا نقطتين فقط (لون البداية ولون النهاية)، سيبدو الدوران كخط واحد متجانس يلف بلا تفاصيل. بتوزيع 6 نقاط — تتبادل بين لون الفئة بشفافيات مختلفة (90%، 70%) ولون أبيض شبه شفاف جداً (4%، 3%، 2%) — نحصل على نمط "نبضات ضوء" متفرقة حول الحد، فيبدو كأن الإطار "ينبض" أثناء دورانه بدل أن يكون حلقة ضوء ثابتة الكثافة.</p>
+
+      <h4>لماذا 7 ثوانٍ بالضبط؟</h4>
+      <p>هذه مدة مدروسة: أسرع من ذلك (2-3 ثوانٍ) يجعل الحركة تشتت الانتباه عن محتوى البطاقة نفسها. أبطأ من ذلك (15+ ثانية) يجعل العين لا تلاحظ أن هناك حركة فعلاً. 7 ثوانٍ هي النقطة التي يشعر فيها الدماغ بـ"حياة" في العنصر دون أن يسحب التركيز من النص.</p>
+
+      <div class="callout info">
+        <div class="ic">◈</div>
+        <p>الحد المتحرك يعمل <strong>فقط على البطاقة النشطة (is-active)</strong> — البطاقات الجانبية لها حد ثابت تماماً بلا أنيميشن، وهذا أحد الأسباب التي تجعل العين تعرف فوراً أي بطاقة هي المركزية حتى قبل النظر إلى حجمها.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════ LAYER 2: PARTICLES ═══════ -->
+<section class="section" id="layer-particles">
+  <div class="eyebrow">طبقة 2</div>
+  <h2 class="sec-title">نظام الجسيمات <span>(Canvas Particle Engine)</span></h2>
+  <p class="sec-desc">كل بطاقة تحمل عنصر <code>&lt;canvas&gt;</code> خاصاً بها بنفس أبعادها بالضبط، يُستخدم لرسم 22 جسيمة متلألئة تطفو وتنبض ببطء — لكن فقط حين تكون البطاقة في المركز.</p>
+
+  <div class="layer-card">
+    <div class="layer-head">
+      <span class="layer-z">Layer 2</span>
+      <span class="layer-name">Per-Card Canvas Particle System</span>
+      <span class="layer-tag">22 particles · RAF loop</span>
+    </div>
+    <div class="layer-body">
+      <p><strong>لماذا Canvas وليس عناصر DOM منفصلة؟</strong> لو رسمنا كل جسيمة كـ <code>div</code> مستقل، سنحتاج 22 عنصر × 6 بطاقات = 132 عنصر DOM إضافي، كل واحد يحتاج إعادة حساب layout عند كل تحريك. الـ Canvas يرسم كل الجسيمات في عملية رسم واحدة (<code>fillRect</code>/<code>arc</code> متتالية) بدون أي تكلفة على شجرة DOM.</p>
+
+      <h4>تركيبة الجسيمة الواحدة</h4>
+      <div class="code-wrap">
+        <div class="code-head"><span class="code-lang">JavaScript — بنية كل جسيمة</span></div>
+        <pre><span class="k">const</span> particles = Array.from({<span class="fn">length</span>: <span class="nm">22</span>}, () => ({
+  x: Math.random() * canvas.width,
+  y: Math.random() * canvas.height,
+  r: (Math.random() * <span class="nm">1.3</span> + <span class="nm">0.5</span>) * dpr,     <span class="c">// نصف قطر 0.5-1.8px</span>
+  baseAlpha: Math.random() * <span class="nm">0.5</span> + <span class="nm">0.15</span>,    <span class="c">// شفافية أساسية 15%-65%</span>
+  phase: Math.random() * Math.PI * <span class="nm">2</span>,    <span class="c">// طور عشوائي للنبض</span>
+  speed: Math.random() * <span class="nm">0.4</span> + <span class="nm">0.15</span>,         <span class="c">// سرعة النبض الفردية</span>
+  vy: -(Math.random() * <span class="nm">0.12</span> + <span class="nm">0.03</span>) * dpr,  <span class="c">// سرعة الطفو للأعلى</span>
+  vx: (Math.random() - <span class="nm">0.5</span>) * <span class="nm">0.05</span> * dpr      <span class="c">// انحراف أفقي خفيف جداً</span>
+}));</pre>
+      </div>
+
+      <h4>كيف تنبض كل جسيمة بشكل مستقل؟</h4>
+      <p>كل جسيمة لها <code>phase</code> عشوائي (نقطة بداية مختلفة على منحنى الجيب) و<code>speed</code> عشوائي (سرعة نبض مختلفة). هذا يعني أنه حتى لو كانت كل الجسيمات تستخدم نفس دالة <code>Math.sin()</code>، فإنها لا تتزامن أبداً — كل واحدة "تتنفس" بمعدلها الخاص، فيبدو المشهد كغبار نجمي حقيقي بدل وميض موحّد مزيّف.</p>
+
+      <div class="formula">
+<span class="v">tw</span> <span class="e">=</span> <span class="val">(sin(t × 0.02 × speed + phase) + 1) / 2</span>   <span class="c">← يحول الموجة من [-1,1] إلى [0,1]</span>
+<span class="v">alpha</span> <span class="e">=</span> <span class="val">baseAlpha × (0.35 + 0.65 × tw)</span>      <span class="c">← الجسيمة لا تختفي بالكامل أبداً (حد أدنى 35%)</span></div>
+
+      <h4>الحركة الفعلية والتدوير اللانهائي</h4>
+      <p>كل جسيمة تتحرك للأعلى ببطء (<code>vy</code> سالبة) وبانحراف أفقي طفيف جداً (<code>vx</code>). عندما تخرج من أعلى الـ canvas (<code>y &lt; -4 * dpr</code>) تُعاد إلى الأسفل فوراً — وكذلك أفقياً عند الحواف — فتبدو الحركة كتدفّق لا ينتهي بدل دورة واضحة يلاحظها العين.</p>
+
+      <h4>لماذا يتوقف نظام الجسيمات على البطاقات غير النشطة؟</h4>
+      <p>كل بطاقة تملك دالتي <code>start()</code> و<code>stop()</code> مستقلتين. الكاروسيل يستدعي <code>sys.stop()</code> على أي بطاقة تخرج من موضع المركز فوراً، و<code>sys.start()</code> فقط على البطاقة التي تدخله. هذا يعني أنه <strong>في أي لحظة، يوجد نظام جسيمات واحد فقط نشط على الصفحة كاملة</strong> — مهم جداً للأداء لأن 6 أنظمة متزامنة كانت ستثقل المتصفح بلا أي فائدة بصرية إضافية (الجسيمات على البطاقات الجانبية لن تُرى بوضوح بسبب التعتيم أصلاً).</p>
+
+      <div class="code-wrap">
+        <div class="code-head"><span class="code-lang">JavaScript — التحكم بدورة حياة نظام الجسيمات</span></div>
+        <pre><span class="k">return</span> {
+  start() { <span class="k">if</span> (alive) <span class="k">return</span>; alive = <span class="nm">true</span>; resize(); tick(); },
+  stop()  { alive = <span class="nm">false</span>; cancelAnimationFrame(raf);
+            ctx.clearRect(<span class="nm">0</span>,<span class="nm">0</span>,canvas.width,canvas.height); },
+  resize
+};
+
+<span class="c">// عند تحديد موضع كل بطاقة في الكاروسيل:</span>
+<span class="k">if</span> (offset === <span class="nm">0</span>) { sys.resize(); sys.start(); }   <span class="c">// البطاقة المركزية فقط</span>
+<span class="k">else</span> { sys.stop(); }                            <span class="c">// كل الباقي متوقف تماماً</span></pre>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════ LAYER 3: INNER ═══════ -->
+<section class="section" id="layer-inner">
+  <div class="eyebrow">طبقة 3</div>
+  <h2 class="sec-title">الخلفية الداخلية <span>وتفاصيل العمق</span></h2>
+  <p class="sec-desc">طبقة <code>trick-card-inner</code> هي السطح الذي يحمل كل المحتوى المرئي، وتحتوي على 3 تأثيرات بصرية دقيقة جداً مكدّسة فوق بعضها.</p>
+
+  <div class="layer-card">
+    <div class="layer-head">
+      <span class="layer-z">Layer 3</span>
+      <span class="layer-name">trick-card-inner</span>
+      <span class="layer-tag">radial + linear + texture + corner glow</span>
+    </div>
+    <div class="layer-body">
+      <p><strong>الخلفية الأساسية:</strong> مزيج من <code>radial-gradient</code> خافت بلون فئة البطاقة من الزاوية العلوية اليسرى، فوق <code>linear-gradient</code> قطري غامق من <code>#272729</code> إلى <code>#1c1c1e</code> — هذا يعطي عمقاً خفيفاً جداً (الزاوية العلوية أفتح بصرياً قليلاً) بدل لون مسطّح واحد.</p>
+
+      <h4>النمط القطري الخفي (texture)</h4>
+      <div class="code-wrap">
+        <div class="code-head"><span class="code-lang">CSS — ::before texture</span></div>
+        <pre><span class="k">.trick-card-inner::before</span> {
+  background-image: repeating-linear-gradient(
+    <span class="nm">135deg</span>,
+    rgba(<span class="nm">255,255,255,0.015</span>) <span class="nm">0px</span>,    <span class="c">/* خط شبه شفاف جداً */</span>
+    rgba(<span class="nm">255,255,255,0.015</span>) <span class="nm">1px</span>,
+    transparent <span class="nm">1px</span>,
+    transparent <span class="nm">14px</span>              <span class="c">/* فجوة 14px بين كل خط */</span>
+  );
+  opacity: <span class="nm">.5</span>;
+}</pre>
+      </div>
+      <p>شفافية 1.5% فقط — هذا النمط لا يُلاحظ بنظرة مباشرة، لكنه يكسر "ملل" السطح المسطّح تماماً عند النظر من قرب، تماماً كما تفعل ورقة معدنية مصقولة بدقة بدل سطح بلاستيكي رخيص.</p>
+
+      <h4>لمعة الزاوية (corner glow)</h4>
+      <p>طبقة <code>::after</code> منفصلة تضيف دائرة توهج صغيرة (90×90px) في الزاوية العلوية اليمنى فقط، بلون فئة البطاقة بشفافية 30%. هذا يحاكي انعكاس ضوء على سطح لامع — تفصيل صغير لكنه يضيف "طبقة" بصرية إضافية للعمق الكلي.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════ LAYER 4: GLOW ═══════ -->
+<section class="section" id="layer-glow">
+  <div class="eyebrow">طبقة 0 (خلف كل شيء)</div>
+  <h2 class="sec-title">التوهج الخلفي <span>(Glow Halo)</span></h2>
+
+  <div class="layer-card">
+    <div class="layer-head">
+      <span class="layer-z">z: -1</span>
+      <span class="layer-name">carousel-card::before</span>
+      <span class="layer-tag">opacity controlled by --glow-strength</span>
+    </div>
+    <div class="layer-body">
+      <p>هذه الطبقة تمتد <strong>خارج</strong> حدود البطاقة (<code>inset:-30px</code>) وتُرسم خلفها (<code>z-index:-1</code>) — دائرة <code>radial-gradient</code> بلون فئة البطاقة تتلاشى تدريجياً للخارج. هذا ما يعطي إحساس "البروز" الحقيقي ضمن مساحة الكاروسيل، وليس مجرد بطاقة أكبر حجماً من البقية.</p>
+      <div class="formula">
+<span class="v">--glow-strength</span> <span class="e">=</span> <span class="val">0.55</span>  <span class="c">عند البطاقة المركزية فقط</span>
+<span class="v">--glow-strength</span> <span class="e">=</span> <span class="val">0</span>     <span class="c">على كل البطاقات الأخرى (غير مرئي تماماً)</span></div>
+      <p>القيمة تنتقل بـ <code>transition:opacity .5s ease</code> فتظهر بسلاسة عند وصول البطاقة للمركز وتختفي بسلاسة عند مغادرتها، بالتزامن مع حركة الـ <code>translateX</code> نفسها.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════ LAYER 5: CONTENT ═══════ -->
+<section class="section" id="layer-content">
+  <div class="eyebrow">طبقة 4</div>
+  <h2 class="sec-title">المحتوى الداخلي <span>والـ Badge</span></h2>
+
+  <div class="demo-card-visual">
+    <span class="demo-badge"><span class="demo-dot"></span>FRONTEND</span>
+    <div class="demo-title">Velocity-driven glitch text on hover</div>
+    <div class="demo-desc">Map smoothed mouse speed to a 0–1 intensity value, then drive slice count, RGB offset...</div>
+  </div>
+
+  <div class="layer-card">
+    <div class="layer-head">
+      <span class="layer-z">Layer 4</span>
+      <span class="layer-name">Badge + Title + Code + Description + Tags</span>
+    </div>
+    <div class="layer-body">
+      <p><strong>الـ Badge:</strong> ليس مجرد نص ملوّن، بل عنصرين: نقطة صغيرة <code>.dot</code> بحجم 6px مع <code>box-shadow</code> يعطيها توهجاً خاصاً بها (محاكاة LED صغيرة)، ونص الفئة بجانبها. الخلفية والحد كلاهما مستخرجان من <code>color-mix(in srgb, var(--card-accent) X%, transparent)</code> بنسب مختلفة (14% للخلفية، 38% للحد) — هذا يضمن أن كل فئة (Frontend/Backend/Mobile) تنتج badge بنفس "الصيغة" البصرية لكن بلون مختلف تماماً تلقائياً، بدون كتابة CSS منفصل لكل لون.</p>
+
+      <table class="spec">
+        <thead><tr><th>الفئة</th><th>اللون الأساسي</th><th>نوع المحتوى</th></tr></thead>
+        <tbody>
+          <tr><td>Frontend</td><td>Violet / Pink / Orange (متنوّع)</td><td>تأثيرات CSS، أداء واجهة</td></tr>
+          <tr><td>Backend</td><td>Blue / Cyan</td><td>NestJS، MongoDB، بنية خادم</td></tr>
+          <tr><td>Mobile</td><td>Emerald</td><td>Flutter، Firebase</td></tr>
+        </tbody>
+      </table>
+
+      <p><strong>كود الـ trick (اختياري):</strong> ليس كل بطاقة تحتوي على code block — فقط الـ tricks التي تستفيد من مثال كود فعلي. عندما يكون موجوداً، يُبنى ديناميكياً بـ <code>data-step</code> مختلف، فيُدفع كل من الوصف (desc) والـ tags خطوة إضافية للأسفل في تسلسل الظهور (سنشرح هذا بدقة في قسم Stagger Reveal).</p>
+    </div>
+  </div>
+</section>
+
+<div class="divider"><span>Carousel Mechanics</span></div>
+
+<!-- ═══════ CAROUSEL POSITIONS ═══════ -->
+<section class="section" id="carousel-positions">
+  <div class="eyebrow">الكاروسيل</div>
+  <h2 class="sec-title">مواضع البطاقات <span>الخمسة</span></h2>
+  <p class="sec-desc">في كل لحظة، يوجد حتى 5 مواضع محسوبة بدقة حول البطاقة المركزية، كل واحد له قيم transform وتعتيم خاصة به.</p>
+
+  <table class="spec">
+    <thead><tr><th>Offset</th><th>الموضع</th><th>الحجم</th><th>الدوران 3D</th><th>z-index</th></tr></thead>
+    <tbody>
+      <tr><td>0</td><td>المركز (translateX: 0)</td><td>scale(1)</td><td>0deg</td><td>30</td></tr>
+      <tr><td>+1</td><td>يمين مباشر (305px)</td><td>scale(0.80)</td><td>-7deg</td><td>20</td></tr>
+      <tr><td>-1</td><td>يسار مباشر (-305px)</td><td>scale(0.80)</td><td>+7deg</td><td>20</td></tr>
+      <tr><td>+2</td><td>يمين بعيد (545px)</td><td>scale(0.64)</td><td>-12deg</td><td>5</td></tr>
+      <tr><td>-2</td><td>يسار بعيد (-545px)</td><td>scale(0.64)</td><td>+12deg</td><td>5</td></tr>
+      <tr><td>±3+</td><td>خارج الرؤية (760px)</td><td>scale(0.5)</td><td>0deg</td><td>1</td></tr>
+    </tbody>
+  </table>
+
+  <h4>لماذا rotateY بدل الاعتماد على scale فقط؟</h4>
+  <p>الانعطاف الخفيف (rotateY بين -12 و +12 درجة) بالتزامن مع <code>perspective:1500px</code> على الـ viewport يعطي إحساساً بأن البطاقات الجانبية "تنحني بعيداً" عن المستخدم في فضاء ثلاثي الأبعاد حقيقي، بدل أن تبدو كصور مسطّحة مصغّرة فقط. هذا الفرق دقيق لكنه يضيف طبقة واقعية معتبرة للكاروسيل ككل.</p>
+
+  <h4>حساب الـ offset الدائري (circular wraparound)</h4>
+  <div class="code-wrap">
+    <div class="code-head"><span class="code-lang">JavaScript — منطق الالتفاف الدائري</span></div>
+    <pre><span class="k">let</span> offset = vi - current;
+<span class="k">if</span> (offset &gt; M / <span class="nm">2</span>)  offset -= M;   <span class="c">// لو البعد أكبر من النصف، التف من الجهة الأخرى</span>
+<span class="k">if</span> (offset &lt; -M / <span class="nm">2</span>) offset += M;   <span class="c">// مثال: M=6, current=0, vi=5 → offset=5 لكن الأقرب فعلياً -1</span></pre>
+  </div>
+  <p>هذا يضمن أن الكاروسيل "يلتف" بسلاسة من آخر بطاقة إلى الأولى دون أن يقطع كل البطاقات الوسطى بصرياً — البطاقة الأخيرة تبدو دائماً كأنها "إلى يسار" الأولى مباشرة بدل الانتقال الفجائي.</p>
+</section>
+
+<!-- ═══════ FADE SYSTEM ═══════ -->
+<section class="section" id="carousel-fade">
+  <h2 class="sec-title">نظام التعتيم <span>المنفصل</span></h2>
+  <p class="sec-desc">هذا الجزء كان أهم تصحيح في تطوير القسم: التعتيم لا يُطبَّق كقيمة واحدة على البطاقة كاملة، بل عبر متغيّرين مستقلّين تماماً.</p>
+
+  <div class="formula">
+<span class="v">--chrome-fade</span>  <span class="e">→</span>  <span class="val">يتحكم بالهيكل</span> (الخلفية، الحد، الظل)
+<span class="v">--txt-fade</span>     <span class="e">→</span>  <span class="val">يتحكم بالنص فقط</span> (العنوان، الوصف، الكود، الـ tags)</div>
+
+  <table class="spec">
+    <thead><tr><th>Offset</th><th>chrome-fade</th><th>txt-fade</th><th>التأثير المرئي</th></tr></thead>
+    <tbody>
+      <tr><td>0 (مركز)</td><td>1.0</td><td>1.0</td><td>واضح بالكامل</td></tr>
+      <tr><td>±1</td><td>0.85</td><td>0.50</td><td>بطاقة واضحة، نص مقروء لكن ثانوي</td></tr>
+      <tr><td>±2</td><td>0.5</td><td>0.20</td><td>بطاقة باهتة جداً، نص بالكاد مقروء</td></tr>
+      <tr><td>±3+</td><td>0</td><td>0</td><td>غير مرئي تماماً</td></tr>
+    </tbody>
+  </table>
+
+  <p>لو استخدمنا <code>opacity</code> واحدة على البطاقة كلها، النص يصبح شبه شفاف بنفس درجة الخلفية فيختلط معها ويصعب قراءته. بفصل القيمتين، الهيكل (الخلفية والحد) يبقى واضحاً كجسم محدد المعالم حتى عند offset=1، بينما النص فقط يخف — هذا يعطي إحساساً بأن البطاقة "موجودة وواضحة لكن محتواها ثانوي الآن" بدل أن تبدو البطاقة كلها على وشك الاختفاء.</p>
+</section>
+
+<!-- ═══════ FILTER SYSTEM ═══════ -->
+<section class="section" id="carousel-filter">
+  <h2 class="sec-title">نظام الفلترة <span>(Frontend/Backend/Mobile)</span></h2>
+  <p class="sec-desc">الفلترة لا تُخفي البطاقات بصرياً فقط، بل تعيد بناء كامل الكاروسيل حول مجموعة فرعية من البيانات.</p>
+
+  <div class="code-wrap">
+    <div class="code-head"><span class="code-lang">JavaScript — applyFilter()</span></div>
+    <pre><span class="k">function</span> applyFilter(filter) {
+  visibleIdx = data
+    .map((d, i) => ({d, i}))
+    .filter(o => filter === <span class="s">'all'</span> || o.d.cat === filter)
+    .map(o => o.i);                    <span class="c">// مصفوفة فهارس جديدة بالكامل</span>
+
+  dotsWrap.innerHTML = <span class="s">''</span>;                <span class="c">// إعادة بناء النقاط من الصفر</span>
+  visibleIdx.forEach((_, vi) => { <span class="c">/* نقطة جديدة لكل بطاقة مرئية */</span> });
+
+  current = <span class="nm">0</span>;                            <span class="c">// إعادة البدء من أول بطاقة في المجموعة المفلترة</span>
+  hasEnteredOnce = <span class="nm">false</span>;
+  layout();                              <span class="c">// إعادة حساب كل المواضع فوراً</span>
+  setTimeout(() =&gt; { <span class="c">/* تفعيل is-active + تشغيل الـ stagger من جديد */</span> }, <span class="nm">80</span>);
+}</pre>
+  </div>
+  <p>المصفوفة <code>visibleIdx</code> هي المصدر الوحيد للحقيقة بخصوص "ما هو مرئي الآن" — دالة <code>layout()</code> تتحقق من كل بطاقة: إن لم تكن فهرستها موجودة في <code>visibleIdx</code>، تُخفى فوراً (<code>opacity:0</code>, <code>pointer-events:none</code>) بصرف النظر عن موضعها السابق. هذا يجعل التبديل بين الفلاتر يبدو كـ"كاروسيل جديد" فعلياً، مع احتفاظ كامل بكل آليات الحركة والتعتيم والـ stagger.</p>
+</section>
+
+<div class="divider"><span>Reveal Choreography</span></div>
+
+<!-- ═══════ STAGGER ═══════ -->
+<section class="section" id="staggered">
+  <div class="eyebrow">البناء المتسلسل</div>
+  <h2 class="sec-title">Stagger Reveal <span>— ظهور المحتوى بترتيب</span></h2>
+  <p class="sec-desc">كل عنصر داخل البطاقة لا يظهر دفعة واحدة، بل بترتيب زمني محسوب بدقة عبر <code>data-step</code> و<code>transition-delay</code>.</p>
+
+  <table class="spec">
+    <thead><tr><th>data-step</th><th>العنصر</th><th>التأخير</th></tr></thead>
+    <tbody>
+      <tr><td>0</td><td>Badge (الفئة)</td><td>0.05s</td></tr>
+      <tr><td>1</td><td>العنوان (title)</td><td>0.16s</td></tr>
+      <tr><td>2</td><td>كود (إن وُجد) أو الوصف</td><td>0.27s</td></tr>
+      <tr><td>3</td><td>الوصف أو الـ tags</td><td>0.38s</td></tr>
+      <tr><td>4</td><td>الـ tags (إذا كان هناك كود)</td><td>0.49s</td></tr>
+    </tbody>
+  </table>
+
+  <h4>الترقيم الديناميكي حسب وجود الكود</h4>
+  <div class="code-wrap">
+    <div class="code-head"><span class="code-lang">JavaScript — إعادة ترقيم الخطوات حسب المحتوى</span></div>
+    <pre><span class="k">const</span> descStep = d.code ? <span class="nm">3</span> : <span class="nm">2</span>;   <span class="c">// لو فيه كود، الوصف يصير خطوة 3 بدل 2</span>
+<span class="k">const</span> tagsStep = d.code ? <span class="nm">4</span> : <span class="nm">3</span>;   <span class="c">// والـ tags تتأخر خطوة كاملة</span></pre>
+  </div>
+  <p>هذا يضمن أن البطاقات التي لا تحتوي على code block (مثل "Avoid layout shift with will-change") لا تترك فجوة زمنية فارغة في التسلسل — الوصف يظهر مباشرة في الخطوة 2 بدل الانتظار لخطوة 3 بلا سبب.</p>
+
+  <h4>آلية CSS الأساسية للتسلسل</h4>
+  <div class="code-wrap">
+    <div class="code-head"><span class="code-lang">CSS — b-item base state + delays</span></div>
+    <pre><span class="k">.b-item</span> {
+  opacity: <span class="nm">0</span>;
+  transform: translateY(<span class="nm">14px</span>);
+  transition: opacity <span class="nm">.42s</span> cubic-bezier(<span class="nm">.22</span>,<span class="nm">.9</span>,<span class="nm">.3</span>,<span class="nm">1</span>),
+              transform <span class="nm">.42s</span> cubic-bezier(<span class="nm">.22</span>,<span class="nm">.9</span>,<span class="nm">.3</span>,<span class="nm">1</span>);
+}
+<span class="k">.is-active .b-item</span> { opacity: <span class="nm">1</span>; transform: translateY(<span class="nm">0</span>); }
+
+<span class="c">/* كل خطوة تنطلق متأخرة عن السابقة بفجوة ~110ms */</span>
+<span class="k">.is-active .b-item[data-step="0"]</span> { transition-delay: <span class="nm">.05s</span>; }
+<span class="k">.is-active .b-item[data-step="1"]</span> { transition-delay: <span class="nm">.16s</span>; }
+<span class="k">.is-active .b-item[data-step="2"]</span> { transition-delay: <span class="nm">.27s</span>; }</pre>
+  </div>
+  <p>كل عنصر ينتقل من <code>opacity:0</code> مع إزاحة 14px للأسفل، إلى <code>opacity:1</code> وموضعه الطبيعي — لكن بفجوة 110 ميلي ثانية تقريباً عن العنصر السابق. هذا الإيقاع المتتالي هو ما يعطي إحساس "البطاقة تُبنى أمام عينيك" بدل ظهورها كصورة جاهزة فجأة.</p>
+
+  <h4>المشكلة التي حلّها class is-settled</h4>
+  <p>بدون معالجة، كل مرة تعود فيها بطاقة سابقة إلى المركز سيُعاد تشغيل الـ stagger من الصفر — وهذا مرغوب فيه عند أول دخول للبطاقة لكنه يصبح مزعجاً ومتكرراً عند التنقل ذهاباً وعودة بسرعة. لذلك أضفنا <code>is-settled</code>: أي بطاقة غادرت المركز ولو لمرة واحدة تنتقل لحالة "مستقرة" حيث عناصرها تتحرك بـ <code>transition</code> بسيط 0.5s بلا أي تأخير متدرّج، فتظهر فوراً وبسلاسة دون إعادة عرض المسرحية كاملة في كل مرة.</p>
+</section>
+
+<!-- ═══════ SCROLL REVEAL ═══════ -->
+<section class="section" id="scroll-reveal">
+  <h2 class="sec-title">ظهور القسم <span>بالكامل عند التمرير</span></h2>
+  <p class="sec-desc">قبل أن يبدأ أي شيء داخل الكاروسيل، القسم بأكمله (الفلاتر + الكاروسيل) ينزلق من اليمين عند دخوله نطاق الرؤية.</p>
+
+  <div class="code-wrap">
+    <div class="code-head"><span class="code-lang">JavaScript — IntersectionObserver</span></div>
+    <pre><span class="k">const</span> obs = <span class="k">new</span> IntersectionObserver((entries) => {
+  entries.forEach(en => {
+    <span class="k">if</span> (en.isIntersecting) {
+      revealBlock.classList.add(<span class="s">'visible'</span>);   <span class="c">// يفعّل الانزلاق من اليمين</span>
+      obs.disconnect();                       <span class="c">// مرة واحدة فقط، لا يتكرر بالتمرير لأعلى/أسفل</span>
+    }
+  });
+}, {threshold: <span class="nm">0.25</span>});                          <span class="c">// يبدأ عند ظهور 25% من القسم</span></pre>
+  </div>
+
+  <div class="formula">
+<span class="v">.reveal-section</span> { opacity: <span class="val">0</span>; transform: translateX(<span class="val">60px</span>); }
+<span class="v">.reveal-section.visible</span> { opacity: <span class="val">1</span>; transform: translateX(<span class="val">0</span>); }
+<span class="e">transition</span>: <span class="val">0.7s cubic-bezier(.22,.9,.3,1)</span></div>
+
+  <p>بعد اكتمال هذا الانزلاق، تبدأ بعدها بـ120 ميلي ثانية مرحلة الـ stagger reveal للبطاقة المركزية الأولى — أي أن المستخدم يرى تسلسلين متتاليين من الحركة: أولاً القسم كله ينزلق من الجانب، ثم محتوى أول بطاقة يُبنى أمامه قطعة بقطعة.</p>
+</section>
+
+<div class="divider"><span>Performance &amp; Color System</span></div>
+
+<!-- ═══════ PERFORMANCE ═══════ -->
+<section class="section" id="performance">
+  <div class="eyebrow">الأداء</div>
+  <h2 class="sec-title">كيف <span>حافظنا على 60FPS</span>؟</h2>
+
+  <div class="callout">
+    <div class="ic">⚠</div>
+    <p>كل القرارات في هذا القسم اتُّخذت لتفادي تحميل المتصفح بحركة لا تُرى أصلاً.</p>
+  </div>
+
+  <table class="spec">
+    <thead><tr><th>القرار</th><th>السبب</th></tr></thead>
+    <tbody>
+      <tr><td>جسيمات Canvas لا DOM</td><td>132 عنصر DOM متحرك كان سيكلّف reflow ضخم؛ الرسم على Canvas تكلفته رسم فقط بلا layout</td></tr>
+      <tr><td>توقف الجسيمات على البطاقات غير النشطة</td><td>نظام واحد فعّال بدل 6 أنظمة متزامنة لا تُرى تفاصيلها بسبب التعتيم</td></tr>
+      <tr><td>will-change: transform, opacity</td><td>يخبر المتصفح بتحضير GPU layer مسبقاً للعناصر المتحركة فقط</td></tr>
+      <tr><td>perspective على viewport لا على كل بطاقة</td><td>حساب فضاء 3D واحد يُطبَّق على كل الأبناء بدل حسابات منفصلة</td></tr>
+      <tr><td>prefers-reduced-motion يعطّل دوران الحد</td><td>احترام تفضيل المستخدم الصحي دون فقد أي وظيفة أساسية</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- ═══════ COLORS ═══════ -->
+<section class="section" id="colors">
+  <div class="eyebrow">الألوان</div>
+  <h2 class="sec-title">نظام الألوان <span>الكامل</span></h2>
+  <p class="sec-desc">كل لون فئة (accent) يُستخدم تلقائياً في 6 أماكن مختلفة عبر <code>color-mix()</code> بنسب متفاوتة، بدلاً من كتابة قواعد CSS منفصلة لكل تركيبة.</p>
+
+  <div class="swatch-row">
+    <div class="swatch"><span class="sw-dot" style="background:#8b5cf6"></span>Violet — #8b5cf6</div>
+    <div class="swatch"><span class="sw-dot" style="background:#3b82f6"></span>Blue — #3b82f6</div>
+    <div class="swatch"><span class="sw-dot" style="background:#10b981"></span>Emerald — #10b981</div>
+    <div class="swatch"><span class="sw-dot" style="background:#0dcaf0"></span>Cyan — #0dcaf0</div>
+    <div class="swatch"><span class="sw-dot" style="background:#f59e0b"></span>Orange — #f59e0b</div>
+    <div class="swatch"><span class="sw-dot" style="background:#ec4899"></span>Pink — #ec4899</div>
+  </div>
+
+  <table class="spec">
+    <thead><tr><th>الاستخدام</th><th>نسبة color-mix</th></tr></thead>
+    <tbody>
+      <tr><td>حد الـ Border (نقاط التدرّج القوية)</td><td>90% / 70%</td></tr>
+      <tr><td>توهج الزاوية (corner glow)</td><td>30%</td></tr>
+      <tr><td>التوهج الخلفي (glow halo)</td><td>38-40%</td></tr>
+      <tr><td>حد الـ badge</td><td>38%</td></tr>
+      <tr><td>خلفية الـ badge</td><td>14%</td></tr>
+      <tr><td>حد الـ tag الواحد</td><td>30%</td></tr>
+      <tr><td>الخلفية الإشعاعية الداخلية</td><td>14%</td></tr>
+    </tbody>
+  </table>
+
+  <p>بهذا النظام، إضافة فئة جديدة (مثلاً "DevOps" بلون أصفر-كهرماني) لا تتطلب كتابة أي CSS جديد على الإطلاق — يكفي تعريف <code>.item-amber{--card-accent:#f59e0b}</code> واحدة، وكل الطبقات (الحد، التوهج، الـ badge، الجسيمات) تتكيّف تلقائياً معها لأنها كلها مبنية على المتغيّر <code>--card-accent</code> نفسه.</p>
+</section>
+
+</main>
+</div>
+
+<footer class="footer" style="margin:0 64px 40px;">
+  <span>TRICKS_CAROUSEL — Documentation v1.0</span>
+  <span>Animated Border · Canvas Particles · Stagger Reveal</span>
+</footer>
+
+<script>
+const links=document.querySelectorAll('.nav-link');
+const sections=document.querySelectorAll('.section[id]');
+const obs=new IntersectionObserver(entries=>{
+  entries.forEach(en=>{if(en.isIntersecting){links.forEach(l=>l.classList.remove('active'));const a=document.querySelector(`.nav-link[href="#${en.target.id}"]`);if(a)a.classList.add('active');}});
+},{threshold:0.25});
+sections.forEach(s=>obs.observe(s));
+</script>
+</body>
+</html>

@@ -1,0 +1,871 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NEXUS — Portfolio</title>
+<style>
+/* ─────────────────────────────────────────────
+   RESET & BASE
+───────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg:         #080810;
+  --bg2:        #0d0d1a;
+  --white:      #f0f0f8;
+  --dim:        rgba(240,240,248,0.38);
+  --accent:     #00ffe0;
+  --accent2:    #7b2fff;
+  --red-ch:     #ff2244;
+  --cyan-ch:    #00e5ff;
+  --grid:       rgba(255,255,255,0.03);
+}
+
+html, body {
+  width: 100%; height: 100%;
+  background: var(--bg);
+  color: var(--white);
+  font-family: 'Courier New', 'Lucida Console', monospace;
+  overflow: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ─────────────────────────────────────────────
+   BACKGROUND GRID + VIGNETTE
+───────────────────────────────────────────── */
+.bg-grid {
+  position: fixed; inset: 0; z-index: 0;
+  background-image:
+    linear-gradient(var(--grid) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+  background-size: 48px 48px;
+  pointer-events: none;
+}
+
+.bg-vignette {
+  position: fixed; inset: 0; z-index: 1;
+  background: radial-gradient(ellipse 80% 70% at 50% 50%,
+    transparent 30%, var(--bg) 100%);
+  pointer-events: none;
+}
+
+/* Subtle animated horizontal scanline sweep (always-on, very faint) */
+.bg-scanlines {
+  position: fixed; inset: 0; z-index: 2;
+  background: repeating-linear-gradient(
+    to bottom,
+    transparent 0px,
+    transparent 3px,
+    rgba(0,0,0,0.08) 3px,
+    rgba(0,0,0,0.08) 4px
+  );
+  pointer-events: none;
+  opacity: 0.5;
+}
+
+/* ─────────────────────────────────────────────
+   LAYOUT
+───────────────────────────────────────────── */
+.page {
+  position: relative; z-index: 10;
+  width: 100vw; height: 100vh;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  gap: 0;
+}
+
+/* ─────────────────────────────────────────────
+   EYEBROW + SUB
+───────────────────────────────────────────── */
+.eyebrow {
+  font-size: 11px;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--accent);
+  opacity: 0.7;
+  margin-bottom: 28px;
+  font-weight: 400;
+}
+
+.sub {
+  margin-top: 32px;
+  font-size: 13px;
+  letter-spacing: 0.14em;
+  color: var(--dim);
+  font-family: 'Courier New', monospace;
+  display: flex; align-items: center; gap: 20px;
+}
+
+.sub-dot {
+  width: 4px; height: 4px; border-radius: 50%;
+  background: var(--accent); opacity: 0.5;
+  display: inline-block;
+}
+
+/* ─────────────────────────────────────────────
+   GLITCH STAGE — the main container
+───────────────────────────────────────────── */
+.glitch-stage {
+  position: relative;
+  display: inline-block;
+  cursor: pointer;
+  /* isolate stacking context for clip-paths */
+  isolation: isolate;
+  user-select: none;
+}
+
+/* ─────────────────────────────────────────────
+   BASE TEXT (always rendered, gives layout size)
+───────────────────────────────────────────── */
+.glitch-base {
+  font-size: clamp(72px, 12vw, 160px);
+  font-weight: 900;
+  letter-spacing: -0.04em;
+  line-height: 1;
+  color: var(--white);
+  font-family: 'Arial Black', 'Arial', sans-serif;
+  position: relative;
+  z-index: 5;
+  /* GPU hint */
+  will-change: transform;
+  transform: translateZ(0);
+}
+
+/* ─────────────────────────────────────────────
+   RGB CHANNEL DUPLICATES (behind base text)
+   Two absolutely-positioned copies:
+   red channel (left) + cyan channel (right)
+───────────────────────────────────────────── */
+.glitch-rgb-r,
+.glitch-rgb-c {
+  position: absolute;
+  inset: 0;
+  font-size: clamp(72px, 12vw, 160px);
+  font-weight: 900;
+  letter-spacing: -0.04em;
+  line-height: 1;
+  font-family: 'Arial Black', 'Arial', sans-serif;
+  z-index: 3;
+  pointer-events: none;
+  will-change: transform, opacity;
+  transform: translateZ(0);
+  opacity: 0; /* hidden by default, JS controls */
+}
+
+.glitch-rgb-r {
+  color: var(--red-ch);
+  mix-blend-mode: screen;
+}
+
+.glitch-rgb-c {
+  color: var(--cyan-ch);
+  mix-blend-mode: screen;
+}
+
+/* ─────────────────────────────────────────────
+   SLICE LAYER — overlays base text with
+   clip-path horizontal bands that shift
+───────────────────────────────────────────── */
+.glitch-slices {
+  position: absolute;
+  inset: 0;
+  z-index: 6;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+/* Each .slice is absolutely positioned,
+   clips a horizontal row of the text,
+   and translates X independently */
+.slice {
+  position: absolute;
+  left: 0; right: 0;
+  /* height & top set by JS */
+  will-change: transform;
+  transform: translateZ(0);
+  overflow: hidden; /* clip the text inside */
+}
+
+.slice-inner {
+  /* inner text matches base exactly */
+  font-size: clamp(72px, 12vw, 160px);
+  font-weight: 900;
+  letter-spacing: -0.04em;
+  line-height: 1;
+  font-family: 'Arial Black', 'Arial', sans-serif;
+  color: var(--white);
+  position: absolute;
+  /* top is negative of slice's top to re-align text */
+  white-space: nowrap;
+}
+
+/* ─────────────────────────────────────────────
+   PIXEL FRAGMENT LAYER
+   Small rectangles that break away
+───────────────────────────────────────────── */
+.glitch-fragments {
+  position: absolute;
+  inset: 0;
+  z-index: 7;
+  pointer-events: none;
+  overflow: visible;
+}
+
+.fragment {
+  position: absolute;
+  background: var(--white);
+  will-change: transform, opacity;
+  transform: translateZ(0);
+}
+
+/* ─────────────────────────────────────────────
+   NOISE + SCANLINE OVERLAY (active during glitch)
+───────────────────────────────────────────── */
+.glitch-noise {
+  position: absolute;
+  inset: -10px;
+  z-index: 8;
+  pointer-events: none;
+  opacity: 0;
+  will-change: opacity;
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+/* noise via canvas, scanlines via CSS */
+.glitch-noise canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%; height: 100%;
+  opacity: 0.18;
+  mix-blend-mode: overlay;
+}
+
+.glitch-scanlines-active {
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(
+    to bottom,
+    rgba(0, 255, 224, 0.04) 0px,
+    rgba(0, 255, 224, 0.04) 1px,
+    transparent 1px,
+    transparent 4px
+  );
+  mix-blend-mode: screen;
+  animation: scanScroll 0.3s linear infinite;
+  opacity: 0.6;
+}
+
+@keyframes scanScroll {
+  from { background-position-y: 0; }
+  to   { background-position-y: 8px; }
+}
+
+/* ─────────────────────────────────────────────
+   BOTTOM STATUS BAR
+───────────────────────────────────────────── */
+.status-bar {
+  position: fixed;
+  bottom: 32px; left: 50%; transform: translateX(-50%);
+  display: flex; align-items: center; gap: 24px;
+  font-size: 10px; letter-spacing: 0.2em;
+  color: rgba(240,240,248,0.2);
+  text-transform: uppercase;
+  z-index: 20;
+  white-space: nowrap;
+}
+
+.status-dot {
+  width: 5px; height: 5px; border-radius: 50%;
+  background: var(--accent);
+  box-shadow: 0 0 8px var(--accent);
+  animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.3; }
+}
+
+.status-glitch-label {
+  color: var(--accent);
+  opacity: 0;
+  transition: opacity 0.1s;
+}
+.status-glitch-label.active { opacity: 1; }
+
+/* ─────────────────────────────────────────────
+   CORNER DECORATIONS
+───────────────────────────────────────────── */
+.corner {
+  position: fixed;
+  z-index: 20;
+  pointer-events: none;
+}
+.corner svg { display: block; }
+.corner-tl { top: 24px;    left: 24px; }
+.corner-tr { top: 24px;    right: 24px; transform: scaleX(-1); }
+.corner-bl { bottom: 24px; left: 24px;  transform: scaleY(-1); }
+.corner-br { bottom: 24px; right: 24px; transform: scale(-1,-1); }
+
+/* ─────────────────────────────────────────────
+   RESPONSIVE
+───────────────────────────────────────────── */
+@media (max-width: 600px) {
+  .eyebrow { font-size: 9px; margin-bottom: 20px; }
+  .sub      { font-size: 10px; }
+  .status-bar { font-size: 8px; gap: 14px; }
+}
+
+/* ─────────────────────────────────────────────
+   REDUCED MOTION
+───────────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  .glitch-stage * { animation: none !important; transition: none !important; }
+}
+</style>
+</head>
+<body>
+
+<!-- BG layers -->
+<div class="bg-grid"></div>
+<div class="bg-vignette"></div>
+<div class="bg-scanlines"></div>
+
+<!-- Corner brackets -->
+<div class="corner corner-tl">
+  <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+    <path d="M1 31V1H31" stroke="rgba(0,255,224,0.35)" stroke-width="1.2"/>
+  </svg>
+</div>
+<div class="corner corner-tr">
+  <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+    <path d="M1 31V1H31" stroke="rgba(0,255,224,0.35)" stroke-width="1.2"/>
+  </svg>
+</div>
+<div class="corner corner-bl">
+  <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+    <path d="M1 31V1H31" stroke="rgba(0,255,224,0.35)" stroke-width="1.2"/>
+  </svg>
+</div>
+<div class="corner corner-br">
+  <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+    <path d="M1 31V1H31" stroke="rgba(0,255,224,0.35)" stroke-width="1.2"/>
+  </svg>
+</div>
+
+<!-- Page layout -->
+<div class="page">
+  <p class="eyebrow">System // Online &nbsp;—&nbsp; Portfolio v2.0</p>
+
+  <!-- ★ GLITCH STAGE ★ -->
+  <div class="glitch-stage" id="glitchStage" role="heading" aria-label="NEXUS">
+
+    <!-- RGB channel duplicates -->
+    <div class="glitch-rgb-r" id="rgbR" aria-hidden="true">NEXUS</div>
+    <div class="glitch-rgb-c" id="rgbC" aria-hidden="true">NEXUS</div>
+
+    <!-- Base text (always visible, gives bounding size) -->
+    <div class="glitch-base" id="glitchBase">NEXUS</div>
+
+    <!-- Slice layer (populated by JS) -->
+    <div class="glitch-slices" id="glitchSlices" aria-hidden="true"></div>
+
+    <!-- Fragment layer (populated by JS) -->
+    <div class="glitch-fragments" id="glitchFragments" aria-hidden="true"></div>
+
+    <!-- Noise + scanlines overlay -->
+    <div class="glitch-noise" id="glitchNoise" aria-hidden="true">
+      <canvas id="noiseCanvas"></canvas>
+      <div class="glitch-scanlines-active"></div>
+    </div>
+
+  </div>
+
+  <p class="sub">
+    <span class="sub-dot"></span>
+    Creative Developer
+    <span class="sub-dot"></span>
+    Digital Architect
+    <span class="sub-dot"></span>
+  </p>
+</div>
+
+<!-- Status bar -->
+<div class="status-bar">
+  <span class="status-dot"></span>
+  <span>SYS_INTEGRITY &nbsp;100%</span>
+  <span id="statusGlitch" class="status-glitch-label">!! DATA_CORRUPTION_DETECTED !!</span>
+  <span>NEXUS_PORT_7731</span>
+</div>
+
+<script>
+/* ═══════════════════════════════════════════════════════════
+   CYBERPUNK GLITCH ENGINE
+   Implements all 7 phases from the spec:
+   1. Initial clean state
+   2. Slice glitch
+   3. RGB channel separation
+   4. Digital signal distortion (band movement)
+   5. Pixel fragmentation
+   6. Scanline / noise interference
+   7. Recovery
+═══════════════════════════════════════════════════════════ */
+
+const stage     = document.getElementById('glitchStage');
+const base      = document.getElementById('glitchBase');
+const slicesEl  = document.getElementById('glitchSlices');
+const fragEl    = document.getElementById('glitchFragments');
+const noiseEl   = document.getElementById('glitchNoise');
+const rgbR      = document.getElementById('rgbR');
+const rgbC      = document.getElementById('rgbC');
+const noiseCv   = document.getElementById('noiseCanvas');
+const statusLbl = document.getElementById('statusGlitch');
+
+/* ── State ── */
+let isGlitching  = false;
+let autoTimer    = null;
+let animFrameId  = null;
+let sliceNodes   = [];
+let fragmentNodes = [];
+let noiseCtx     = null;
+let noiseAnim    = null;
+
+/* ── Utility ── */
+const rand    = (a, b)    => a + Math.random() * (b - a);
+const randInt = (a, b)    => Math.floor(rand(a, b + 1));
+const pick    = arr        => arr[Math.floor(Math.random() * arr.length)];
+const clamp   = (v, a, b) => Math.max(a, Math.min(b, v));
+const lerp    = (a, b, t) => a + (b - a) * t;
+
+/* ── Setup noise canvas ── */
+function setupNoise() {
+  const rect = stage.getBoundingClientRect();
+  noiseCv.width  = Math.ceil(rect.width  + 20);
+  noiseCv.height = Math.ceil(rect.height + 20);
+  noiseCtx = noiseCv.getContext('2d');
+}
+
+function renderNoise() {
+  if (!noiseCtx) return;
+  const w = noiseCv.width, h = noiseCv.height;
+  const id = noiseCtx.createImageData(w, h);
+  const d  = id.data;
+  for (let i = 0; i < d.length; i += 4) {
+    const v = Math.random() > 0.5 ? 255 : 0;
+    d[i] = d[i+1] = d[i+2] = v;
+    d[i+3] = Math.random() * 180;
+  }
+  noiseCtx.putImageData(id, 0, 0);
+}
+
+/* ── Build slice nodes (once, reuse) ── */
+const SLICE_COUNT = 18; // number of horizontal bands
+
+function buildSlices() {
+  slicesEl.innerHTML = '';
+  sliceNodes = [];
+  const stageH = base.offsetHeight;
+  const bandH  = stageH / SLICE_COUNT;
+
+  for (let i = 0; i < SLICE_COUNT; i++) {
+    const topPx = i * bandH;
+
+    const slice = document.createElement('div');
+    slice.className = 'slice';
+    slice.style.top    = topPx + 'px';
+    slice.style.height = bandH + 'px';
+    slice.style.transform = 'translateX(0px)';
+    slice.style.opacity   = '0'; // hidden at rest
+
+    const inner = document.createElement('div');
+    inner.className = 'slice-inner';
+    inner.textContent = 'NEXUS';
+    inner.style.top  = -topPx + 'px';
+    inner.style.left = '0px';
+
+    slice.appendChild(inner);
+    slicesEl.appendChild(slice);
+    sliceNodes.push({ el: slice, baseTop: topPx, bandH });
+  }
+}
+
+/* ── Reset everything to clean state ── */
+function resetAll() {
+  sliceNodes.forEach(s => {
+    s.el.style.transform = 'translateX(0px)';
+    s.el.style.opacity   = '0';
+  });
+  rgbR.style.transform = 'translateX(0px)';
+  rgbC.style.transform = 'translateX(0px)';
+  rgbR.style.opacity   = '0';
+  rgbC.style.opacity   = '0';
+  noiseEl.style.opacity = '0';
+  base.style.opacity    = '1';
+  fragEl.innerHTML      = '';
+  fragmentNodes         = [];
+  statusLbl.classList.remove('active');
+}
+
+/* ═══════════════════════════════════════════
+   MAIN GLITCH SEQUENCE
+   All 7 phases orchestrated with setTimeout/rAF
+═══════════════════════════════════════════ */
+function runGlitch() {
+  if (isGlitching) return;
+  isGlitching = true;
+  cancelAutoTimer();
+  statusLbl.classList.add('active');
+
+  /* Total burst: random 650ms–950ms */
+  const totalDuration = randInt(650, 950);
+
+  /* ── Phase timing breakdown ── */
+  const t = {
+    phase2_start: 0,                              // slice start
+    phase2_dur:   randInt(150, 250),              // slice duration
+    phase3_start: randInt(30, 80),                // RGB starts slightly after slices
+    phase4_start: randInt(60, 120),               // bands start
+    phase5_start: randInt(80, 150),               // fragments
+    phase6_start: 0,                              // noise from the start
+    phase6_end:   totalDuration - randInt(80,140),// noise ends before recovery
+    recovery_start: totalDuration - randInt(200, 300),
+    end:          totalDuration
+  };
+
+  /* Make slices visible */
+  sliceNodes.forEach(s => { s.el.style.opacity = '1'; });
+  base.style.opacity = '0'; // hide base, slices take over
+
+  /* ────────────────────────────────────────
+     PHASE 6: NOISE on (immediately)
+  ──────────────────────────────────────── */
+  setupNoise();
+  noiseEl.style.opacity = '1';
+  let noiseRunning = true;
+  function tickNoise() {
+    if (!noiseRunning) return;
+    renderNoise();
+    noiseAnim = requestAnimationFrame(tickNoise);
+  }
+  tickNoise();
+
+  /* ────────────────────────────────────────
+     PHASE 2: SLICE GLITCH — rapid random X shifts
+     Each RAF tick: randomize active slices
+  ──────────────────────────────────────── */
+  const phase2End = performance.now() + t.phase2_dur;
+  let lastSliceUpdate = 0;
+
+  function tickSlices(now) {
+    if (now < phase2End) {
+      /* Update slices every 16–40ms (irregular) */
+      if (now - lastSliceUpdate > rand(16, 40)) {
+        lastSliceUpdate = now;
+        applySliceFrame(1.0); // full intensity
+      }
+      requestAnimationFrame(tickSlices);
+    } else {
+      /* Slices keep going at reduced intensity during distortion phase */
+      tickSlicesDistort(performance.now());
+    }
+  }
+
+  requestAnimationFrame(tickSlices);
+
+  /* ────────────────────────────────────────
+     PHASE 4: DIGITAL SIGNAL DISTORTION
+     Bands move in different directions,
+     intensity peaks then fades
+  ──────────────────────────────────────── */
+  const phase4Start = performance.now() + t.phase4_start;
+  const phase4Peak  = phase4Start + randInt(80, 150);
+  const phase4End   = performance.now() + t.recovery_start;
+
+  function tickSlicesDistort(now) {
+    if (now < phase4End) {
+      /* Intensity: ramps up to peak, holds, fades */
+      let intensity;
+      if (now < phase4Start)     intensity = 0.4;
+      else if (now < phase4Peak) intensity = lerp(0.4, 1.0, (now - phase4Start) / (phase4Peak - phase4Start));
+      else                       intensity = lerp(1.0, 0.5, (now - phase4Peak)  / (phase4End - phase4Peak));
+
+      const elapsed = now - lastSliceUpdate;
+      if (elapsed > rand(22, 55)) {
+        lastSliceUpdate = now;
+        applySliceFrame(intensity);
+      }
+      requestAnimationFrame(tickSlicesDistort);
+    }
+    /* Distortion phase done — recovery starts */
+  }
+
+  /* Core slice frame: choose which bands glitch and by how much */
+  function applySliceFrame(intensity) {
+    /* How many slices to disturb (intensity-weighted) */
+    const activeCount = Math.floor(randInt(3, 9) * intensity);
+    const activeSet   = new Set();
+    while (activeSet.size < activeCount) {
+      activeSet.add(randInt(0, SLICE_COUNT - 1));
+    }
+
+    sliceNodes.forEach((s, i) => {
+      if (activeSet.has(i)) {
+        /* Shift: 5px to 40px, direction random, GPU-accelerated */
+        const maxShift = lerp(5, 40, intensity);
+        const shift = (Math.random() > 0.5 ? 1 : -1) * rand(5, maxShift);
+        s.el.style.transform = `translateX(${shift}px)`;
+      } else {
+        /* Bands not in active set snap back */
+        s.el.style.transform = 'translateX(0px)';
+      }
+    });
+  }
+
+  /* ────────────────────────────────────────
+     PHASE 3: RGB CHANNEL SEPARATION
+     Red shifted left, cyan shifted right,
+     flickering opacity
+  ──────────────────────────────────────── */
+  let rgbRunning = true;
+  let lastRgbUpdate = 0;
+
+  setTimeout(() => {
+    function tickRGB(now) {
+      if (!rgbRunning) return;
+      if (now - lastRgbUpdate > rand(30, 80)) {
+        lastRgbUpdate = now;
+        /* Offset: 2px–8px, flickering */
+        const offset   = rand(2, 8);
+        const flickerR = Math.random() > 0.25;
+        const flickerC = Math.random() > 0.25;
+        rgbR.style.transform = `translateX(-${offset}px)`;
+        rgbC.style.transform = `translateX(${offset + rand(1, 4)}px)`;
+        rgbR.style.opacity   = flickerR ? rand(0.3, 0.7) : '0';
+        rgbC.style.opacity   = flickerC ? rand(0.3, 0.7) : '0';
+      }
+      requestAnimationFrame(tickRGB);
+    }
+    requestAnimationFrame(tickRGB);
+  }, t.phase3_start);
+
+  /* ────────────────────────────────────────
+     PHASE 5: PIXEL FRAGMENTATION
+     Spawn small rects that shoot off and disappear
+  ──────────────────────────────────────── */
+  setTimeout(() => {
+    spawnFragments();
+  }, t.phase5_start);
+
+  /* ────────────────────────────────────────
+     PHASE 6: NOISE OFF
+  ──────────────────────────────────────── */
+  setTimeout(() => {
+    noiseRunning = false;
+    cancelAnimationFrame(noiseAnim);
+    noiseEl.style.opacity = '0';
+  }, t.phase6_end);
+
+  /* ────────────────────────────────────────
+     PHASE 7: RECOVERY
+     Slices ease back to origin,
+     RGB collapses, everything cleans up
+  ──────────────────────────────────────── */
+  setTimeout(() => {
+    rgbRunning = false;
+    recovery();
+  }, t.recovery_start);
+
+  /* ────────────────────────────────────────
+     END — fully clean
+  ──────────────────────────────────────── */
+  setTimeout(() => {
+    finalClean();
+  }, t.end);
+}
+
+/* ── Recovery: interpolate slices back to 0 ── */
+function recovery() {
+  const RECOVERY_DUR = 280; // ms
+  const start = performance.now();
+
+  /* Snapshot current positions */
+  const currentOffsets = sliceNodes.map(s => {
+    const m = new WebKitCSSMatrix(getComputedStyle(s.el).transform);
+    return m.m41; // translateX
+  });
+
+  /* RGB eases to 0 */
+  rgbR.style.transition = `transform ${RECOVERY_DUR}ms cubic-bezier(.4,0,.2,1),
+                            opacity   ${RECOVERY_DUR * 0.6}ms ease`;
+  rgbC.style.transition = rgbR.style.transition;
+  rgbR.style.transform  = 'translateX(0px)';
+  rgbC.style.transform  = 'translateX(0px)';
+  rgbR.style.opacity    = '0';
+  rgbC.style.opacity    = '0';
+
+  function tickRecovery(now) {
+    const progress = clamp((now - start) / RECOVERY_DUR, 0, 1);
+    /* Ease-out cubic */
+    const eased = 1 - Math.pow(1 - progress, 3);
+
+    sliceNodes.forEach((s, i) => {
+      const x = lerp(currentOffsets[i], 0, eased);
+      s.el.style.transform = `translateX(${x}px)`;
+    });
+
+    if (progress < 1) {
+      requestAnimationFrame(tickRecovery);
+    }
+  }
+  requestAnimationFrame(tickRecovery);
+}
+
+/* ── Final clean: restore base, hide slices ── */
+function finalClean() {
+  /* Remove transition on RGB to prevent future conflicts */
+  rgbR.style.transition = '';
+  rgbC.style.transition = '';
+  resetAll();
+  isGlitching = false;
+  statusLbl.classList.remove('active');
+  scheduleAuto();
+}
+
+/* ─────────────────────────────────────────────
+   PHASE 5 DETAIL: Pixel Fragments
+───────────────────────────────────────────── */
+function spawnFragments() {
+  fragEl.innerHTML = '';
+  fragmentNodes = [];
+
+  const stageRect = base.getBoundingClientRect();
+  const stageSelf = stage.getBoundingClientRect();
+  const offsetTop = stageRect.top - stageSelf.top;
+  const h = stageRect.height;
+  const w = stageRect.width;
+
+  const count = randInt(12, 22);
+
+  for (let i = 0; i < count; i++) {
+    const el = document.createElement('div');
+    el.className = 'fragment';
+
+    /* Random fragment size: small rectangles */
+    const fw = randInt(4, 28);
+    const fh = randInt(2, 10);
+
+    /* Position within text bounds */
+    const fx = rand(0, w - fw);
+    const fy = offsetTop + rand(0, h - fh);
+
+    el.style.width   = fw + 'px';
+    el.style.height  = fh + 'px';
+    el.style.left    = fx + 'px';
+    el.style.top     = fy + 'px';
+    el.style.opacity = rand(0.5, 1.0);
+
+    fragEl.appendChild(el);
+    fragmentNodes.push({ el, x: fx, fy });
+
+    /* Animate: jump horizontally then fade */
+    animateFragment(el, fw);
+  }
+}
+
+function animateFragment(el, fw) {
+  /* Some fragments jump far, some close */
+  const jumpX    = (Math.random() > 0.5 ? 1 : -1) * rand(8, 60);
+  const duration = rand(80, 300); // ms
+  const delay    = rand(0, 120);  // ms stagger
+  const reassemble = Math.random() > 0.45; // some come back
+
+  setTimeout(() => {
+    const start = performance.now();
+    const startX = 0;
+
+    function tick(now) {
+      const p = clamp((now - start) / duration, 0, 1);
+      const eased = p < 0.5 ? 2 * p * p : -1 + (4 - 2 * p) * p; // ease in-out
+
+      /* Jump phase */
+      el.style.transform = `translateX(${lerp(startX, jumpX, eased)}px)`;
+      el.style.opacity   = lerp(1, 0, eased);
+
+      if (p < 1) {
+        requestAnimationFrame(tick);
+      } else if (reassemble) {
+        /* Reassemble: jump back to origin */
+        el.style.transform = 'translateX(0px)';
+        el.style.opacity   = '0.8';
+
+        setTimeout(() => {
+          el.style.transition = 'transform 120ms ease, opacity 120ms ease';
+          el.style.opacity    = '0';
+        }, rand(40, 120));
+      } else {
+        el.style.opacity = '0';
+      }
+    }
+    requestAnimationFrame(tick);
+  }, delay);
+}
+
+/* ─────────────────────────────────────────────
+   AUTO TRIGGER (every 4–8 seconds)
+───────────────────────────────────────────── */
+function scheduleAuto() {
+  cancelAutoTimer();
+  const delay = randInt(4000, 8000);
+  autoTimer = setTimeout(() => {
+    if (!isGlitching) runGlitch();
+  }, delay);
+}
+
+function cancelAutoTimer() {
+  if (autoTimer) { clearTimeout(autoTimer); autoTimer = null; }
+}
+
+/* ─────────────────────────────────────────────
+   HOVER TRIGGER
+───────────────────────────────────────────── */
+stage.addEventListener('mouseenter', () => {
+  if (!isGlitching) runGlitch();
+});
+
+/* Touch support */
+stage.addEventListener('touchstart', (e) => {
+  e.preventDefault();
+  if (!isGlitching) runGlitch();
+}, { passive: false });
+
+/* ─────────────────────────────────────────────
+   INIT
+───────────────────────────────────────────── */
+function init() {
+  buildSlices();
+  resetAll();
+  /* Phase 1: hold 500ms clean, then first auto glitch */
+  setTimeout(() => {
+    scheduleAuto();
+  }, 500);
+}
+
+/* Wait for fonts / layout to settle */
+window.addEventListener('load', init);
+
+/* Rebuild slices on resize */
+let resizeTimer;
+window.addEventListener('resize', () => {
+  clearTimeout(resizeTimer);
+  resizeTimer = setTimeout(() => {
+    if (!isGlitching) {
+      buildSlices();
+      resetAll();
+    }
+  }, 200);
+});
+</script>
+</body>
+</html>

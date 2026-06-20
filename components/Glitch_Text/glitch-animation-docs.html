@@ -1,0 +1,2107 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Velocity Glitch — توثيق شامل</title>
+<style>
+/* ═══════════════════════════════════
+   TOKENS
+═══════════════════════════════════ */
+:root{
+  --bg:       #04040c;
+  --bg2:      #090916;
+  --bg3:      #0e0e20;
+  --surface:  #12122a;
+  --border:   rgba(0,255,208,0.12);
+  --border2:  rgba(0,255,208,0.22);
+  --accent:   #00ffd0;
+  --accent2:  #00e5ff;
+  --red:      #ff1a3a;
+  --white:    #eeeef6;
+  --dim:      rgba(238,238,246,0.45);
+  --muted:    rgba(238,238,246,0.22);
+  --code-bg:  #07071a;
+  --tag-bg:   rgba(0,255,208,0.08);
+  --warn:     #ffb700;
+  --font-head:'Arial Black','Arial Bold',Arial,sans-serif;
+  --font-body:'Segoe UI',system-ui,-apple-system,sans-serif;
+  --font-mono:'Courier New','Lucida Console',monospace;
+}
+
+/* ═══════════════════════════════════
+   BASE
+═══════════════════════════════════ */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;font-size:16px}
+body{
+  background:var(--bg);
+  color:var(--white);
+  font-family:var(--font-body);
+  line-height:1.7;
+  -webkit-font-smoothing:antialiased;
+}
+
+/* ═══════════════════════════════════
+   SCROLLBAR
+═══════════════════════════════════ */
+::-webkit-scrollbar{width:4px}
+::-webkit-scrollbar-track{background:var(--bg)}
+::-webkit-scrollbar-thumb{background:var(--accent);opacity:0.3;border-radius:2px}
+
+/* ═══════════════════════════════════
+   LAYOUT
+═══════════════════════════════════ */
+.shell{display:flex;min-height:100vh}
+
+/* ── Sidebar ── */
+.sidebar{
+  width:260px;flex-shrink:0;
+  position:sticky;top:0;height:100vh;
+  overflow-y:auto;
+  background:var(--bg2);
+  border-left:1px solid var(--border);
+  padding:32px 0;
+  display:flex;flex-direction:column;
+  gap:0;
+}
+.sidebar-logo{
+  padding:0 24px 28px;
+  border-bottom:1px solid var(--border);
+  margin-bottom:20px;
+}
+.sidebar-logo .logo-tag{
+  font-family:var(--font-mono);
+  font-size:9px;letter-spacing:0.3em;
+  color:var(--accent);opacity:0.55;
+  text-transform:uppercase;margin-bottom:6px;
+}
+.sidebar-logo .logo-name{
+  font-family:var(--font-head);
+  font-size:18px;font-weight:900;
+  color:var(--white);letter-spacing:-0.02em;
+}
+
+.nav-group-label{
+  font-family:var(--font-mono);
+  font-size:8.5px;letter-spacing:0.35em;
+  color:var(--accent);opacity:0.40;
+  text-transform:uppercase;
+  padding:0 24px;margin:18px 0 6px;
+}
+.nav-link{
+  display:block;
+  padding:7px 24px;
+  font-size:13px;color:var(--dim);
+  text-decoration:none;
+  border-right:2px solid transparent;
+  transition:color .15s,border-color .15s,background .15s;
+  font-family:var(--font-body);
+}
+.nav-link:hover{color:var(--white);background:rgba(0,255,208,0.04);}
+.nav-link.active{color:var(--accent);border-right-color:var(--accent);background:rgba(0,255,208,0.06);}
+.nav-sub{padding-right:36px;font-size:12px;color:var(--muted);}
+
+/* ── Main ── */
+.main{
+  flex:1;min-width:0;
+  padding:60px 64px;
+  max-width:860px;
+}
+@media(max-width:900px){
+  .sidebar{display:none}
+  .main{padding:40px 24px}
+}
+
+/* ═══════════════════════════════════
+   SECTION LAYOUT
+═══════════════════════════════════ */
+.section{margin-bottom:80px}
+.section + .section{
+  padding-top:56px;
+  border-top:1px solid var(--border);
+}
+
+/* ═══════════════════════════════════
+   TYPOGRAPHY
+═══════════════════════════════════ */
+.page-eyebrow{
+  font-family:var(--font-mono);
+  font-size:10px;letter-spacing:0.38em;
+  color:var(--accent);opacity:0.55;
+  text-transform:uppercase;margin-bottom:14px;
+}
+.page-title{
+  font-family:var(--font-head);
+  font-size:clamp(36px,5vw,58px);
+  font-weight:900;
+  letter-spacing:-0.03em;
+  line-height:1.05;
+  color:var(--white);
+  margin-bottom:20px;
+}
+.page-title span{color:var(--accent);}
+.page-intro{
+  font-size:16px;color:var(--dim);
+  line-height:1.75;max-width:620px;
+  margin-bottom:36px;
+}
+.section-badge{
+  display:inline-flex;align-items:center;gap:8px;
+  font-family:var(--font-mono);
+  font-size:10px;letter-spacing:0.28em;text-transform:uppercase;
+  color:var(--accent);
+  background:var(--tag-bg);
+  border:1px solid var(--border2);
+  padding:4px 12px;border-radius:2px;
+  margin-bottom:14px;
+}
+.section-title{
+  font-family:var(--font-head);
+  font-size:clamp(22px,3vw,30px);
+  font-weight:900;
+  letter-spacing:-0.025em;
+  color:var(--white);
+  margin-bottom:14px;
+  line-height:1.1;
+}
+.section-title span{color:var(--accent);}
+.section-desc{
+  font-size:15px;color:var(--dim);
+  line-height:1.75;margin-bottom:28px;
+  max-width:640px;
+}
+h4{
+  font-size:14px;font-weight:700;
+  color:var(--white);margin:24px 0 8px;
+  font-family:var(--font-body);
+  letter-spacing:0.02em;
+}
+p{font-size:15px;color:var(--dim);line-height:1.75;margin-bottom:14px;}
+strong{color:var(--white);}
+
+/* ═══════════════════════════════════
+   PHASE CARD
+═══════════════════════════════════ */
+.phase-card{
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:4px;
+  margin-bottom:24px;
+  overflow:hidden;
+}
+.phase-header{
+  display:flex;align-items:center;gap:14px;
+  padding:16px 22px;
+  border-bottom:1px solid var(--border);
+  background:rgba(0,255,208,0.03);
+}
+.phase-num{
+  font-family:var(--font-mono);
+  font-size:11px;letter-spacing:0.2em;
+  color:var(--accent);
+  background:rgba(0,255,208,0.10);
+  border:1px solid rgba(0,255,208,0.25);
+  padding:3px 9px;border-radius:2px;
+  flex-shrink:0;
+}
+.phase-name{
+  font-family:var(--font-head);
+  font-size:16px;font-weight:900;
+  color:var(--white);letter-spacing:-0.01em;
+}
+.phase-dur{
+  margin-right:auto;
+  font-family:var(--font-mono);
+  font-size:10px;color:var(--muted);
+  letter-spacing:0.15em;
+}
+.phase-body{padding:20px 22px;}
+.phase-body p{margin-bottom:12px;font-size:14px;}
+.phase-body p:last-child{margin-bottom:0}
+
+.behavior-row{
+  display:grid;grid-template-columns:1fr 1fr;
+  gap:12px;margin-top:16px;
+}
+@media(max-width:600px){.behavior-row{grid-template-columns:1fr}}
+.behavior-box{
+  background:var(--bg3);
+  border:1px solid var(--border);
+  border-radius:3px;padding:14px 16px;
+}
+.behavior-box .bh-label{
+  font-family:var(--font-mono);
+  font-size:9px;letter-spacing:0.3em;text-transform:uppercase;
+  color:var(--accent);margin-bottom:8px;opacity:0.65;
+}
+.behavior-box p{font-size:13px;color:var(--dim);margin:0;}
+
+/* ═══════════════════════════════════
+   VELOCITY TABLE
+═══════════════════════════════════ */
+.vel-table{
+  width:100%;border-collapse:collapse;
+  margin:20px 0;font-size:13px;
+}
+.vel-table th{
+  font-family:var(--font-mono);
+  font-size:9px;letter-spacing:0.28em;text-transform:uppercase;
+  color:var(--accent);opacity:0.65;
+  text-align:right;padding:8px 14px;
+  border-bottom:1px solid var(--border2);
+  background:rgba(0,255,208,0.03);
+}
+.vel-table td{
+  padding:10px 14px;text-align:right;
+  border-bottom:1px solid var(--border);
+  color:var(--dim);vertical-align:top;
+}
+.vel-table tr:last-child td{border-bottom:none}
+.vel-table .level{
+  font-family:var(--font-mono);
+  font-size:11px;letter-spacing:0.15em;
+  font-weight:700;
+}
+.lv-low{color:#00ffd0}
+.lv-med{color:#00e5ff}
+.lv-hi {color:#7b00ff}
+.lv-ext{color:#ff1a3a}
+
+/* ═══════════════════════════════════
+   CODE BLOCK
+═══════════════════════════════════ */
+.code-wrap{
+  background:var(--code-bg);
+  border:1px solid var(--border);
+  border-radius:4px;
+  margin:20px 0;
+  overflow:hidden;
+}
+.code-header{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:9px 16px;
+  border-bottom:1px solid var(--border);
+  background:rgba(0,255,208,0.03);
+}
+.code-lang{
+  font-family:var(--font-mono);
+  font-size:9px;letter-spacing:0.28em;text-transform:uppercase;
+  color:var(--accent);opacity:0.60;
+}
+.code-copy{
+  font-family:var(--font-mono);
+  font-size:9px;letter-spacing:0.2em;text-transform:uppercase;
+  color:var(--muted);cursor:pointer;
+  background:none;border:none;padding:0;
+  transition:color .15s;
+}
+.code-copy:hover{color:var(--accent);}
+pre{
+  padding:20px;
+  overflow-x:auto;
+  font-family:var(--font-mono);
+  font-size:12.5px;
+  line-height:1.65;
+  color:var(--dim);
+}
+.kw {color:#00ffd0}   /* keyword / property  */
+.fn {color:#00e5ff}   /* function name       */
+.str{color:#ffb700}   /* string              */
+.cm {color:rgba(238,238,246,0.28);font-style:italic} /* comment */
+.nm {color:#c17aff}   /* number              */
+.op {color:rgba(238,238,246,0.55)} /* operator */
+
+/* ═══════════════════════════════════
+   PROMPT BOX
+═══════════════════════════════════ */
+.prompt-box{
+  background:rgba(0,229,255,0.04);
+  border:1px solid rgba(0,229,255,0.20);
+  border-radius:4px;
+  margin:24px 0;
+  overflow:hidden;
+}
+.prompt-header{
+  display:flex;align-items:center;gap:10px;
+  padding:10px 18px;
+  border-bottom:1px solid rgba(0,229,255,0.15);
+  background:rgba(0,229,255,0.06);
+}
+.prompt-icon{
+  font-size:12px;color:var(--accent2);
+  font-family:var(--font-mono);
+}
+.prompt-label{
+  font-family:var(--font-mono);
+  font-size:9px;letter-spacing:0.28em;text-transform:uppercase;
+  color:var(--accent2);opacity:0.75;
+}
+.prompt-body{
+  padding:18px;
+  font-family:var(--font-mono);
+  font-size:12.5px;line-height:1.75;
+  color:rgba(238,238,246,0.65);
+  white-space:pre-wrap;
+  word-break:break-word;
+}
+.prompt-body .ph{color:var(--accent);}   /* placeholder */
+.prompt-body .cmt{color:rgba(238,238,246,0.30);font-style:italic;}
+
+/* ═══════════════════════════════════
+   FORMULA / MATH BOX
+═══════════════════════════════════ */
+.formula{
+  background:var(--bg3);
+  border:1px solid var(--border);
+  border-radius:3px;
+  padding:16px 20px;
+  margin:16px 0;
+  font-family:var(--font-mono);
+  font-size:13px;color:var(--dim);
+  line-height:1.8;
+}
+.formula .var{color:#c17aff;}
+.formula .val{color:var(--accent);}
+.formula .eq {color:rgba(238,238,246,0.45);}
+
+/* ═══════════════════════════════════
+   TAGS / BADGES
+═══════════════════════════════════ */
+.tag{
+  display:inline-block;
+  font-family:var(--font-mono);
+  font-size:10px;letter-spacing:0.15em;text-transform:uppercase;
+  padding:2px 8px;border-radius:2px;
+  margin:2px;
+}
+.tag-green{background:rgba(0,255,208,0.10);color:var(--accent);border:1px solid rgba(0,255,208,0.25);}
+.tag-red  {background:rgba(255,26,58,0.10); color:var(--red);  border:1px solid rgba(255,26,58,0.25);}
+.tag-warn {background:rgba(255,183,0,0.10); color:var(--warn); border:1px solid rgba(255,183,0,0.25);}
+.tag-blue {background:rgba(0,229,255,0.10); color:var(--accent2);border:1px solid rgba(0,229,255,0.25);}
+
+/* ═══════════════════════════════════
+   CALLOUT
+═══════════════════════════════════ */
+.callout{
+  display:flex;gap:14px;
+  background:rgba(255,183,0,0.05);
+  border:1px solid rgba(255,183,0,0.20);
+  border-radius:4px;
+  padding:16px 18px;
+  margin:20px 0;
+}
+.callout-icon{font-size:18px;line-height:1;flex-shrink:0;margin-top:1px;}
+.callout-body{font-size:13.5px;color:rgba(238,238,246,0.60);line-height:1.70;}
+.callout-body strong{color:var(--warn);}
+.callout.info{background:rgba(0,229,255,0.05);border-color:rgba(0,229,255,0.18);}
+.callout.info .callout-body strong{color:var(--accent2);}
+
+/* ═══════════════════════════════════
+   VISUAL FLOW DIAGRAM (ASCII-style)
+═══════════════════════════════════ */
+.flow{
+  background:var(--code-bg);
+  border:1px solid var(--border);
+  border-radius:4px;
+  padding:22px 24px;
+  margin:20px 0;
+  font-family:var(--font-mono);
+  font-size:12px;
+  line-height:1.9;
+  color:rgba(238,238,246,0.50);
+  overflow-x:auto;
+  white-space:pre;
+}
+.flow .fh{color:var(--accent);font-weight:700;}
+.flow .fa{color:rgba(238,238,246,0.30);}
+.flow .fd{color:var(--accent2);}
+.flow .fe{color:var(--red);}
+.flow .fw{color:var(--warn);}
+
+/* ═══════════════════════════════════
+   HERO DEMO AREA
+═══════════════════════════════════ */
+.demo-frame{
+  background:var(--bg);
+  border:1px solid var(--border2);
+  border-radius:4px;
+  height:200px;
+  display:flex;flex-direction:column;
+  align-items:center;justify-content:center;
+  gap:0;
+  margin:24px 0;
+  position:relative;
+  overflow:hidden;
+}
+.demo-frame::before{
+  content:'';position:absolute;inset:0;
+  background-image:
+    linear-gradient(rgba(255,255,255,0.018) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(255,255,255,0.018) 1px,transparent 1px);
+  background-size:40px 40px;
+  pointer-events:none;
+}
+.demo-word{
+  display:flex;align-items:flex-end;gap:0;
+  position:relative;z-index:5;
+  padding:0 10px;
+}
+.demo-char{
+  font-family:var(--font-head);
+  font-size:clamp(50px,8vw,96px);
+  font-weight:900;
+  letter-spacing:-0.03em;
+  color:var(--white);
+  position:relative;
+  display:inline-block;
+  cursor:default;
+  user-select:none;
+}
+.demo-sub{
+  position:relative;z-index:5;
+  font-family:var(--font-mono);
+  font-size:9px;letter-spacing:0.3em;text-transform:uppercase;
+  color:rgba(238,238,246,0.20);
+  margin-top:12px;
+}
+
+/* ═══════════════════════════════════
+   TWO-COL COMPARE
+═══════════════════════════════════ */
+.compare{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:20px 0;}
+@media(max-width:600px){.compare{grid-template-columns:1fr}}
+.compare-box{
+  background:var(--bg3);
+  border:1px solid var(--border);
+  border-radius:3px;padding:16px;
+}
+.compare-box .cb-label{
+  font-family:var(--font-mono);font-size:9px;
+  letter-spacing:0.28em;text-transform:uppercase;
+  margin-bottom:10px;
+}
+.cb-do   .cb-label{color:#00ffd0;}
+.cb-dont .cb-label{color:var(--red);}
+.compare-box ul{padding-right:18px;}
+.compare-box li{font-size:13px;color:var(--dim);margin-bottom:6px;line-height:1.55;}
+
+/* ═══════════════════════════════════
+   SECTION DIVIDER
+═══════════════════════════════════ */
+.divider{
+  display:flex;align-items:center;gap:14px;
+  margin:48px 0 40px;
+}
+.divider::before,.divider::after{
+  content:'';flex:1;height:1px;
+  background:linear-gradient(90deg,transparent,var(--border2),transparent);
+}
+.divider span{
+  font-family:var(--font-mono);font-size:9px;
+  letter-spacing:0.3em;text-transform:uppercase;
+  color:var(--accent);opacity:0.35;
+  white-space:nowrap;
+}
+
+/* ═══════════════════════════════════
+   FOOTER
+═══════════════════════════════════ */
+.footer{
+  margin-top:80px;padding:32px 0;
+  border-top:1px solid var(--border);
+  font-family:var(--font-mono);font-size:10px;
+  letter-spacing:0.20em;text-transform:uppercase;
+  color:var(--muted);
+  display:flex;align-items:center;justify-content:space-between;
+  gap:12px;flex-wrap:wrap;
+}
+
+/* ═══════════════════════════════════
+   INLINE CODE
+═══════════════════════════════════ */
+code{
+  font-family:var(--font-mono);font-size:12px;
+  background:var(--code-bg);
+  border:1px solid var(--border);
+  padding:1px 6px;border-radius:2px;
+  color:var(--accent);
+}
+</style>
+</head>
+<body>
+
+<div class="shell">
+
+<!-- ═══════════════════════════════════
+     SIDEBAR NAV
+═══════════════════════════════════ -->
+<nav class="sidebar" aria-label="Navigation">
+  <div class="sidebar-logo">
+    <div class="logo-tag">Documentation</div>
+    <div class="logo-name">GLITCH<span style="color:var(--accent)">_</span>ENGINE</div>
+  </div>
+
+  <span class="nav-group-label">Overview</span>
+  <a class="nav-link active" href="#intro">مقدمة — ما هذا؟</a>
+  <a class="nav-link" href="#concept">المفهوم الأساسي</a>
+  <a class="nav-link" href="#architecture">البنية المعمارية</a>
+
+  <span class="nav-group-label">مراحل الحركة</span>
+  <a class="nav-link" href="#phase1">Phase 1 — Clean State</a>
+  <a class="nav-link nav-sub" href="#phase2">Phase 2 — Corruption</a>
+  <a class="nav-link nav-sub" href="#phase3">Phase 3 — RGB Split</a>
+  <a class="nav-link nav-sub" href="#phase4">Phase 4 — Peak</a>
+  <a class="nav-link nav-sub" href="#phase5">Phase 5 — Fragments</a>
+  <a class="nav-link nav-sub" href="#phase6">Phase 6 — Recovery</a>
+
+  <span class="nav-group-label">نظام السرعة</span>
+  <a class="nav-link" href="#velocity">قياس السرعة</a>
+  <a class="nav-link" href="#vel-mapping">ربط السرعة بالتأثير</a>
+  <a class="nav-link" href="#easing">منحنيات العودة</a>
+
+  <span class="nav-group-label">الكود</span>
+  <a class="nav-link" href="#html-structure">HTML Structure</a>
+  <a class="nav-link" href="#css-system">CSS System</a>
+  <a class="nav-link" href="#js-engine">JS Engine</a>
+
+  <span class="nav-group-label">الـ Prompts</span>
+  <a class="nav-link" href="#prompt-full">Prompt كامل</a>
+  <a class="nav-link" href="#prompt-phases">Prompt لكل مرحلة</a>
+
+  <span class="nav-group-label">تخصيص</span>
+  <a class="nav-link" href="#customization">تعديل الإعدادات</a>
+  <a class="nav-link" href="#accessibility">Accessibility</a>
+</nav>
+
+<!-- ═══════════════════════════════════
+     MAIN CONTENT
+═══════════════════════════════════ -->
+<main class="main">
+
+<!-- ─────────────────────────────────
+     HERO
+───────────────────────────────── -->
+<section class="section" id="intro">
+  <div class="page-eyebrow">Velocity-Driven Per-Character Glitch Animation</div>
+  <h1 class="page-title">GLITCH<span>_</span>ENGINE<br>التوثيق الشامل</h1>
+  <p class="page-intro">
+    دليل تقني كامل يشرح بناء حركة Glitch تفاعلية مرتبطة بسرعة الماوس،
+    تعمل على مستوى كل حرف بشكل مستقل، مع نظام recovery ديناميكي.
+    مكتوب لكل من المطور البشري والـ AI Agent.
+  </p>
+
+  <div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:36px;">
+    <span class="tag tag-green">Pure CSS + JS</span>
+    <span class="tag tag-blue">No Libraries</span>
+    <span class="tag tag-green">GPU Accelerated</span>
+    <span class="tag tag-warn">60 FPS</span>
+    <span class="tag tag-blue">Per-Character</span>
+    <span class="tag tag-green">Velocity-Driven</span>
+  </div>
+
+  <!-- Live demo area -->
+  <div class="demo-frame" id="demoFrame">
+    <div class="demo-word" id="demoWord"></div>
+    <div class="demo-sub">[ مرر الماوس على الأحرف ]</div>
+  </div>
+</section>
+
+<!-- ─────────────────────────────────
+     CONCEPT
+───────────────────────────────── -->
+<section class="section" id="concept">
+  <div class="section-badge">■ المفهوم</div>
+  <h2 class="section-title">ما الذي يجعل هذا الـ <span>Glitch</span> مختلفاً؟</h2>
+  <p class="section-desc">
+    معظم تأثيرات الـ Glitch المتاحة تعمل على النص كاملاً، وتبدأ تلقائياً، وتتكرر بشكل آلي.
+    هذا النظام مختلف جذرياً في ثلاثة محاور:
+  </p>
+
+  <div class="behavior-row">
+    <div class="behavior-box">
+      <div class="bh-label">■ Per-Character</div>
+      <p>كل حرف يعمل كـ unit مستقل تماماً. له slices خاصة، وRGB channels منفصلة، ودورة حياة خاصة. الحرف يتأثر فقط عندما يدخل الماوس مساحته.</p>
+    </div>
+    <div class="behavior-box">
+      <div class="bh-label">■ Velocity-Driven</div>
+      <p>شدة التأثير تساوي شدة السرعة. الماوس البطيء ينتج تشويشاً خفيفاً. الماوس السريع ينتج فوضى كاملة. لا يوجد تأثير ثابت.</p>
+    </div>
+    <div class="behavior-box">
+      <div class="bh-label">■ Direction-Aware</div>
+      <p>الـ slices تتحرك في نفس اتجاه الماوس. القناة الحمراء تذهب مع الاتجاه، السماوية عكسه. الحركة تشعر بأنها ناتجة عن الاحتكاك الرقمي.</p>
+    </div>
+    <div class="behavior-box">
+      <div class="bh-label">■ Dynamic Recovery</div>
+      <p>العودة ليست ثابتة. السرعة العالية تنتج elastic overshoot — الحرف يتجاوز الوضع الأصلي قليلاً ثم يرتد. السرعة المنخفضة تنتج ease-out ناعم.</p>
+    </div>
+  </div>
+
+  <div class="divider"><span>Flow Overview</span></div>
+
+  <div class="flow"><span class="fh">┌─ TRIGGER ─────────────────────────────────────────────────────┐</span>
+<span class="fh">│</span>  mouseenter على حرف معين                                     <span class="fh">│</span>
+<span class="fh">│</span>  <span class="fa">→</span> قراءة السرعة الحالية (smoothVX, smoothVY)                  <span class="fh">│</span>
+<span class="fh">│</span>  <span class="fa">→</span> حساب intensity = clamp((speed - 1.5) / 26.5, 0, 1)       <span class="fh">│</span>
+<span class="fh">│</span>  <span class="fa">→</span> تحديد dirSign = smoothVX >= 0 ? +1 : -1                   <span class="fh">│</span>
+<span class="fh">└───────────────────────────────────────────────────────────────┘</span>
+            <span class="fa">│</span>
+            <span class="fa">▼</span>
+<span class="fd">┌─ PHASE 2: Signal Corruption (100–150ms) ──────────────────────┐</span>
+<span class="fd">│</span>  buildSlices(intensity)  <span class="fa">→</span> بناء شرائح أفقية عشوائية             <span class="fd">│</span>
+<span class="fd">│</span>  activateSlices()        <span class="fa">→</span> إخفاء base، إظهار slices             <span class="fd">│</span>
+<span class="fd">│</span>  loopP2()                <span class="fa">→</span> تحديث مواضع الشرائح كل 8–18ms        <span class="fd">│</span>
+<span class="fd">└───────────────────────────────────────────────────────────────┘</span>
+            <span class="fa">│</span>    <span class="fa">↗ يبدأ بعد 35ms</span>
+            <span class="fa">▼</span>
+<span class="fw">┌─ PHASE 3: RGB Split (100ms) ──────────────────────────────────┐</span>
+<span class="fw">│</span>  rgbR.translateX( +offset * dirSign)  <span class="fa">mix-blend-mode:screen</span>    <span class="fw">│</span>
+<span class="fw">│</span>  rgbC.translateX( -offset * dirSign)  <span class="fa">mix-blend-mode:screen</span>    <span class="fw">│</span>
+<span class="fw">│</span>  opacity: 8%–50% حسب intensity                                 <span class="fw">│</span>
+<span class="fw">└───────────────────────────────────────────────────────────────┘</span>
+            <span class="fa">│</span>
+            <span class="fa">▼</span>
+<span class="fh">┌─ PHASE 4: Distortion Peak (150–280ms) ────────────────────────┐</span>
+<span class="fh">│</span>  intensity ترتفع حتى 42% من المدة ثم تنخفض                    <span class="fh">│</span>
+<span class="fh">│</span>  كل slice تتحرك بشكل مستقل بـ inertia خاصة                    <span class="fh">│</span>
+<span class="fh">└───────────────────────────────────────────────────────────────┘</span>
+            <span class="fa">│</span>    <span class="fa">↗ يبدأ بعد 50ms (فقط عند intensity &gt; 0.45)</span>
+            <span class="fa">▼</span>
+<span class="fe">┌─ PHASE 5: Pixel Fragments ────────────────────────────────────┐</span>
+<span class="fe">│</span>  مستطيلات صغيرة 3–22px تتطاير في اتجاه الماوس                <span class="fe">│</span>
+<span class="fe">│</span>  تتلاشى خلال 60–180ms بـ easeOutCubic                         <span class="fe">│</span>
+<span class="fe">└───────────────────────────────────────────────────────────────┘</span>
+            <span class="fa">│</span>
+            <span class="fa">▼</span>
+<span class="fd">┌─ PHASE 6: Recovery ───────────────────────────────────────────┐</span>
+<span class="fd">│</span>  LOW speed   : easeOutCubic,  ~80ms,  ناعم وسريع              <span class="fd">│</span>
+<span class="fd">│</span>  MED speed   : easeOutQuint, ~180ms,  أبطأ                    <span class="fd">│</span>
+<span class="fd">│</span>  HIGH speed  : elastic spring, ~320ms, overshoot ثم استقرار   <span class="fd">│</span>
+<span class="fd">│</span>  ← يعود الحرف إلى Phase 1 النظيف تماماً                       <span class="fd">│</span>
+<span class="fd">└───────────────────────────────────────────────────────────────┘</span></div>
+</section>
+
+<!-- ─────────────────────────────────
+     ARCHITECTURE
+───────────────────────────────── -->
+<section class="section" id="architecture">
+  <div class="section-badge">■ البنية</div>
+  <h2 class="section-title">البنية <span>المعمارية</span> للكود</h2>
+  <p class="section-desc">
+    كل حرف يُبنى كـ component مستقل يحتوي على طبقات متعددة تُكدَّس فوق بعضها.
+    فهم هذه الطبقات ضروري قبل أي تعديل.
+  </p>
+
+  <div class="code-wrap">
+    <div class="code-header">
+      <span class="code-lang">HTML Structure — كل حرف</span>
+    </div>
+    <pre>
+<span class="cm">&lt;!-- هذا الـ HTML يُبنى ديناميكياً بالـ JS لكل حرف --&gt;</span>
+<span class="kw">&lt;div</span> class=<span class="str">"g-char-wrap"</span><span class="kw">&gt;</span>           <span class="cm">&lt;!-- الحاوية الرئيسية --&gt;</span>
+
+  <span class="cm">&lt;!-- طبقة RGB الحمراء — خلف النص الأصلي --&gt;</span>
+  <span class="kw">&lt;span</span> class=<span class="str">"g-char-rgb red"</span><span class="kw">&gt;</span>N<span class="kw">&lt;/span&gt;</span>
+
+  <span class="cm">&lt;!-- طبقة RGB السماوية — خلف النص الأصلي --&gt;</span>
+  <span class="kw">&lt;span</span> class=<span class="str">"g-char-rgb cyn"</span><span class="kw">&gt;</span>N<span class="kw">&lt;/span&gt;</span>
+
+  <span class="cm">&lt;!-- النص الأصلي — يختفي أثناء الـ glitch --&gt;</span>
+  <span class="kw">&lt;span</span> class=<span class="str">"g-char-base"</span><span class="kw">&gt;</span>N<span class="kw">&lt;/span&gt;</span>
+
+  <span class="cm">&lt;!-- حاوية الـ slices — تُملأ بالـ JS --&gt;</span>
+  <span class="kw">&lt;div</span> class=<span class="str">"g-char-slices"</span><span class="kw">&gt;</span>
+    <span class="cm">&lt;!-- slice مثال --&gt;</span>
+    <span class="kw">&lt;div</span> class=<span class="str">"g-char-slice"</span> style=<span class="str">"top:0;height:8px"</span><span class="kw">&gt;</span>
+      <span class="kw">&lt;div</span> class=<span class="str">"g-char-slice-inner"</span> style=<span class="str">"top:0px"</span><span class="kw">&gt;</span>N<span class="kw">&lt;/div&gt;</span>
+    <span class="kw">&lt;/div&gt;</span>
+    <span class="cm">&lt;!-- ... المزيد من الـ slices --&gt;</span>
+  <span class="kw">&lt;/div&gt;</span>
+
+<span class="kw">&lt;/div&gt;</span></pre>
+  </div>
+
+  <h4>لماذا هذه البنية تحديداً؟</h4>
+  <p>
+    <strong>g-char-base</strong> موجود دائماً ويحدد أبعاد الحرف. عند تشغيل الـ glitch نجعله
+    <code>opacity:0</code> فقط ولا نحذفه — هذا يمنع الـ layout shifts.
+  </p>
+  <p>
+    <strong>g-char-slices</strong> تحتوي على <code>overflow:hidden</code> مما يجعل كل slice تعرض فقط
+    الجزء الخاص بها من النص عبر clipping تلقائي. هذا هو جوهر تأثير الـ slice.
+  </p>
+  <p>
+    <strong>g-char-slice-inner</strong> يحتوي على نفس النص لكن <code>top</code> تساوي سالب موضع الـ slice،
+    مما يجعل النص يظهر في الموضع الصحيح داخل كل شريحة.
+  </p>
+
+  <div class="callout info">
+    <div class="callout-icon">◈</div>
+    <div class="callout-body">
+      <strong>ملاحظة للـ AI Agent:</strong> كل طبقة لها z-index محدد.
+      rgb: z=3، base: z=5، slices: z=6، fragments: z=7.
+      تغيير هذه القيم سيكسر ترتيب الطبقات.
+    </div>
+  </div>
+
+  <h4>مخطط الـ z-index layers</h4>
+  <div class="formula">
+<span class="cm">/* من الأسفل للأعلى */</span>
+<span class="var">z-index: 3</span>  <span class="eq">→</span>  <span class="val">RGB ghost layers</span>       <span class="cm">/* mix-blend-mode:screen */</span>
+<span class="var">z-index: 5</span>  <span class="eq">→</span>  <span class="val">Base text</span>              <span class="cm">/* النص الأصلي        */</span>
+<span class="var">z-index: 6</span>  <span class="eq">→</span>  <span class="val">Slice bands</span>            <span class="cm">/* يغطي Base أثناء glitch */</span>
+<span class="var">z-index: 7</span>  <span class="eq">→</span>  <span class="val">Pixel fragments</span>        <span class="cm">/* فوق كل شيء         */</span></div>
+</section>
+
+<!-- ═══════════════════════════════════
+     PHASES
+═══════════════════════════════════ -->
+<section class="section" id="phase1">
+  <div class="section-badge">■ المراحل</div>
+  <h2 class="section-title"><span>Phase 1</span> — Clean State</h2>
+  <p class="section-desc">الحالة الافتراضية للحرف قبل أي تفاعل. هذه هي نقطة البداية والنهاية في كل دورة.</p>
+
+  <div class="phase-card">
+    <div class="phase-header">
+      <span class="phase-num">PH.01</span>
+      <span class="phase-name">Clean State — الحالة النظيفة</span>
+      <span class="phase-dur">∞ until hover</span>
+    </div>
+    <div class="phase-body">
+      <p><strong>ماذا يحدث:</strong> النص ظاهر بشكل حاد وكامل. لا حركة، لا تشويش، لا تأثيرات.</p>
+      <p><strong>ما هو موجود في DOM لكنه مخفي:</strong> طبقتا RGB (opacity:0)، حاوية الـ slices (فارغة)، حاوية الـ fragments (فارغة).</p>
+      <p><strong>السبب:</strong> الحفاظ على DOM ثابت يمنع reflow عند بدء الحركة، وهو أهم من الأداء اللحظي.</p>
+
+      <div class="code-wrap" style="margin-top:16px">
+        <div class="code-header"><span class="code-lang">CSS — الحالة الافتراضية</span></div>
+        <pre>
+<span class="cm">/* كل هذا موجود لكن غير مرئي */</span>
+<span class="kw">.g-char-rgb</span> { <span class="fn">opacity</span>: <span class="nm">0</span>; }
+<span class="kw">.g-char-slice</span> { <span class="fn">opacity</span>: <span class="nm">0</span>; }
+<span class="kw">.g-char-base</span> { <span class="fn">opacity</span>: <span class="nm">1</span>; <span class="cm">/* الوحيد الظاهر */</span> }
+
+<span class="cm">/* GPU layer لكل عنصر متحرك مستقبلاً */</span>
+<span class="kw">.g-char-rgb, .g-char-slice</span> {
+  <span class="fn">will-change</span>: <span class="str">transform, opacity</span>;
+  <span class="fn">transform</span>: <span class="fn">translateZ</span>(<span class="nm">0</span>); <span class="cm">/* إنشاء GPU layer فوري */</span>
+}</pre>
+      </div>
+    </div>
+  </div>
+
+  <div class="prompt-box" id="phase1-prompt">
+    <div class="prompt-header">
+      <span class="prompt-icon">◆</span>
+      <span class="prompt-label">Prompt — Phase 1</span>
+    </div>
+    <div class="prompt-body">
+<span class="ph">Create the default clean state for a per-character glitch animation.</span>
+
+<span class="cmt"># Requirements:</span>
+- Each character must be wrapped in a div with class "g-char-wrap"
+- Inside each wrapper, create THREE layers in this exact order:
+  1. span.g-char-rgb.red  → opacity:0, color:#ff1a3a, mix-blend-mode:screen, z-index:3
+  2. span.g-char-rgb.cyn  → opacity:0, color:#00e5ff, mix-blend-mode:screen, z-index:3
+  3. span.g-char-base     → opacity:1, z-index:5 (the only visible layer)
+- Add div.g-char-slices   → overflow:hidden, z-index:6, position:absolute, inset:0
+- All animated elements must have: will-change:transform,opacity; transform:translateZ(0)
+- NO CSS transitions on any of these elements — JS handles all animation
+- Font: Arial Black, weight:900, letter-spacing:-0.03em
+
+<span class="cmt"># State variables per character object:</span>
+{ wrap, base, rgbR, rgbC, slicesCon, slices:[], running:false, letter }
+    </div>
+  </div>
+</section>
+
+<!-- ─────────────────────────────────
+     PHASE 2
+───────────────────────────────── -->
+<section class="section" id="phase2">
+  <h2 class="section-title"><span>Phase 2</span> — Digital Corruption</h2>
+  <p class="section-desc">الإشارة الأولى للتشويش. النص يُقسَّم إلى شرائح أفقية تتحرك بشكل عشوائي.</p>
+
+  <div class="phase-card">
+    <div class="phase-header">
+      <span class="phase-num">PH.02</span>
+      <span class="phase-name">Digital Corruption — التشويش الرقمي</span>
+      <span class="phase-dur">60ms – 160ms (حسب السرعة)</span>
+    </div>
+    <div class="phase-body">
+      <p><strong>الاسم التقني:</strong> Horizontal Slice Displacement</p>
+      <p><strong>ماذا يحدث:</strong> ارتفاع الحرف يُقسَّم إلى شرائح أفقية. كل شريحة تعرض جزءاً من النص وتتحرك أفقياً بشكل مستقل عن الأخريات.</p>
+
+      <div class="behavior-row">
+        <div class="behavior-box">
+          <div class="bh-label">🟢 سرعة منخفضة</div>
+          <p>8–12 شريحة، ارتفاع 8–18px، إزاحة 3–8px، تُحدَّث كل 18ms</p>
+        </div>
+        <div class="behavior-box">
+          <div class="bh-label">🔴 سرعة عالية</div>
+          <p>40–50 شريحة، ارتفاع 2–6px، إزاحة 15–42px، تُحدَّث كل 8ms</p>
+        </div>
+      </div>
+
+      <div class="code-wrap" style="margin-top:16px">
+        <div class="code-header"><span class="code-lang">JavaScript — buildSlices()</span></div>
+        <pre>
+<span class="kw">function</span> <span class="fn">buildSlices</span>(s, intensity) {
+  s.slicesCon.innerHTML = <span class="str">''</span>;
+  s.slices = [];
+  <span class="kw">const</span> H = s.base.offsetHeight;
+
+  <span class="cm">/* عدد الشرائح: يزيد مع السرعة */</span>
+  <span class="kw">const</span> maxSlices = Math.round(<span class="fn">lerp</span>(<span class="nm">8</span>, <span class="nm">50</span>, intensity));
+
+  <span class="cm">/* ارتفاع الشريحة: يقل مع السرعة (تقطيع أدق) */</span>
+  <span class="kw">const</span> minH = Math.round(<span class="fn">lerp</span>(<span class="nm">8</span>, <span class="nm">2</span>, intensity));
+  <span class="kw">const</span> maxH = Math.round(<span class="fn">lerp</span>(<span class="nm">18</span>, <span class="nm">6</span>, intensity));
+
+  <span class="kw">let</span> y = <span class="nm">0</span>;
+  <span class="kw">while</span> (y < H && s.slices.length < maxSlices) {
+    <span class="kw">const</span> h = <span class="fn">clamp</span>(<span class="fn">rndInt</span>(minH, maxH), <span class="nm">2</span>, H - y);
+
+    <span class="cm">/* كل شريحة = div يقطع بـ overflow:hidden */</span>
+    <span class="kw">const</span> el = document.<span class="fn">createElement</span>(<span class="str">'div'</span>);
+    el.className = <span class="str">'g-char-slice'</span>;
+    el.style.top = y + <span class="str">'px'</span>;
+    el.style.height = h + <span class="str">'px'</span>;
+
+    <span class="cm">/* النص داخل الشريحة — يُعوَّض لأعلى لمحاذاة الحرف */</span>
+    <span class="kw">const</span> inner = document.<span class="fn">createElement</span>(<span class="str">'div'</span>);
+    inner.className = <span class="str">'g-char-slice-inner'</span>;
+    inner.textContent = s.letter;
+    inner.style.top = (-y) + <span class="str">'px'</span>; <span class="cm">/* التعويض الحاسم */</span>
+
+    el.<span class="fn">appendChild</span>(inner);
+    s.slicesCon.<span class="fn">appendChild</span>(el);
+    s.slices.<span class="fn">push</span>({ el, cx: <span class="nm">0</span>, velX: <span class="nm">0</span> });
+    y += h;
+  }
+}</pre>
+      </div>
+
+      <h4>لماذا top: (-y) مهم جداً؟</h4>
+      <p>
+        إذا وضعنا الحرف داخل div بارتفاع 8px فقط، سيظهر الجزء العلوي من الحرف فقط في كل شريحة.
+        بإضافة <code>top: -y</code> نعوّض الموضع لأعلى بمقدار بداية الشريحة، فيظهر الجزء الصحيح
+        من الحرف في كل شريحة. هذا هو المبدأ الأساسي لـ CSS Clipping بدون clip-path.
+      </p>
+    </div>
+  </div>
+
+  <div class="prompt-box">
+    <div class="prompt-header">
+      <span class="prompt-icon">◆</span>
+      <span class="prompt-label">Prompt — Phase 2: Slice System</span>
+    </div>
+    <div class="prompt-body">
+<span class="ph">Implement a horizontal slice displacement system for a single character.</span>
+
+<span class="cmt"># buildSlices(charState, intensity) — intensity: 0.0 to 1.0</span>
+- Clear existing slices from slicesCon
+- Calculate maxSlices = lerp(8, 50, intensity) rounded to integer
+- Calculate slice height range: minH = lerp(8, 2, intensity), maxH = lerp(18, 6, intensity)
+- Loop from y=0 to charHeight, creating slice divs:
+  * div.g-char-slice: position:absolute, left:0, right:0, top:y, height:h, overflow:hidden
+  * div.g-char-slice-inner inside it: position:absolute, top:-y (CRITICAL), contains the letter
+  * Initial state: opacity:0, transform:translateX(0px)
+  * Push to slices array: { el, cx:0, velX:0 }
+
+<span class="cmt"># sliceFrameChaos(charState, intensity, dirSign)</span>
+- fraction of active slices = lerp(0.15, 0.82, intensity)
+- maxShift = lerp(3, 42, intensity) pixels
+- For each slice:
+  * if Math.random() < fraction: apply displacement in dirSign direction (70% chance), opposite (30%)
+  * else: decay current position by lerp(0.85, 0.55, intensity)
+- Apply via style.transform = translateX(${cx}px) — NO CSS transitions
+
+<span class="cmt"># loopP2 — animation loop</span>
+- Update interval: lerp(18, 8, intensity)ms between frames
+- Duration: lerp(60, 160, intensity)ms total
+- Use requestAnimationFrame, NOT setInterval
+    </div>
+  </div>
+</section>
+
+<!-- ─────────────────────────────────
+     PHASE 3
+───────────────────────────────── -->
+<section class="section" id="phase3">
+  <h2 class="section-title"><span>Phase 3</span> — RGB Channel Split</h2>
+  <p class="section-desc">ظهور الانقسام اللوني. طبقتان شبحيتان تنفصلان في اتجاهين معاكسين.</p>
+
+  <div class="phase-card">
+    <div class="phase-header">
+      <span class="phase-num">PH.03</span>
+      <span class="phase-name">RGB Channel Split — انقسام القنوات اللونية</span>
+      <span class="phase-dur">يبدأ بعد 35ms — يستمر حتى Recovery</span>
+    </div>
+    <div class="phase-body">
+      <p><strong>الاسم التقني:</strong> Chromatic Aberration Simulation</p>
+      <p>
+        <strong>المفهوم:</strong> نسخ من النص بلونين مختلفين (أحمر + سماوي) تُزاح في اتجاهين معاكسين.
+        <code>mix-blend-mode:screen</code> يجعلها مرئية فقط على الخلفيات الداكنة ويمنع البياض الكامل.
+      </p>
+
+      <div class="behavior-row">
+        <div class="behavior-box">
+          <div class="bh-label">القناة الحمراء (#ff1a3a)</div>
+          <p>تتحرك في <strong>نفس اتجاه الماوس</strong>. إزاحة +1 إلى +8px. تومض بشكل مستقل.</p>
+        </div>
+        <div class="behavior-box">
+          <div class="bh-label">القناة السماوية (#00e5ff)</div>
+          <p>تتحرك في <strong>الاتجاه المعاكس للماوس</strong>. إزاحة -1 إلى -8px. تومض بشكل مستقل.</p>
+        </div>
+      </div>
+
+      <div class="code-wrap" style="margin-top:16px">
+        <div class="code-header"><span class="code-lang">JavaScript — rgbFrame()</span></div>
+        <pre>
+<span class="kw">function</span> <span class="fn">rgbFrame</span>(s, intensity, dirSign) {
+  <span class="cm">/* الإزاحة القصوى: 1px عند بطء شديد → 8px عند سرعة قصوى */</span>
+  <span class="kw">const</span> maxOff = <span class="fn">lerp</span>(<span class="nm">1</span>, <span class="nm">8</span>, intensity);
+
+  <span class="cm">/* الشفافية: 8% عند بطء → 50% عند سرعة */</span>
+  <span class="kw">const</span> maxOpa = <span class="fn">lerp</span>(<span class="nm">0.08</span>, <span class="nm">0.50</span>, intensity);
+
+  <span class="cm">/* احتمال الظهور: يزيد مع السرعة */</span>
+  <span class="kw">const</span> flickerChance = <span class="fn">lerp</span>(<span class="nm">0.55</span>, <span class="nm">0.20</span>, intensity);
+
+  <span class="cm">/* القناة الحمراء → اتجاه الماوس */</span>
+  s.rgbR.style.transform = `translateX(${dirSign * <span class="fn">rnd</span>(<span class="nm">1</span>, maxOff)}px)`;
+  s.rgbR.style.opacity = Math.random() > flickerChance
+    ? String(<span class="fn">rnd</span>(<span class="nm">0.06</span>, maxOpa)) : <span class="str">'0'</span>;
+
+  <span class="cm">/* القناة السماوية → عكس اتجاه الماوس */</span>
+  s.rgbC.style.transform = `translateX(${-dirSign * <span class="fn">rnd</span>(<span class="nm">1</span>, maxOff)}px)`;
+  s.rgbC.style.opacity = Math.random() > flickerChance
+    ? String(<span class="fn">rnd</span>(<span class="nm">0.06</span>, maxOpa)) : <span class="str">'0'</span>;
+}</pre>
+      </div>
+
+      <div class="callout">
+        <div class="callout-icon">⚠</div>
+        <div class="callout-body">
+          <strong>تنبيه:</strong> لا تستخدم CSS transitions مع القنوات اللونية.
+          التحديث يجب أن يكون فورياً في كل frame لتحقيق تأثير الوميض السريع.
+          أي transition ستحوّل الوميض إلى fade بطيء.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="prompt-box">
+    <div class="prompt-header">
+      <span class="prompt-icon">◆</span>
+      <span class="prompt-label">Prompt — Phase 3: RGB Split</span>
+    </div>
+    <div class="prompt-body">
+<span class="ph">Implement chromatic aberration simulation for per-character glitch.</span>
+
+<span class="cmt"># CSS setup for RGB layers (already in DOM, opacity:0 at rest):</span>
+.g-char-rgb.red { color: #ff1a3a; mix-blend-mode: screen; position: absolute; inset: 0; z-index: 3; }
+.g-char-rgb.cyn { color: #00e5ff; mix-blend-mode: screen; position: absolute; inset: 0; z-index: 3; }
+
+<span class="cmt"># rgbFrame(charState, intensity, dirSign) — called every 14–30ms</span>
+- maxOffset = lerp(1, 8, intensity) pixels
+- maxOpacity = lerp(0.08, 0.50, intensity)
+- flickerOffChance = lerp(0.55, 0.20, intensity)  ← higher speed = less flicker-off
+- Red channel: translateX(+dirSign * random(1, maxOffset))
+- Cyan channel: translateX(-dirSign * random(1, maxOffset))
+- Each channel independently: if random() > flickerChance → show at random opacity, else opacity:0
+- NO CSS transitions — direct style assignment only
+
+<span class="cmt"># Loop behavior:</span>
+- Start: 35ms after Phase 2 begins
+- Interval between frames: lerp(30, 14, intensity)ms
+- Stop: when Recovery phase begins (set rgbAlive = false)
+- On stop: immediately set both channels to opacity:0, translateX(0)
+    </div>
+  </div>
+</section>
+
+<!-- ─────────────────────────────────
+     PHASE 4
+───────────────────────────────── -->
+<section class="section" id="phase4">
+  <h2 class="section-title"><span>Phase 4</span> — Distortion Peak</h2>
+  <p class="section-desc">ذروة التشويش. الشدة ترتفع حتى نقطة الذروة ثم تبدأ بالتراجع تدريجياً.</p>
+
+  <div class="phase-card">
+    <div class="phase-header">
+      <span class="phase-num">PH.04</span>
+      <span class="phase-name">Distortion Peak — ذروة التشويش</span>
+      <span class="phase-dur">80ms – 280ms (حسب السرعة)</span>
+    </div>
+    <div class="phase-body">
+      <p>
+        <strong>ما يجعله مختلفاً عن Phase 2:</strong> في Phase 2 الشدة ثابتة (~0.5).
+        في Phase 4 الشدة تتغير مع الوقت — ترتفع من 0.55 إلى 1.0 عند 42% من المدة،
+        ثم تنخفض تدريجياً إلى 0.25. هذه هي "الإيقاعية" التي تجعل التأثير يشعر بأنه حي.
+      </p>
+
+      <div class="code-wrap">
+        <div class="code-header"><span class="code-lang">JavaScript — loopP4 intensity curve</span></div>
+        <pre>
+<span class="kw">const</span> p4Peak = p4Start + P4_DUR * <span class="nm">0.42</span>; <span class="cm">/* الذروة عند 42% */</span>
+
+<span class="cm">/* داخل الـ animation loop */</span>
+<span class="kw">const</span> ratio = (now - p4Start) / P4_DUR;
+<span class="kw">const</span> intensity =
+  now < p4Peak
+  <span class="cm">/* صعود: من 0.55*intensity إلى intensity */</span>
+  ? <span class="fn">lerp</span>(<span class="nm">0.55</span> * baseIntensity, baseIntensity,
+          (now - p4Start) / (p4Peak - p4Start))
+
+  <span class="cm">/* هبوط: من intensity إلى intensity*0.25 */</span>
+  : <span class="fn">lerp</span>(baseIntensity, baseIntensity * <span class="nm">0.25</span>,
+          (now - p4Peak) / (p4End - p4Peak));</pre>
+      </div>
+
+      <div class="formula">
+<span class="var">P4_DUR</span>     <span class="eq">=</span>  <span class="val">lerp(80, 280, intensity)</span>     <span class="cm">← أطول عند سرعة عالية</span>
+<span class="var">peak_time</span>  <span class="eq">=</span>  <span class="val">P4_START + P4_DUR × 0.42</span>   <span class="cm">← الذروة قبل منتصف المدة</span>
+<span class="var">update_ms</span>  <span class="eq">=</span>  <span class="val">lerp(20, 8, intensity)</span>      <span class="cm">← تحديث أسرع عند سرعة عالية</span></div>
+    </div>
+  </div>
+
+  <div class="prompt-box">
+    <div class="prompt-header">
+      <span class="prompt-icon">◆</span>
+      <span class="prompt-label">Prompt — Phase 4: Peak Distortion</span>
+    </div>
+    <div class="prompt-body">
+<span class="ph">Implement the distortion peak phase with a time-varying intensity curve.</span>
+
+<span class="cmt"># Timing:</span>
+- Starts: P2_DUR + 10ms after trigger
+- Duration P4_DUR = lerp(80, 280, intensity)ms
+- Peak moment: P4_START + P4_DUR × 0.42
+
+<span class="cmt"># Intensity curve (two-part):</span>
+Phase A (0% → 42%): intensity rises from (0.55 × baseIntensity) to baseIntensity
+Phase B (42% → 100%): intensity falls from baseIntensity to (baseIntensity × 0.25)
+Formula:
+  ratio = (now - p4Start) / P4_DUR
+  if ratio < 0.42: lerp(0.55×base, base, ratio/0.42)
+  else:            lerp(base, base×0.25, (ratio-0.42)/0.58)
+
+<span class="cmt"># Frame update:</span>
+- Interval: lerp(20, 8, intensity)ms between slice updates
+- Call sliceFrameChaos(charState, currentIntensity, dirSign) each interval
+- Loop exits when now >= p4End (no explicit cancel needed)
+    </div>
+  </div>
+</section>
+
+<!-- ─────────────────────────────────
+     PHASE 5
+───────────────────────────────── -->
+<section class="section" id="phase5">
+  <h2 class="section-title"><span>Phase 5</span> — Pixel Fragmentation</h2>
+  <p class="section-desc">جزيئات رقمية تتطاير من الحرف. تظهر فقط عند السرعات العالية (intensity &gt; 0.45).</p>
+
+  <div class="phase-card">
+    <div class="phase-header">
+      <span class="phase-num">PH.05</span>
+      <span class="phase-name">Pixel Fragmentation — تشرذم البكسل</span>
+      <span class="phase-dur">60ms – 180ms per fragment</span>
+    </div>
+    <div class="phase-body">
+      <p>
+        <strong>المفهوم:</strong> مستطيلات صغيرة لونها أبيض (نفس لون النص) تُنشأ عشوائياً على مساحة الحرف
+        وتتطاير في اتجاه الماوس بتسارع متناقص (ease-out)، ثم تتلاشى حتى opacity:0.
+      </p>
+      <p><strong>عدد الجزيئات:</strong> <code>lerp(3, 18, intensity)</code> — من 3 قطع ببطء إلى 18 قطعة بسرعة قصوى.</p>
+      <p><strong>أبعاد كل جزيئة:</strong> عرض 3–22px، ارتفاع 1–5px. مستطيلات أفقية لتناسب مظهر البيانات الرقمية.</p>
+
+      <div class="code-wrap">
+        <div class="code-header"><span class="code-lang">JavaScript — spawnFragments()</span></div>
+        <pre>
+<span class="kw">function</span> <span class="fn">spawnFragments</span>(s, intensity, dirSign) {
+  <span class="kw">const</span> count = Math.<span class="fn">round</span>(<span class="fn">lerp</span>(<span class="nm">3</span>, <span class="nm">18</span>, intensity));
+
+  <span class="kw">for</span> (<span class="kw">let</span> i = <span class="nm">0</span>; i < count; i++) {
+    <span class="kw">const</span> fw = <span class="fn">rndInt</span>(<span class="nm">3</span>, Math.<span class="fn">round</span>(<span class="fn">lerp</span>(<span class="nm">8</span>, <span class="nm">22</span>, intensity)));
+    <span class="kw">const</span> fh = <span class="fn">rndInt</span>(<span class="nm">1</span>, <span class="nm">5</span>);
+    <span class="kw">const</span> fx = <span class="fn">rnd</span>(W*<span class="nm">0.02</span>, W*<span class="nm">0.98</span> - fw);
+    <span class="kw">const</span> fy = <span class="fn">rnd</span>(<span class="nm">0</span>, H - fh);
+
+    <span class="cm">/* اتجاه الطيران = اتجاه الماوس، مسافة حسب السرعة */</span>
+    <span class="kw">const</span> jumpX = dirSign * <span class="fn">rnd</span>(<span class="nm">8</span>, <span class="nm">55</span> * intensity);
+    <span class="kw">const</span> dur   = <span class="fn">rnd</span>(<span class="nm">60</span>, <span class="nm">180</span> * intensity);
+
+    <span class="cm">/* كل جزيئة لها دورة حياة مستقلة */</span>
+    <span class="fn">setTimeout</span>(() => {
+      (<span class="kw">function</span> <span class="fn">tick</span>(now) {
+        <span class="kw">const</span> p = <span class="fn">clamp</span>((now - t0) / dur, <span class="nm">0</span>, <span class="nm">1</span>);
+        <span class="kw">const</span> e = <span class="fn">easeOutCubic</span>(p);           <span class="cm">/* تباطؤ طبيعي */</span>
+        el.style.transform = `translateX(${jumpX * e}px)`;
+        el.style.opacity = String(<span class="nm">1</span> - e);    <span class="cm">/* تلاشٍ متزامن */</span>
+        <span class="kw">if</span> (p < <span class="nm">1</span>) <span class="fn">requestAnimationFrame</span>(tick);
+        <span class="kw">else</span> fcon.<span class="fn">remove</span>();                  <span class="cm">/* تنظيف DOM */</span>
+      })(<span class="fn">performance.now</span>());
+    }, <span class="fn">rnd</span>(<span class="nm">0</span>, <span class="nm">60</span>)); <span class="cm">/* تأخير عشوائي لكل جزيئة */</span>
+  }
+}</pre>
+      </div>
+    </div>
+  </div>
+
+  <div class="prompt-box">
+    <div class="prompt-header">
+      <span class="prompt-icon">◆</span>
+      <span class="prompt-label">Prompt — Phase 5: Pixel Fragments</span>
+    </div>
+    <div class="prompt-body">
+<span class="ph">Create pixel fragment explosion effect, triggered only when intensity > 0.45.</span>
+
+<span class="cmt"># Fragment properties:</span>
+- Count: Math.round(lerp(3, 18, intensity))
+- Width: rndInt(3, Math.round(lerp(8, 22, intensity))) pixels
+- Height: rndInt(1, 5) pixels  ← horizontal rectangles only
+- Color: #eeeef6 (same as text)
+- Position: random within character bounding box (use getBoundingClientRect relative to wrapper)
+- Container: create a div with position:absolute,inset:0,z-index:7, append to charWrap
+
+<span class="cmt"># Fragment animation (independent per fragment):</span>
+- jumpX = dirSign × random(8, 55 × intensity) pixels
+- Duration = random(60, 180 × intensity)ms
+- Random delay per fragment: random(0, 60)ms
+- Easing: easeOutCubic — el.style.transform moves, el.style.opacity decreases from 1 to 0
+- On complete: remove the container div from DOM
+
+<span class="cmt"># Trigger timing:</span>
+- setTimeout: P4_START + 50ms after main trigger
+- Gate condition: if (intensity > 0.45) only
+    </div>
+  </div>
+</section>
+
+<!-- ─────────────────────────────────
+     PHASE 6
+───────────────────────────────── -->
+<section class="section" id="phase6">
+  <h2 class="section-title"><span>Phase 6</span> — Dynamic Recovery</h2>
+  <p class="section-desc">
+    المرحلة الأكثر دقة في النظام. طريقة العودة تختلف جذرياً حسب السرعة الأصلية.
+  </p>
+
+  <div class="phase-card">
+    <div class="phase-header">
+      <span class="phase-num">PH.06</span>
+      <span class="phase-name">Dynamic Recovery — العودة الديناميكية</span>
+      <span class="phase-dur">80ms – 320ms (حسب السرعة)</span>
+    </div>
+    <div class="phase-body">
+      <p><strong>المفهوم:</strong> كل slice تعود إلى موضع X=0 ولكن بمسار مختلف حسب شدة التشويش.</p>
+
+      <table class="vel-table">
+        <thead>
+          <tr>
+            <th>مستوى السرعة</th>
+            <th>نوع الـ Easing</th>
+            <th>المدة</th>
+            <th>السلوك</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><span class="level lv-low">LOW</span></td>
+            <td>easeOutCubic</td>
+            <td>~80ms</td>
+            <td class="dim">سريع وناعم. مباشر إلى الصفر.</td>
+          </tr>
+          <tr>
+            <td><span class="level lv-med">MED</span></td>
+            <td>easeOutQuint</td>
+            <td>~180ms</td>
+            <td>أبطأ في البداية، توقف تدريجي.</td>
+          </tr>
+          <tr>
+            <td><span class="level lv-hi">HIGH</span></td>
+            <td>easeOutQuint</td>
+            <td>~250ms</td>
+            <td>بطيء جداً في النهاية، ثقيل.</td>
+          </tr>
+          <tr>
+            <td><span class="level lv-ext">EXTREME</span></td>
+            <td>Elastic Spring</td>
+            <td>~320ms</td>
+            <td>يتجاوز الصفر (overshoot) ثم يرتد.</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="code-wrap">
+        <div class="code-header"><span class="code-lang">JavaScript — Recovery Easing Selection</span></div>
+        <pre>
+<span class="cm">/* اختيار نوع الـ easing حسب شدة السرعة */</span>
+<span class="kw">let</span> e;
+<span class="kw">if</span> (intensity < <span class="nm">0.40</span>) {
+  <span class="cm">/* LOW: ناعم وسريع */</span>
+  e = <span class="fn">easeOutCubic</span>(p);   <span class="cm">/* 1 - (1-p)³ */</span>
+
+} <span class="kw">else if</span> (intensity < <span class="nm">0.75</span>) {
+  <span class="cm">/* MED-HIGH: أبطأ وأثقل */</span>
+  e = <span class="fn">easeOutQuint</span>(p);   <span class="cm">/* 1 - (1-p)⁵ */</span>
+
+} <span class="kw">else</span> {
+  <span class="cm">/* EXTREME: elastic spring — يتجاوز ثم يرتد */</span>
+  <span class="kw">const</span> c4 = (<span class="nm">2</span> * Math.PI) / <span class="nm">3</span>;
+  e = p === <span class="nm">0</span> ? <span class="nm">0</span> : p === <span class="nm">1</span> ? <span class="nm">1</span> :
+    Math.<span class="fn">pow</span>(<span class="nm">2</span>, -<span class="nm">10</span>*p) * Math.<span class="fn">sin</span>((p*<span class="nm">10</span> - <span class="nm">0.75</span>) * c4) + <span class="nm">1</span>;
+}
+
+<span class="cm">/* كل slice تعود من موضعها الحالي إلى الصفر */</span>
+s.slices.<span class="fn">forEach</span>((sl, i) => {
+  <span class="kw">const</span> pos = <span class="fn">lerp</span>(startX[i], <span class="nm">0</span>, e);
+  sl.el.style.transform = `translateX(${pos}px)`;
+});</pre>
+      </div>
+
+      <div class="callout info">
+        <div class="callout-icon">◈</div>
+        <div class="callout-body">
+          <strong>Elastic Overshoot:</strong> معادلة الـ Spring تنتج قيماً تتجاوز 1 مؤقتاً.
+          هذا يعني أن <code>lerp(startX, 0, e)</code> ستتجاوز الصفر قليلاً من الجانب الآخر
+          قبل أن تستقر. هذا هو التأثير المرغوب — الحرف "يرتد" كالنابض.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="prompt-box">
+    <div class="prompt-header">
+      <span class="prompt-icon">◆</span>
+      <span class="prompt-label">Prompt — Phase 6: Dynamic Recovery</span>
+    </div>
+    <div class="prompt-body">
+<span class="ph">Implement velocity-dependent recovery animation for the glitch effect.</span>
+
+<span class="cmt"># Recovery timing:</span>
+- Duration REC_DUR = lerp(80, 320, intensity)ms
+- Starts: immediately after P4 ends (= P4_START + P4_DUR + 30ms from trigger)
+
+<span class="cmt"># Pre-recovery setup:</span>
+1. Set rgbAlive = false (stops RGB loop)
+2. Snap both RGB channels to opacity:0, translateX(0) immediately
+3. Snapshot current slice positions: startX = slices.map(sl => sl.cx)
+
+<span class="cmt"># Easing selection (based on entry intensity):</span>
+- intensity < 0.40 → easeOutCubic: 1 - Math.pow(1-p, 3)
+- intensity < 0.75 → easeOutQuint: 1 - Math.pow(1-p, 5)
+- intensity >= 0.75 → Elastic spring:
+  const c4 = (2 * Math.PI) / 3
+  e = Math.pow(2, -10*p) * Math.sin((p*10 - 0.75) * c4) + 1
+
+<span class="cmt"># Per-frame update:</span>
+- p = clamp((now - recStart) / REC_DUR, 0, 1)
+- e = selectedEasing(p)
+- For each slice i: style.transform = translateX(lerp(startX[i], 0, e) + "px")
+- When p >= 1: call resetChar() → base opacity:1, all slices opacity:0, running=false
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════
+     VELOCITY SYSTEM
+═══════════════════════════════════ -->
+<section class="section" id="velocity">
+  <div class="section-badge">■ نظام السرعة</div>
+  <h2 class="section-title">كيف نقيس <span>سرعة الماوس</span></h2>
+  <p class="section-desc">
+    السرعة الخام من أحداث mousemove متقلبة جداً. نستخدم exponential smoothing
+    لتحويلها إلى سرعة ناعمة وقابلة للاستخدام.
+  </p>
+
+  <div class="code-wrap">
+    <div class="code-header"><span class="code-lang">JavaScript — Velocity Tracker</span></div>
+    <pre>
+<span class="kw">let</span> smoothVX = <span class="nm">0</span>, smoothVY = <span class="nm">0</span>;
+<span class="kw">let</span> lastMX = <span class="nm">0</span>, lastMY = <span class="nm">0</span>, lastT = <span class="nm">0</span>;
+
+window.<span class="fn">addEventListener</span>(<span class="str">'mousemove'</span>, e => {
+  <span class="kw">const</span> now = <span class="fn">performance.now</span>();
+  <span class="kw">const</span> dt  = Math.<span class="fn">max</span>(now - lastT, <span class="nm">1</span>); <span class="cm">/* منع القسمة على صفر */</span>
+
+  <span class="cm">/* السرعة الخام = التغيير في الموضع ÷ الزمن × معامل تطبيع */</span>
+  <span class="kw">const</span> dvx = (e.clientX - lastMX) / dt * <span class="nm">16</span>;
+  <span class="kw">const</span> dvy = (e.clientY - lastMY) / dt * <span class="nm">16</span>;
+
+  <span class="cm">/* Exponential smoothing — α=0.40 — يمزج الجديد مع القديم */</span>
+  smoothVX = <span class="fn">lerp</span>(smoothVX, dvx, <span class="nm">0.40</span>);
+  smoothVY = <span class="fn">lerp</span>(smoothVY, dvy, <span class="nm">0.40</span>);
+
+  lastMX = e.clientX;
+  lastMY = e.clientY;
+  lastT  = now;
+});
+
+<span class="cm">/* تناقص تدريجي عند توقف الماوس */</span>
+<span class="fn">setInterval</span>(() => {
+  smoothVX *= <span class="nm">0.88</span>;
+  smoothVY *= <span class="nm">0.88</span>;
+}, <span class="nm">30</span>);</pre>
+  </div>
+
+  <div class="formula">
+<span class="var">rawSpeed</span>  <span class="eq">=</span>  <span class="val">√(smoothVX² + smoothVY²)</span>
+<span class="var">intensity</span> <span class="eq">=</span>  <span class="val">clamp((rawSpeed - 1.5) / 26.5,  0.0,  1.0)</span>
+<span class="var">dirSign</span>   <span class="eq">=</span>  <span class="val">smoothVX >= 0 ? +1 : -1</span>
+
+<span class="cm">/* أمثلة عملية */</span>
+<span class="var">rawSpeed = 0</span>   <span class="eq">→</span> intensity = <span class="val">0.00</span>  <span class="cm">← لا تأثير</span>
+<span class="var">rawSpeed = 5</span>   <span class="eq">→</span> intensity = <span class="val">0.13</span>  <span class="cm">← تشويش خفيف</span>
+<span class="var">rawSpeed = 14</span>  <span class="eq">→</span> intensity = <span class="val">0.47</span>  <span class="cm">← تشويش متوسط</span>
+<span class="var">rawSpeed = 28</span>  <span class="eq">→</span> intensity = <span class="val">1.00</span>  <span class="cm">← تشويش أقصى</span></div>
+
+  <h4>لماذا نطرح 1.5 من rawSpeed؟</h4>
+  <p>
+    هذه هي الـ <strong>dead zone</strong>. الحركة الطبيعية للماوس حتى عند التحريك البطيء جداً
+    تنتج قيماً صغيرة من الضجيج. طرح 1.5 يمنع ظهور تأثير خفيف عند الحركة البطيئة جداً
+    التي يجب ألا تنتج أي تأثير.
+  </p>
+</section>
+
+<!-- ─────────────────────────────────
+     VEL MAPPING
+───────────────────────────────── -->
+<section class="section" id="vel-mapping">
+  <h2 class="section-title">ربط السرعة بكل <span>معامل</span></h2>
+  <p class="section-desc">كل معامل في النظام يتغير بشكل مستقل حسب intensity. هذا الجدول يلخص جميع العلاقات.</p>
+
+  <table class="vel-table">
+    <thead>
+      <tr>
+        <th>المعامل</th>
+        <th>عند intensity=0 (بطيء)</th>
+        <th>عند intensity=1 (سريع)</th>
+        <th>الصيغة</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>عدد الـ slices</td>
+        <td>8 شرائح</td>
+        <td>50 شريحة</td>
+        <td><code>lerp(8, 50, i)</code></td>
+      </tr>
+      <tr>
+        <td>ارتفاع الـ slice</td>
+        <td>8–18px</td>
+        <td>2–6px</td>
+        <td><code>lerp(8→18, 2→6, i)</code></td>
+      </tr>
+      <tr>
+        <td>إزاحة الـ slice</td>
+        <td>3–8px</td>
+        <td>15–42px</td>
+        <td><code>lerp(3, 42, i)</code></td>
+      </tr>
+      <tr>
+        <td>نسبة الـ slices المتحركة</td>
+        <td>15%</td>
+        <td>82%</td>
+        <td><code>lerp(0.15, 0.82, i)</code></td>
+      </tr>
+      <tr>
+        <td>إزاحة RGB</td>
+        <td>1–2px</td>
+        <td>6–8px</td>
+        <td><code>lerp(1, 8, i)</code></td>
+      </tr>
+      <tr>
+        <td>شفافية RGB</td>
+        <td>6–8%</td>
+        <td>40–50%</td>
+        <td><code>lerp(0.08, 0.50, i)</code></td>
+      </tr>
+      <tr>
+        <td>تردد التحديث (P2)</td>
+        <td>كل 18ms</td>
+        <td>كل 8ms</td>
+        <td><code>lerp(18, 8, i)</code>ms</td>
+      </tr>
+      <tr>
+        <td>مدة Phase 2</td>
+        <td>60ms</td>
+        <td>160ms</td>
+        <td><code>lerp(60, 160, i)</code>ms</td>
+      </tr>
+      <tr>
+        <td>مدة Phase 4</td>
+        <td>80ms</td>
+        <td>280ms</td>
+        <td><code>lerp(80, 280, i)</code>ms</td>
+      </tr>
+      <tr>
+        <td>عدد الـ fragments</td>
+        <td>0 (غير مفعّل)</td>
+        <td>18 قطعة</td>
+        <td><code>lerp(3, 18, i)</code> إذا i>0.45</td>
+      </tr>
+      <tr>
+        <td>مدة Recovery</td>
+        <td>80ms</td>
+        <td>320ms</td>
+        <td><code>lerp(80, 320, i)</code>ms</td>
+      </tr>
+      <tr>
+        <td>نوع Recovery Easing</td>
+        <td>easeOutCubic</td>
+        <td>Elastic Spring</td>
+        <td>i&lt;0.4: cubic, i&lt;0.75: quint, else: elastic</td>
+      </tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- ═══════════════════════════════════
+     EASING CURVES
+═══════════════════════════════════ -->
+<section class="section" id="easing">
+  <div class="section-badge">■ منحنيات الحركة</div>
+  <h2 class="section-title">الـ <span>Easing Functions</span> المستخدمة</h2>
+
+  <div class="code-wrap">
+    <div class="code-header"><span class="code-lang">JavaScript — جميع منحنيات الحركة</span></div>
+    <pre>
+<span class="cm">/* ─── الدوال الأساسية ─── */</span>
+
+<span class="cm">/* Ease Out Cubic — ناعم وطبيعي، للسرعات المنخفضة */</span>
+<span class="kw">const</span> <span class="fn">easeOutCubic</span>  = t => <span class="nm">1</span> - Math.<span class="fn">pow</span>(<span class="nm">1</span> - t, <span class="nm">3</span>);
+
+<span class="cm">/* Ease Out Quint — أثقل وأبطأ في النهاية، للسرعات المتوسطة */</span>
+<span class="kw">const</span> <span class="fn">easeOutQuint</span>  = t => <span class="nm">1</span> - Math.<span class="fn">pow</span>(<span class="nm">1</span> - t, <span class="nm">5</span>);
+
+<span class="cm">/* Elastic Spring — يتجاوز الهدف ثم يرتد، للسرعات العالية */</span>
+<span class="kw">const</span> <span class="fn">elasticOut</span> = t => {
+  <span class="kw">if</span> (t === <span class="nm">0</span>) <span class="kw">return</span> <span class="nm">0</span>;
+  <span class="kw">if</span> (t === <span class="nm">1</span>) <span class="kw">return</span> <span class="nm">1</span>;
+  <span class="kw">const</span> c4 = (<span class="nm">2</span> * Math.PI) / <span class="nm">3</span>;
+  <span class="kw">return</span> Math.<span class="fn">pow</span>(<span class="nm">2</span>, -<span class="nm">10</span> * t) *
+         Math.<span class="fn">sin</span>((t * <span class="nm">10</span> - <span class="nm">0.75</span>) * c4) + <span class="nm">1</span>;
+};
+
+<span class="cm">/* Ease Out Quad — للشرائح أثناء الـ glitch */</span>
+<span class="kw">const</span> <span class="fn">easeOutQuad</span>   = t => <span class="nm">1</span> - (<span class="nm">1</span> - t) * (<span class="nm">1</span> - t);
+
+<span class="cm">/* Linear Interpolation — الأساس لكل شيء */</span>
+<span class="kw">const</span> <span class="fn">lerp</span> = (a, b, t) => a + (b - a) * t;</pre>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════
+     HTML STRUCTURE (FULL)
+═══════════════════════════════════ -->
+<section class="section" id="html-structure">
+  <div class="section-badge">■ الكود الكامل</div>
+  <h2 class="section-title"><span>HTML</span> Structure — البنية الكاملة</h2>
+
+  <div class="code-wrap">
+    <div class="code-header"><span class="code-lang">HTML — الصفحة الكاملة</span></div>
+    <pre>
+<span class="kw">&lt;!DOCTYPE html&gt;</span>
+<span class="kw">&lt;html</span> lang=<span class="str">"en"</span><span class="kw">&gt;</span>
+<span class="kw">&lt;head&gt;</span>
+  <span class="kw">&lt;meta</span> charset=<span class="str">"UTF-8"</span><span class="kw">&gt;</span>
+  <span class="kw">&lt;meta</span> name=<span class="str">"viewport"</span> content=<span class="str">"width=device-width, initial-scale=1"</span><span class="kw">&gt;</span>
+  <span class="kw">&lt;title&gt;</span>Portfolio<span class="kw">&lt;/title&gt;</span>
+<span class="kw">&lt;/head&gt;</span>
+<span class="kw">&lt;body&gt;</span>
+
+  <span class="cm">&lt;!-- ❶ الشبكة الخلفية — pure CSS --&gt;</span>
+  <span class="kw">&lt;div</span> class=<span class="str">"bg-grid"</span> aria-hidden=<span class="str">"true"</span><span class="kw">&gt;&lt;/div&gt;</span>
+
+  <span class="cm">&lt;!-- ❷ زوايا الإطار — SVG ثابتة --&gt;</span>
+  <span class="kw">&lt;svg</span> class=<span class="str">"corner corner-tl"</span> <span class="kw">...&gt;</span>...<span class="kw">&lt;/svg&gt;</span>
+
+  <span class="cm">&lt;!-- ❸ الـ eyebrow label --&gt;</span>
+  <span class="kw">&lt;p</span> class=<span class="str">"eyebrow"</span><span class="kw">&gt;</span>System_Online // Portfolio_v3<span class="kw">&lt;/p&gt;</span>
+
+  <span class="cm">&lt;!-- ❹ صف الأحرف — يُبنى بالـ JS --&gt;</span>
+  <span class="kw">&lt;div</span> class=<span class="str">"title-row"</span>
+       id=<span class="str">"titleRow"</span>
+       role=<span class="str">"heading"</span>
+       aria-label=<span class="str">"NEXUS"</span>
+       aria-level=<span class="str">"1"</span><span class="kw">&gt;</span>
+    <span class="cm">&lt;!-- الـ JS يبني هنا كل g-char-wrap --&gt;</span>
+  <span class="kw">&lt;/div&gt;</span>
+
+  <span class="cm">&lt;!-- ❺ السطر الفرعي --&gt;</span>
+  <span class="kw">&lt;p</span> class=<span class="str">"sub"</span><span class="kw">&gt;</span>Creative Developer<span class="kw">&lt;/p&gt;</span>
+
+<span class="kw">&lt;/body&gt;</span>
+<span class="kw">&lt;/html&gt;</span></pre>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════
+     CSS SYSTEM
+═══════════════════════════════════ -->
+<section class="section" id="css-system">
+  <h2 class="section-title"><span>CSS</span> — النظام الكامل</h2>
+
+  <div class="code-wrap">
+    <div class="code-header"><span class="code-lang">CSS — جميع المتغيرات والطبقات</span></div>
+    <pre>
+<span class="kw">:root</span> {
+  <span class="fn">--bg</span>:        <span class="str">#04040c</span>;
+  <span class="fn">--white</span>:     <span class="str">#eeeef6</span>;
+  <span class="fn">--accent</span>:    <span class="str">#00ffd0</span>;
+  <span class="fn">--red-ch</span>:    <span class="str">#ff1a3a</span>;   <span class="cm">/* قناة RGB الحمراء */</span>
+  <span class="fn">--cyan-ch</span>:   <span class="str">#00e5ff</span>;   <span class="cm">/* قناة RGB السماوية */</span>
+}
+
+<span class="cm">/* ── الحاوية الرئيسية لكل حرف ── */</span>
+<span class="kw">.g-char-wrap</span> {
+  <span class="fn">position</span>: relative;
+  <span class="fn">display</span>: inline-block;
+  <span class="fn">line-height</span>: <span class="nm">1</span>;
+  <span class="fn">isolation</span>: isolate; <span class="cm">/* يمنع mix-blend من التأثير خارج الحرف */</span>
+}
+
+<span class="cm">/* ── النص الأساسي ── */</span>
+<span class="kw">.g-char-base</span> {
+  <span class="fn">font-family</span>: <span class="str">'Arial Black'</span>, Arial, sans-serif;
+  <span class="fn">font-size</span>: <span class="fn">clamp</span>(<span class="nm">62px</span>, <span class="nm">10vw</span>, <span class="nm">128px</span>);
+  <span class="fn">font-weight</span>: <span class="nm">900</span>;
+  <span class="fn">letter-spacing</span>: <span class="nm">-0.03em</span>;
+  <span class="fn">color</span>: var(--white);
+  <span class="fn">display</span>: block;
+  <span class="fn">position</span>: relative;
+  <span class="fn">z-index</span>: <span class="nm">5</span>;
+  <span class="fn">will-change</span>: opacity;
+}
+
+<span class="cm">/* ── طبقات RGB ── */</span>
+<span class="kw">.g-char-rgb</span> {
+  <span class="fn">position</span>: absolute; <span class="fn">inset</span>: <span class="nm">0</span>;
+  <span class="fn">font-size</span>: <span class="fn">clamp</span>(<span class="nm">62px</span>, <span class="nm">10vw</span>, <span class="nm">128px</span>);
+  <span class="fn">font-weight</span>: <span class="nm">900</span>;
+  <span class="fn">letter-spacing</span>: <span class="nm">-0.03em</span>;
+  <span class="fn">line-height</span>: <span class="nm">1</span>;
+  <span class="fn">z-index</span>: <span class="nm">3</span>;
+  <span class="fn">pointer-events</span>: none;
+  <span class="fn">will-change</span>: transform, opacity;
+  <span class="fn">opacity</span>: <span class="nm">0</span>; <span class="cm">/* مخفي في الحالة الافتراضية */</span>
+}
+<span class="kw">.g-char-rgb.red</span> { <span class="fn">color</span>: var(--red-ch);  <span class="fn">mix-blend-mode</span>: screen; }
+<span class="kw">.g-char-rgb.cyn</span> { <span class="fn">color</span>: var(--cyan-ch); <span class="fn">mix-blend-mode</span>: screen; }
+
+<span class="cm">/* ── حاوية الـ slices ── */</span>
+<span class="kw">.g-char-slices</span> {
+  <span class="fn">position</span>: absolute; <span class="fn">inset</span>: <span class="nm">0</span>;
+  <span class="fn">pointer-events</span>: none;
+  <span class="fn">z-index</span>: <span class="nm">6</span>;
+  <span class="fn">overflow</span>: hidden; <span class="cm">/* يقطع الـ slices بحدود الحرف */</span>
+}
+
+<span class="cm">/* ── slice واحدة ── */</span>
+<span class="kw">.g-char-slice</span> {
+  <span class="fn">position</span>: absolute;
+  <span class="fn">left</span>: <span class="nm">0</span>; <span class="fn">right</span>: <span class="nm">0</span>;
+  <span class="fn">overflow</span>: hidden; <span class="cm">/* يقطع النص بارتفاع الشريحة */</span>
+  <span class="fn">will-change</span>: transform;
+  <span class="cm">/* لا transition! JS يتحكم بكل شيء */</span>
+}
+
+<span class="cm">/* ── النص داخل الـ slice ── */</span>
+<span class="kw">.g-char-slice-inner</span> {
+  <span class="fn">position</span>: absolute;
+  <span class="fn">top</span>: <span class="nm">0</span>; <span class="fn">left</span>: <span class="nm">0</span>;
+  <span class="fn">font-size</span>: <span class="fn">clamp</span>(<span class="nm">62px</span>, <span class="nm">10vw</span>, <span class="nm">128px</span>);
+  <span class="fn">font-weight</span>: <span class="nm">900</span>;
+  <span class="fn">letter-spacing</span>: <span class="nm">-0.03em</span>;
+  <span class="fn">line-height</span>: <span class="nm">1</span>;
+  <span class="fn">color</span>: var(--white);
+  <span class="fn">white-space</span>: nowrap;
+  <span class="cm">/* top يُعيَّن بالـ JS: -y لمحاذاة النص */</span>
+}</pre>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════
+     JS ENGINE
+═══════════════════════════════════ -->
+<section class="section" id="js-engine">
+  <h2 class="section-title"><span>JS</span> — المحرك الكامل</h2>
+
+  <div class="code-wrap">
+    <div class="code-header"><span class="code-lang">JavaScript — triggerChar() المحرك الرئيسي</span></div>
+    <pre>
+<span class="kw">function</span> <span class="fn">triggerChar</span>(s) {
+  <span class="kw">if</span> (s.running) <span class="kw">return</span>; <span class="cm">/* منع التشغيل المزدوج */</span>
+  s.running = <span class="kw">true</span>;
+
+  <span class="cm">/* ❶ قراءة السرعة والاتجاه لحظة الدخول */</span>
+  <span class="kw">const</span> intensity = <span class="fn">getIntensity</span>();
+  <span class="kw">const</span> dirSign   = <span class="fn">getDirSign</span>();
+
+  <span class="cm">/* ❷ حساب توقيتات كل مرحلة */</span>
+  <span class="kw">const</span> P2_DUR   = Math.<span class="fn">round</span>(<span class="fn">lerp</span>(<span class="nm">60</span>,  <span class="nm">160</span>, intensity));
+  <span class="kw">const</span> P3_START = Math.<span class="fn">round</span>(<span class="fn">lerp</span>(<span class="nm">20</span>,  <span class="nm">40</span>,  intensity));
+  <span class="kw">const</span> P4_DUR   = Math.<span class="fn">round</span>(<span class="fn">lerp</span>(<span class="nm">80</span>,  <span class="nm">280</span>, intensity));
+  <span class="kw">const</span> P4_START = P2_DUR + <span class="nm">10</span>;
+  <span class="kw">const</span> REC_DUR  = Math.<span class="fn">round</span>(<span class="fn">lerp</span>(<span class="nm">80</span>,  <span class="nm">320</span>, intensity));
+  <span class="kw">const</span> REC_START = P4_START + P4_DUR + <span class="nm">30</span>;
+
+  <span class="cm">/* ❸ بناء الـ slices وتفعيلها */</span>
+  <span class="fn">buildSlices</span>(s, intensity);
+  <span class="fn">activateSlices</span>(s);
+
+  <span class="cm">/* ❹ Phase 2 loop */</span>
+  <span class="fn">startPhase2Loop</span>(s, intensity, dirSign, P2_DUR);
+
+  <span class="cm">/* ❺ Phase 3 — بعد P3_START */</span>
+  <span class="fn">setTimeout</span>(() => <span class="fn">startRGBLoop</span>(s, intensity, dirSign), P3_START);
+
+  <span class="cm">/* ❻ Phase 4 — بعد P4_START */</span>
+  <span class="fn">setTimeout</span>(() => <span class="fn">startPhase4Loop</span>(s, intensity, dirSign, P4_DUR), P4_START);
+
+  <span class="cm">/* ❼ Phase 5 — fragments (فقط عند سرعة كافية) */</span>
+  <span class="kw">if</span> (intensity > <span class="nm">0.45</span>) {
+    <span class="fn">setTimeout</span>(() => <span class="fn">spawnFragments</span>(s, intensity, dirSign), P4_START + <span class="nm">50</span>);
+  }
+
+  <span class="cm">/* ❽ Phase 6 — Recovery */</span>
+  <span class="fn">setTimeout</span>(() => <span class="fn">startRecovery</span>(s, intensity, REC_DUR), REC_START);
+}</pre>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════
+     PROMPT FULL
+═══════════════════════════════════ -->
+<section class="section" id="prompt-full">
+  <div class="section-badge">■ الـ Prompts</div>
+  <h2 class="section-title">Prompt الكامل <span>للمشروع</span></h2>
+  <p class="section-desc">استخدم هذا الـ prompt لإعادة بناء المشروع كاملاً من الصفر.</p>
+
+  <div class="prompt-box">
+    <div class="prompt-header">
+      <span class="prompt-icon">◆</span>
+      <span class="prompt-label">MASTER PROMPT — Velocity-Driven Glitch Animation</span>
+    </div>
+    <div class="prompt-body">
+<span class="ph">Build a velocity-driven per-character glitch animation for a portfolio hero title.</span>
+
+<span class="cmt">═══ VISUAL STYLE ═══</span>
+- Background: #04040c (near black)
+- Text color: #eeeef6 (off-white)
+- Accent: #00ffd0 (cyan-green)
+- Font: Arial Black, weight:900, letter-spacing:-0.03em
+- CSS grid background: rgba(255,255,255,0.025), 48px cells
+- No external libraries. Pure CSS + Vanilla JS.
+
+<span class="cmt">═══ CORE BEHAVIOR ═══</span>
+- Word: "NEXUS" (or any word, split into individual characters)
+- Each character is an INDEPENDENT unit with its own animation state
+- Trigger: mouseenter on individual character only
+- No auto-play. No loops. No idle animation.
+- Animation completes once, resets, then re-triggerable on next hover.
+
+<span class="cmt">═══ VELOCITY SYSTEM ═══</span>
+Track mouse velocity with exponential smoothing (α=0.40):
+  smoothVX = lerp(smoothVX, rawVX, 0.40)
+  rawSpeed = √(smoothVX² + smoothVY²)
+  intensity = clamp((rawSpeed - 1.5) / 26.5, 0, 1)
+  dirSign = smoothVX >= 0 ? +1 : -1
+Decay: smoothVX *= 0.88 every 30ms when mouse stops
+
+<span class="cmt">═══ DOM STRUCTURE (per character) ═══</span>
+div.g-char-wrap (position:relative, isolation:isolate)
+  span.g-char-rgb.red  (z:3, opacity:0, color:#ff1a3a, mix-blend-mode:screen)
+  span.g-char-rgb.cyn  (z:3, opacity:0, color:#00e5ff, mix-blend-mode:screen)
+  span.g-char-base     (z:5, opacity:1)
+  div.g-char-slices    (z:6, overflow:hidden, position:absolute, inset:0)
+
+<span class="cmt">═══ PHASE 2: Slice Corruption (60–160ms) ═══</span>
+- buildSlices(intensity): create lerp(8,50,i) horizontal strips
+- Slice heights: lerp(8→18, 2→6, i)px  — thinner at high speed
+- Each slice: div with overflow:hidden, child div with top:-y offset
+- sliceFrameChaos(): 
+  fraction = lerp(0.15, 0.82, i) of slices get displaced
+  maxShift = lerp(3, 42, i)px in dirSign direction (70%) or opposite (30%)
+  Update every lerp(18, 8, i)ms via requestAnimationFrame
+
+<span class="cmt">═══ PHASE 3: RGB Split (starts 35ms after P2) ═══</span>
+- Red: translateX(+dirSign × rnd(1,8×i)), opacity rnd(0.06, 0.50×i)
+- Cyan: translateX(-dirSign × rnd(1,8×i)), opacity rnd(0.06, 0.50×i)
+- Each channel flickers independently every lerp(30,14,i)ms
+- Stops immediately when Recovery begins
+
+<span class="cmt">═══ PHASE 4: Distortion Peak (80–280ms) ═══</span>
+- Starts: P2_DUR + 10ms
+- Intensity curve: rises 0.55i→i at 42%, falls i→0.25i at 100%
+- Update interval: lerp(20,8,i)ms
+
+<span class="cmt">═══ PHASE 5: Fragments (intensity > 0.45 only) ═══</span>
+- Count: lerp(3,18,i) horizontal rectangles
+- Size: width lerp(3,22,i)px × height 1–5px
+- Color: #eeeef6
+- Each flies in dirSign direction: jumpX = dirSign × rnd(8, 55×i)px
+- Duration: rnd(60, 180×i)ms, easeOutCubic, opacity 1→0
+- Random delay per fragment: rnd(0,60)ms
+
+<span class="cmt">═══ PHASE 6: Recovery ═══</span>
+- Duration: lerp(80,320,i)ms
+- Easing selection:
+  i < 0.40 → easeOutCubic: 1-(1-p)³
+  i < 0.75 → easeOutQuint: 1-(1-p)⁵
+  i >= 0.75 → Elastic: pow(2,-10p)×sin((10p-0.75)×2π/3)+1
+- Each slice returns from startX[i] to 0 via lerp(startX[i], 0, easing(p))
+- On complete: base opacity:1, all slices opacity:0, running=false
+
+<span class="cmt">═══ ACCESSIBILITY ═══</span>
+prefers-reduced-motion: disable all glitch, use opacity:0.6 on hover only
+Role on container: role="heading" aria-label="NEXUS" aria-level="1"
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════
+     PROMPT PER PHASE
+═══════════════════════════════════ -->
+<section class="section" id="prompt-phases">
+  <h2 class="section-title">Prompt لكل <span>مرحلة منفردة</span></h2>
+  <p class="section-desc">استخدم هذه الـ prompts لتعديل مرحلة معينة فقط دون المساس بالباقي.</p>
+
+  <div class="prompt-box">
+    <div class="prompt-header">
+      <span class="prompt-icon">◆</span>
+      <span class="prompt-label">Prompt — تعديل حجم الـ Slices</span>
+    </div>
+    <div class="prompt-body">
+<span class="ph">Modify the slice system to change slice thickness behavior.</span>
+
+In the buildSlices(charState, intensity) function:
+- Current: minH = lerp(8, 2, intensity), maxH = lerp(18, 6, intensity)
+- Change to: minH = lerp(<span class="ph">[NEW_MIN_LOW]</span>, <span class="ph">[NEW_MIN_HIGH]</span>, intensity)
+             maxH = lerp(<span class="ph">[NEW_MAX_LOW]</span>, <span class="ph">[NEW_MAX_HIGH]</span>, intensity)
+
+Keep all other slice properties unchanged.
+Keep the total slice count formula: lerp(8, 50, intensity).
+Keep the top:-y alignment offset inside each slice-inner.
+    </div>
+  </div>
+
+  <div class="prompt-box">
+    <div class="prompt-header">
+      <span class="prompt-icon">◆</span>
+      <span class="prompt-label">Prompt — تغيير ألوان RGB</span>
+    </div>
+    <div class="prompt-body">
+<span class="ph">Change the RGB channel colors while keeping chromatic aberration behavior intact.</span>
+
+In the CSS, change:
+- .g-char-rgb.red → color: <span class="ph">[NEW_COLOR_1]</span>  (was #ff1a3a)
+- .g-char-rgb.cyn → color: <span class="ph">[NEW_COLOR_2]</span>  (was #00e5ff)
+
+Keep mix-blend-mode:screen on both — this is REQUIRED for the blending effect.
+Keep all opacity and transform logic in rgbFrame() unchanged.
+Ensure the two colors are complementary (opposite hues) for best chromatic effect.
+    </div>
+  </div>
+
+  <div class="prompt-box">
+    <div class="prompt-header">
+      <span class="prompt-icon">◆</span>
+      <span class="prompt-label">Prompt — تغيير نص العنوان</span>
+    </div>
+    <div class="prompt-body">
+<span class="ph">Replace the animated word with a different title.</span>
+
+Change the WORD constant at the top of the JS:
+  const WORD = '<span class="ph">NEW_WORD_HERE</span>';
+
+The system automatically:
+- Splits into individual characters
+- Creates DOM structure for each character
+- Sets aria-label on the container to the full word
+
+Also update: aria-label="<span class="ph">NEW_WORD_HERE</span>" on the title-row div.
+
+Note: Very wide characters (W, M) may need padding adjustment:
+  .g-char-wrap { padding: 0 2px; }
+    </div>
+  </div>
+
+  <div class="prompt-box">
+    <div class="prompt-header">
+      <span class="prompt-icon">◆</span>
+      <span class="prompt-label">Prompt — تعديل حساسية السرعة</span>
+    </div>
+    <div class="prompt-body">
+<span class="ph">Adjust velocity sensitivity — how fast mouse must move to trigger full glitch.</span>
+
+In the getIntensity() function:
+  Current: intensity = clamp((rawSpeed - 1.5) / 26.5, 0, 1)
+  
+  To make it MORE sensitive (less mouse speed needed):
+    intensity = clamp((rawSpeed - 1.5) / <span class="ph">15.0</span>, 0, 1)  ← smaller divisor
+    
+  To make it LESS sensitive (more mouse speed needed):
+    intensity = clamp((rawSpeed - 1.5) / <span class="ph">40.0</span>, 0, 1)  ← larger divisor
+    
+  To change the dead zone (minimum speed before any effect):
+    intensity = clamp((rawSpeed - <span class="ph">3.0</span>) / 26.5, 0, 1)  ← larger dead zone
+
+Keep the exponential smoothing (α=0.40) unchanged.
+Keep the decay interval (0.88 every 30ms) unchanged.
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════
+     CUSTOMIZATION
+═══════════════════════════════════ -->
+<section class="section" id="customization">
+  <div class="section-badge">■ التخصيص</div>
+  <h2 class="section-title">تعديل <span>الإعدادات</span></h2>
+
+  <h4>المتغيرات القابلة للتعديل بأمان</h4>
+
+  <div class="compare">
+    <div class="compare-box cb-do">
+      <div class="cb-label">✓ آمن للتعديل</div>
+      <ul>
+        <li>ألوان النص والخلفية في CSS</li>
+        <li>حجم الخط (clamp)</li>
+        <li>قيم lerp (الأرقام فقط)</li>
+        <li>نص WORD</li>
+        <li>مدة Recovery</li>
+        <li>حساسية السرعة</li>
+        <li>ألوان RGB channels</li>
+      </ul>
+    </div>
+    <div class="compare-box cb-dont">
+      <div class="cb-label">✗ لا تلمس هذا</div>
+      <ul>
+        <li>ترتيب طبقات z-index</li>
+        <li>mix-blend-mode:screen</li>
+        <li>منطق top:-y في slice-inner</li>
+        <li>isolation:isolate في wrap</li>
+        <li>بنية DOM الهرمية</li>
+        <li>منطق running:true/false</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="callout">
+    <div class="callout-icon">⚠</div>
+    <div class="callout-body">
+      <strong>قاعدة ذهبية:</strong> لا تضف <code>transition</code> لأي عنصر متحرك.
+      كل الحركة يجب أن تمر عبر <code>requestAnimationFrame</code> فقط.
+      CSS transitions تتعارض مع الـ JS animation وتنتج تأثيرات غير متوقعة.
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════
+     ACCESSIBILITY
+═══════════════════════════════════ -->
+<section class="section" id="accessibility">
+  <div class="section-badge">■ إمكانية الوصول</div>
+  <h2 class="section-title"><span>Accessibility</span></h2>
+
+  <div class="code-wrap">
+    <div class="code-header"><span class="code-lang">JavaScript — Reduced Motion</span></div>
+    <pre>
+<span class="kw">if</span> (window.<span class="fn">matchMedia</span>(<span class="str">'(prefers-reduced-motion: reduce)'</span>).matches) {
+  <span class="cm">/* تعطيل كل الـ glitch — استبداله بـ opacity خفيف */</span>
+  chars.<span class="fn">forEach</span>(s => {
+    s.wrap.<span class="fn">addEventListener</span>(<span class="str">'mouseenter'</span>, () => {
+      s.base.style.transition = <span class="str">'opacity 200ms ease'</span>;
+      s.base.style.opacity = <span class="str">'0.6'</span>;
+    });
+    s.wrap.<span class="fn">addEventListener</span>(<span class="str">'mouseleave'</span>, () => {
+      s.base.style.opacity = <span class="str">'1'</span>;
+    });
+  });
+  <span class="kw">return</span>; <span class="cm">/* إيقاف كل الكود التالي */</span>
+}
+
+<span class="cm">/* HTML — دعم القراء الآليين */</span>
+<span class="cm">&lt;div id="titleRow"
+     role="heading"
+     aria-label="NEXUS"    ← النص الكامل هنا
+     aria-level="1"        ← مستوى h1
+&gt;</span></pre>
+  </div>
+</section>
+
+<!-- ─────────────────────────────────
+     FOOTER
+───────────────────────────────── -->
+<footer class="footer">
+  <span>GLITCH_ENGINE — Documentation v1.0</span>
+  <span>Velocity-Driven · Per-Character · GPU Accelerated</span>
+</footer>
+
+</main>
+</div>
+
+<!-- ═══════════════════════════════════
+     LIVE DEMO JS
+═══════════════════════════════════ -->
+<script>
+(function(){
+'use strict';
+const WORD='NEXUS';
+const row=document.getElementById('demoWord');
+const rnd=(a,b)=>a+Math.random()*(b-a);
+const rndInt=(a,b)=>Math.floor(rnd(a,b+1));
+const clamp=(v,lo,hi)=>Math.max(lo,Math.min(hi,v));
+const lerp=(a,b,t)=>a+(b-a)*t;
+const easeOutCubic=t=>1-Math.pow(1-t,3);
+const easeOutQuint=t=>1-Math.pow(1-t,5);
+
+let smoothVX=0,smoothVY=0,lastMX=0,lastMY=0,lastT=0;
+window.addEventListener('mousemove',e=>{
+  const now=performance.now();
+  const dt=Math.max(now-lastT,1);
+  smoothVX=lerp(smoothVX,(e.clientX-lastMX)/dt*16,0.40);
+  smoothVY=lerp(smoothVY,(e.clientY-lastMY)/dt*16,0.40);
+  lastMX=e.clientX;lastMY=e.clientY;lastT=now;
+});
+setInterval(()=>{smoothVX*=0.88;smoothVY*=0.88;},30);
+
+const getIntensity=()=>clamp((Math.sqrt(smoothVX*smoothVX+smoothVY*smoothVY)-1.5)/26.5,0,1);
+const getDirSign=()=>smoothVX>=0?1:-1;
+
+const chars=[];
+WORD.split('').forEach(letter=>{
+  const wrap=document.createElement('div');
+  wrap.className='demo-char';
+  wrap.style.cssText='position:relative;display:inline-block;line-height:1;isolation:isolate;cursor:default;user-select:none;font-family:"Arial Black",Arial,sans-serif;font-size:clamp(50px,8vw,96px);font-weight:900;letter-spacing:-0.03em;color:#eeeef6;';
+
+  const rgbR=document.createElement('span');
+  rgbR.textContent=letter;
+  rgbR.style.cssText='position:absolute;inset:0;display:block;font-family:"Arial Black",Arial,sans-serif;font-size:clamp(50px,8vw,96px);font-weight:900;letter-spacing:-0.03em;line-height:1;color:#ff1a3a;mix-blend-mode:screen;z-index:3;pointer-events:none;opacity:0;will-change:transform,opacity;';
+
+  const rgbC=document.createElement('span');
+  rgbC.textContent=letter;
+  rgbC.style.cssText='position:absolute;inset:0;display:block;font-family:"Arial Black",Arial,sans-serif;font-size:clamp(50px,8vw,96px);font-weight:900;letter-spacing:-0.03em;line-height:1;color:#00e5ff;mix-blend-mode:screen;z-index:3;pointer-events:none;opacity:0;will-change:transform,opacity;';
+
+  const base=document.createElement('span');
+  base.textContent=letter;
+  base.style.cssText='display:block;position:relative;z-index:5;will-change:opacity;';
+
+  const slicesCon=document.createElement('div');
+  slicesCon.style.cssText='position:absolute;inset:0;pointer-events:none;z-index:6;overflow:hidden;';
+
+  wrap.appendChild(rgbR);wrap.appendChild(rgbC);wrap.appendChild(base);wrap.appendChild(slicesCon);
+  row.appendChild(wrap);
+
+  const s={wrap,base,rgbR,rgbC,slicesCon,slices:[],running:false,letter};
+  chars.push(s);
+  wrap.addEventListener('mouseenter',()=>{if(!s.running)triggerChar(s);});
+});
+
+function buildSlices(s,intensity){
+  s.slicesCon.innerHTML='';s.slices=[];
+  const H=s.base.offsetHeight;if(!H)return;
+  const maxSlices=Math.round(lerp(8,50,intensity));
+  const minH=Math.round(lerp(8,2,intensity));
+  const maxH=Math.round(lerp(18,6,intensity));
+  let y=0;
+  while(y<H&&s.slices.length<maxSlices){
+    const h=clamp(rndInt(minH,maxH),2,H-y);
+    const el=document.createElement('div');
+    el.style.cssText=`position:absolute;left:0;right:0;top:${y}px;height:${h}px;overflow:hidden;opacity:0;will-change:transform;`;
+    const inner=document.createElement('div');
+    inner.textContent=s.letter;
+    inner.style.cssText=`position:absolute;top:${-y}px;left:0;display:block;font-family:"Arial Black",Arial,sans-serif;font-size:clamp(50px,8vw,96px);font-weight:900;letter-spacing:-0.03em;line-height:1;color:#eeeef6;white-space:nowrap;`;
+    el.appendChild(inner);s.slicesCon.appendChild(el);
+    s.slices.push({el,cx:0});y+=h;
+  }
+}
+function activateSlices(s){
+  s.base.style.opacity='0';
+  s.slices.forEach(sl=>{sl.el.style.opacity='1';});
+}
+function sliceFrameChaos(s,intensity,dirSign){
+  const maxShift=lerp(3,42,intensity);
+  const fraction=lerp(0.15,0.82,intensity);
+  s.slices.forEach(sl=>{
+    if(Math.random()<fraction){
+      sl.cx=(Math.random()<0.70?dirSign:-dirSign)*rnd(3,maxShift);
+    }else{sl.cx*=lerp(0.85,0.55,intensity);}
+    sl.el.style.transform=`translateX(${sl.cx}px)`;
+  });
+}
+function rgbFrame(s,intensity,dirSign){
+  const maxOff=lerp(1,8,intensity);const maxOpa=lerp(0.08,0.50,intensity);
+  const fc=lerp(0.55,0.20,intensity);
+  s.rgbR.style.transform=`translateX(${dirSign*rnd(1,maxOff)}px)`;
+  s.rgbC.style.transform=`translateX(${-dirSign*rnd(1,maxOff)}px)`;
+  s.rgbR.style.opacity=Math.random()>fc?String(rnd(0.06,maxOpa)):'0';
+  s.rgbC.style.opacity=Math.random()>fc?String(rnd(0.06,maxOpa)):'0';
+}
+function resetChar(s){
+  s.base.style.opacity='1';
+  s.rgbR.style.opacity='0';s.rgbC.style.opacity='0';
+  s.rgbR.style.transform='translateX(0px)';s.rgbC.style.transform='translateX(0px)';
+  s.slices.forEach(sl=>{sl.el.style.opacity='0';sl.el.style.transform='translateX(0px)';sl.cx=0;});
+  s.running=false;
+}
+function triggerChar(s){
+  if(s.running)return;s.running=true;
+  const intensity=getIntensity();const dirSign=getDirSign();
+  const P2_DUR=Math.round(lerp(60,160,intensity));
+  const P3_START=Math.round(lerp(20,40,intensity));
+  const P4_DUR=Math.round(lerp(80,280,intensity));
+  const P4_START=P2_DUR+10;
+  const REC_DUR=Math.round(lerp(80,320,intensity));
+  const REC_START=P4_START+P4_DUR+30;
+
+  buildSlices(s,intensity);activateSlices(s);
+
+  const p2End=performance.now()+P2_DUR;let p2Last=0;const p2Int=Math.round(lerp(18,8,intensity));
+  (function loopP2(now){if(now<p2End){if(now-p2Last>p2Int){p2Last=now;sliceFrameChaos(s,0.45+intensity*0.3,dirSign);}requestAnimationFrame(loopP2);}})( performance.now());
+
+  let rgbAlive=false,rgbLast=0;
+  setTimeout(()=>{rgbAlive=true;const ri=Math.round(lerp(30,14,intensity));
+    (function loopRGB(now){if(!rgbAlive)return;if(now-rgbLast>ri){rgbLast=now;rgbFrame(s,lerp(0.25,1.0,Math.random()*intensity+intensity*0.2),dirSign);}requestAnimationFrame(loopRGB);})(performance.now());
+  },P3_START);
+
+  setTimeout(()=>{
+    const p4s=performance.now();const p4pk=p4s+P4_DUR*0.42;const p4e=p4s+P4_DUR;let p4Last=0;const p4i=Math.round(lerp(20,8,intensity));
+    (function loopP4(now){if(now>=p4e)return;const ratio=(now-p4s)/P4_DUR;const intens=now<p4pk?lerp(0.55*intensity,intensity,ratio/0.42):lerp(intensity,intensity*0.25,(ratio-0.42)/0.58);if(now-p4Last>p4i){p4Last=now;sliceFrameChaos(s,intens,dirSign);}requestAnimationFrame(loopP4);})(performance.now());
+  },P4_START);
+
+  if(intensity>0.45){setTimeout(()=>{
+    const fcon=document.createElement('div');fcon.style.cssText='position:absolute;inset:0;z-index:7;pointer-events:none;overflow:visible;';s.wrap.appendChild(fcon);
+    const H=s.base.offsetHeight;const W=s.wrap.offsetWidth;const count=Math.round(lerp(3,18,intensity));
+    for(let i=0;i<count;i++){const fw=rndInt(3,Math.round(lerp(8,22,intensity)));const fh=rndInt(1,5);const fx=rnd(W*0.02,W*0.98-fw);const fy=rnd(0,H-fh);
+      const el=document.createElement('div');el.style.cssText=`position:absolute;background:#eeeef6;width:${fw}px;height:${fh}px;left:${fx}px;top:${fy}px;opacity:1;will-change:transform,opacity;`;fcon.appendChild(el);
+      const jumpX=dirSign*rnd(8,55*intensity);const dur=rnd(60,180*intensity);const delay=rnd(0,60);const t0r=performance.now()+delay;
+      setTimeout(()=>{(function tick(now){const p=clamp((now-t0r)/dur,0,1);const e=easeOutCubic(p);el.style.transform=`translateX(${jumpX*e}px)`;el.style.opacity=String(1-e);if(p<1)requestAnimationFrame(tick);else fcon.remove();})(performance.now());},delay);}
+  },P4_START+50);}
+
+  setTimeout(()=>{
+    rgbAlive=false;s.rgbR.style.opacity='0';s.rgbC.style.opacity='0';s.rgbR.style.transform='translateX(0px)';s.rgbC.style.transform='translateX(0px)';
+    const recT0=performance.now();const startX=s.slices.map(sl=>sl.cx);
+    (function recover(now){
+      const p=clamp((now-recT0)/REC_DUR,0,1);
+      let e;if(intensity<0.40)e=easeOutCubic(p);else if(intensity<0.75)e=easeOutQuint(p);else{const c4=(2*Math.PI)/3;e=p===0?0:p===1?1:Math.pow(2,-10*p)*Math.sin((p*10-0.75)*c4)+1;}
+      s.slices.forEach((sl,i)=>{sl.el.style.transform=`translateX(${lerp(startX[i],0,e)}px)`;});
+      if(p<1)requestAnimationFrame(recover);else resetChar(s);
+    })(performance.now());
+  },REC_START);
+}
+
+/* Sidebar active link */
+const links=document.querySelectorAll('.nav-link');
+const sections=document.querySelectorAll('.section[id]');
+const obs=new IntersectionObserver(entries=>{
+  entries.forEach(en=>{if(en.isIntersecting){links.forEach(l=>l.classList.remove('active'));const a=document.querySelector(`.nav-link[href="#${en.target.id}"]`);if(a)a.classList.add('active');}});
+},{threshold:0.3});
+sections.forEach(s=>obs.observe(s));
+})();
+</script>
+</body>
+</html>

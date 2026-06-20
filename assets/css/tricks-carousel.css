@@ -1,0 +1,562 @@
+/* ═══════════════════════════════════════
+   TRICKS CAROUSEL — Animated Border + Particles
+   ═══════════════════════════════════════ */
+
+/* ── Variable additions (site variables used: --background-color, --default-color, --surface-color, --accent-color) ── */
+:root {
+  --violet: #8b5cf6;
+  --violet-dim: rgba(139, 92, 246, 0.10);
+  --violet-line: rgba(139, 92, 246, 0.25);
+  --red: #ef4444;
+  --emerald: #10b981;
+  --cyan: #0dcaf0;
+  --orange: #f59e0b;
+  --pink: #ec4899;
+  --blue: #3b82f6;
+  --code-bg: #111114;
+  --border-soft: color-mix(in srgb, var(--default-color), transparent 88%);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --code-bg: #0a0a0e;
+    --border-soft: rgba(255, 255, 255, 0.12);
+  }
+}
+
+#tricks {
+  padding: 90px 0;
+  background: var(--background-color);
+  overflow: hidden;
+}
+
+#tricks .container {
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+/* ── Section Title ── */
+#tricks .section-title {
+  text-align: center;
+  margin-bottom: 50px;
+}
+
+#tricks .section-title h2 {
+  font-size: 34px;
+  font-weight: 700;
+  color: var(--heading-color);
+  margin-bottom: 14px;
+  position: relative;
+  display: inline-block;
+}
+
+#tricks .section-title h2::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  bottom: -10px;
+  transform: translateX(-50%);
+  width: 50px;
+  height: 3px;
+  background: var(--violet);
+  border-radius: 2px;
+}
+
+#tricks .section-title p {
+  font-size: 15px;
+  color: color-mix(in srgb, var(--default-color), transparent 45%);
+  max-width: 480px;
+  margin: 18px auto 0;
+}
+
+/* ── Filters ── */
+.tricks-filters {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-bottom: 48px;
+}
+
+.filter-btn {
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 500;
+  padding: 9px 22px;
+  border-radius: 24px;
+  border: 1px solid var(--border-soft);
+  background: transparent;
+  color: color-mix(in srgb, var(--default-color), transparent 35%);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.filter-btn:hover {
+  border-color: var(--violet-line);
+  color: var(--default-color);
+}
+
+.filter-btn.active {
+  background: var(--violet);
+  border-color: var(--violet);
+  color: #fff;
+}
+
+/* ── Carousel Wrap ── */
+.carousel-wrap {
+  position: relative;
+  padding: 40px 0 50px;
+}
+
+.carousel-viewport {
+  position: relative;
+  height: 470px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  perspective: 1500px;
+}
+
+.carousel-track {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.carousel-card {
+  position: absolute;
+  width: 372px;
+  will-change: transform, opacity;
+  transition: transform 0.55s cubic-bezier(0.22, 0.9, 0.3, 1),
+              opacity 0.55s cubic-bezier(0.22, 0.9, 0.3, 1),
+              filter 0.55s ease;
+  cursor: pointer;
+}
+
+/* ═══════════════════════════
+   ROTATING BORDER (Layer 1)
+   ═══════════════════════════ */
+@property --border-angle {
+  syntax: '<angle>';
+  inherits: false;
+  initial-value: 0deg;
+}
+
+.trick-card {
+  position: relative;
+  border-radius: 16px;
+  padding: 2px;
+  background: conic-gradient(
+    from var(--border-angle),
+    color-mix(in srgb, var(--card-accent, #8b5cf6) 90%, transparent) 0%,
+    rgba(255, 255, 255, 0.04) 18%,
+    rgba(255, 255, 255, 0.02) 35%,
+    color-mix(in srgb, var(--card-accent, #8b5cf6) 70%, transparent) 55%,
+    rgba(255, 255, 255, 0.03) 72%,
+    color-mix(in srgb, var(--card-accent, #8b5cf6) 90%, transparent) 100%
+  );
+  transition: filter 0.5s ease;
+}
+
+.carousel-card.is-active .trick-card {
+  animation: rotateBorder 7s linear infinite;
+}
+
+@keyframes rotateBorder {
+  to { --border-angle: 360deg; }
+}
+
+/* ── Card Inner (Layer 3) ── */
+.trick-card-inner {
+  position: relative;
+  background: radial-gradient(
+      circle at 18% 0%,
+      color-mix(in srgb, var(--card-accent, #8b5cf6) 14%, transparent) 0%,
+      transparent 55%
+    ),
+    linear-gradient(165deg, #272729 0%, #1c1c1e 100%);
+  border-radius: 15px;
+  padding: 28px 26px 26px;
+  display: flex;
+  flex-direction: column;
+  min-height: 362px;
+  overflow: hidden;
+}
+
+.trick-card-inner::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  background-image: repeating-linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.015) 0px,
+    rgba(255, 255, 255, 0.015) 1px,
+    transparent 1px,
+    transparent 14px
+  );
+  opacity: 0.5;
+}
+
+.trick-card-inner::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 90px;
+  height: 90px;
+  z-index: 0;
+  background: radial-gradient(
+    circle at 100% 0%,
+    color-mix(in srgb, var(--card-accent, #8b5cf6) 30%, transparent) 0%,
+    transparent 70%
+  );
+  pointer-events: none;
+}
+
+/* ── Particle Canvas (Layer 2) ── */
+.particle-canvas {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  border-radius: 15px;
+}
+
+/* ── Glow Halo (Layer 0) ── */
+.carousel-card::before {
+  content: '';
+  position: absolute;
+  inset: -30px;
+  background: radial-gradient(
+    circle,
+    color-mix(in srgb, var(--card-accent, #8b5cf6) 40%, transparent) 0%,
+    transparent 68%
+  );
+  z-index: -1;
+  opacity: 0;
+  transition: opacity 0.5s ease;
+  pointer-events: none;
+}
+
+.carousel-card.is-active::before {
+  opacity: var(--glow-strength, 0.55);
+}
+
+/* ── Color Variants ── */
+.item-violet { --card-accent: var(--violet); }
+.item-cyan { --card-accent: var(--cyan); }
+.item-emerald { --card-accent: var(--emerald); }
+.item-orange { --card-accent: var(--orange); }
+.item-pink { --card-accent: var(--pink); }
+.item-blue { --card-accent: var(--blue); }
+
+/* ── Chrome / Text Fade System ── */
+.carousel-card {
+  --txt-fade: 1;
+  --chrome-fade: 1;
+}
+
+.trick-card {
+  opacity: var(--chrome-fade);
+}
+
+.trick-title,
+.trick-desc,
+.trick-tags,
+.trick-badge,
+.trick-code {
+  position: relative;
+  z-index: 2;
+  opacity: var(--txt-fade);
+  transition: opacity 0.5s ease;
+}
+
+/* ── Stagger Reveal (b-item) ── */
+.b-item {
+  opacity: 0;
+  transform: translateY(14px);
+  transition: opacity 0.42s cubic-bezier(0.22, 0.9, 0.3, 1),
+              transform 0.42s cubic-bezier(0.22, 0.9, 0.3, 1);
+}
+
+.carousel-card.is-active .b-item {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.carousel-card.is-active .b-item[data-step="0"] { transition-delay: 0.05s; }
+.carousel-card.is-active .b-item[data-step="1"] { transition-delay: 0.16s; }
+.carousel-card.is-active .b-item[data-step="2"] { transition-delay: 0.27s; }
+.carousel-card.is-active .b-item[data-step="3"] { transition-delay: 0.38s; }
+.carousel-card.is-active .b-item[data-step="4"] { transition-delay: 0.49s; }
+
+.carousel-card.is-settled .b-item {
+  transition: opacity 0.5s ease;
+  transform: translateY(0);
+}
+
+/* ── Badge ── */
+.trick-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding: 5px 13px 5px 10px;
+  border-radius: 20px;
+  margin-bottom: 16px;
+  width: fit-content;
+  background: color-mix(in srgb, var(--card-accent, #8b5cf6) 14%, transparent);
+  border: 1px solid color-mix(in srgb, var(--card-accent, #8b5cf6) 38%, transparent);
+  color: color-mix(in srgb, var(--card-accent, #8b5cf6) 88%, white);
+}
+
+.trick-badge .dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--card-accent, #8b5cf6);
+  box-shadow: 0 0 8px var(--card-accent, #8b5cf6);
+}
+
+/* ── Title ── */
+.trick-title {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--heading-color);
+  margin-bottom: 12px;
+  line-height: 1.35;
+  letter-spacing: -0.01em;
+}
+
+/* ── Description ── */
+.trick-desc {
+  font-size: 13.5px;
+  line-height: 1.75;
+  color: color-mix(in srgb, var(--default-color), transparent 38%);
+  margin-bottom: 16px;
+}
+
+/* ── Code Block ── */
+.trick-code {
+  background: var(--code-bg);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  border-radius: 9px;
+  margin-bottom: 16px;
+  overflow: hidden;
+}
+
+.trick-code-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 12px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  background: rgba(255, 255, 255, 0.025);
+}
+
+.trick-code-lang {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.35);
+}
+
+.copy-btn {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-family: inherit;
+  font-size: 10.5px;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.40);
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 2px 4px;
+  border-radius: 4px;
+  transition: color 0.15s;
+}
+
+.copy-btn:hover {
+  color: var(--card-accent, #8b5cf6);
+}
+
+.copy-btn svg {
+  width: 11px;
+  height: 11px;
+}
+
+.copy-btn.copied {
+  color: var(--emerald);
+}
+
+.trick-code pre {
+  padding: 14px 16px;
+  overflow-x: auto;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.82);
+}
+
+.trick-code .k { color: #8b5cf6; }
+.trick-code .s { color: #f59e0b; }
+.trick-code .c { color: rgba(255, 255, 255, 0.32); font-style: italic; }
+
+/* ── Tags ── */
+.trick-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: auto;
+}
+
+.trick-tag {
+  font-size: 10.5px;
+  font-weight: 500;
+  padding: 4px 11px;
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid color-mix(in srgb, var(--card-accent, #8b5cf6) 30%, transparent);
+  color: color-mix(in srgb, var(--default-color), transparent 30%);
+}
+
+/* ── Carousel Controls ── */
+.carousel-controls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 24px;
+  margin-top: 34px;
+}
+
+.car-arrow {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  border: 1px solid var(--border-soft);
+  background: transparent;
+  color: color-mix(in srgb, var(--default-color), transparent 30%);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+}
+
+.car-arrow:hover {
+  border-color: var(--violet-line);
+  background: var(--violet-dim);
+  color: var(--default-color);
+}
+
+.car-arrow svg {
+  width: 18px;
+  height: 18px;
+}
+
+/* ── Dots ── */
+.car-dots {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.car-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.18);
+  border: none;
+  cursor: pointer;
+  transition: all 0.25s;
+  padding: 0;
+}
+
+.car-dot.active {
+  background: var(--violet);
+  width: 22px;
+  border-radius: 4px;
+}
+
+/* ── Scroll Reveal ── */
+.reveal-section {
+  opacity: 0;
+  transform: translateX(60px);
+  transition: opacity 0.7s cubic-bezier(0.22, 0.9, 0.3, 1),
+              transform 0.7s cubic-bezier(0.22, 0.9, 0.3, 1);
+}
+
+.reveal-section.visible {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+/* ── Reduced Motion ── */
+@media (prefers-reduced-motion: reduce) {
+  .carousel-card.is-active .trick-card {
+    animation: none;
+  }
+}
+
+/* ── Responsive ── */
+@media (max-width: 820px) {
+  .carousel-card {
+    width: 300px;
+  }
+
+  .trick-card-inner {
+    padding: 22px 20px 20px;
+    min-height: 320px;
+  }
+
+  .carousel-viewport {
+    height: 400px;
+  }
+
+  #tricks .section-title h2 {
+    font-size: 28px;
+  }
+}
+
+@media (max-width: 540px) {
+  .carousel-card {
+    width: 260px;
+  }
+
+  .trick-card-inner {
+    padding: 18px 16px 16px;
+    min-height: 290px;
+  }
+
+  .carousel-viewport {
+    height: 360px;
+  }
+
+  .trick-title {
+    font-size: 16px;
+  }
+
+  .trick-desc {
+    font-size: 12.5px;
+  }
+
+  .carousel-controls {
+    gap: 16px;
+  }
+
+  #tricks .section-title h2 {
+    font-size: 24px;
+  }
+}

@@ -9,11 +9,15 @@
   "titleAr": "تأثير Glitch مرتبط بسرعة الماوس",
   "desc": "Map smoothed mouse speed to a 0-1 intensity value, then drive slice count, RGB offset, and recovery easing from that single number.",
   "descAr": "تحويل سرعة الماوس إلى قيمة شدة 0-1 لتحديد عدد الشرائح وإزاحة RGB وسرعة الاستعادة من رقم واحد.",
+  "summary": "A per-character glitch animation where corruption intensity, slice count, and recovery easing all scale with how fast the mouse enters the element — instead of playing one fixed effect every time.",
   "tags": ["CSS", "Vanilla JS", "Animation"],
-  "problem": "Traditional glitch effects use random values or time-based jitter, which feels disconnected from user interaction. The glitch animates at the same intensity regardless of how fast the cursor moves, making it feel like a canned effect.",
-  "problemAr": "تأثيرات glitch التقليدية تستخدم قيماً عشوائية أو ارتجاجاً زمنياً، مما يجعلها منفصلة عن تفاعل المستخدم. يتحرك الـ glitch بنفس الشدة بغض النظر عن سرعة المؤشر.",
-  "solution": "Track cursor velocity via requestAnimationFrame, smooth it with a low-pass filter, then use exponential easing to map velocity to glitch intensity. At low velocity the text is pristine; a fast swipe tears it apart proportionally.",
-  "solutionAr": "تتبع سرعة المؤشر عبر requestAnimationFrame، قم بتمليسها بمرشح تردد منخفض، ثم استخدم easing أسي لتحويل السرعة إلى شدة glitch. عند السرعة المنخفضة النص نظيف، وعند السرعة العالية يتمزق proportionally.",
+  "problem": "Most glitch-on-hover effects play the exact same animation regardless of how the user interacted with the element. A slow, deliberate mouse movement triggers the same chaotic RGB-split-and-shatter sequence as a fast swipe across the screen — there's no relationship between the user's gesture and the visual response.\n\nThis breaks the illusion the effect is trying to sell. A glitch is supposed to feel like <strong>data corruption caused by interference</strong> — and interference should scale with the force of whatever caused it. A gentle hover producing a full violent shatter reads as disconnected from the interaction, not premium.",
+  "problemTitle": "A fixed glitch effect feels robotic",
+  "solution": "Track the mouse's velocity with exponential smoothing, normalize it into a 0\u20131 <code class=\"td-code-inline\">intensity</code> value, and derive <strong>every other parameter</strong> \u2014 slice count, RGB offset, particle count, recovery duration, even which easing curve to use \u2014 from that single number.\n\nThis turns one physical measurement into a coordinated system: a slow approach produces a few large, soft slices and a quick fade-out. A fast swipe produces dozens of thin slices, visible RGB splitting, flying pixel fragments, and an elastic spring-back recovery.",
+  "solutionTitle": "Map mouse velocity to a single intensity value",
+  "callout": {
+    "text": "<strong>Key idea:</strong> don't hardcode separate \u201clight\u201d and \u201cheavy\u201d animation variants. Derive everything from one continuous variable so the transition between intensities is smooth, not a hard switch."
+  },
   "code": {
     "lang": "JavaScript",
     "html": "<span class=\"k\">const</span> vel = Math.hypot(dx, dy);\n<span class=\"k\">const</span> speed = lerp(prev, vel, <span class=\"m\">0.15</span>);\n<span class=\"k\">const</span> i = clamp((speed<span class=\"o\">-</span><span class=\"m\">1.5</span>)<span class=\"o\">/</span><span class=\"m\">26.5</span>, <span class=\"m\">0</span>, <span class=\"m\">1</span>);\n<span class=\"c\">// i drives slices, RGB offset & recovery</span>"
@@ -21,30 +25,34 @@
   "codeSteps": [
     {
       "step": 1,
-      "label": "Track velocity",
-      "html": "<span class=\"k\">const</span> vel = Math.hypot(dx, dy);\n<span class=\"k\">const</span> speed = lerp(prev, vel, <span class=\"m\">0.15</span>);"
+      "label": "Track and smooth mouse velocity",
+      "html": "<span class=\"k\">let</span> smoothVX = <span class=\"nm\">0</span>;\n<span class=\"k\">let</span> lastMX = <span class=\"nm\">0</span>, lastT = <span class=\"nm\">0</span>;\n\nwindow.<span class=\"fn\">addEventListener</span>(<span class=\"s\">'mousemove'</span>, e => {\n  <span class=\"k\">const</span> now = performance.<span class=\"fn\">now</span>();\n  <span class=\"k\">const</span> dt = Math.<span class=\"fn\">max</span>(now - lastT, <span class=\"nm\">1</span>);\n  <span class=\"k\">const</span> rawVX = (e.clientX - lastMX) / dt * <span class=\"nm\">16</span>;\n  smoothVX = <span class=\"fn\">lerp</span>(smoothVX, rawVX, <span class=\"nm\">0.40</span>); <span class=\"c\">// exponential smoothing</span>\n  lastMX = e.clientX; lastT = now;\n});"
     },
     {
       "step": 2,
-      "label": "Normalise intensity",
-      "html": "<span class=\"k\">const</span> i = clamp((speed<span class=\"o\">-</span><span class=\"m\">1.5</span>)<span class=\"o\">/</span><span class=\"m\">26.5</span>, <span class=\"m\">0</span>, <span class=\"m\">1</span>);"
+      "label": "Convert speed into a 0\u20131 intensity value",
+      "html": "<span class=\"k\">function</span> <span class=\"fn\">getIntensity</span>() {\n  <span class=\"k\">const</span> speed = Math.<span class=\"fn\">sqrt</span>(smoothVX ** <span class=\"nm\">2</span> + smoothVY ** <span class=\"nm\">2</span>);\n  <span class=\"c\">// 1.5 = dead zone (ignores tiny jitter), 26.5 = speed that maps to full intensity</span>\n  <span class=\"k\">return</span> <span class=\"fn\">clamp</span>((speed - <span class=\"nm\">1.5</span>) / <span class=\"nm\">26.5</span>, <span class=\"nm\">0</span>, <span class=\"nm\">1</span>);\n}"
     },
     {
       "step": 3,
-      "label": "Drive effect",
-      "html": "<span class=\"c\">// i drives slices, RGB offset & recovery</span>"
+      "label": "Derive every visual parameter from intensity",
+      "html": "<span class=\"k\">const</span> intensity = <span class=\"fn\">getIntensity</span>();\n\n<span class=\"k\">const</span> sliceCount   = Math.<span class=\"fn\">round</span>(<span class=\"fn\">lerp</span>(<span class=\"nm\">8</span>,  <span class=\"nm\">50</span>,  intensity));\n<span class=\"k\">const</span> maxShift     = <span class=\"fn\">lerp</span>(<span class=\"nm\">3</span>,  <span class=\"nm\">42</span>,  intensity);\n<span class=\"k\">const</span> rgbOpacity   = <span class=\"fn\">lerp</span>(<span class=\"nm\">0.08</span>, <span class=\"nm\">0.50</span>, intensity);\n<span class=\"k\">const</span> recoveryMs   = <span class=\"fn\">lerp</span>(<span class=\"nm\">80</span>, <span class=\"nm\">320</span>, intensity);\n<span class=\"k\">const</span> easing       = intensity < <span class=\"nm\">0.4</span> ? easeOutCubic\n                : intensity < <span class=\"nm\">0.75</span> ? easeOutQuint\n                : elasticOut; <span class=\"c\">// spring overshoot only at high speed</span>"
     }
   ],
+  "baTitle": "Fixed timing vs. velocity-derived timing",
+  "baDesc": "The structural difference is small in code, but the perceived quality difference is large \u2014 the second version makes the element feel physically responsive.",
   "before": {
-    "desc": "Glitch intensity was either constant or purely random, creating a disconnect between user intent and visual feedback.",
-    "descAr": "شدة glitch كانت إما ثابتة أو عشوائية بحتة، مما خلق انفصالاً بين نية المستخدم والتغذية البصرية."
+    "desc": "Identical result for a slow drift or a fast flick \u2014 no gesture awareness.",
+    "code": "el.<span class=\"fn\">addEventListener</span>(<span class=\"s\">'mouseenter'</span>, () => {\n  <span class=\"c\">// same animation every single time</span>\n  <span class=\"fn\">runGlitch</span>({\n    slices: <span class=\"bad\">24</span>,\n    shift: <span class=\"bad\">20</span>,\n    duration: <span class=\"bad\">300</span>\n  });\n});",
+    "note": "Identical result for a slow drift or a fast flick \u2014 no gesture awareness."
   },
   "after": {
-    "desc": "A fast swipe across the text tears it apart with proportional intensity. Slow movement keeps it readable, giving a natural physical feel.",
-    "descAr": "مسحة سريعة عبر النص تمزقه بشدة متناسبة. الحركة البطيئة تحافظ على readability، مما يعطي إحساساً فيزيائياً طبيعياً."
+    "desc": "Every parameter scales continuously with how the user actually moved.",
+    "code": "el.<span class=\"fn\">addEventListener</span>(<span class=\"s\">'mouseenter'</span>, () => {\n  <span class=\"k\">const</span> i = <span class=\"fn\">getIntensity</span>();\n  <span class=\"fn\">runGlitch</span>({\n    slices: <span class=\"good\">lerp(8,50,i)</span>,\n    shift: <span class=\"good\">lerp(3,42,i)</span>,\n    duration: <span class=\"good\">lerp(80,320,i)</span>\n  });\n});",
+    "note": "Every parameter scales continuously with how the user actually moved."
   },
   "resources": [
-    { "label": "MDN: requestAnimationFrame", "url": "https://developer.mozilla.org/en-US/docs/Web/API/window/requestAnimationFrame" },
-    { "label": "CSS-Tricks: Glitch Effect", "url": "https://css-tricks.com/glitch-effect-text-images-svg/" }
+    { "label": "MDN \u2014 requestAnimationFrame()", "url": "https://developer.mozilla.org/en-US/docs/Web/API/window/requestAnimationFrame", "sub": "developer.mozilla.org" },
+    { "label": "Easing functions cheat sheet", "url": "https://easings.net", "sub": "easings.net" }
   ]
 }

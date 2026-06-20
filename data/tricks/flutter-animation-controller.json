@@ -9,11 +9,15 @@
   "titleAr": "تسريب AnimationController وطريقة التخلص منه",
   "desc": "Every AnimationController must be disposed in the State.dispose() method, or the ticker keeps running after the widget is removed from the tree.",
   "descAr": "كل AnimationController يجب التخلص منه في State.dispose()، وإلا سيستمر المؤقت بعد إزالة الـ widget من الشجرة.",
+  "summary": "Forgetting to call controller.dispose() in State.dispose() leaves orphaned tickers running in the background, wasting CPU and leaking memory. Every AnimationController must be manually disposed.",
   "tags": ["Flutter", "Dart"],
-  "problem": "Missing dispose() on an AnimationController means the underlying Ticker continues firing after the widget is gone. This causes a 'Ticker disposed' error or silent CPU usage in the background. The widget leaks memory and the user experiences jank from phantom tickers.",
-  "problemAr": "نقص dispose() في AnimationController يعني أن Ticker الأساسي يستمر في العمل بعد اختفاء الـ widget. هذا يسبب خطأ 'Ticker disposed' أو استخدام CPU صامت في الخلفية. يتسرب الـ widget للذاكرة ويعاني المستخدم من هزات بسبب tickers الوهمية.",
-  "solution": "Override dispose() in any State that owns an AnimationController and call controller.dispose(). For multiple controllers, call dispose() on each. Using AutomaticKeepAliveClientMixin does not exempt you — you must still manually dispose.",
-  "solutionAr": "تجاوز dispose() في أي State يملك AnimationController واستدعِ controller.dispose(). لعدة متحكمات، استدعِ dispose() لكل منهم. استخدام AutomaticKeepAliveClientMixin لا يعفيك — يجب أن تتخلص يدوياً.",
+  "problem": "Missing <code class=\"td-code-inline\">dispose()</code> on an <code class=\"td-code-inline\">AnimationController</code> means the underlying <code class=\"td-code-inline\">Ticker</code> continues firing after the widget is gone. This causes a <code class=\"td-code-inline\">'Ticker disposed'</code> error or silent CPU usage in the background.\n\nWith 8 animation controllers on a single page, forgetting one means 7% constant CPU even after the user navigates away. The error only surfaces when the ticker eventually overflows, making it hard to debug.",
+  "problemTitle": "Orphaned tickers keep running after widget disposal",
+  "solution": "Override <code class=\"td-code-inline\">dispose()</code> in any <code class=\"td-code-inline\">State</code> that owns an <code class=\"td-code-inline\">AnimationController</code> and call <code class=\"td-code-inline\">controller.dispose()</code>. For multiple controllers, call <code class=\"td-code-inline\">dispose()</code> on each. Using <code class=\"td-code-inline\">AutomaticKeepAliveClientMixin</code> does not exempt you \u2014 you must still manually dispose.\n\nThe pattern: declare, init in <code class=\"td-code-inline\">initState</code>, dispose in <code class=\"td-code-inline\">dispose</code>. Never skip the third step.",
+  "solutionTitle": "Always call controller.dispose() in State.dispose()",
+  "callout": {
+    "text": "<strong>Key idea:</strong> the Dart analyzer with <code class=\"td-code-inline\">close_sinks</code> lint catches this. Enable <code class=\"td-code-inline\">cancel_subscriptions</code> and <code class=\"td-code-inline\">close_sinks</code> in analysis_options.yaml to catch leaks early."
+  },
   "code": {
     "lang": "Dart",
     "html": "<span class=\"k\">@override</span>\n<span class=\"k\">void</span> dispose() {\n  _controller.dispose();\n  <span class=\"k\">super</span>.dispose();\n}"
@@ -21,30 +25,32 @@
   "codeSteps": [
     {
       "step": 1,
-      "label": "Declare controller",
+      "label": "Declare the controller",
       "html": "late AnimationController _controller;"
     },
     {
       "step": 2,
-      "label": "Init in initState",
+      "label": "Initialize in initState",
       "html": "_controller = AnimationController(\n  vsync: <span class=\"k\">this</span>,\n  duration: Duration(milliseconds: 300),\n);"
     },
     {
       "step": 3,
-      "label": "Dispose in dispose",
+      "label": "Dispose in dispose()",
       "html": "<span class=\"k\">@override</span>\n<span class=\"k\">void</span> dispose() {\n  _controller.dispose();\n  <span class=\"k\">super</span>.dispose();\n}"
     }
   ],
+  "baTitle": "Missing dispose vs. proper disposal",
+  "baDesc": "The code diff is adding a single method override, but the runtime behaviour change is significant.",
   "before": {
-    "desc": "Missing dispose() on 8 animation controllers in a page. After navigating away, background CPU stayed at 12% constant from orphaned tickers. Memory grew 4MB per page visit.",
-    "descAr": "نقص dispose() في 8 متحكمات حركة في صفحة. بعد الانتقال بعيداً، بقيت CPU في الخلفية عند 12% ثابتة من tickers اليتيمة. نمت الذاكرة 4MB لكل زيارة."
+    "desc": "Orphaned ticker runs in background. CPU at 12% after navigation.",
+    "code": "<span class=\"k\">class</span> _MyState <span class=\"k\">extends</span> State<MyWidget> {\n  late AnimationController _ctrl;\n\n  <span class=\"k\">@override</span>\n  <span class=\"k\">void</span> initState() {\n    <span class=\"k\">super</span>.initState();\n    _ctrl = AnimationController(vsync: <span class=\"k\">this</span>, duration: <span class=\"nm\">300</span>ms);\n  }\n  <span class=\"c\">// dispose() is <span class=\"bad\">missing</span> \u2014 leak!</span>\n}"
   },
   "after": {
-    "desc": "All controllers disposed in dispose(). Zero background CPU after navigation. Memory stable across page visits.",
-    "descAr": "جميع المتحكمات تم التخلص منها في dispose(). صفر CPU في الخلفية بعد التنقل. ذاكرة مستقرة عبر زيارات الصفحة."
+    "desc": "Controller disposed. Zero background CPU. Memory stable.",
+    "code": "<span class=\"k\">class</span> _MyState <span class=\"k\">extends</span> State<MyWidget> {\n  late AnimationController _ctrl;\n\n  <span class=\"k\">@override</span>\n  <span class=\"k\">void</span> initState() {\n    <span class=\"k\">super</span>.initState();\n    _ctrl = AnimationController(vsync: <span class=\"k\">this</span>, duration: <span class=\"nm\">300</span>ms);\n  }\n\n  <span class=\"k\">@override</span>\n  <span class=\"k\">void</span> <span class=\"good\">dispose()</span> {\n    _ctrl.<span class=\"good\">dispose()</span>;\n    <span class=\"k\">super</span>.dispose();\n  }\n}"
   },
   "resources": [
-    { "label": "Flutter: Animation and Ticker", "url": "https://api.flutter.dev/flutter/animation/AnimationController-class.html" },
-    { "label": "Flutter: dispose lifecycle", "url": "https://api.flutter.dev/flutter/widgets/State/dispose.html" }
+    { "label": "AnimationController class", "url": "https://api.flutter.dev/flutter/animation/AnimationController-class.html", "sub": "api.flutter.dev" },
+    { "label": "State.dispose lifecycle", "url": "https://api.flutter.dev/flutter/widgets/State/dispose.html", "sub": "api.flutter.dev" }
   ]
 }

@@ -9,23 +9,28 @@
   "titleAr": "بطاقة 3D مائلة مع قصور ذاتي عند التحرير",
   "desc": "Track rotation velocity each frame, then on pointerup let the card keep spinning briefly with exponential decay instead of snapping flat.",
   "descAr": "تتبع سرعة الدوران كل إطار، وعند رفع المؤشر دع البطاقة تستمر في الدوران للحظة مع توهين أسي بدلاً من العودة الفورية.",
+  "summary": "Most 3D tilt cards snap back to flat instantly on release, losing the tactile feel. Adding inertia with exponential decay makes the interaction feel physical and polished.",
   "tags": ["CSS 3D", "RAF"],
-  "problem": "Most 3D tilt implementations snap back to flat immediately on pointer release. This feels robotic and misses a chance for tactile, physical feedback. Users expect inertia from a physical 3D surface.",
-  "problemAr": "معظم تطبيقات 3D tilt تعود فوراً إلى الوضع المسطح عند رفع المؤشر. هذا يبدو آلياً ويفوّت فرصة لرد فعل فيزيائي ملموس. يتوقع المستخدمون قصوراً ذاتياً من سطح 3D فيزيائي.",
-  "solution": "On pointermove, compute delta-rotation per frame, store in a velocity vector. On pointerup, continue applying that velocity each frame multiplied by a friction coefficient (e.g. 0.95). Stop when velocity drops below a threshold. The card coasts to rest naturally.",
-  "solutionAr": "في pointermove، احسب فرق الدوران لكل إطار وخزنه في متجه سرعة. عند pointerup، استمر في تطبيق تلك السرعة كل إطار مضروبة بمعامل احتكاك (مثال 0.95). توقف عندما تنخفض السرعة عن حد معين. تتوقف البطاقة بشكل طبيعي.",
+  "problem": "Most 3D tilt implementations snap back to flat immediately on pointer release. This feels robotic and misses a chance for tactile, physical feedback. Users expect inertia from a physical 3D surface \u2014 the sudden stop breaks the illusion.\n\nThe problem is structural: developers treat tilt as a hover-only effect and never consider what happens after the cursor leaves. A card that tracks rotation but has no momentum feels weightless.",
+  "problemTitle": "Cards snap flat instantly on release",
+  "solution": "On <code class=\"td-code-inline\">pointermove</code>, compute delta-rotation per frame and store it in a velocity vector. On <code class=\"td-code-inline\">pointerup</code>, continue applying that velocity each frame multiplied by a friction coefficient (e.g. 0.95). Stop when velocity drops below a threshold.\n\nThe card coasts to rest naturally. Tap it gently and it barely moves; flick it hard and it spins dramatically before settling.",
+  "solutionTitle": "Track velocity, then apply exponential decay",
+  "callout": {
+    "text": "<strong>Key idea:</strong> friction should be subtle (0.92\u20130.97 per frame). Too low and the card stops instantly; too high and it never settles. Test with real interaction to find the sweet spot."
+  },
   "code": null,
   "codeSteps": [],
+  "baTitle": "Snap vs. inertia decay",
   "before": {
-    "desc": "On pointerup, rotation snapped instantly to 0,0,0. No sense of weight or physical presence.",
-    "descAr": "عند pointerup، يعود الدوران فوراً إلى 0,0,0. بدون أي إحساس بالوزن أو الوجود الفيزيائي."
+    "desc": "On pointerup, rotation snaps instantly to 0,0,0.",
+    "code": "<span class=\"c\">// Resets immediately \u2014 no feel</span>\nel.<span class=\"fn\">addEventListener</span>(<span class=\"s\">'pointerup'</span>, () => {\n  el.style.transform = <span class=\"s\">'rotateX(0) rotateY(0)'</span>;\n  <span class=\"c\">// transitions back in 200ms</span>\n});"
   },
   "after": {
-    "desc": "Card continues spinning with exponential decay on release. Tap it gently and it coasts; flick it hard and it drifts dramatically before settling.",
-    "descAr": "تواصل البطاقة الدوران بتوهين أسي عند التحرير. المسها برفق تنزلق، ارمها بقوة تنجرف بشكل كبير قبل أن تستقر."
+    "desc": "Card coasts to rest with exponential decay.",
+    "code": "<span class=\"c\">// Each frame after release</span>\nvelX *= <span class=\"good\">0.95</span>;  <span class=\"c\">// friction</span>\nvelY *= <span class=\"good\">0.95</span>;\nangleX += velX;\nangleY += velY;\n\n<span class=\"c\">// Stop when velocity is negligible</span>\n<span class=\"k\">if</span> (Math.<span class=\"fn\">abs</span>(velX) < <span class=\"nm\">0.01</span> && Math.<span class=\"fn\">abs</span>(velY) < <span class=\"nm\">0.01</span>) {\n  <span class=\"fn\">stopRAFLoop</span>();\n}"
   },
   "resources": [
-    { "label": "CSS 3D transforms", "url": "https://developer.mozilla.org/en-US/docs/Web/CSS/transform-function/rotateX" },
-    { "label": "Infinite Games: Exponential decay", "url": "https://www.youtube.com/watch?v=GIk5YyPB-oA" }
+    { "label": "CSS 3D transforms", "url": "https://developer.mozilla.org/en-US/docs/Web/CSS/transform-function/rotateX", "sub": "developer.mozilla.org" },
+    { "label": "Exponential decay explained", "url": "https://en.wikipedia.org/wiki/Exponential_decay", "sub": "wikipedia.org" }
   ]
 }

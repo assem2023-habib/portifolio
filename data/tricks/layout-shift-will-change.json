@@ -9,23 +9,28 @@
   "titleAr": "تجنب تغيير التخطيط باستخدام will-change",
   "desc": "Apply will-change:transform only while an element is actively animating, then remove it after. Keeping it permanently can bloat GPU memory.",
   "descAr": "طبّق will-change:transform فقط أثناء الحركة الفعلية للعنصر، ثم أزله بعدها. تركه دائماً يستهلك ذاكرة GPU بلا فائدة.",
+  "summary": "will-change on every card sounds like a performance win, but it actually allocates GPU layers for each element permanently, ballooning memory and causing jank. Apply it only during active animation.",
   "tags": ["Performance", "CSS"],
-  "problem": "Overusing will-change on dozens of elements simultaneously forces the browser to allocate GPU layers for each one, consuming memory and potentially causing repaints on every frame even when nothing is animating. Layout shifts happen when composite layers change dimensions.",
-  "problemAr": "الإفراط في استخدام will-change على عشرات العناصر في وقت واحد يجبر المتصفح على تخصيص طبقات GPU لكل منها، مما يستهلك الذاكرة وقد يسبب repaints في كل إطار حتى عند عدم وجود حركة.",
-  "solution": "Apply will-change: transform via JS just before the animation starts (e.g. pointerenter / RAF loop start) and remove it in the onfinish / promise.then. For scroll-based animations use IntersectionObserver to toggle will-change only for visible elements.",
-  "solutionAr": "طبّق will-change: transform عبر JS قبل بدء الحركة مباشرة (pointerenter / بداية RAF loop) وأزله في onfinish / promise.then. للحركات القائمة على التمرير استخدم IntersectionObserver لتبديل will-change فقط للعناصر المرئية.",
+  "problem": "Overusing <code class=\"td-code-inline\">will-change</code> on dozens of elements simultaneously forces the browser to allocate GPU layers for each one, consuming memory and potentially causing repaints on every frame even when nothing is animating. Layout shifts happen when composite layers change dimensions.\n\nA common anti-pattern is adding <code class=\"td-code-inline\">will-change: transform</code> in CSS on every card \"just in case\" \u2014 but this tells the browser to reserve GPU memory for elements that may never animate.",
+  "problemTitle": "Permanent will-change bloats GPU memory",
+  "solution": "Apply <code class=\"td-code-inline\">will-change: transform</code> via JavaScript just before the animation starts (e.g. <code class=\"td-code-inline\">pointerenter</code> or rAF loop start) and remove it in the <code class=\"td-code-inline\">onfinish</code> callback. For scroll-based animations, use IntersectionObserver to toggle will-change only for visible elements.\n\nThis keeps GPU layer count proportional to active animations, not to total DOM elements.",
+  "solutionTitle": "Toggle will-change only during active animation",
+  "callout": {
+    "text": "<strong>Key idea:</strong> will-change is a hint to the browser about <em>upcoming</em> changes. Once the change is done, remove the hint so the browser can reclaim resources."
+  },
   "code": null,
   "codeSteps": [],
+  "baTitle": "Always-on vs. toggled will-change",
   "before": {
-    "desc": "will-change set permanently in CSS on every card. Browser allocated GPU layers for all 50+ cards, causing ~120MB extra GPU memory and visible jank on scroll.",
-    "descAr": "will-change مثبت بشكل دائم في CSS على كل بطاقة. خصص المتصفح طبقات GPU لـ 50+ بطاقة، مما تسبب في ~120MB ذاكرة GPU إضافية وهزات مرئية عند التمرير."
+    "desc": "GPU memory ~120MB extra. Scroll jank on every frame.",
+    "code": "<span class=\"c\">/* CSS \u2014 bad: permanent on all cards */</span>\n<span class=\"k\">.card</span> {\n  will-change: transform, opacity;\n}"
   },
   "after": {
-    "desc": "will-change applied only during hover/scroll animation and removed immediately after. GPU memory dropped to baseline, scroll jank eliminated.",
-    "descAr": "will-change طُبق فقط أثناء حركة hover/scroll وأزيل فوراً. انخفضت ذاكرة GPU إلى المستوى الأساسي، وزالت هزات التمرير."
+    "desc": "GPU memory at baseline. Smooth 60fps scroll.",
+    "code": "<span class=\"c\">// JS \u2014 good: toggle on hover</span>\nel.<span class=\"fn\">addEventListener</span>(<span class=\"s\">'mouseenter'</span>, () => {\n  el.style.willChange = <span class=\"s\">'transform'</span>;\n});\nel.<span class=\"fn\">addEventListener</span>(<span class=\"s\">'mouseleave'</span>, () => {\n  el.style.willChange = <span class=\"s\">'auto'</span>;\n});"
   },
   "resources": [
-    { "label": "MDN: will-change", "url": "https://developer.mozilla.org/en-US/docs/Web/CSS/will-change" },
-    { "label": "CSS Triggers", "url": "https://csstriggers.com/" }
+    { "label": "MDN: will-change", "url": "https://developer.mozilla.org/en-US/docs/Web/CSS/will-change", "sub": "developer.mozilla.org" },
+    { "label": "CSS Triggers", "url": "https://csstriggers.com", "sub": "csstriggers.com" }
   ]
 }

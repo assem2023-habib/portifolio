@@ -9,23 +9,29 @@
   "titleAr": "تحديثات Firebase المتفائلة لواجهة المستخدم",
   "desc": "Update local widget state immediately on user action, then sync to Firebase in the background. Roll back only if the write actually fails.",
   "descAr": "حدّث حالة الواجهة محلياً فوراً عند action المستخدم، ثم زامن مع Firebase في الخلفية. ارجع فقط إذا فشلت الكتابة فعلاً.",
+  "summary": "Waiting for Firebase to confirm a write before updating the UI adds 200\u2013800ms latency to every interaction. Optimistic updates make the UI feel instant by rendering the change locally first.",
   "tags": ["Firebase", "Flutter"],
-  "problem": "Waiting for Firebase write confirmation before updating the UI adds 100-500ms latency on every user action. On slower networks the UI feels sluggish and unresponsive, especially for toggles, likes, and reordering.",
-  "problemAr": "انتظار تأكيد كتابة Firebase قبل تحديث الواجهة يضيف 100-500ms تأخير على كل إجراء. على الشبكات البطيئة تشعر الواجهة بالبطء وعدم الاستجابة، خاصة في التبديلات والإعجابات وإعادة الترتيب.",
-  "solution": "Apply the change to the local model and rebuild the widget immediately, then write to Firebase asynchronously. Listen for failure and revert only if the write errors. For offline resilience buffer writes and replay on reconnect.",
-  "solutionAr": "طبّق التغيير على النموذج المحلي وأعد بناء الواجهة فوراً، ثم اكتب إلى Firebase بشكل غير متزامن. استمع للفشل وارجع فقط إذا أخطأت الكتابة. للمرونة في وضع عدم الاتصال، خزّن الكتابات مؤقتاً وأعد تشغيلها عند إعادة الاتصال.",
+  "problem": "Waiting for Firebase write confirmation before updating the UI adds 100\u2013500ms latency on every user action. On slower networks the UI feels sluggish and unresponsive, especially for toggles, likes, and reordering.\n\nUsers perceive any delay over 100ms as lag. A toggle that takes 300ms to flip feels broken compared to native apps that respond instantly.",
+  "problemTitle": "Write latency makes the UI feel sluggish",
+  "solution": "Apply the change to the local model and rebuild the widget immediately, then write to Firebase asynchronously. Listen for failure and revert only if the write errors. For offline resilience, buffer writes and replay on reconnect.\n\nThe key insight: <strong>assume success</strong>. The vast majority of writes succeed, so optimising for that case makes the UI feel instant. Rare failures are handled gracefully with a rollback animation.",
+  "solutionTitle": "Render locally, sync in the background",
+  "callout": {
+    "text": "<strong>Key idea:</strong> the rollback should be impossible to miss — a short shake animation + visual cue tells the user something went wrong without blocking them."
+  },
   "code": null,
   "codeSteps": [],
+  "baTitle": "Synchronous vs. optimistic updates",
+  "baDesc": "The architectural difference is moving the write from a blocking step to a background concern.",
   "before": {
-    "desc": "Every like/toggle waited for Firebase round-trip. 200-400ms delay per action, on 3G up to 800ms. UI felt sluggish on every interaction.",
-    "descAr": "كل إعجاب/تبديل ينتظر رحلة Firebase ذهاباً وإياباً. 200-400ms تأخير لكل إجراء، على 3G يصل إلى 800ms. شعور بالبطء في كل تفاعل."
+    "desc": "Await Firebase before updating UI. 200\u2013400ms delay.",
+    "code": "<span class=\"c\">// Bad: wait for server</span>\n<span class=\"k\">await</span> firebase.<span class=\"fn\">ref</span>(<span class=\"s\">'likes/post1'</span>).<span class=\"fn\">set</span>(likes + <span class=\"nm\">1</span>);\n<span class=\"c\">// UI updates AFTER write completes</span>\nsetState(() => count++);"
   },
   "after": {
-    "desc": "Toggle flips instantly in the UI. Firebase syncs in the background. On rare write failure the toggle reverts with a brief shake animation signalling the rollback.",
-    "descAr": "يتغير التبديل فوراً في الواجهة. Firebase يزامن في الخلفية. في حالة فشل كتابة نادر يتراجع التبديل مع حركة اهتزاز قصيرة تشير إلى التراجع."
+    "desc": "Update UI instantly, sync in background.",
+    "code": "<span class=\"c\">// Good: optimistic update</span>\nsetState(() => count++); <span class=\"c\">// instant!</span>\n<span class=\"k\">try</span> {\n  <span class=\"k\">await</span> firebase.<span class=\"fn\">ref</span>(<span class=\"s\">'likes/post1'</span>).<span class=\"fn\">set</span>(count);\n} <span class=\"k\">catch</span> (e) {\n  setState(() => count--); <span class=\"c\">// rollback</span>\n  <span class=\"fn\">showRollbackAnimation</span>();\n}"
   },
   "resources": [
-    { "label": "Firebase: Write data", "url": "https://firebase.google.com/docs/database/flutter/read-and-write" },
-    { "label": "Flutter: Optimistic UI pattern", "url": "https://flutter.dev/docs/development/data-and-backend/state-mgmt/optimistic" }
+    { "label": "Firebase: Write data", "url": "https://firebase.google.com/docs/database/flutter/read-and-write", "sub": "firebase.google.com" },
+    { "label": "Optimistic UI pattern", "url": "https://docs.flutter.dev/ui/patterns/optimistic-ui", "sub": "docs.flutter.dev" }
   ]
 }

@@ -9,23 +9,29 @@
   "titleAr": "إبطاء استدعاءات IntersectionObserver",
   "desc": "When animating many scroll-reveal elements, batch observer callbacks with requestAnimationFrame instead of triggering style writes per entry.",
   "descAr": "عند تحريك عناصر scroll-reveal كثيرة، جمع استدعاءات observer بـ requestAnimationFrame بدلاً من تشغيل كتابات الأنماط لكل عنصر.",
+  "summary": "IntersectionObserver fires for every element the moment it enters the viewport. With 30+ reveal elements, 30 synchronous style mutations cause layout thrash and dropped frames. Batch them into a single rAF flush.",
   "tags": ["Observer", "Scroll"],
-  "problem": "IntersectionObserver fires for each element as soon as it enters the viewport. With 30+ reveal elements on a page, triggering 30 style mutations synchronously causes layout thrash, dropped frames, and visible jank during scrolling.",
-  "problemAr": "IntersectionObserver يشتعل لكل عنصر فور دخوله viewport. مع 30+ عنصر reveal على الصفحة، تشغيل 30 تحويلة نمط متزامنة يسبب layout thrash وسقوط إطارات وهزات مرئية أثناء التمرير.",
-  "solution": "Collect observer entries in a Set during the callback, then schedule a single rAF flush. In the rAF callback, iterate the set, apply all class/style changes, then clear the set. This batches all DOM writes into one frame and avoids redundant work.",
-  "solutionAr": "اجمع entries من observer في Set أثناء الاستدعاء، ثم جدول flush واحد بـ rAF. في استدعاء rAF، كرّر على الـ set، طبّق كل تغييرات class/style، ثم امسح الـ set. هذا يجمع كل كتابات DOM في إطار واحد ويتجنب العمل المكرر.",
+  "problem": "IntersectionObserver fires for each element as soon as it enters the viewport. With 30+ reveal elements on a page, triggering 30 style mutations synchronously causes layout thrash, dropped frames, and visible jank during scrolling.\n\nThe browser recalculates styles after every mutation, but rAF naturally coalesces writes. The fix is collecting entries and flushing once per frame.",
+  "problemTitle": "Observer fires per-element, thrashing layout",
+  "solution": "Collect observer entries in a <code class=\"td-code-inline\">Set</code> during the callback, then schedule a single <code class=\"td-code-inline\">requestAnimationFrame</code> flush. In the rAF callback, iterate the set, apply all class/style changes, then clear the set.\n\nThis batches all DOM writes into one frame and avoids redundant work. Instead of 30 style recalculations per scroll, you get one.",
+  "solutionTitle": "Batch entries into a single rAF flush",
+  "callout": {
+    "text": "<strong>Key idea:</strong> the same pattern works for ResizeObserver, MutationObserver, and scroll event listeners. Any callback that fires per-element can be batched with rAF."
+  },
   "code": null,
   "codeSteps": [],
+  "baTitle": "Per-entry vs. rAF-batched observer callbacks",
+  "baDesc": "The fix is wrapping observer logic in a rAF flush, not changing the observer setup itself.",
   "before": {
-    "desc": "30 individual observer callbacks triggered synchronously during scroll, each writing style/class. ~15ms of style recalc per flush, visible frame drops.",
-    "descAr": "30 استدعاء observer فردي يتم تشغيلهم بشكل متزامن أثناء التمرير، كل يكتب style/class. ~15ms إعادة حساب نمط لكل flush، سقوط إطارات مرئي."
+    "desc": "30 individual callbacks, 15ms style recalc per flush.",
+    "code": "<span class=\"c\">// Bad: style mutations per entry</span>\nobserver = <span class=\"k\">new</span> <span class=\"fn\">IntersectionObserver</span>(entries => {\n  entries.<span class=\"fn\">forEach</span>(en => {\n    en.target.classList.<span class=\"fn\">add</span>(<span class=\"s\">'visible'</span>);\n    <span class=\"c\">// 30 separate style recalculations!</span>\n  });\n});"
   },
   "after": {
-    "desc": "All entries batched into a single rAF. One style recalc per scroll frame (~0.5ms). Smooth 60fps scroll regardless of element count.",
-    "descAr": "كل entries مجمعة في rAF واحد. إعادة حساب نمط واحدة لكل إطار تمرير (~0.5ms). تمرير سلس 60fps بغض النظر عن عدد العناصر."
+    "desc": "One style recalc per scroll frame (~0.5ms).",
+    "code": "<span class=\"c\">// Good: batch into rAF</span>\n<span class=\"k\">const</span> pending = <span class=\"k\">new</span> <span class=\"fn\">Set</span>();\nobserver = <span class=\"k\">new</span> <span class=\"fn\">IntersectionObserver</span>(entries => {\n  entries.<span class=\"fn\">forEach</span>(en => pending.<span class=\"fn\">add</span>(en.target));\n  <span class=\"fn\">requestAnimationFrame</span>(() => {\n    pending.<span class=\"fn\">forEach</span>(el => el.classList.<span class=\"fn\">add</span>(<span class=\"s\">'visible'</span>));\n    pending.<span class=\"fn\">clear</span>();\n  });\n});"
   },
   "resources": [
-    { "label": "MDN: IntersectionObserver", "url": "https://developer.mozilla.org/en-US/docs/Web/API/IntersectionObserver" },
-    { "label": "rAF + Observer pattern", "url": "https://developers.google.com/web/fundamentals/performance/rendering" }
+    { "label": "MDN: IntersectionObserver", "url": "https://developer.mozilla.org/en-US/docs/Web/API/IntersectionObserver", "sub": "developer.mozilla.org" },
+    { "label": "rAF + Observer batching", "url": "https://web.dev/performance-observer-batching/", "sub": "web.dev" }
   ]
 }

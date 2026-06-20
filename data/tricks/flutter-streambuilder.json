@@ -9,11 +9,15 @@
   "titleAr": "Flutter StreamBuilder إعادة بناء القائمة بالكامل",
   "desc": "Wrap each list item with a ValueKey tied to a stable id so Flutter diffs correctly instead of rebuilding the whole list on every snapshot.",
   "descAr": "لف كل عنصر في القائمة بـ ValueKey مرتبط بمعرف ثابت ليتمكن Flutter من المقارنة بشكل صحيح بدلاً من إعادة بناء القائمة كاملة عند كل تحديث.",
+  "summary": "Every Firestore snapshot triggered a full ListView rebuild, losing scroll positions, animation states, and expansion toggles. The fix is a single ValueKey per item.",
   "tags": ["Flutter", "Firebase"],
-  "problem": "Using StreamBuilder with Firebase Firestore, every snapshot caused the entire ListView to rebuild. Each item lost its scroll position, animation controller, and expansion state because Flutter's diff algorithm had no stable key to match old vs new children.",
-  "problemAr": "استخدام StreamBuilder مع Firebase Firestore، كل snapshot كان يسبب إعادة بناء كاملة لـ ListView. كل عنصر يفقد موضع التمرير وحالة المتحكم بالـ animation وحالة التوسع لأن خوارزمية diff لـ Flutter ليس لديها مفتاح ثابت لمطابقة العناصر القديمة مع الجديدة.",
-  "solution": "Assign a ValueKey(item.id) to every list item widget. Flutter's Element tree uses keys to match old and new Widget instances, so adding one item no longer recreates all siblings. Scroll position and state are preserved across snapshot changes.",
-  "solutionAr": "خصص ValueKey(item.id) لكل عنصر في القائمة. شجرة Element في Flutter تستخدم المفاتيح لمطابقة Widgets القديمة مع الجديدة، لذا إضافة عنصر واحد لم يعد يعيد بناء كل العناصر الشقيقة. يتم الحفاظ على موضع التمرير والحالة عبر تغييرات snapshot.",
+  "problem": "Using StreamBuilder with Firebase Firestore, every snapshot caused the entire ListView to rebuild. Each item lost its scroll position, animation controller, and expansion state because Flutter's diff algorithm had no stable key to match old vs new children.\n\nThis is especially painful with real-time listeners that fire multiple times per second. Users see the whole list flicker, expanded cards collapse, and scroll position resets to top on every data change.",
+  "problemTitle": "Entire list rebuilds on every snapshot",
+  "solution": "Assign a <code class=\"td-code-inline\">ValueKey(item.id)</code> to every list item widget. Flutter's Element tree uses keys to match old and new Widget instances, so adding one item no longer recreates all siblings. Scroll position and state are preserved across snapshot changes.\n\nThe same principle applies to any builder that produces a dynamic list: always provide stable keys based on your data model's unique identifier, never the loop index.",
+  "solutionTitle": "Provide stable keys to every list item",
+  "callout": {
+    "text": "<strong>Key idea:</strong> keys are not just for performance \u2014 they preserve widget state between rebuilds. Without keys, Flutter treats the list as a brand-new collection every time."
+  },
   "code": {
     "lang": "Dart",
     "html": "<span class=\"k\">const</span> key = ValueKey(item.id); <span class=\"c\">// stable key</span>"
@@ -21,25 +25,26 @@
   "codeSteps": [
     {
       "step": 1,
-      "label": "Before",
+      "label": "Before \u2014 no keys, full rebuild",
       "html": "children: snap.data!.docs\n    .map((d) => MyItem(data: d))\n    .toList()"
     },
     {
       "step": 2,
-      "label": "After",
+      "label": "After \u2014 keys preserve state",
       "html": "children: snap.data!.docs\n    .map((d) => MyItem(key: ValueKey(d.id), data: d))\n    .toList()"
     }
   ],
+  "baTitle": "Without keys vs. with ValueKey",
   "before": {
-    "desc": "Entire ListView rebuilt on each Firestore snapshot, losing states, animation controllers, and scroll offsets across all visible items.",
-    "descAr": "إعادة بناء كاملة لـ ListView عند كل snapshot من Firestore، مما يفقد حالات ومتحكمات الرسوم المتحركة وأماكن التمرير في جميع العناصر المرئية."
+    "desc": "Every Firestore snapshot rebuilds the entire list.",
+    "code": "StreamBuilder(\n  stream: firestore.snapshots(),\n  builder: (ctx, snap) {\n    <span class=\"c\">// no keys \u2014 full rebuild</span>\n    <span class=\"k\">return</span> ListView(\n      children: snap.data!.docs\n        .map((d) => MyItem(<span class=\"bad\">data: d</span>))\n        .toList(),\n    );\n  },\n);"
   },
   "after": {
-    "desc": "Only the added/removed widget is rebuilt. Scroll position and item-interal state (expansion, animations) survive across snapshots.",
-    "descAr": "فقط widget المضاف أو المحذوف يُعاد بناؤه. يبقى موضع التمرير والحالة الداخلية للعنصر (التوسع، الحركات) كما هي."
+    "desc": "Only added/removed items rebuild. Scrolling and state preserved.",
+    "code": "StreamBuilder(\n  stream: firestore.snapshots(),\n  builder: (ctx, snap) {\n    <span class=\"c\">// stable keys \u2014 only diff changes</span>\n    <span class=\"k\">return</span> ListView(\n      children: snap.data!.docs\n        .map((d) => MyItem(<span class=\"good\">key: ValueKey(d.id)</span>, data: d))\n        .toList(),\n    );\n  },\n);"
   },
   "resources": [
-    { "label": "Flutter Keys docs", "url": "https://docs.flutter.dev/development/ui/widgets-intro#keys" },
-    { "label": "Medium: Understanding Flutter keys", "url": "https://medium.com/flutter-community/understanding-flutter-keys-40525c2cb42a" }
+    { "label": "Flutter Keys documentation", "url": "https://docs.flutter.dev/development/ui/widgets-intro#keys", "sub": "docs.flutter.dev" },
+    { "label": "Understanding Flutter keys", "url": "https://medium.com/flutter-community/understanding-flutter-keys-40525c2cb42a", "sub": "medium.com" }
   ]
 }

@@ -9,37 +9,48 @@
   "titleAr": "تخزين طبقات Docker المؤقت للبناء الأسرع",
   "desc": "Copy only dependency manifests first and install before copying the rest of the source. Docker reuses the cached layer when only code changes.",
   "descAr": "انسخ ملفات التبعيات أولاً ثم ثبتها قبل نسخ باقي المصدر. Docker يعيد استخدام الطبقة المخبأة عندما يتغير الكود فقط.",
+  "summary": "Changing one line of source invalidated npm install, forcing a full re-download of dependencies every CI build. Reordering two COPY instructions drops build time from 3 minutes to 10 seconds.",
   "tags": ["Docker", "CI"],
-  "problem": "Every CI build copied the entire source, then ran npm install. Changing one line of source code invalidated the npm install cache layer, forcing a full re-download of dependencies every time. Builds took 3-5 minutes.",
-  "problemAr": "كل بناء CI ينسخ المصدر بالكامل ثم يشغل npm install. تغيير سطر واحد من المصدر يبطل طبقة npm install cache، مما يجبر على إعادة تحميل التبعيات بالكامل في كل مرة. استغرقت عمليات البناء 3-5 دقائق.",
-  "solution": "Reorder Dockerfile commands: COPY package.json and package-lock.json first, RUN npm install, then COPY the rest of the source. Docker uses cached layers — if dependencies haven't changed the npm install layer is reused and only the app code layer is rebuilt (~10s).",
-  "solutionAr": "أعد ترتيب أوامر Dockerfile: انسخ package.json و package-lock.json أولاً، ثم RUN npm install، ثم انسخ باقي المصدر. Docker يستخدم الطبقات المخبأة — إذا لم تتغير التبعيات يعاد استخدام طبقة npm install ويُبنى فقط طبقة كود التطبيق (~10s).",
+  "problem": "Every CI build copied the entire source, then ran <code class=\"td-code-inline\">npm install</code>. Changing one line of source code invalidated the npm install cache layer, forcing a full re-download of dependencies every time. Builds took 3\u20135 minutes.\n\nDevelopers waste time waiting for builds, CI pipelines clog, and the feedback loop slows dramatically. The fix is reordering two lines in the Dockerfile.",
+  "problemTitle": "Every source edit re-downloads all dependencies",
+  "solution": "Reorder Dockerfile commands:\n1. <code class=\"td-code-inline\">COPY package*.json ./</code>  \u2014 copy manifests only\n2. <code class=\"td-code-inline\">RUN npm ci --only=production</code>  \u2014 install deps\n3. <code class=\"td-code-inline\">COPY . .</code>  \u2014 copy the rest of the source\n\nDocker caches each layer. If dependencies haven't changed, the npm install layer is reused and only the app code layer rebuilds. This drops build time from minutes to seconds.",
+  "solutionTitle": "Copy manifests first, install, then copy source",
+  "callout": {
+    "text": "<strong>Key idea:</strong> Docker caches by layer, and a layer is invalidated when its contents <em>or any previous layer</em> changes. By putting volatile code after stable dependencies, the dependency cache survives source edits."
+  },
   "code": {
     "lang": "Dockerfile",
-    "html": "<span class=\"c\"># 1. Install deps FIRST</span>\n<span class=\"k\">COPY</span> package*.json ./ \n<span class=\"k\">RUN</span> npm ci --only=production\n\n<span class=\"c\"># 2. Then copy source (invalidates only this layer)</span>\n<span class=\"k\">COPY</span> . ."
+    "html": "<span class=\"k\">COPY</span> package*.json ./\n<span class=\"k\">RUN</span> npm ci --only=production\n<span class=\"k\">COPY</span> . ."
   },
   "codeSteps": [
     {
       "step": 1,
-      "label": "Copy manifests",
-      "html": "COPY package*.json ./\nRUN npm ci --only=production"
+      "label": "Copy dependency manifests only",
+      "html": "COPY package*.json ./"
     },
     {
       "step": 2,
-      "label": "Copy source last",
+      "label": "Install dependencies (cached layer)",
+      "html": "RUN npm ci --only=production"
+    },
+    {
+      "step": 3,
+      "label": "Copy source code last",
       "html": "COPY . ."
     }
   ],
+  "baTitle": "Default Dockerfile vs. optimised order",
+  "baDesc": "The change is two line swaps, but the build time difference is massive in CI.",
   "before": {
-    "desc": "Any source change invalidated npm install. Build time: 3+ minutes. CI pipeline blocked waiting for dependencies to re-install.",
-    "descAr": "أي تغيير في المصدر يبطل npm install. وقت البناء: 3+ دقائق. خط CI محظور بانتظار إعادة تثبيت التبعيات."
+    "desc": "Any source change invalidates npm install.",
+    "code": "<span class=\"k\">FROM</span> node:18\n<span class=\"k\">WORKDIR</span> /app\n<span class=\"bad\">COPY</span> . .  <span class=\"c\">// source first \u2014 invalidates everything</span>\n<span class=\"k\">RUN</span> npm ci"
   },
   "after": {
-    "desc": "Dependency layer cached permanently. Source-only builds complete in ~10 seconds. Full rebuild needed only when package.json changes.",
-    "descAr": "طبقة التبعيات مخبأة بشكل دائم. بناء المصدر فقط يكتمل في ~10 ثوانٍ. إعادة بناء كاملة مطلوبة فقط عندما يتغير package.json."
+    "desc": "Dependency layer cached permanently.",
+    "code": "<span class=\"k\">FROM</span> node:18\n<span class=\"k\">WORKDIR</span> /app\n<span class=\"good\">COPY</span> package*.json ./  <span class=\"c\">// manifests first</span>\n<span class=\"k\">RUN</span> npm ci                <span class=\"c\">// cached unless package.json changes</span>\n<span class=\"good\">COPY</span> . .                 <span class=\"c\">// only this layer rebuilds</span>"
   },
   "resources": [
-    { "label": "Docker best practices", "url": "https://docs.docker.com/develop/develop-images/dockerfile_best-practices/" },
-    { "label": "Docker layer caching in CI", "url": "https://docs.docker.com/build/ci/" }
+    { "label": "Docker best practices", "url": "https://docs.docker.com/develop/develop-images/dockerfile_best-practices/", "sub": "docs.docker.com" },
+    { "label": "Docker layer caching in CI", "url": "https://docs.docker.com/build/ci/", "sub": "docs.docker.com" }
   ]
 }

@@ -84,6 +84,13 @@
   .td-ba-head svg{width:14px;height:14px;}
   .td-ba-body{background:var(--code-bg);padding:16px 18px;}
   .td-ba-body p{font-size:13px;color:color-mix(in srgb, var(--default-color), transparent 40%);margin:0;line-height:1.7;}
+  .td-ba-body pre{font-family:'JetBrains Mono',monospace;font-size:12px;line-height:1.65;color:rgba(255,255,255,0.78);overflow-x:auto;margin:0;}
+  .td-ba-body .k{color:#8b5cf6;}
+  .td-ba-body .s{color:#f59e0b;}
+  .td-ba-body .c{color:rgba(255,255,255,0.30);font-style:italic;}
+  .td-ba-body .bad{color:#ef4444;}
+  .td-ba-body .good{color:#10b981;}
+  .td-ba-note{padding:10px 16px;font-size:11.5px;color:color-mix(in srgb, var(--default-color), transparent 60%);border-top:1px solid rgba(255,255,255,0.06);}
 
   .td-code-block{margin-bottom:22px;}
   .td-code-block:last-child{margin-bottom:0;}
@@ -209,14 +216,8 @@
     'item-violet': '#8b5cf6', 'item-cyan': '#0dcaf0', 'item-emerald': '#10b981',
     'item-orange': '#f59e0b', 'item-pink': '#ec4899', 'item-blue': '#3b82f6'
   };
-  const CAT_COLOR = {
-    frontend: 'item-violet', backend: 'item-blue', mobile: 'item-emerald'
-  };
   const LABELS = { frontend: 'Frontend', backend: 'Backend', mobile: 'Mobile' };
   const DIFF_LABELS = { beginner: 'Beginner', intermediate: 'Intermediate', advanced: 'Advanced' };
-
-  function qs(sel, ctx) { return (ctx || document).querySelector(sel); }
-  function qsa(sel, ctx) { return (ctx || document).querySelectorAll(sel); }
 
   var trickId = null;
   var allTricks = [];
@@ -248,6 +249,11 @@
       tagsHtml += '<span class="td-tag">' + d.tags[i] + '</span>';
     }
 
+    var summary = d.summary || d.desc;
+
+    var words = (d.solution || '').split(/\s+/).length;
+    var readingTime = Math.max(1, Math.round(words / 200)) + ' min read';
+
     var codeStepsHtml = '';
     if (d.codeSteps && d.codeSteps.length) {
       var stepLetters = ['a','b','c','d','e'];
@@ -271,19 +277,34 @@
 
     var beforeAfterHtml = '';
     if (d.before && d.after) {
+      var beforeBody = d.before.code
+        ? '<pre>' + d.before.code + '</pre>'
+        : '<p>' + (d.before.desc || '') + '</p>';
+      var afterBody = d.after.code
+        ? '<pre>' + d.after.code + '</pre>'
+        : '<p>' + (d.after.desc || '') + '</p>';
       beforeAfterHtml = '<div class="td-block">' +
         '<div class="td-block-label"><span class="td-num">4</span>Before / After</div>' +
+        '<h2 class="td-block-title">' + (d.baTitle || 'Before vs After') + '</h2>' +
+        (d.baDesc ? '<p>' + d.baDesc + '</p>' : '') +
         '<div class="td-ba-grid">' +
           '<div class="td-ba-card td-before">' +
             '<div class="td-ba-head"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M15 9l-6 6M9 9l6 6"/></svg>Before</div>' +
-            '<div class="td-ba-body"><p>' + d.before.desc + '</p></div>' +
+            '<div class="td-ba-body">' + beforeBody + '</div>' +
+            (d.before.note ? '<div class="td-ba-note">' + d.before.note + '</div>' : '') +
           '</div>' +
           '<div class="td-ba-card td-after">' +
             '<div class="td-ba-head"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>After</div>' +
-            '<div class="td-ba-body"><p>' + d.after.desc + '</p></div>' +
+            '<div class="td-ba-body">' + afterBody + '</div>' +
+            (d.after.note ? '<div class="td-ba-note">' + d.after.note + '</div>' : '') +
           '</div>' +
         '</div>' +
       '</div>';
+    }
+
+    var calloutHtml = '';
+    if (d.callout) {
+      calloutHtml = '<div class="td-callout"><div class="td-ic">' + (d.callout.icon || '◆') + '</div><p>' + d.callout.text + '</p></div>';
     }
 
     var resourcesHtml = '';
@@ -293,7 +314,7 @@
         var res = d.resources[r];
         resItems += '<a class="td-res-item" href="' + res.url + '" target="_blank" rel="noopener">' +
           '<div class="td-res-icon"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4"><circle cx="8" cy="8" r="6"/><path d="M8 5v3l2 1"/></svg></div>' +
-          '<div class="td-res-text"><div class="td-res-title">' + res.label + '</div></div>' +
+          '<div class="td-res-text"><div class="td-res-title">' + res.label + '</div>' + (res.sub ? '<div class="td-res-sub">' + res.sub + '</div>' : '') + '</div>' +
           '<svg class="td-res-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M7 7h10v10"/></svg>' +
         '</a>';
       }
@@ -325,7 +346,7 @@
           relatedHtml = '<section class="td-related">' +
             '<div class="td-related-inner">' +
               '<h3 class="td-related-title">Related tricks</h3>' +
-              '<p class="td-related-sub">More tips from the same category</p>' +
+              '<p class="td-related-sub">Other animation and performance notes you might find useful</p>' +
               '<div class="td-related-grid">' + relCards + '</div>' +
             '</div>' +
           '</section>';
@@ -333,8 +354,12 @@
       }
     }
 
-    var difficultyIcon = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>';
+    var clockIcon = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>';
     var calIcon = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>';
+    var diffIcon = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>';
+
+    var problemTitle = d.problemTitle || (d.problem ? d.problem.split('.')[0] + '.' : 'What went wrong');
+    var solutionTitle = d.solutionTitle || (d.solution ? d.solution.split('.')[0] + '.' : 'How to fix it');
 
     var html =
     '<div class="td-topbar">' +
@@ -342,7 +367,7 @@
         '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>' +
         'All tricks' +
       '</a>' +
-      '<span class="td-crumb">Tricks / <span>' + catLabel + '</span></span>' +
+      '<span class="td-crumb">Tricks &amp; Solutions / <span>' + catLabel + '</span></span>' +
       '<button class="td-copy-link" id="copyLinkBtn">' +
         '<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M6 10a3 3 0 010-4l2-2a3 3 0 014 4l-1 1"/><path d="M10 6a3 3 0 010 4l-2 2a3 3 0 01-4-4l1-1"/></svg>' +
         'Copy link' +
@@ -351,23 +376,25 @@
     '<header class="td-hero" style="--td-accent:' + accent + '">' +
       '<span class="td-badge"><span class="dot"></span>' + catLabel + '</span>' +
       '<h1 class="td-title">' + d.title + '</h1>' +
-      '<p class="td-summary">' + d.desc + '</p>' +
+      '<p class="td-summary">' + summary + '</p>' +
       '<div class="td-meta">' +
+        '<span class="td-pill">' + clockIcon + readingTime + '</span>' +
         '<span class="td-pill">' + calIcon + 'Updated ' + d.date + '</span>' +
-        '<span class="td-pill">' + difficultyIcon + difficulty + '</span>' +
+        '<span class="td-pill">' + diffIcon + difficulty + '</span>' +
       '</div>' +
       '<div class="td-tags">' + tagsHtml + '</div>' +
     '</header>' +
     '<div class="td-body" style="--td-accent:' + accent + '">' +
       '<div class="td-block">' +
         '<div class="td-block-label"><span class="td-num">1</span>The Problem</div>' +
-        '<h2 class="td-block-title">' + (d.problem ? d.problem.slice(0, 60) + '...' : 'What went wrong') + '</h2>' +
-        '<p>' + (d.problem || '') + '</p>' +
+        '<h2 class="td-block-title">' + problemTitle + '</h2>' +
+        (d.problem ? '<p>' + d.problem.replace(/\n/g, '</p><p>') + '</p>' : '') +
       '</div>' +
       '<div class="td-block">' +
         '<div class="td-block-label"><span class="td-num">2</span>The Solution</div>' +
-        '<h2 class="td-block-title">' + (d.solution ? d.solution.slice(0, 60) + '...' : 'How to fix it') + '</h2>' +
-        '<p>' + (d.solution || '') + '</p>' +
+        '<h2 class="td-block-title">' + solutionTitle + '</h2>' +
+        (d.solution ? '<p>' + d.solution.replace(/\n/g, '</p><p>') + '</p>' : '') +
+        calloutHtml +
       '</div>' +
       (codeStepsHtml ? '<div class="td-block"><div class="td-block-label"><span class="td-num">3</span>Implementation</div><h2 class="td-block-title">Step by step</h2>' + codeStepsHtml + '</div>' : '') +
       beforeAfterHtml +

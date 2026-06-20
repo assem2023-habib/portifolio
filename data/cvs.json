@@ -2,6 +2,9 @@
   "cvs": [
     {
       "id": "laravel",
+      "type": "backend",
+      "accent": "#3b82f6",
+      "accentRgb": "59,130,246",
       "title": "Laravel Developer CV",
       "titleAr": "سيرة ذاتية - مطور Laravel",
       "specialization": "Backend Development",
@@ -104,6 +107,9 @@
     },
     {
       "id": "nestjs",
+      "type": "backend",
+      "accent": "#3b82f6",
+      "accentRgb": "59,130,246",
       "title": "NestJS Developer CV",
       "titleAr": "سيرة ذاتية - مطور NestJS",
       "specialization": "Backend Development",
@@ -187,6 +193,9 @@
     },
     {
       "id": "flutter",
+      "type": "mobile",
+      "accent": "#10b981",
+      "accentRgb": "16,185,129",
       "title": "Flutter Developer CV",
       "titleAr": "سيرة ذاتية - مطور Flutter",
       "specialization": "Mobile Development",
@@ -281,6 +290,9 @@
     },
     {
       "id": "fullstack",
+      "type": "fullstack",
+      "accent": "#7c6cf0",
+      "accentRgb": "124,108,240",
       "title": "Full-Stack Developer CV",
       "titleAr": "سيرة ذاتية - مطور Full-Stack",
       "specialization": "Full-Stack Development",
@@ -389,7 +401,7 @@
   "metadata": {
     "version": "2.0.0",
     "createdAt": "2026-04-23",
-    "updatedAt": "2026-06-10",
+    "updatedAt": "2026-06-20",
     "author": "Assem Adel Habib",
     "contact": "099assemhb@gmail.com",
     "totalCVs": 4

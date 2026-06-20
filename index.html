@@ -40,6 +40,7 @@
     <link href="assets/css/services-carousel.css" rel="stylesheet" />
     <link href="assets/css/splash-screen.css" rel="stylesheet" />
     <link href="assets/css/tricks-carousel.css" rel="stylesheet" />
+    <link href="assets/css/cv-carousel.css" rel="stylesheet" />
   </head>
 
   <body class="index-page">
@@ -293,8 +294,7 @@ Software engineer specializing in building modern applications and
       <!-- /Skills Section -->
 
       <!-- Resume Section -->
-      <section id="resume" class="resume section">
-        <!-- Section Title -->
+      <section id="resume" class="cv-section section">
         <div class="container section-title" data-aos="fade-up">
           <h2>Resume</h2>
           <p>
@@ -302,66 +302,21 @@ Software engineer specializing in building modern applications and
             development and web technologies
           </p>
         </div>
-        <!-- End Section Title -->
 
         <div class="container">
-          <!-- 3D Carousel Stage for CVs -->
-          <div class="carousel-stage">
-            <div class="carousel-scene">
-              <div class="carousel-ring" id="cv-ring"></div>
+          <div class="cv-carousel-wrap">
+            <div class="cv-ambient-glow"></div>
+            <div class="cv-carousel-viewport">
+              <div class="cv-carousel-track" id="cv-track"></div>
             </div>
-            <div class="ground-line"></div>
-          </div>
-
-          <!-- Carousel Controls for CVs -->
-          <div class="carousel-controls">
-            <button class="ctrl-btn" id="prevCVBtn" aria-label="Previous">
-              <i class="bi bi-chevron-left"></i>
-            </button>
-            <button class="ctrl-btn ctrl-play" id="playCVBtn" aria-label="Play/Pause">
-              <i class="bi bi-pause-fill" id="playCVIcon"></i>
-            </button>
-            <button class="ctrl-btn" id="nextCVBtn" aria-label="Next">
-              <i class="bi bi-chevron-right"></i>
-            </button>
-          </div>
-
-          <!-- Carousel Dots for CVs -->
-          <div class="carousel-dots" id="cv-dots"></div>
-
-          <!-- Template for CV carousel card (hidden) -->
-          <div id="cv-card-template" style="display: none;">
-            <div class="cv-carousel-card">
-              <div class="card-inner">
-                <div class="card-glow"></div>
-                <div class="card-header-wrap">
-                  <div class="card-number">01</div>
-                  <div class="card-icon-wrap">
-                    <i class="bi bi-file-earmark-text"></i>
-                  </div>
-                </div>
-                <div class="card-content text-center">
-                  <h5 class="cv-title fw-bold mb-1">Title</h5>
-                  <span class="cv-specialization text-muted small d-block mb-3">Spec</span>
-                  <p class="cv-description small mb-4">Desc</p>
-                </div>
-                <div class="cv-actions mt-auto">
-                  <div class="d-flex gap-2" id="cv-download-btns">
-                    <!-- Buttons populated by JS -->
-                  </div>
-                  <a href="cv-details.html?id=" class="cv-details-link" id="cv-details-link">
-                    <i class="bi bi-box-arrow-up-right"></i>
-                    <span class="cv-details-text">View Details</span>
-                  </a>
-                </div>
-              </div>
-              <div class="card-back">
-                <div class="back-logo"><i class="bi bi-file-earmark-pdf"></i></div>
-                <h3 class="back-title">Title</h3>
-                <div class="back-divider"></div>
-                <span class="back-tag">Professional Resume</span>
-                <div class="back-num">01</div>
-              </div>
+            <div class="cv-controls">
+              <button class="cv-arrow" id="cv-prev" aria-label="Previous">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
+              </button>
+              <div class="cv-dots" id="cv-dots"></div>
+              <button class="cv-arrow" id="cv-next" aria-label="Next">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
+              </button>
             </div>
           </div>
         </div>
@@ -814,7 +769,7 @@ Software engineer specializing in building modern applications and
     <!-- Main JS File -->
     <script src="assets/js/portfolio-data.js"></script>
     <script src="assets/js/data-loader.js"></script>
-    <script src="assets/js/cv-loader.js"></script>
+    <script src="assets/js/cv-carousel.js"></script>
     <script src="assets/js/main.js"></script>
     <script src="assets/js/homepage-data-loader.js"></script>
     <!-- <script src="assets/js/testimonial-form.js"></script> -->

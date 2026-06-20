@@ -1,0 +1,415 @@
+/* CV Carousel v2 — canvas-drawn imagery + hover effects
+   Uses site CSS variables from main.css: --accent-color, --background-color,
+   --default-color, --heading-color, --surface-color, --violet, --emerald, --blue
+*/
+.cv-section {
+  position: relative;
+  overflow: hidden;
+}
+
+.cv-section .section-title {
+  padding-bottom: 20px;
+}
+
+.cv-carousel-wrap {
+  position: relative;
+  padding: 36px 0 30px;
+}
+
+.cv-ambient-glow {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 520px;
+  height: 380px;
+  transform: translate(-50%, -50%);
+  background: radial-gradient(ellipse, color-mix(in srgb, var(--accent-color), transparent 85%) 0%, transparent 72%);
+  pointer-events: none;
+  z-index: 0;
+  filter: blur(4px);
+}
+
+.cv-carousel-viewport {
+  position: relative;
+  height: 360px;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  perspective: 1200px;
+}
+
+.cv-carousel-track {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.cv-card {
+  position: absolute;
+  width: 288px;
+  will-change: transform, opacity;
+  transition: transform 0.5s cubic-bezier(0.22, 0.9, 0.3, 1), opacity 0.5s cubic-bezier(0.22, 0.9, 0.3, 1);
+  cursor: pointer;
+}
+
+.cv-card-face {
+  position: relative;
+  border-radius: 14px;
+  overflow: hidden;
+  border: 1px solid var(--border-soft);
+  background: color-mix(in srgb, var(--surface-color), #000 85%);
+  box-shadow: 0 10px 26px rgba(0, 0, 0, 0.35);
+  transition: transform 0.35s cubic-bezier(0.22, 0.9, 0.3, 1), box-shadow 0.35s ease, border-color 0.35s ease;
+}
+
+/* Hover — only meaningful on the center card */
+.cv-card.is-center:hover .cv-card-face {
+  transform: translateY(-7px) scale(1.025);
+  box-shadow:
+    0 22px 44px rgba(0, 0, 0, 0.50),
+    0 0 0 1px var(--hover-accent, rgba(5, 99, 187, 0.35)),
+    0 0 32px var(--hover-glow, rgba(5, 99, 187, 0.20));
+  border-color: var(--hover-accent, rgba(5, 99, 187, 0.40));
+}
+
+.cv-card.is-center:hover .cv-bg-canvas {
+  transform: scale(1.08);
+  filter: saturate(1.25) brightness(1.08);
+}
+
+.cv-card.is-center:hover .cv-icon-badge {
+  transform: rotate(-6deg) scale(1.08);
+  background: var(--hover-accent, rgba(5, 99, 187, 0.30));
+}
+
+.cv-card.is-center:hover .scan-line {
+  opacity: 1;
+}
+
+/* Background canvas */
+.cv-bg-canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  transition: transform 0.5s cubic-bezier(0.22, 0.9, 0.3, 1), filter 0.5s ease;
+}
+
+/* Scan-line sweep — appears on hover */
+.scan-line {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 50px;
+  z-index: 1;
+  background: linear-gradient(180deg, transparent, rgba(255, 255, 255, 0.10), transparent);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  animation: scanSweep 2.4s linear infinite;
+  pointer-events: none;
+}
+
+@keyframes scanSweep {
+  0%   { top: -60px; }
+  100% { top: 260px; }
+}
+
+/* Spec overlay for depth */
+.spec-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: linear-gradient(
+    180deg,
+    color-mix(in srgb, var(--surface-color), transparent 70%) 0%,
+    color-mix(in srgb, var(--surface-color), transparent 12%) 56%,
+    var(--surface-color) 100%
+  );
+}
+
+body.dark-mode .spec-overlay {
+  background: linear-gradient(
+    180deg,
+    rgba(22, 22, 29, 0.30) 0%,
+    rgba(22, 22, 29, 0.88) 56%,
+    #16161d 100%
+  );
+}
+
+/* Card content */
+.cv-content {
+  position: relative;
+  z-index: 2;
+  padding: 20px 20px 22px;
+  display: flex;
+  flex-direction: column;
+  min-height: 288px;
+}
+
+.cv-top-row {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: auto;
+}
+
+.cv-index {
+  font-size: 11px;
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.35);
+  font-family: 'JetBrains Mono', monospace;
+  letter-spacing: 0.05em;
+}
+
+.cv-icon-badge {
+  width: 30px;
+  height: 30px;
+  border-radius: 9px;
+  background: rgba(255, 255, 255, 0.07);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(255, 255, 255, 0.10);
+  transition: transform 0.3s cubic-bezier(0.22, 0.9, 0.3, 1), background 0.3s ease;
+}
+
+.cv-icon-badge svg {
+  width: 14px;
+  height: 14px;
+}
+
+.cv-text {
+  margin-top: 16px;
+}
+
+.cv-card-title {
+  font-size: 16px;
+  font-weight: 700;
+  color: #fff;
+  line-height: 1.25;
+  margin-bottom: 3px;
+}
+
+.cv-subtitle {
+  font-size: 9.5px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  margin-bottom: 14px;
+}
+
+.cv-actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 7px;
+  margin-bottom: 9px;
+}
+
+.cv-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  padding: 8px 0;
+  border-radius: 8px;
+  font-size: 11px;
+  font-weight: 600;
+  background: rgba(255, 255, 255, 0.07);
+  border: 1px solid rgba(255, 255, 255, 0.10);
+  color: rgba(255, 255, 255, 0.70);
+  cursor: pointer;
+  text-decoration: none;
+  transition: background 0.22s ease, border-color 0.22s ease, transform 0.22s cubic-bezier(0.22, 0.9, 0.3, 1), box-shadow 0.22s ease;
+}
+
+.cv-btn:hover {
+  background: var(--hover-btn-bg, rgba(5, 99, 187, 0.24));
+  border-color: var(--hover-accent2, rgba(255, 255, 255, 0.60));
+  color: #fff;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.30), 0 0 0 1px var(--hover-accent2, rgba(255, 255, 255, 0.60)) inset;
+}
+
+.cv-btn:active {
+  transform: translateY(0) scale(0.96);
+}
+
+.cv-btn svg {
+  width: 11px;
+  height: 11px;
+  transition: transform 0.22s cubic-bezier(0.22, 0.9, 0.3, 1);
+}
+
+.cv-btn:hover svg {
+  transform: translateY(-1px) scale(1.08);
+}
+
+.cv-view {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  font-size: 10.5px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  color: rgba(255, 255, 255, 0.40);
+  padding: 7px 0;
+  border-radius: 7px;
+  cursor: pointer;
+  isolation: isolate;
+  overflow: hidden;
+  transition: color 0.25s ease;
+  text-decoration: none;
+}
+
+.cv-view::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border-radius: 7px;
+  background: rgba(255, 255, 255, 0.08);
+  opacity: 0;
+  transform: scaleX(0);
+  transform-origin: center;
+  transition: transform 0.35s cubic-bezier(0.22, 0.9, 0.3, 1), opacity 0.35s ease;
+}
+
+.cv-view::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  bottom: 2px;
+  width: 0;
+  height: 1.5px;
+  background: currentColor;
+  border-radius: 2px;
+  transform: translateX(-50%);
+  transition: width 0.3s cubic-bezier(0.22, 0.9, 0.3, 1);
+}
+
+.cv-view:hover {
+  color: #fff;
+}
+
+.cv-view:hover::before {
+  opacity: 1;
+  transform: scaleX(1);
+}
+
+.cv-view:hover::after {
+  width: 60%;
+}
+
+.cv-view:hover .cv-view-icon {
+  transform: translateX(3px) scale(1.12);
+}
+
+.cv-view:active {
+  transform: scale(0.97);
+}
+
+.cv-view-icon {
+  display: flex;
+  align-items: center;
+  transition: transform 0.3s cubic-bezier(0.22, 0.9, 0.3, 1);
+}
+
+.cv-view-icon svg {
+  width: 10px;
+  height: 10px;
+}
+
+.cv-card-face {
+  opacity: 1;
+}
+
+/* Controls */
+.cv-controls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 22px;
+  margin-top: 26px;
+  position: relative;
+  z-index: 1;
+}
+
+.cv-arrow {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  border: 1px solid var(--border-soft);
+  background: transparent;
+  color: color-mix(in srgb, var(--default-color), transparent 40%);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+}
+
+.cv-arrow:hover {
+  border-color: color-mix(in srgb, var(--accent-color), transparent 60%);
+  background: color-mix(in srgb, var(--accent-color), transparent 86%);
+  color: var(--accent-color);
+}
+
+.cv-arrow svg {
+  width: 16px;
+  height: 16px;
+}
+
+.cv-dots {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.cv-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: color-mix(in srgb, var(--default-color), transparent 80%);
+  border: none;
+  cursor: pointer;
+  transition: all 0.25s;
+  padding: 0;
+}
+
+.cv-dot.active {
+  background: var(--accent-color);
+  width: 18px;
+  border-radius: 4px;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .cv-carousel-viewport {
+    height: 320px;
+    perspective: 800px;
+  }
+  .cv-card {
+    width: 220px;
+  }
+  .cv-content {
+    padding: 16px 16px 18px;
+    min-height: 220px;
+  }
+  .cv-card-title {
+    font-size: 14px;
+  }
+  .cv-actions {
+    gap: 5px;
+  }
+  .cv-btn {
+    padding: 6px 0;
+    font-size: 10px;
+  }
+}

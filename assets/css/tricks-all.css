@@ -143,9 +143,11 @@
 }
 
 .trick-card-wrap {
+  display: block;
   position: relative;
   border-radius: 16px;
   padding: 2px;
+  overflow: hidden;
   background: conic-gradient(
     from var(--border-angle, 0deg),
     color-mix(in srgb, var(--card-accent, #8b5cf6) 90%, transparent) 0%,

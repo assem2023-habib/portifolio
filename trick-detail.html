@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <title>Trick Detail - Assem Adel Habib</title>
+  <meta content="" name="description">
+  <meta content="" name="keywords">
+
+  <!-- Favicons -->
+  <link href="assets/img/favicon.png" rel="icon">
+  <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com" rel="preconnect">
+  <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Raleway:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Vendor CSS Files -->
+  <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+  <link href="assets/vendor/aos/aos.css" rel="stylesheet">
+  <link href="assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
+  <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+
+  <!-- Main CSS File -->
+  <link href="assets/css/main.css" rel="stylesheet">
+
+  <!-- Splash Screen CSS -->
+  <link href="assets/css/splash-screen.css" rel="stylesheet">
+
+  <style>
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  #trick-detail{background:var(--background-color);color:var(--default-color);font-family:var(--default-font);-webkit-font-smoothing:antialiased;line-height:1.7;}
+  #trick-detail a{color:inherit;}
+
+  .td-topbar{
+    position:sticky;top:0;z-index:50;
+    background:rgba(0,0,0,0.92);backdrop-filter:blur(14px);
+    border-bottom:1px solid var(--border-soft);
+    padding:16px 28px;display:flex;align-items:center;gap:18px;
+  }
+  .td-back{display:flex;align-items:center;gap:7px;font-size:13px;font-weight:500;color:color-mix(in srgb, var(--default-color), transparent 45%);text-decoration:none;transition:color .2s;}
+  .td-back:hover{color:var(--default-color);}
+  .td-back svg{width:15px;height:15px;}
+  .td-crumb{font-size:12.5px;color:color-mix(in srgb, var(--default-color), transparent 70%);margin-right:auto;}
+  .td-crumb span{color:color-mix(in srgb, var(--default-color), transparent 40%);}
+  .td-copy-link{
+    display:flex;align-items:center;gap:7px;font-family:inherit;font-size:12.5px;font-weight:500;
+    padding:8px 16px;border-radius:8px;border:1px solid var(--border-soft);
+    background:transparent;color:color-mix(in srgb, var(--default-color), transparent 40%);cursor:pointer;transition:all .2s;
+  }
+  .td-copy-link:hover{border-color:var(--violet-line);color:var(--default-color);}
+  .td-copy-link svg{width:13px;height:13px;}
+
+  .td-hero{max-width:880px;margin:0 auto;padding:56px 28px 40px;border-bottom:1px solid var(--border-soft);}
+  .td-badge{display:inline-flex;align-items:center;gap:8px;font-size:11.5px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;padding:6px 15px 6px 11px;border-radius:20px;margin-bottom:22px;width:fit-content;background:color-mix(in srgb, var(--td-accent) 14%, transparent);border:1px solid color-mix(in srgb, var(--td-accent) 38%, transparent);color:color-mix(in srgb, var(--td-accent) 88%, white);}
+  .td-badge .dot{width:7px;height:7px;border-radius:50%;background:var(--td-accent);box-shadow:0 0 8px var(--td-accent);}
+  .td-title{font-size:clamp(28px,4vw,42px);font-weight:800;letter-spacing:-.015em;line-height:1.15;margin-bottom:18px;}
+  .td-summary{font-size:16px;color:color-mix(in srgb, var(--default-color), transparent 38%);max-width:680px;margin-bottom:26px;}
+  .td-meta{display:flex;align-items:center;gap:22px;flex-wrap:wrap;}
+  .td-pill{display:flex;align-items:center;gap:7px;font-size:12.5px;color:color-mix(in srgb, var(--default-color), transparent 55%);}
+  .td-pill svg{width:14px;height:14px;}
+  .td-tags{display:flex;flex-wrap:wrap;gap:7px;margin-top:20px;}
+  .td-tag{font-size:11.5px;font-weight:500;padding:5px 13px;border-radius:7px;background:rgba(255,255,255,0.05);border:1px solid color-mix(in srgb, var(--td-accent) 30%, transparent);color:color-mix(in srgb, var(--default-color), transparent 30%);}
+
+  .td-body{max-width:880px;margin:0 auto;padding:48px 28px 100px;}
+  .td-block{margin-bottom:48px;}
+  .td-block-label{display:flex;align-items:center;gap:11px;font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.26em;text-transform:uppercase;color:var(--td-accent);opacity:.8;margin-bottom:16px;}
+  .td-block-label .td-num{width:24px;height:24px;border-radius:6px;background:color-mix(in srgb, var(--td-accent) 16%, transparent);border:1px solid color-mix(in srgb, var(--td-accent) 35%, transparent);display:flex;align-items:center;justify-content:center;font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--td-accent);}
+  .td-block-title{font-size:22px;font-weight:700;margin-bottom:14px;letter-spacing:-.01em;}
+  .td-block p{font-size:14.5px;color:color-mix(in srgb, var(--default-color), transparent 38%);margin-bottom:14px;}
+  .td-block p:last-child{margin-bottom:0;}
+  .td-block strong{color:var(--heading-color);}
+  .td-code-inline{font-family:'JetBrains Mono',monospace;background:var(--code-bg);padding:1px 6px;border-radius:3px;color:var(--violet);}
+
+  .td-ba-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:8px;}
+  @media(max-width:680px){.td-ba-grid{grid-template-columns:1fr;}}
+  .td-ba-card{border-radius:12px;overflow:hidden;border:1px solid var(--border-soft);}
+  .td-ba-head{display:flex;align-items:center;gap:8px;padding:11px 16px;font-size:12px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;}
+  .td-before .td-ba-head{background:rgba(239,68,68,0.10);color:#ef4444;}
+  .td-after .td-ba-head{background:rgba(16,185,129,0.10);color:#10b981;}
+  .td-ba-head svg{width:14px;height:14px;}
+  .td-ba-body{background:var(--code-bg);padding:16px 18px;}
+  .td-ba-body p{font-size:13px;color:color-mix(in srgb, var(--default-color), transparent 40%);margin:0;line-height:1.7;}
+
+  .td-code-block{margin-bottom:22px;}
+  .td-code-block:last-child{margin-bottom:0;}
+  .td-code-label{font-size:13.5px;font-weight:600;color:color-mix(in srgb, var(--default-color), transparent 25%);margin-bottom:10px;display:flex;align-items:center;gap:8px;}
+  .td-code-label .td-step-num{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--td-accent);background:color-mix(in srgb, var(--td-accent) 14%, transparent);width:18px;height:18px;border-radius:5px;display:flex;align-items:center;justify-content:center;}
+  .td-code-box{background:var(--code-bg);border:1px solid rgba(255,255,255,0.08);border-radius:10px;overflow:hidden;}
+  .td-code-head{display:flex;align-items:center;justify-content:space-between;padding:9px 14px;border-bottom:1px solid rgba(255,255,255,0.06);background:rgba(255,255,255,0.02);}
+  .td-code-lang{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,0.35);}
+  .td-copy-btn{display:flex;align-items:center;gap:5px;font-family:inherit;font-size:11px;font-weight:500;color:rgba(255,255,255,0.40);background:none;border:none;cursor:pointer;padding:2px 4px;border-radius:4px;transition:color .15s;}
+  .td-copy-btn:hover{color:var(--td-accent);}
+  .td-copy-btn svg{width:12px;height:12px;}
+  .td-copy-btn.copied{color:var(--emerald);}
+  .td-code-box pre{padding:16px 18px;overflow-x:auto;font-family:'JetBrains Mono',monospace;font-size:12.5px;line-height:1.7;color:rgba(255,255,255,0.82);}
+  .td-code-box .k{color:#8b5cf6;}
+  .td-code-box .fn{color:#0dcaf0;}
+  .td-code-box .s{color:#f59e0b;}
+  .td-code-box .c{color:rgba(255,255,255,0.30);font-style:italic;}
+  .td-code-box .nm{color:#c17aff;}
+
+  .td-callout{display:flex;gap:13px;padding:16px 18px;border-radius:10px;margin:18px 0;background:rgba(245,158,11,0.06);border:1px solid rgba(245,158,11,0.20);}
+  .td-callout .td-ic{font-size:16px;flex-shrink:0;}
+  .td-callout p{font-size:13px;color:color-mix(in srgb, var(--default-color), transparent 35%);margin:0;}
+  .td-callout p strong{color:#f59e0b;}
+
+  .td-res-list{display:flex;flex-direction:column;gap:10px;}
+  .td-res-item{display:flex;align-items:center;gap:12px;padding:13px 16px;border-radius:10px;background:var(--surface-color);border:1px solid var(--border-soft);transition:border-color .2s;text-decoration:none;}
+  .td-res-item:hover{border-color:var(--violet-line);}
+  .td-res-icon{width:34px;height:34px;border-radius:8px;flex-shrink:0;background:color-mix(in srgb, var(--td-accent) 14%, transparent);display:flex;align-items:center;justify-content:center;color:var(--td-accent);}
+  .td-res-icon svg{width:15px;height:15px;}
+  .td-res-text{flex:1;}
+  .td-res-title{font-size:13.5px;font-weight:600;color:var(--heading-color);}
+  .td-res-sub{font-size:11.5px;color:color-mix(in srgb, var(--default-color), transparent 60%);}
+  .td-res-arrow{width:14px;height:14px;color:color-mix(in srgb, var(--default-color), transparent 70%);flex-shrink:0;}
+
+  .td-related{border-top:1px solid var(--border-soft);background:color-mix(in srgb, var(--surface-color), transparent 50%);padding:56px 28px 80px;}
+  .td-related-inner{max-width:880px;margin:0 auto;}
+  .td-related-title{font-size:21px;font-weight:700;margin-bottom:6px;}
+  .td-related-sub{font-size:13.5px;color:color-mix(in srgb, var(--default-color), transparent 55%);margin-bottom:26px;}
+  .td-related-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;}
+  @media(max-width:760px){.td-related-grid{grid-template-columns:1fr;}}
+  .td-rel-card{background:linear-gradient(165deg,#222224 0%,#1a1a1c 100%);border:1px solid var(--border-soft);border-radius:12px;padding:18px 17px;text-decoration:none;display:block;position:relative;overflow:hidden;transition:transform .2s,border-color .2s;}
+  .td-rel-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--td-r-accent,var(--violet));}
+  .td-rel-card:hover{transform:translateY(-4px);border-color:color-mix(in srgb, var(--td-r-accent,var(--violet)) 40%, var(--border-soft));}
+  .td-rel-badge{font-size:10px;font-weight:600;letter-spacing:.05em;text-transform:uppercase;color:var(--td-r-accent,var(--violet));margin-bottom:9px;}
+  .td-rel-title{font-size:13.5px;font-weight:600;color:var(--heading-color);line-height:1.45;}
+
+  .td-loading{text-align:center;padding:100px 20px;color:color-mix(in srgb, var(--default-color), transparent 50%);font-size:15px;}
+  </style>
+</head>
+
+<body class="trick-detail-page">
+<!-- Splash Screen -->
+<div id="splash">
+  <div id="splash-shards"></div>
+  <div id="splash-content">
+    <div id="splash-terminal">
+      <span id="splash-prefix" class="sp-prefix">~/portfolio $</span>
+      <span id="splash-typed"></span>
+      <span id="splash-cursor" class="sp-cursor">▋</span>
+    </div>
+    <div id="splash-compile">
+      <div id="splash-compile-label">
+        <span id="splash-compile-step">Initializing...</span>
+        <span id="splash-compile-pct">0%</span>
+      </div>
+      <div id="splash-bar-track">
+        <div id="splash-bar-fill"></div>
+        <div id="splash-bar-glow"></div>
+      </div>
+      <div id="splash-logs"></div>
+    </div>
+  </div>
+</div>
+<div class="page">
+
+<main class="main" id="trick-detail">
+  <div class="td-loading" id="tdLoading">Loading trick details...</div>
+</main>
+
+<footer id="footer" class="footer position-relative light-background">
+  <div class="container">
+    <h3>Assem Adel Habib</h3>
+    <p>Full-stack developer sharing concise solutions to real problems.</p>
+    <div class="social-links d-flex justify-content-center">
+      <a href=""><i class="bi bi-twitter-x"></i></a>
+      <a href=""><i class="bi bi-facebook"></i></a>
+      <a href=""><i class="bi bi-instagram"></i></a>
+      <a href=""><i class="bi bi-linkedin"></i></a>
+    </div>
+    <div class="copyright">
+      <span>Copyright</span> <strong class="px-1">Assem Adel Habib</strong> <span>All Rights Reserved</span>
+    </div>
+  </div>
+</footer>
+
+</div><!-- /.page -->
+
+<!-- Splash Screen JS -->
+<script src="assets/js/splash-screen.js"></script>
+<script>SplashScreen.init({ name: 'Assem Adel Habib' });</script>
+
+<!-- Vendor JS Files -->
+<script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="assets/vendor/php-email-form/validate.js"></script>
+<script src="assets/vendor/aos/aos.js"></script>
+<script src="assets/vendor/typed.js/typed.umd.js"></script>
+<script src="assets/vendor/purecounter/purecounter_vanilla.js"></script>
+<script src="assets/vendor/waypoints/noframework.waypoints.js"></script>
+<script src="assets/vendor/glightbox/js/glightbox.min.js"></script>
+<script src="assets/vendor/imagesloaded/imagesloaded.pkgd.min.js"></script>
+<script src="assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
+<script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
+
+<!-- Main JS File -->
+<script src="assets/js/data-loader.js"></script>
+<script src="assets/js/main.js"></script>
+
+<script>
+(function() {
+  'use strict';
+
+  const ACCENT_HEX = {
+    'item-violet': '#8b5cf6', 'item-cyan': '#0dcaf0', 'item-emerald': '#10b981',
+    'item-orange': '#f59e0b', 'item-pink': '#ec4899', 'item-blue': '#3b82f6'
+  };
+  const CAT_COLOR = {
+    frontend: 'item-violet', backend: 'item-blue', mobile: 'item-emerald'
+  };
+  const LABELS = { frontend: 'Frontend', backend: 'Backend', mobile: 'Mobile' };
+  const DIFF_LABELS = { beginner: 'Beginner', intermediate: 'Intermediate', advanced: 'Advanced' };
+
+  function qs(sel, ctx) { return (ctx || document).querySelector(sel); }
+  function qsa(sel, ctx) { return (ctx || document).querySelectorAll(sel); }
+
+  var trickId = null;
+  var allTricks = [];
+  var trickData = null;
+
+  function getParam(name) {
+    var m = location.search.match(new RegExp('[?&]' + name + '=([^&]*)'));
+    return m ? decodeURIComponent(m[1]) : null;
+  }
+
+  function copyCode(btn) {
+    var code = btn.closest('.td-code-box').querySelector('pre').textContent;
+    navigator.clipboard.writeText(code).catch(function() {});
+    var orig = btn.innerHTML;
+    btn.classList.add('copied');
+    btn.innerHTML = '<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 8l4 4 6-8"/></svg> Copied';
+    setTimeout(function() { btn.classList.remove('copied'); btn.innerHTML = orig; }, 1500);
+  }
+
+  window.tdCopyCode = copyCode;
+
+  function renderDetail(d) {
+    var accent = ACCENT_HEX[d.color] || '#8b5cf6';
+    var catLabel = LABELS[d.cat] || d.cat;
+    var difficulty = DIFF_LABELS[d.difficulty] || d.difficulty || '';
+
+    var tagsHtml = '';
+    for (var i = 0; i < d.tags.length; i++) {
+      tagsHtml += '<span class="td-tag">' + d.tags[i] + '</span>';
+    }
+
+    var codeStepsHtml = '';
+    if (d.codeSteps && d.codeSteps.length) {
+      var stepLetters = ['a','b','c','d','e'];
+      for (var s = 0; s < d.codeSteps.length; s++) {
+        var st = d.codeSteps[s];
+        var letter = stepLetters[s] || (s + 1);
+        codeStepsHtml += '<div class="td-code-block">' +
+          '<div class="td-code-label"><span class="td-step-num">' + letter + '</span>' + st.label + '</div>' +
+          '<div class="td-code-box">' +
+            '<div class="td-code-head">' +
+              '<span class="td-code-lang">' + (d.code ? d.code.lang : 'Code') + '</span>' +
+              '<button class="td-copy-btn" onclick="tdCopyCode(this)">' +
+                '<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3"><rect x="5" y="5" width="8" height="9" rx="1"/><path d="M3 11V3a1 1 0 011-1h6"/></svg>Copy' +
+              '</button>' +
+            '</div>' +
+            '<pre>' + st.html + '</pre>' +
+          '</div>' +
+        '</div>';
+      }
+    }
+
+    var beforeAfterHtml = '';
+    if (d.before && d.after) {
+      beforeAfterHtml = '<div class="td-block">' +
+        '<div class="td-block-label"><span class="td-num">4</span>Before / After</div>' +
+        '<div class="td-ba-grid">' +
+          '<div class="td-ba-card td-before">' +
+            '<div class="td-ba-head"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M15 9l-6 6M9 9l6 6"/></svg>Before</div>' +
+            '<div class="td-ba-body"><p>' + d.before.desc + '</p></div>' +
+          '</div>' +
+          '<div class="td-ba-card td-after">' +
+            '<div class="td-ba-head"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>After</div>' +
+            '<div class="td-ba-body"><p>' + d.after.desc + '</p></div>' +
+          '</div>' +
+        '</div>' +
+      '</div>';
+    }
+
+    var resourcesHtml = '';
+    if (d.resources && d.resources.length) {
+      var resItems = '';
+      for (var r = 0; r < d.resources.length; r++) {
+        var res = d.resources[r];
+        resItems += '<a class="td-res-item" href="' + res.url + '" target="_blank" rel="noopener">' +
+          '<div class="td-res-icon"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4"><circle cx="8" cy="8" r="6"/><path d="M8 5v3l2 1"/></svg></div>' +
+          '<div class="td-res-text"><div class="td-res-title">' + res.label + '</div></div>' +
+          '<svg class="td-res-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M7 7h10v10"/></svg>' +
+        '</a>';
+      }
+      resourcesHtml = '<div class="td-block">' +
+        '<div class="td-block-label"><span class="td-num">5</span>Resources</div>' +
+        '<div class="td-res-list">' + resItems + '</div>' +
+      '</div>';
+    }
+
+    var relatedHtml = '';
+    if (allTricks.length) {
+      var sameCat = [];
+      for (var i = 0; i < allTricks.length; i++) {
+        if (allTricks[i].id !== trickId && allTricks[i].cat === d.cat && sameCat.length < 3) {
+          sameCat.push(allTricks[i]);
+        }
+      }
+      if (sameCat.length) {
+        var relCards = '';
+        for (var rc = 0; rc < sameCat.length; rc++) {
+          var rel = sameCat[rc];
+          var rAccent = ACCENT_HEX[rel.color] || '#8b5cf6';
+          relCards += '<a class="td-rel-card" href="trick-detail.html?id=' + rel.id + '" style="--td-r-accent:' + rAccent + '">' +
+            '<div class="td-rel-badge">' + (LABELS[rel.cat] || rel.cat) + '</div>' +
+            '<div class="td-rel-title">' + rel.title + '</div>' +
+          '</a>';
+        }
+        if (relCards) {
+          relatedHtml = '<section class="td-related">' +
+            '<div class="td-related-inner">' +
+              '<h3 class="td-related-title">Related tricks</h3>' +
+              '<p class="td-related-sub">More tips from the same category</p>' +
+              '<div class="td-related-grid">' + relCards + '</div>' +
+            '</div>' +
+          '</section>';
+        }
+      }
+    }
+
+    var difficultyIcon = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>';
+    var calIcon = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>';
+
+    var html =
+    '<div class="td-topbar">' +
+      '<a href="tricks.html" class="td-back">' +
+        '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>' +
+        'All tricks' +
+      '</a>' +
+      '<span class="td-crumb">Tricks / <span>' + catLabel + '</span></span>' +
+      '<button class="td-copy-link" id="copyLinkBtn">' +
+        '<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M6 10a3 3 0 010-4l2-2a3 3 0 014 4l-1 1"/><path d="M10 6a3 3 0 010 4l-2 2a3 3 0 01-4-4l1-1"/></svg>' +
+        'Copy link' +
+      '</button>' +
+    '</div>' +
+    '<header class="td-hero" style="--td-accent:' + accent + '">' +
+      '<span class="td-badge"><span class="dot"></span>' + catLabel + '</span>' +
+      '<h1 class="td-title">' + d.title + '</h1>' +
+      '<p class="td-summary">' + d.desc + '</p>' +
+      '<div class="td-meta">' +
+        '<span class="td-pill">' + calIcon + 'Updated ' + d.date + '</span>' +
+        '<span class="td-pill">' + difficultyIcon + difficulty + '</span>' +
+      '</div>' +
+      '<div class="td-tags">' + tagsHtml + '</div>' +
+    '</header>' +
+    '<div class="td-body" style="--td-accent:' + accent + '">' +
+      '<div class="td-block">' +
+        '<div class="td-block-label"><span class="td-num">1</span>The Problem</div>' +
+        '<h2 class="td-block-title">' + (d.problem ? d.problem.slice(0, 60) + '...' : 'What went wrong') + '</h2>' +
+        '<p>' + (d.problem || '') + '</p>' +
+      '</div>' +
+      '<div class="td-block">' +
+        '<div class="td-block-label"><span class="td-num">2</span>The Solution</div>' +
+        '<h2 class="td-block-title">' + (d.solution ? d.solution.slice(0, 60) + '...' : 'How to fix it') + '</h2>' +
+        '<p>' + (d.solution || '') + '</p>' +
+      '</div>' +
+      (codeStepsHtml ? '<div class="td-block"><div class="td-block-label"><span class="td-num">3</span>Implementation</div><h2 class="td-block-title">Step by step</h2>' + codeStepsHtml + '</div>' : '') +
+      beforeAfterHtml +
+      resourcesHtml +
+    '</div>' +
+    relatedHtml;
+
+    var container = document.getElementById('trick-detail');
+    container.innerHTML = html;
+    container.style.setProperty('--td-accent', accent);
+
+    document.title = d.title + ' — Trick Detail';
+
+    document.getElementById('copyLinkBtn').addEventListener('click', function() {
+      navigator.clipboard.writeText(window.location.href).catch(function() {});
+      var orig = this.innerHTML;
+      this.innerHTML = '<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 8l4 4 6-8"/></svg> Copied';
+      setTimeout(function() { this.innerHTML = orig; }.bind(this), 1500);
+    });
+  }
+
+  function loadTrick() {
+    trickId = getParam('id');
+    if (!trickId) {
+      document.getElementById('trick-detail').innerHTML =
+        '<div class="td-loading">No trick ID specified. <a href="tricks.html">Browse all tricks</a></div>';
+      return;
+    }
+
+    var idxXhr = new XMLHttpRequest();
+    idxXhr.open('GET', 'data/tricks.json', true);
+    idxXhr.onload = function() {
+      if (idxXhr.status === 200) {
+        allTricks = (JSON.parse(idxXhr.responseText).tricks || []);
+      }
+    };
+    idxXhr.send();
+
+    var detailXhr = new XMLHttpRequest();
+    detailXhr.open('GET', 'data/tricks/' + trickId + '.json', true);
+    detailXhr.onload = function() {
+      if (detailXhr.status === 200) {
+        trickData = JSON.parse(detailXhr.responseText);
+        renderDetail(trickData);
+      } else {
+        document.getElementById('trick-detail').innerHTML =
+          '<div class="td-loading">Trick not found. <a href="tricks.html">Browse all tricks</a></div>';
+      }
+    };
+    detailXhr.onerror = function() {
+      document.getElementById('trick-detail').innerHTML =
+        '<div class="td-loading">Failed to load trick data. <a href="tricks.html">Browse all tricks</a></div>';
+    };
+    detailXhr.send();
+  }
+
+  loadTrick();
+})();
+</script>
+
+</body>
+</html>

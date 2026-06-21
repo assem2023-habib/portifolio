@@ -669,11 +669,11 @@ body.dark-mode .cv3d-avatar {
 @media (max-width: 768px) {
   .cv3d-hero-inner {
     grid-template-columns: 1fr;
-    gap: 2rem;
+    gap: 1.5rem;
   }
   .cv3d {
     --box-w: 300px;
-    --box-h: 480px;
+    --box-h: 460px;
     --box-d: 48px;
   }
   .cv3d-scene {
@@ -682,17 +682,72 @@ body.dark-mode .cv3d-avatar {
     margin: 0 auto;
   }
   .cv3d-hero {
-    padding: 2rem 1rem;
+    padding: 1.5rem 1rem;
+    min-height: auto;
+  }
+  .cv3d-top {
+    padding: 1.5rem;
+  }
+  .cv3d-pills-wrap {
+    padding: 0.8rem 1.5rem;
+  }
+  .cv3d-name-display {
+    font-size: clamp(1.8rem, 5vw, 2.4rem);
+  }
+  .cv3d-actions {
+    flex-wrap: wrap;
   }
 }
 
 @media (max-width: 480px) {
   .cv3d {
-    --box-w: 280px;
-    --box-h: 440px;
-    --box-d: 42px;
+    --box-w: 250px;
+    --box-h: 400px;
+    --box-d: 36px;
   }
-  .cv3d-name-display { font-size: 2rem; }
+  .cv3d-hero {
+    padding: 1rem 0.75rem;
+  }
+  .cv3d-hero-inner {
+    gap: 1rem;
+  }
+  .cv3d-name-display { font-size: 1.6rem; }
+  .cv3d-top {
+    padding: 1rem;
+  }
+  .cv3d-pills-wrap {
+    padding: 0.6rem 1rem;
+  }
+  .cv3d-avatar {
+    width: 56px; height: 56px;
+    font-size: 1.2rem;
+  }
+  .cv3d-name {
+    font-size: 1rem;
+    margin-top: 0.5rem;
+  }
+  .cv3d-stat-n {
+    font-size: 1rem;
+  }
+  .cv3d-stat {
+    padding: 0.5rem 0.3rem;
+  }
+  .cv3d-pill {
+    font-size: 0.55rem;
+    padding: 2px 8px;
+  }
+  .cv3d-flip-btn,
+  .cv3d-back-btn {
+    bottom: 10px;
+    left: 10px;
+    font-size: 0.55rem;
+    padding: 4px 10px;
+  }
+  .cv3d-flip-hint {
+    bottom: 10px;
+    right: 10px;
+    font-size: 0.5rem;
+  }
 }
 
 /* ============================================================

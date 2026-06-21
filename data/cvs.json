@@ -43,6 +43,7 @@
       "projects": [
         {
           "name": "SmartShip",
+          "projectId": "rma",
           "type": "final_year",
           "description": "Parcel Delivery Management System",
           "points": [
@@ -53,6 +54,7 @@
         },
         {
           "name": "StitchHub",
+          "projectId": "stitchhub",
           "type": "ecommerce",
           "description": "Tailoring E-Commerce Platform",
           "points": [
@@ -73,6 +75,7 @@
         },
         {
           "name": "CutOptimizer",
+          "projectId": "cutoptimizer",
           "type": "freelance",
           "description": "Optimization Tool",
           "points": [
@@ -149,6 +152,7 @@
       "projects": [
         {
           "name": "Jeeb",
+          "projectId": "jeeb",
           "type": "in_progress",
           "description": "Delivery Platform Backend",
           "points": [
@@ -159,6 +163,7 @@
         },
         {
           "name": "Shehrezad",
+          "projectId": "shehrezad",
           "type": "ecommerce",
           "description": "E-commerce Backend System",
           "points": [
@@ -237,6 +242,7 @@
       "projects": [
         {
           "name": "Shift Pay",
+          "projectId": "shiftpay",
           "type": "mobile",
           "description": "Smart HR & Financial Management System",
           "points": [
@@ -247,6 +253,7 @@
         },
         {
           "name": "Sajadi",
+          "projectId": "cutoptimizer",
           "type": "mobile",
           "description": "Cut Optimizer Mobile",
           "points": [
@@ -257,6 +264,7 @@
         },
         {
           "name": "Mizaneyati Pro",
+          "projectId": "mizaneyati",
           "type": "mobile",
           "description": "Personal Finance Management System",
           "points": [
@@ -336,6 +344,7 @@
       "projects": [
         {
           "name": "Shift Pay",
+          "projectId": "shiftpay",
           "type": "mobile",
           "description": "Smart HR & Financial Management System",
           "points": [
@@ -346,6 +355,7 @@
         },
         {
           "name": "Jeeb",
+          "projectId": "jeeb",
           "type": "backend",
           "description": "Delivery Platform",
           "points": [
@@ -356,6 +366,7 @@
         },
         {
           "name": "Shahrazad",
+          "projectId": "shehrezad",
           "type": "ecommerce",
           "description": "E-Commerce Platform",
           "points": [
@@ -366,6 +377,7 @@
         },
         {
           "name": "SmartShip",
+          "projectId": "rma",
           "type": "final_year",
           "description": "Parcel Delivery Management System",
           "points": [

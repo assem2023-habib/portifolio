@@ -449,36 +449,72 @@
 
         /* ── Projects ── */
         var projGrid = document.getElementById('cvProjectsGrid');
+        var portfolioMap = window._portfolioProjects || {};
         if (projGrid) {
           projGrid.innerHTML = '';
           (cv.projects || []).forEach(function (p, idx) {
             var themeIdx = (idx % 4) + 1;
             var num = (idx + 1).toString().padStart(2, '0');
+            var matched = p.projectId && portfolioMap[p.projectId];
             var scene = document.createElement('div');
             scene.className = 'proj-scene';
-            scene.innerHTML = 
-              '<div class="proj-reveal-wrap">' +
-                '<div class="proj-card proj-card-' + themeIdx + '">' +
-                  '<div class="proj-front-bar"></div>' +
-                  '<div class="proj-face proj-front">' +
-                    '<div class="proj-front-content">' +
-                      '<div class="proj-name">' + p.name + '</div>' +
-                      '<div class="proj-stack">' + (p.description || '') + '</div>' +
-                      '<div class="proj-hover-hint">' +
-                        '<span class="proj-hint-icon">↻</span> Hover details' +
+
+            if (matched) {
+              var techBadges = (matched.technologies || []).slice(0, 4).map(function (t) {
+                return '<span class="cv3d-pill ' + pillClasses[Math.floor(Math.random() * pillClasses.length)] + '">' + t + '</span>';
+              }).join('');
+              var thumb = matched.thumbnail || '';
+              var projUrl = 'project.html?project=' + p.projectId;
+              scene.innerHTML =
+                '<div class="proj-reveal-wrap">' +
+                  '<a href="' + projUrl + '" class="proj-linked-card">' +
+                    '<div class="proj-card proj-card-' + themeIdx + '">' +
+                      '<div class="proj-front-bar" style="background:linear-gradient(to right,var(--accent-color),color-mix(in srgb,var(--accent-color),white 30%))"></div>' +
+                      '<div class="proj-face proj-front" style="background-image:url(' + thumb + ');background-size:cover;background-position:center;">' +
+                        '<div class="proj-front-overlay"></div>' +
+                        '<div class="proj-front-content" style="justify-content:flex-end;padding:1.2rem;">' +
+                          '<div class="proj-name" style="color:#fff;text-shadow:0 2px 8px rgba(0,0,0,0.6);font-size:1.1rem;">' + p.name + '</div>' +
+                          '<div class="proj-stack" style="color:rgba(255,255,255,0.8);text-shadow:0 1px 4px rgba(0,0,0,0.5);">' + (p.description || '') + '</div>' +
+                        '</div>' +
+                      '</div>' +
+                      '<div class="proj-face proj-back">' +
+                        '<div class="proj-number">' + num + '</div>' +
+                        '<div class="proj-back-title">' + p.name + '</div>' +
+                        '<div class="proj-back-desc">' + p.description + '</div>' +
+                        '<div class="proj-tech-badges">' + techBadges + '</div>' +
+                        '<ul class="proj-points-list">' +
+                          (p.points || []).map(function (pt) { return '<li>' + pt + '</li>'; }).join('') +
+                        '</ul>' +
+                        '<div style="margin-top:auto;text-align:center;padding-top:10px;font-size:0.65rem;font-weight:600;color:var(--accent-color);font-family:DM Mono,monospace;">View Full Project →</div>' +
                       '</div>' +
                     '</div>' +
+                  '</a>' +
+                '</div>';
+            } else {
+              scene.innerHTML =
+                '<div class="proj-reveal-wrap">' +
+                  '<div class="proj-card proj-card-' + themeIdx + '">' +
+                    '<div class="proj-front-bar"></div>' +
+                    '<div class="proj-face proj-front">' +
+                      '<div class="proj-front-content">' +
+                        '<div class="proj-name">' + p.name + '</div>' +
+                        '<div class="proj-stack">' + (p.description || '') + '</div>' +
+                        '<div class="proj-hover-hint">' +
+                          '<span class="proj-hint-icon">↻</span> Hover details' +
+                        '</div>' +
+                      '</div>' +
+                    '</div>' +
+                    '<div class="proj-face proj-back">' +
+                      '<div class="proj-number">' + num + '</div>' +
+                      '<div class="proj-back-title">' + p.name + '</div>' +
+                      '<div class="proj-back-desc">' + p.description + '</div>' +
+                      '<ul class="proj-points-list">' +
+                        (p.points || []).map(function (pt) { return '<li>' + pt + '</li>'; }).join('') +
+                      '</ul>' +
+                    '</div>' +
                   '</div>' +
-                  '<div class="proj-face proj-back">' +
-                    '<div class="proj-number">' + num + '</div>' +
-                    '<div class="proj-back-title">' + p.name + '</div>' +
-                    '<div class="proj-back-desc">' + p.description + '</div>' +
-                    '<ul class="proj-points-list">' +
-                      (p.points || []).map(function (pt) { return '<li>' + pt + '</li>'; }).join('') +
-                    '</ul>' +
-                  '</div>' +
-                '</div>' +
-              '</div>';
+                '</div>';
+            }
             projGrid.appendChild(scene);
           });
         }
@@ -522,6 +558,19 @@
         }
       }
 
+      async function loadPortfolioProjects() {
+        try {
+          var r = await fetch('data/projects.json');
+          if (!r.ok) return {};
+          var json = await r.json();
+          var map = {};
+          (json.projects || []).forEach(function (pr) { map[pr.id] = pr; });
+          return map;
+        } catch (e) {
+          return {};
+        }
+      }
+
       async function init() {
         var cvId = getParam('id');
         if (!cvId) {
@@ -534,6 +583,7 @@
           document.getElementById('cvNavTitle').textContent = 'CV not found: ' + cvId;
           return;
         }
+        window._portfolioProjects = await loadPortfolioProjects();
         populate(cv);
         if (window.CV3DCard) CV3DCard.init('cv3dScene');
         if (window.CVDetailsEffects) window.CVDetailsEffects.init();
